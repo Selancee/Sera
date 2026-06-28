@@ -13,6 +13,9 @@ data/metadata/*.pid
 data/metadata/*.stamp
 data/metadata/*.log
 experiments/*
+training_runs/*
+checkpoints/*
+models/*
 examples/scores/*.musicxml
 examples/midi/*.mid
 examples/abc/*.abc

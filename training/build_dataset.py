@@ -7,8 +7,10 @@ MusicXML/MIDI files.  This script never downloads large datasets itself.
 
 from __future__ import annotations
 
-import argparse
 import json
+import argparse
+import zipfile
+from hashlib import sha1
 from pathlib import Path
 
 
@@ -34,29 +36,51 @@ def iter_score_paths(source_dirs: list[Path]) -> list[Path]:
     for source in source_dirs:
         if not source.exists():
             continue
-        for pattern in ("*.musicxml", "*.xml"):
+        for pattern in ("*.musicxml", "*.xml", "*.mxl"):
             paths.extend(source.rglob(pattern))
-        # TODO: add safe .mxl unzip/parse support when compressed corpora are used.
     return sorted(set(paths))
 
 
-def build_dataset(source_dirs: list[Path], log_path: Path, out_path: Path) -> int:
+def read_score_text(score_path: Path) -> str:
+    """Read plain MusicXML or the first XML score inside a compressed MXL."""
+
+    if score_path.suffix.lower() != ".mxl":
+        return score_path.read_text(encoding="utf-8", errors="ignore")
+    with zipfile.ZipFile(score_path) as archive:
+        xml_names = [name for name in archive.namelist() if name.lower().endswith((".xml", ".musicxml"))]
+        if not xml_names:
+            return ""
+        return archive.read(xml_names[0]).decode("utf-8", errors="ignore")
+
+
+def build_dataset(source_dirs: list[Path], log_path: Path, out_path: Path, max_examples: int = 0) -> int:
     """Write JSONL examples with prompt, run id, source, and raw MusicXML."""
 
     lookup = load_prompt_lookup(log_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     count = 0
+    seen_hashes: set[str] = set()
     with out_path.open("w", encoding="utf-8") as handle:
         for score_path in iter_score_paths(source_dirs):
+            musicxml = read_score_text(score_path)
+            if not musicxml.strip():
+                continue
+            content_hash = sha1(musicxml.encode("utf-8")).hexdigest()
+            if content_hash in seen_hashes:
+                continue
+            seen_hashes.add(content_hash)
             run_id = score_path.stem
             example = {
                 "run_id": run_id,
                 "prompt": lookup.get(run_id, ""),
-                "musicxml": score_path.read_text(encoding="utf-8"),
+                "musicxml": musicxml,
                 "source": str(score_path),
+                "sha1": content_hash,
             }
             handle.write(json.dumps(example, ensure_ascii=False) + "\n")
             count += 1
+            if max_examples and count >= max_examples:
+                break
     return count
 
 
@@ -72,8 +96,14 @@ def main() -> None:
     )
     parser.add_argument("--logs", default="data/metadata/experiment_logs.jsonl")
     parser.add_argument("--out", default="data/processed/musicxml_dataset.jsonl")
+    parser.add_argument("--max-examples", type=int, default=0)
     args = parser.parse_args()
-    count = build_dataset([Path(item) for item in args.sources], Path(args.logs), Path(args.out))
+    count = build_dataset(
+        [Path(item) for item in args.sources],
+        Path(args.logs),
+        Path(args.out),
+        max_examples=args.max_examples,
+    )
     print(f"Wrote {count} examples to {args.out}")
 
 

@@ -1,22 +1,29 @@
-# Sera V0.2 symbolic training configuration.
-# TODO: use this on a cloud GPU runtime after preparing PDMX, MetaScore,
-# POP909, or Lakh MIDI Dataset derived symbolic MusicXML/token data.
+# Sera V0.2 symbolic training configuration for AutoDL smoke training.
+# TODO: scale max_examples/model width for PDMX or MetaScore when budget allows.
+seed: 42
 model:
   architecture: decoder_only_transformer
-  base_model: gpt2
-  max_sequence_length: 2048
+  implementation: torch_native
+  max_sequence_length: 512
   vocab_type: musicxml_event_tokens
+  d_model: 128
+  n_layers: 4
+  n_heads: 4
+  dim_feedforward: 512
+  dropout: 0.1
+  sample_max_new_tokens: 256
 data:
   train_tokens: data/processed/musicxml_tokens.jsonl
   validation_split: 0.1
+  min_frequency: 1
+  max_examples: 600
 optimization:
-  batch_size: 1
-  gradient_accumulation_steps: 8
-  learning_rate: 0.0002
-  epochs: 3
-  warmup_steps: 100
+  batch_size: 8
+  gradient_accumulation_steps: 1
+  learning_rate: 0.0003
+  epochs: 5
 lora:
-  enabled: true
+  enabled: false
   rank: 8
   alpha: 16
   dropout: 0.05

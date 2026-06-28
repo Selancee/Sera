@@ -126,7 +126,15 @@ python training/train_symbolic_model.py --dry-run
 python training/evaluate_model.py
 ```
 
-The training scripts are pipeline scaffolds for local MusicXML/PDMX/MetaScore-derived folders and future POP909/Lakh MIDI Dataset conversions. They do not download large datasets or run heavy training locally.
+Cloud training on AutoDL:
+
+```bash
+bash training/autodl_train.sh
+```
+
+By default the AutoDL script trains a compact native PyTorch decoder-only Transformer on Sera generated examples plus the ASAP GitHub MusicXML dataset. It keeps third-party data and checkpoints under `/root/autodl-tmp` instead of committing them.
+
+The training scripts are ready for local MusicXML/PDMX/MetaScore-derived folders and future POP909/Lakh MIDI Dataset conversions. They do not download large datasets locally.
 
 ## Tests
 
