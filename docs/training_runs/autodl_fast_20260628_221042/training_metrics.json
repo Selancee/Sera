@@ -1,0 +1,40 @@
+{
+  "token_rows": 120,
+  "sequence_chunks": 71316,
+  "train_chunks": 64185,
+  "validation_chunks": 7131,
+  "vocab_size": 218631,
+  "device": "cuda",
+  "settings": {
+    "batch_size": 8,
+    "epochs": 2,
+    "learning_rate": 0.0003,
+    "max_sequence_length": 128,
+    "d_model": 64,
+    "n_layers": 2,
+    "n_heads": 4,
+    "dropout": 0.1,
+    "dim_feedforward": 256,
+    "validation_split": 0.1,
+    "min_frequency": 1,
+    "max_examples": 120,
+    "gradient_accumulation_steps": 1,
+    "seed": 42,
+    "sample_max_new_tokens": 64
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.2166498340926284,
+      "val_loss": 0.7694870619763173
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7459445143060931,
+      "val_loss": 0.7368806726863032
+    }
+  ],
+  "best_loss": 0.7368806726863032,
+  "seconds": 317.856,
+  "checkpoint": "/root/autodl-tmp/sera_runs/autodl_fast_20260628_221042/model.pt"
+}
