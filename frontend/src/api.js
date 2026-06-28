@@ -36,6 +36,17 @@ export function evaluateRun(runId) {
   });
 }
 
+export function getSymbolicModelStatus() {
+  return request("/model/status");
+}
+
+export function generateSymbolicModelSample(prompt, maxTokens = 96) {
+  return request("/model/sample", {
+    method: "POST",
+    body: JSON.stringify({ prompt, max_tokens: maxTokens })
+  });
+}
+
 export function submitRating(runId, rating) {
   return request("/rate", {
     method: "POST",

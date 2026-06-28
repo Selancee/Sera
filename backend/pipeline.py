@@ -12,6 +12,7 @@ from backend.agents.revision_agent import RevisionAgent
 from backend.export.midi_exporter import MidiExporter
 from backend.export.musicxml_exporter import MusicXMLExporter
 from backend.export.pdf_exporter import PDFExporter
+from backend.generation.model_generator import ModelGenerator
 from backend.generation.symbolic_generator import SymbolicMusicGenerator
 from backend.models.schemas import CompositionPlan, GenerationArtifacts, ValidationResult
 from backend.storage.experiment_logger import ExperimentLogger
@@ -34,6 +35,7 @@ class SeraPipeline:
         self.midi_exporter = MidiExporter()
         self.pdf_exporter = PDFExporter()
         self.logger = ExperimentLogger(self.project_root)
+        self.model_lab = ModelGenerator(self.project_root)
 
     def generate(self, prompt: str) -> dict[str, Any]:
         """Run the full generation pipeline and persist all artifacts."""
@@ -72,6 +74,16 @@ class SeraPipeline:
         if record is None:
             raise KeyError(f"Unknown run_id: {run_id}")
         return record.get("evaluation", {})
+
+    def symbolic_model_status(self) -> dict[str, Any]:
+        """Return status for the optional trained symbolic model."""
+
+        return self.model_lab.status()
+
+    def symbolic_model_sample(self, prompt: str, max_tokens: int = 96) -> dict[str, Any]:
+        """Generate or replay a qualitative symbolic-model token sample."""
+
+        return self.model_lab.sample_tokens(prompt, max_tokens=max_tokens)
 
     def rate_run(self, run_id: str, rating: dict[str, Any]) -> dict[str, Any]:
         """Persist a human evaluation rating for one generated run."""

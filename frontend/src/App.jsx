@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { evaluateRun, generateScore, listExperiments, reviseScore, submitRating } from "./api.js";
+import {
+  evaluateRun,
+  generateScore,
+  generateSymbolicModelSample,
+  getSymbolicModelStatus,
+  listExperiments,
+  reviseScore,
+  submitRating
+} from "./api.js";
 import AgentPlanPanel from "./components/AgentPlanPanel.jsx";
 import ExperimentLogPanel from "./components/ExperimentLogPanel.jsx";
 import ExportPanel from "./components/ExportPanel.jsx";
@@ -7,6 +15,7 @@ import HumanEvaluationPanel from "./components/HumanEvaluationPanel.jsx";
 import MidiPlayer from "./components/MidiPlayer.jsx";
 import PromptInput from "./components/PromptInput.jsx";
 import ScoreViewer from "./components/ScoreViewer.jsx";
+import SymbolicModelPanel from "./components/SymbolicModelPanel.jsx";
 import ValidationReportPanel from "./components/ValidationReportPanel.jsx";
 
 const DEFAULT_PROMPT =
@@ -22,6 +31,8 @@ const DEFAULT_PARAMS = {
   difficulty: "intermediate"
 };
 
+const MAIN_TABS = ["Score", "Plan", "Validation", "Evaluation", "Model"];
+
 function promptWithParams(prompt, params) {
   return [
     prompt.trim(),
@@ -35,6 +46,9 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [experiments, setExperiments] = useState([]);
   const [feedback, setFeedback] = useState("更忧郁，左手更流动。");
+  const [modelPrompt, setModelPrompt] = useState(DEFAULT_PROMPT);
+  const [modelStatus, setModelStatus] = useState(null);
+  const [modelSample, setModelSample] = useState(null);
   const [status, setStatus] = useState("ready");
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("Score");
@@ -52,9 +66,23 @@ export default function App() {
     }
   }, []);
 
+  const refreshModelStatus = useCallback(async () => {
+    try {
+      const payload = await getSymbolicModelStatus();
+      setModelStatus(payload);
+    } catch (err) {
+      setModelStatus({
+        available: false,
+        mode: "unavailable",
+        warnings: [err.message]
+      });
+    }
+  }, []);
+
   useEffect(() => {
     refreshExperiments();
-  }, [refreshExperiments]);
+    refreshModelStatus();
+  }, [refreshExperiments, refreshModelStatus]);
 
   const handleGenerate = useCallback(async () => {
     setStatus("generating");
@@ -102,31 +130,62 @@ export default function App() {
     }
   }, [runId]);
 
-  const handleRating = useCallback(async (rating) => {
-    if (!runId) return;
+  const handleModelSample = useCallback(async () => {
+    setStatus("modeling");
     setError("");
     try {
-      const payload = await submitRating(runId, rating);
-      setResult(payload);
-      await refreshExperiments();
+      const payload = await generateSymbolicModelSample(modelPrompt, 96);
+      setModelSample(payload);
+      setModelStatus(payload.status || modelStatus);
+      setActiveTab("Model");
+      setStatus("success");
     } catch (err) {
       setError(err.message);
-      throw err;
+      setStatus("error");
     }
-  }, [refreshExperiments, runId]);
+  }, [modelPrompt, modelStatus]);
+
+  const handleRating = useCallback(
+    async (rating) => {
+      if (!runId) return;
+      setError("");
+      try {
+        const payload = await submitRating(runId, rating);
+        setResult(payload);
+        await refreshExperiments();
+      } catch (err) {
+        setError(err.message);
+        throw err;
+      }
+    },
+    [refreshExperiments, runId]
+  );
+
+  const modelPanel = (
+    <SymbolicModelPanel
+      disabled={status === "modeling"}
+      modelSample={modelSample}
+      modelStatus={modelStatus}
+      onGenerateSample={handleModelSample}
+      prompt={modelPrompt}
+      setPrompt={setModelPrompt}
+    />
+  );
 
   return (
     <div className="app-shell">
       <header className="topbar">
         <div className="brand">
-          <div className="brand-mark" aria-hidden="true">S</div>
+          <div className="brand-mark" aria-hidden="true">
+            S
+          </div>
           <div>
             <h1>Sera - Agentic Text-to-Score Composition System</h1>
             <p>Research workbench V0.2</p>
           </div>
         </div>
         <nav className="tabs" aria-label="Main views">
-          {["Score", "Plan", "Validation", "Evaluation"].map((tab) => (
+          {MAIN_TABS.map((tab) => (
             <button
               className={activeTab === tab ? "tab active" : "tab"}
               key={tab}
@@ -173,7 +232,8 @@ export default function App() {
               ))}
             </div>
           )}
-          {!result && (
+          {activeTab === "Model" && modelPanel}
+          {!result && activeTab !== "Model" && (
             <div className="empty-state">
               <strong>Ready for first generation</strong>
               <span>Run the prompt to create MusicXML, MIDI, ABC, PDF, and an experiment log.</span>

@@ -61,6 +61,13 @@ class EvaluateRequest(BaseModel):
     run_id: str
 
 
+class ModelSampleRequest(BaseModel):
+    """Request body for /model/sample."""
+
+    prompt: str = Field(min_length=1, max_length=2000)
+    max_tokens: int = Field(default=96, ge=8, le=256)
+
+
 class RatingRequest(BaseModel):
     """Request body for /rate."""
 
@@ -145,6 +152,20 @@ def evaluate(request: EvaluateRequest) -> dict[str, object]:
         return pipeline.evaluate_run(request.run_id)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/model/status")
+def model_status() -> dict[str, object]:
+    """Return trained symbolic model status and latest run metrics."""
+
+    return pipeline.symbolic_model_status()
+
+
+@app.post("/model/sample")
+def model_sample(request: ModelSampleRequest) -> dict[str, object]:
+    """Return a token-level qualitative sample from the symbolic model lab."""
+
+    return pipeline.symbolic_model_sample(request.prompt, request.max_tokens)
 
 
 @app.post("/rate")

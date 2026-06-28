@@ -67,6 +67,8 @@ Open:
 - `POST /generate`: prompt to plan, score, validation, evaluation, and artifacts.
 - `POST /revise`: revise an existing run with user feedback.
 - `POST /rate`: save local human evaluation ratings for a run.
+- `GET /model/status`: inspect the optional trained symbolic model and latest AutoDL run metrics.
+- `POST /model/sample`: generate or replay token-level symbolic model samples for the frontend Model Lab.
 - `GET /export/{run_id}/{format}`: download `musicxml`, `midi`, `abc`, `pdf`, `plan`, `validation_report`, or `experiment_log`.
 - `POST /evaluate`: return saved metrics for one run.
 - `GET /experiments`: list recent experiment logs.
@@ -135,6 +137,24 @@ bash training/autodl_train.sh
 By default the AutoDL script trains a compact native PyTorch decoder-only Transformer on Sera generated examples plus the ASAP GitHub MusicXML dataset. It keeps third-party data and checkpoints under `/root/autodl-tmp` instead of committing them.
 
 The training scripts are ready for local MusicXML/PDMX/MetaScore-derived folders and future POP909/Lakh MIDI Dataset conversions. They do not download large datasets locally.
+
+## Symbolic Model Lab
+
+The frontend has a `Model` tab for qualitative testing of the trained symbolic model. By default it reads lightweight
+AutoDL evidence from `docs/training_runs/<run_id>/samples.json` and `training_metrics.json`.
+
+For live checkpoint inference, place the AutoDL checkpoint artifacts outside Git and point Sera at them:
+
+```powershell
+$env:SERA_SYMBOLIC_MODEL_DIR = "D:\Sera\models\sera_symbolic_small"
+# Expected files:
+# D:\Sera\models\sera_symbolic_small\model.pt
+# D:\Sera\models\sera_symbolic_small\vocab.json
+```
+
+Then start the backend and frontend. The `Model` tab will switch from `recorded_sample` to `checkpoint` mode when
+`model.pt` is found and PyTorch is installed. Current output is token-level research evidence; TODO: add constrained
+detokenization before routing the model into the main `/generate` score pipeline.
 
 ## Tests
 
