@@ -1,0 +1,13 @@
+{
+  "baseline_id": "rule_based_v0",
+  "description": "Deterministic prompt-to-plan-to-MusicXML baseline used by the MVP.",
+  "expected_measures": [8, 12, 16],
+  "reported_metrics": [
+    "musicxml_validity",
+    "bar_completeness",
+    "pitch_range_validity",
+    "prompt_adherence",
+    "structural_consistency",
+    "revision_success_rate"
+  ]
+}

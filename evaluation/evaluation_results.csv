@@ -1,0 +1,21 @@
+prompt_id,category,run_id,baseline,musicxml_validity_rate,midi_export_success_rate,pdf_export_success_rate,bar_completeness_score,pitch_range_validity_rate,empty_measure_rate,prompt_adherence_rule_score,revision_success_rate,human_rating_present,human_average_score,issue_count,prompt
+seed_001,classical_piano,20260628_081602_649d1107,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create an 8 measure classical piano piece in C major, 4/4, 90 bpm, beginner difficulty, melody with simple accompaniment."
+seed_002,classical_piano,20260628_081602_5a4858ce,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 16 measure classical piano sonatina sketch in G major, 4/4, clear ABA form, intermediate difficulty."
+seed_003,romantic_piano,20260628_081602_83efcc42,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,Create a 16 measure romantic piano nocturne in A minor at 76 bpm with arpeggiated left hand and melancholic mood.
+seed_004,romantic_piano,20260628_081602_cbb26133,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个32小节肖邦风格钢琴小品，A小调，三拍子，更忧郁，左手更流动。
+seed_005,jazz,20260628_081602_6e770621,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 16 measure modal jazz piano sketch in F major, 4/4, 124 bpm, with ii-V-I harmony and chordal texture."
+seed_006,jazz,20260628_081602_c82e2a73,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create an 8 measure swing jazz piano phrase in Bb major, upbeat mood, intermediate difficulty."
+seed_007,pop_ballad,20260628_081603_96bf686b,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create a 16 measure pop ballad for piano in C major, 4/4, 72 bpm, warm and lyrical melody_accompaniment texture."
+seed_008,pop_ballad,20260628_081603_a7017c2f,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个8小节流行抒情钢琴段落，C大调，慢速，简单可弹。
+seed_009,chinese_pentatonic,20260628_081603_e5b01fef,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 16 measure Chinese pentatonic style piano piece in D major, 4/4, calm mood, melody_accompaniment texture."
+seed_010,chinese_pentatonic,20260628_081603_bf957e8d,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个中国风五声音阶钢琴小品，16小节，G大调，速度90，旋律清晰。
+seed_011,electronic_ambient,20260628_081603_35b4a8fd,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create an 8 measure electronic ambient score in A minor, 4/4, 68 bpm, sparse single line texture and dreamlike mood."
+seed_012,electronic_ambient,20260628_081603_d7118d4f,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 16 measure ambient electronic piano/synth sketch in E minor, 6/8, flowing arpeggiated texture."
+seed_013,beginner_children,20260628_081603_642bedbe,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create an 8 measure children's beginner piano piece in C major, 4/4, 80 bpm, very simple melody and accompaniment."
+seed_014,beginner_children,20260628_081603_994e2ff8,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个儿童初级钢琴练习曲，8小节，C大调，四四拍，降低难度。
+seed_015,complex_triple_meter,20260628_081603_53acf001,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 32 measure complex romantic waltz in D minor, 3/4, advanced difficulty, simple_counterpoint texture."
+seed_016,complex_triple_meter,20260628_081603_521c4082,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,Create a 16 measure experimental 3/4 piano miniature with contrapuntal motion and shifting sections.
+seed_017,fast_lively,20260628_081603_f6decaab,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Create an 8 measure fast lively classical piano piece in G major, 4/4, 144 bpm, energetic mood."
+seed_018,fast_lively,20260628_081603_cfa32a34,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个快速活泼的16小节钢琴曲，G大调，4/4，速度132。
+seed_019,sad_adagio,20260628_081604_906bacd0,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,"Compose a 16 measure sad adagio piano piece in A minor, 4/4, 60 bpm, melody_accompaniment texture."
+seed_020,sad_adagio,20260628_081604_ab310cee,rule_based_v0_2,1.0,1.0,1.0,1.0,1.0,0.0,0.9,1.0,0.0,0.0,0,写一个悲伤慢板风格的32小节钢琴作品，A小调，6/8，旋律忧郁。

@@ -1,0 +1,10 @@
+[project]
+name = "sera"
+version = "0.1.0"
+description = "Agent-assisted symbolic music generation MVP."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"

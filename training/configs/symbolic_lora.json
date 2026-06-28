@@ -1,0 +1,13 @@
+{
+  "base_model": "gpt2",
+  "max_sequence_length": 2048,
+  "learning_rate": 0.0002,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "num_train_epochs": 3,
+  "lora": {
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.05
+  }
+}

@@ -1,0 +1,20 @@
+{"id":"seed_001","category":"classical_piano","prompt":"Create an 8 measure classical piano piece in C major, 4/4, 90 bpm, beginner difficulty, melody with simple accompaniment."}
+{"id":"seed_002","category":"classical_piano","prompt":"Compose a 16 measure classical piano sonatina sketch in G major, 4/4, clear ABA form, intermediate difficulty."}
+{"id":"seed_003","category":"romantic_piano","prompt":"Create a 16 measure romantic piano nocturne in A minor at 76 bpm with arpeggiated left hand and melancholic mood."}
+{"id":"seed_004","category":"romantic_piano","prompt":"写一个32小节肖邦风格钢琴小品，A小调，三拍子，更忧郁，左手更流动。"}
+{"id":"seed_005","category":"jazz","prompt":"Compose a 16 measure modal jazz piano sketch in F major, 4/4, 124 bpm, with ii-V-I harmony and chordal texture."}
+{"id":"seed_006","category":"jazz","prompt":"Create an 8 measure swing jazz piano phrase in Bb major, upbeat mood, intermediate difficulty."}
+{"id":"seed_007","category":"pop_ballad","prompt":"Create a 16 measure pop ballad for piano in C major, 4/4, 72 bpm, warm and lyrical melody_accompaniment texture."}
+{"id":"seed_008","category":"pop_ballad","prompt":"写一个8小节流行抒情钢琴段落，C大调，慢速，简单可弹。"}
+{"id":"seed_009","category":"chinese_pentatonic","prompt":"Compose a 16 measure Chinese pentatonic style piano piece in D major, 4/4, calm mood, melody_accompaniment texture."}
+{"id":"seed_010","category":"chinese_pentatonic","prompt":"写一个中国风五声音阶钢琴小品，16小节，G大调，速度90，旋律清晰。"}
+{"id":"seed_011","category":"electronic_ambient","prompt":"Create an 8 measure electronic ambient score in A minor, 4/4, 68 bpm, sparse single line texture and dreamlike mood."}
+{"id":"seed_012","category":"electronic_ambient","prompt":"Compose a 16 measure ambient electronic piano/synth sketch in E minor, 6/8, flowing arpeggiated texture."}
+{"id":"seed_013","category":"beginner_children","prompt":"Create an 8 measure children's beginner piano piece in C major, 4/4, 80 bpm, very simple melody and accompaniment."}
+{"id":"seed_014","category":"beginner_children","prompt":"写一个儿童初级钢琴练习曲，8小节，C大调，四四拍，降低难度。"}
+{"id":"seed_015","category":"complex_triple_meter","prompt":"Compose a 32 measure complex romantic waltz in D minor, 3/4, advanced difficulty, simple_counterpoint texture."}
+{"id":"seed_016","category":"complex_triple_meter","prompt":"Create a 16 measure experimental 3/4 piano miniature with contrapuntal motion and shifting sections."}
+{"id":"seed_017","category":"fast_lively","prompt":"Create an 8 measure fast lively classical piano piece in G major, 4/4, 144 bpm, energetic mood."}
+{"id":"seed_018","category":"fast_lively","prompt":"写一个快速活泼的16小节钢琴曲，G大调，4/4，速度132。"}
+{"id":"seed_019","category":"sad_adagio","prompt":"Compose a 16 measure sad adagio piano piece in A minor, 4/4, 60 bpm, melody_accompaniment texture."}
+{"id":"seed_020","category":"sad_adagio","prompt":"写一个悲伤慢板风格的32小节钢琴作品，A小调，6/8，旋律忧郁。"}

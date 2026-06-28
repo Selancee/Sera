@@ -1,0 +1,32 @@
+# Sera V0.2 symbolic training configuration.
+# TODO: use this on a cloud GPU runtime after preparing PDMX, MetaScore,
+# POP909, or Lakh MIDI Dataset derived symbolic MusicXML/token data.
+model:
+  architecture: decoder_only_transformer
+  base_model: gpt2
+  max_sequence_length: 2048
+  vocab_type: musicxml_event_tokens
+data:
+  train_tokens: data/processed/musicxml_tokens.jsonl
+  validation_split: 0.1
+optimization:
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  learning_rate: 0.0002
+  epochs: 3
+  warmup_steps: 100
+lora:
+  enabled: true
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+evaluation:
+  metrics:
+    - musicxml_validity_rate
+    - midi_export_success_rate
+    - pdf_export_success_rate
+    - bar_completeness_score
+    - pitch_range_validity_rate
+    - empty_measure_rate
+    - prompt_adherence_rule_score
+    - revision_success_rate
