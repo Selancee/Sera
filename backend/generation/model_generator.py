@@ -29,6 +29,7 @@ class ModelGenerator:
     def __init__(self, project_root: str | Path | None = None) -> None:
         self.project_root = Path(project_root) if project_root else Path(__file__).resolve().parents[2]
         self.training_runs_dir = self.project_root / "docs" / "training_runs"
+        self.default_model_dir = self.project_root / "models" / "sera_symbolic_small"
 
     def generate(self, plan: CompositionPlan) -> GeneratedScore | None:
         """Return None until the neural model can emit validated MusicXML.
@@ -48,11 +49,12 @@ class ModelGenerator:
         samples = self._read_json(run_dir / "samples.json") if run_dir else []
         checkpoint_path = self.checkpoint_path(run_dir)
         torch_available = self._torch_available()
+        checkpoint_candidates = self.checkpoint_candidates(run_dir)
         warnings: list[str] = []
         if not checkpoint_path:
             warnings.append(
-                "No local model.pt found. Put the AutoDL checkpoint in SERA_SYMBOLIC_MODEL_DIR "
-                "to enable live inference."
+                f"No local model.pt found. Put the AutoDL checkpoint in {self.default_model_dir} "
+                "or set SERA_SYMBOLIC_MODEL_DIR to enable live inference."
             )
         if checkpoint_path and not torch_available:
             warnings.append("PyTorch is not installed in this Python environment; live inference is disabled.")
@@ -63,6 +65,9 @@ class ModelGenerator:
             "run_id": run_dir.name if run_dir else "",
             "run_dir": str(run_dir) if run_dir else "",
             "checkpoint_path": str(checkpoint_path) if checkpoint_path else "",
+            "expected_model_dir": str(self.default_model_dir),
+            "checkpoint_candidates": [str(path) for path in checkpoint_candidates],
+            "torch_available": torch_available,
             "sample_count": len(samples) if isinstance(samples, list) else 0,
             "metrics": metrics,
             "warnings": warnings,
@@ -80,10 +85,18 @@ class ModelGenerator:
     def checkpoint_path(self, run_dir: Path | None = None) -> Path | None:
         """Resolve the configured checkpoint path without hardcoding machines."""
 
+        for path in self.checkpoint_candidates(run_dir):
+            if path.exists():
+                return path
+        return None
+
+    def checkpoint_candidates(self, run_dir: Path | None = None) -> list[Path]:
+        """Return checkpoint candidates in runtime priority order."""
+
         explicit_checkpoint = os.environ.get("SERA_SYMBOLIC_MODEL_CHECKPOINT", "").strip()
         if explicit_checkpoint:
             path = Path(explicit_checkpoint).expanduser()
-            return path if path.exists() else None
+            return [path]
 
         explicit_dir = os.environ.get("SERA_SYMBOLIC_MODEL_DIR", "").strip()
         candidates: list[Path] = []
@@ -91,12 +104,12 @@ class ModelGenerator:
             candidates.append(Path(explicit_dir).expanduser() / "model.pt")
         if run_dir:
             candidates.append(run_dir / "model.pt")
-        candidates.append(self.project_root / "models" / "sera_symbolic_small" / "model.pt")
-
+        candidates.append(self.default_model_dir / "model.pt")
+        unique_candidates: list[Path] = []
         for path in candidates:
-            if path.exists():
-                return path
-        return None
+            if path not in unique_candidates:
+                unique_candidates.append(path)
+        return unique_candidates
 
     def latest_run_dir(self) -> Path | None:
         """Return the newest committed or local training run directory."""
@@ -133,7 +146,7 @@ class ModelGenerator:
 
         from training.train_symbolic_model import TrainSettings, generate_sample, make_model
 
-        checkpoint = torch.load(status["checkpoint_path"], map_location="cpu")
+        checkpoint = self._load_checkpoint(torch, status["checkpoint_path"])
         vocab = dict(checkpoint["vocab"])
         raw_settings = dict(checkpoint.get("settings", {}))
         setting_names = TrainSettings.__dataclass_fields__.keys()
@@ -164,6 +177,19 @@ class ModelGenerator:
         except ImportError:
             return False
         return True
+
+    @staticmethod
+    def _load_checkpoint(torch: Any, checkpoint_path: str) -> dict[str, Any]:
+        """Load checkpoints across PyTorch versions.
+
+        PyTorch 2.6 tightened the default loader. Sera checkpoints are local
+        training artifacts, but we still prefer the explicit safe path first.
+        """
+
+        try:
+            return torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+        except TypeError:
+            return torch.load(checkpoint_path, map_location="cpu")
 
     @staticmethod
     def _read_json(path: Path) -> Any:

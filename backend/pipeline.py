@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -27,7 +28,8 @@ class SeraPipeline:
         self.project_root = Path(project_root) if project_root else Path(__file__).resolve().parents[1]
         self.prompt_agent = PromptUnderstandingAgent()
         self.planning_agent = CompositionPlanningAgent()
-        self.generator = SymbolicMusicGenerator()
+        generator_backend = os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
+        self.generator = SymbolicMusicGenerator(backend=generator_backend, project_root=self.project_root)
         self.musicxml_validator = MusicXMLValidator()
         self.theory_validator = TheoryValidator()
         self.revision_agent = RevisionAgent()
@@ -78,12 +80,17 @@ class SeraPipeline:
     def symbolic_model_status(self) -> dict[str, Any]:
         """Return status for the optional trained symbolic model."""
 
-        return self.model_lab.status()
+        status = self.model_lab.status()
+        status["generator_backend"] = self.generator.backend
+        return status
 
     def symbolic_model_sample(self, prompt: str, max_tokens: int = 96) -> dict[str, Any]:
         """Generate or replay a qualitative symbolic-model token sample."""
 
-        return self.model_lab.sample_tokens(prompt, max_tokens=max_tokens)
+        payload = self.model_lab.sample_tokens(prompt, max_tokens=max_tokens)
+        if isinstance(payload.get("status"), dict):
+            payload["status"]["generator_backend"] = self.generator.backend
+        return payload
 
     def rate_run(self, run_id: str, rating: dict[str, Any]) -> dict[str, Any]:
         """Persist a human evaluation rating for one generated run."""

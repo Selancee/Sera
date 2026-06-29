@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from backend.generation.model_generator import ModelGenerator
+from backend.pipeline import SeraPipeline
 
 
 def test_model_lab_falls_back_to_recorded_samples(tmp_path: Path) -> None:
@@ -40,3 +41,29 @@ def test_model_lab_falls_back_to_recorded_samples(tmp_path: Path) -> None:
     assert sample["model_loaded"] is False
     assert sample["tokens"][-1] == '<score-partwise version="3.1">'
     assert "score-partwise" in sample["musicxml_preview"]
+
+
+def test_model_lab_reports_default_checkpoint_location(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_CHECKPOINT", raising=False)
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_DIR", raising=False)
+
+    model = ModelGenerator(tmp_path)
+    status = model.status()
+
+    expected = tmp_path / "models" / "sera_symbolic_small"
+    assert status["expected_model_dir"] == str(expected)
+    assert str(expected / "model.pt") in status["checkpoint_candidates"]
+    assert status["mode"] == "recorded_sample"
+
+
+def test_pipeline_uses_configured_model_backend_with_safe_fallback(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("SERA_GENERATOR_BACKEND", "model")
+    monkeypatch.setenv("SERA_SYMBOLIC_MODEL_DIR", str(tmp_path / "models" / "sera_symbolic_small"))
+
+    pipeline = SeraPipeline(tmp_path)
+    status = pipeline.symbolic_model_status()
+    result = pipeline.generate("Create an 8 bar calm piano sketch in C major.")
+
+    assert status["generator_backend"] == "model"
+    assert result["validation"]["valid"] is True
+    assert Path(result["artifacts"]["musicxml_path"]).exists()

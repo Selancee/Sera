@@ -25,6 +25,8 @@ D:\Sera\run_app.bat
 ```
 
 This one-click launcher starts or reuses the backend and frontend, opens the browser, and writes logs to `data/metadata`.
+It also starts the backend in model-priority mode and points symbolic inference at
+`D:\Sera\models\sera_symbolic_small` when no custom model environment variable is set.
 
 If the browser opens to a blank page, close the page and run `D:\Sera\run_app.bat` again. The launcher checks that the backend exposes the V0.2 API and refreshes stale local Sera frontend processes before opening `http://127.0.0.1:5173`.
 
@@ -143,18 +145,41 @@ The training scripts are ready for local MusicXML/PDMX/MetaScore-derived folders
 The frontend has a `Model` tab for qualitative testing of the trained symbolic model. By default it reads lightweight
 AutoDL evidence from `docs/training_runs/<run_id>/samples.json` and `training_metrics.json`.
 
-For live checkpoint inference, place the AutoDL checkpoint artifacts outside Git and point Sera at them:
+For live checkpoint inference, copy the AutoDL checkpoint artifacts outside Git into the default local model folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\Sera\scripts\fetch_autodl_model.ps1 `
+  -SshTarget root@<autodl-host> `
+  -Port <ssh-port>
+```
+
+The script downloads `model.pt` and `vocab.json` from
+`/root/autodl-tmp/sera_runs/autodl_fast_20260628_221042` into
+`D:\Sera\models\sera_symbolic_small`, updates local `.env`, and leaves the large files ignored by Git.
+
+Manual equivalent:
 
 ```powershell
 $env:SERA_SYMBOLIC_MODEL_DIR = "D:\Sera\models\sera_symbolic_small"
+$env:SERA_GENERATOR_BACKEND = "model"
 # Expected files:
 # D:\Sera\models\sera_symbolic_small\model.pt
 # D:\Sera\models\sera_symbolic_small\vocab.json
 ```
 
 Then start the backend and frontend. The `Model` tab will switch from `recorded_sample` to `checkpoint` mode when
-`model.pt` is found and PyTorch is installed. Current output is token-level research evidence; TODO: add constrained
-detokenization before routing the model into the main `/generate` score pipeline.
+`model.pt` is found and PyTorch is installed:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-training.txt
+D:\Sera\stop_app.bat
+D:\Sera\run_app.bat
+Invoke-RestMethod http://127.0.0.1:8000/model/status
+```
+
+The backend now uses `SERA_GENERATOR_BACKEND=model` by default in the launcher. Current model output is still
+token-level research evidence, so `/generate` keeps a rule-based fallback until constrained MusicXML detokenization is
+complete. TODO: add grammar-constrained detokenization before routing unchecked model tokens into the final score export.
 
 ## Tests
 

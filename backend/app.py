@@ -8,12 +8,16 @@ from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 from backend.pipeline import SeraPipeline
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# TODO: move environment validation into a dedicated settings module when Sera
+# grows more runtime configuration knobs.
+load_dotenv(PROJECT_ROOT / ".env")
 pipeline = SeraPipeline(PROJECT_ROOT)
 
 app = FastAPI(

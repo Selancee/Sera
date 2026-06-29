@@ -19,6 +19,7 @@ $BackendPidFile = Join-Path $MetadataDir "sera_backend.pid"
 $FrontendPidFile = Join-Path $MetadataDir "sera_frontend.pid"
 $BackendStamp = Join-Path $MetadataDir ".backend_deps.stamp"
 $FrontendStamp = Join-Path $MetadataDir ".frontend_deps.stamp"
+$DefaultModelDir = Join-Path $ProjectRoot "models\sera_symbolic_small"
 
 New-Item -ItemType Directory -Force -Path $MetadataDir | Out-Null
 
@@ -112,6 +113,23 @@ function Test-SeraBackend {
     }
 }
 
+function Test-SeraBackendModelEnvironment {
+    param([int]$Port)
+    try {
+        $status = Invoke-RestMethod -Uri "http://$HostName`:$Port/model/status" -TimeoutSec 2
+        if ([string]$status.generator_backend -ne [string]$env:SERA_GENERATOR_BACKEND) {
+            return $false
+        }
+        if (-not [string]::IsNullOrWhiteSpace($env:SERA_SYMBOLIC_MODEL_CHECKPOINT)) {
+            return $true
+        }
+        return ([string]$status.expected_model_dir -eq [string]$env:SERA_SYMBOLIC_MODEL_DIR)
+    }
+    catch {
+        return $false
+    }
+}
+
 function Test-FrontendReady {
     param([int]$Port)
     try {
@@ -185,18 +203,43 @@ function Ensure-FrontendEnvironment {
     }
 }
 
+function Configure-ModelEnvironment {
+    if ([string]::IsNullOrWhiteSpace($env:SERA_SYMBOLIC_MODEL_DIR) -and
+        [string]::IsNullOrWhiteSpace($env:SERA_SYMBOLIC_MODEL_CHECKPOINT)) {
+        $env:SERA_SYMBOLIC_MODEL_DIR = $DefaultModelDir
+    }
+    if ([string]::IsNullOrWhiteSpace($env:SERA_GENERATOR_BACKEND)) {
+        $env:SERA_GENERATOR_BACKEND = "model"
+    }
+    Write-Step "Symbolic model directory: $env:SERA_SYMBOLIC_MODEL_DIR"
+    Write-Step "Generator backend: $env:SERA_GENERATOR_BACKEND"
+    # TODO: add a visible launcher warning when PyTorch is missing but a
+    # checkpoint is present; the API currently reports that state via
+    # /model/status.
+}
+
 function Start-Backend {
     param([string]$PythonExe, [int]$Port)
     if (Test-PortOpen -Port $Port) {
         if (Test-SeraBackend -Port $Port) {
-            Write-Step "Backend already running on http://$HostName`:$Port"
-            return $Port
+            if (Test-SeraBackendModelEnvironment -Port $Port) {
+                Write-Step "Backend already running on http://$HostName`:$Port"
+                return $Port
+            }
+            Write-Step "Backend is running with stale model settings; restarting it."
+            Stop-SeraProcessesOnPort -Port $Port | Out-Null
+            if (-not (Wait-ForPortFree -Port $Port)) {
+                $Port = Find-FreePort -StartPort ($Port + 1)
+                Write-Step "Requested backend port is still busy; using $Port."
+            }
         }
-        Write-Step "Backend port $Port has an old or incompatible service."
-        Stop-SeraProcessesOnPort -Port $Port | Out-Null
-        if (-not (Wait-ForPortFree -Port $Port)) {
-            $Port = Find-FreePort -StartPort ($Port + 1)
-            Write-Step "Requested backend port is still busy; using $Port."
+        else {
+            Write-Step "Backend port $Port has an old or incompatible service."
+            Stop-SeraProcessesOnPort -Port $Port | Out-Null
+            if (-not (Wait-ForPortFree -Port $Port)) {
+                $Port = Find-FreePort -StartPort ($Port + 1)
+                Write-Step "Requested backend port is still busy; using $Port."
+            }
         }
     }
 
@@ -260,6 +303,7 @@ function Start-Frontend {
 Write-Step "Project root: $ProjectRoot"
 $PythonExe = Ensure-BackendEnvironment
 Ensure-FrontendEnvironment
+Configure-ModelEnvironment
 
 $ActualBackendPort = Start-Backend -PythonExe $PythonExe -Port $BackendPort
 $BackendUrl = "http://$HostName`:$ActualBackendPort"

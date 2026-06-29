@@ -23,6 +23,7 @@ examples/pdf/*.pdf
 !data/processed/.gitkeep
 !data/metadata/.gitkeep
 !experiments/.gitkeep
+!models/.gitkeep
 !examples/scores/.gitkeep
 !examples/midi/.gitkeep
 !examples/abc/.gitkeep
