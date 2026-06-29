@@ -204,6 +204,9 @@ function Ensure-FrontendEnvironment {
 }
 
 function Configure-ModelEnvironment {
+    if ([string]::IsNullOrWhiteSpace($env:SERA_ACTIVE_SYMBOLIC_MODEL)) {
+        $env:SERA_ACTIVE_SYMBOLIC_MODEL = "sera_symbolic_small"
+    }
     if ([string]::IsNullOrWhiteSpace($env:SERA_SYMBOLIC_MODEL_DIR) -and
         [string]::IsNullOrWhiteSpace($env:SERA_SYMBOLIC_MODEL_CHECKPOINT)) {
         $env:SERA_SYMBOLIC_MODEL_DIR = $DefaultModelDir
@@ -211,6 +214,7 @@ function Configure-ModelEnvironment {
     if ([string]::IsNullOrWhiteSpace($env:SERA_GENERATOR_BACKEND)) {
         $env:SERA_GENERATOR_BACKEND = "model"
     }
+    Write-Step "Active symbolic model: $env:SERA_ACTIVE_SYMBOLIC_MODEL"
     Write-Step "Symbolic model directory: $env:SERA_SYMBOLIC_MODEL_DIR"
     Write-Step "Generator backend: $env:SERA_GENERATOR_BACKEND"
     # TODO: add a visible launcher warning when PyTorch is missing but a

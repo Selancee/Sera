@@ -19,7 +19,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from backend.generation.rule_based_generator import GeneratedScore
+from backend.generation.rule_based_generator import GeneratedScore, RuleBasedGenerator
 from backend.models.schemas import CompositionPlan
 
 
@@ -29,17 +29,48 @@ class ModelGenerator:
     def __init__(self, project_root: str | Path | None = None) -> None:
         self.project_root = Path(project_root) if project_root else Path(__file__).resolve().parents[2]
         self.training_runs_dir = self.project_root / "docs" / "training_runs"
-        self.default_model_dir = self.project_root / "models" / "sera_symbolic_small"
+        self.active_model_name = os.getenv("SERA_ACTIVE_SYMBOLIC_MODEL", "sera_symbolic_small").strip()
+        self.default_model_dir = self.project_root / "models" / self.active_model_name
+        self.safe_generator = RuleBasedGenerator()
 
     def generate(self, plan: CompositionPlan) -> GeneratedScore | None:
-        """Return None until the neural model can emit validated MusicXML.
+        """Generate a valid score conditioned by the active neural checkpoint.
 
-        This keeps Sera's main generation pipeline stable and parseable. The
-        frontend calls sample_tokens(...) for qualitative model testing.
+        The current trained model emits MusicXML-like tokens, but not a fully
+        balanced score every time. For the main app path we therefore use the
+        checkpoint output as musical conditioning, then route those conditions
+        through the legal MusicXML assembler. This makes the main page use the
+        trained model while keeping MIDI/PDF export stable.
+
+        TODO: once a larger model is trained with constrained decoding, replace
+        this conditioning bridge with direct model-to-MusicXML generation.
         """
 
-        _ = plan
-        return None
+        status = self.status()
+        if not status["available"]:
+            return None
+
+        prompt = self._prompt_from_plan(plan)
+        sample = self._sample_from_checkpoint(prompt, max_tokens=128, status=status)
+        conditioned_plan, conditioning = self._condition_plan_from_tokens(plan, sample.get("tokens", []))
+        generated = self.safe_generator.generate(conditioned_plan)
+        generated.musicxml = generated.musicxml.replace(
+            "Sera rule-based generator V0.2",
+            f"Sera neural-conditioned generator ({self.active_model_name})",
+        )
+        generated.metadata = {
+            "generator_mode": "model_conditioned",
+            "model_backend": "pytorch_decoder",
+            "model_name": self.active_model_name,
+            "model_loaded": True,
+            "model_status_mode": sample.get("mode", status.get("mode")),
+            "checkpoint_path": status.get("checkpoint_path", ""),
+            "conditioning": conditioning,
+            "raw_model_tokens": list(sample.get("tokens", []))[:128],
+            "raw_model_token_text": sample.get("token_text", ""),
+            "warnings": sample.get("warnings", []),
+        }
+        return generated
 
     def status(self) -> dict[str, Any]:
         """Return model availability and the latest training evidence."""
@@ -62,6 +93,8 @@ class ModelGenerator:
         return {
             "available": bool(checkpoint_path and torch_available),
             "mode": "checkpoint" if checkpoint_path and torch_available else "recorded_sample",
+            "active_model": self.active_model_name,
+            "known_models": self.known_models(),
             "run_id": run_dir.name if run_dir else "",
             "run_dir": str(run_dir) if run_dir else "",
             "checkpoint_path": str(checkpoint_path) if checkpoint_path else "",
@@ -73,6 +106,24 @@ class ModelGenerator:
             "warnings": warnings,
             "todo": "Constrain decoded tokens into valid MusicXML before routing this model into /generate.",
         }
+
+    def known_models(self) -> list[dict[str, str]]:
+        """List local model directories available for current and future runs."""
+
+        models_dir = self.project_root / "models"
+        if not models_dir.exists():
+            return []
+        known: list[dict[str, str]] = []
+        for path in sorted(item for item in models_dir.iterdir() if item.is_dir()):
+            known.append(
+                {
+                    "name": path.name,
+                    "path": str(path),
+                    "checkpoint": str(path / "model.pt"),
+                    "available": str((path / "model.pt").exists()).lower(),
+                }
+            )
+        return known
 
     def sample_tokens(self, prompt: str, max_tokens: int = 96) -> dict[str, Any]:
         """Return a checkpoint-generated or recorded token sample."""
@@ -102,14 +153,115 @@ class ModelGenerator:
         candidates: list[Path] = []
         if explicit_dir:
             candidates.append(Path(explicit_dir).expanduser() / "model.pt")
+        candidates.append(self.default_model_dir / "model.pt")
         if run_dir:
             candidates.append(run_dir / "model.pt")
-        candidates.append(self.default_model_dir / "model.pt")
         unique_candidates: list[Path] = []
         for path in candidates:
             if path not in unique_candidates:
                 unique_candidates.append(path)
         return unique_candidates
+
+    @staticmethod
+    def _prompt_from_plan(plan: CompositionPlan) -> str:
+        intent = plan.intent
+        return (
+            f"{intent.title}. {intent.style} {intent.mood} music for "
+            f"{', '.join(intent.instruments)} in {intent.key}, {intent.time_signature}, "
+            f"{intent.tempo_bpm} bpm, {intent.bars} measures, {intent.texture}, "
+            f"{intent.difficulty}. Harmony: {' '.join(intent.harmony_plan)}."
+        )
+
+    def _condition_plan_from_tokens(
+        self,
+        plan: CompositionPlan,
+        tokens: list[str],
+    ) -> tuple[CompositionPlan, dict[str, Any]]:
+        """Map model token evidence into a safe measure-level plan.
+
+        This bridge is intentionally conservative: it only reads pitch steps,
+        octaves, and duration numbers from the checkpoint sample and leaves
+        form, meter, and harmony under the validated planning agent.
+        """
+
+        conditioned = plan
+        pitches = self._extract_pitch_names(tokens)
+        durations = self._extract_durations(tokens)
+        degree_hints = self._pitch_names_to_degrees(pitches, conditioned.intent.key)
+        if degree_hints:
+            for index, measure in enumerate(conditioned.measures):
+                start = (index * 2) % len(degree_hints)
+                notes = [degree_hints[(start + offset) % len(degree_hints)] for offset in range(4)]
+                measure.notes = notes
+                measure.description = (
+                    f"{measure.description} Model-conditioned motif: {' '.join(notes)}."
+                ).strip()
+        conditioned.baseline = f"model_conditioned:{self.active_model_name}"
+        conditioned.global_plan = dict(conditioned.global_plan)
+        conditioned.global_plan["model_conditioning"] = {
+            "model_name": self.active_model_name,
+            "pitch_hints": pitches[:32],
+            "degree_hints": degree_hints[:32],
+            "duration_hints": durations[:32],
+        }
+        return conditioned, conditioned.global_plan["model_conditioning"]
+
+    @staticmethod
+    def _extract_pitch_names(tokens: list[str]) -> list[str]:
+        pitches: list[str] = []
+        pending_step = ""
+        pending_alter = 0
+        for index, token in enumerate(tokens):
+            clean = str(token).strip()
+            if clean == "<step>" and index + 1 < len(tokens):
+                candidate = str(tokens[index + 1]).strip().upper()
+                if candidate in {"C", "D", "E", "F", "G", "A", "B"}:
+                    pending_step = candidate
+                    pending_alter = 0
+            elif clean == "<alter>" and index + 1 < len(tokens):
+                try:
+                    pending_alter = int(float(str(tokens[index + 1]).strip()))
+                except ValueError:
+                    pending_alter = 0
+            elif clean == "<octave>" and index + 1 < len(tokens) and pending_step:
+                octave_token = str(tokens[index + 1]).strip()
+                if octave_token.lstrip("-").isdigit():
+                    accidental = "#" if pending_alter > 0 else "b" if pending_alter < 0 else ""
+                    pitches.append(f"{pending_step}{accidental}{octave_token}")
+                    pending_step = ""
+                    pending_alter = 0
+        return pitches
+
+    @staticmethod
+    def _extract_durations(tokens: list[str]) -> list[int]:
+        durations: list[int] = []
+        for index, token in enumerate(tokens):
+            if str(token).strip() != "<duration>" or index + 1 >= len(tokens):
+                continue
+            value = str(tokens[index + 1]).strip()
+            if value.isdigit():
+                durations.append(int(value))
+        return durations
+
+    @staticmethod
+    def _pitch_names_to_degrees(pitches: list[str], key: str) -> list[str]:
+        if not pitches:
+            return []
+        chromatic = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
+        major = {0: "1", 2: "2", 4: "3", 5: "4", 7: "5", 9: "6", 11: "7"}
+        minor = {0: "1", 2: "2", 3: "b3", 5: "4", 7: "5", 8: "b6", 11: "7"}
+        tonic = key.split()[0].replace("-flat", "b")
+        tonic_pc = chromatic.get(tonic[0].upper(), 0)
+        if len(tonic) > 1:
+            tonic_pc += 1 if tonic[1] == "#" else -1 if tonic[1].lower() == "b" else 0
+        degree_map = minor if "minor" in key.lower() else major
+        degrees: list[str] = []
+        for pitch in pitches:
+            step = pitch[0].upper()
+            accidental = 1 if "#" in pitch else -1 if "b" in pitch else 0
+            pitch_pc = (chromatic.get(step, 0) + accidental - tonic_pc) % 12
+            degrees.append(degree_map.get(pitch_pc, "1"))
+        return degrees
 
     def latest_run_dir(self) -> Path | None:
         """Return the newest committed or local training run directory."""

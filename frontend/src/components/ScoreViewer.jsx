@@ -38,6 +38,8 @@ export default function ScoreViewer({ measures, result }) {
   const width = Math.max(880, measures.length * MEASURE_WIDTH + 40);
   const notes = collectNotes(measures);
   const musicxmlPreview = result?.musicxml ? result.musicxml.slice(0, 3000) : "";
+  const generation = result?.generation || {};
+  const symbolicModel = result?.metadata?.symbolic_model || {};
 
   return (
     <section className="panel score-panel">
@@ -89,6 +91,16 @@ export default function ScoreViewer({ measures, result }) {
         <span>MusicXML</span>
         <code>{result?.artifacts?.musicxml_path || "pending"}</code>
       </div>
+      {result && (
+        <div className="musicxml-strip generation-strip">
+          <span>{generation.generator_mode || result?.metadata?.generator_mode || "generator"}</span>
+          <code>
+            {symbolicModel.loaded
+              ? `${symbolicModel.name || "symbolic model"} checkpoint`
+              : "rule-based fallback"}
+          </code>
+        </div>
+      )}
       <details className="json-details musicxml-preview">
         <summary>MusicXML text preview</summary>
         <pre>{musicxmlPreview || "Generate a score to inspect MusicXML. TODO: add OpenSheetMusicDisplay or Verovio engraving."}</pre>

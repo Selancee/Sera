@@ -7,7 +7,7 @@ deterministic motifs, phrase repetition, basic harmony, and cadences.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from html import escape
 from typing import Any
 
@@ -40,6 +40,7 @@ class GeneratedScore:
     musicxml: str
     abc: str
     note_events: list[dict[str, Any]]
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class RuleBasedGenerator:
@@ -121,7 +122,12 @@ class RuleBasedGenerator:
                 "",
             ]
         )
-        return GeneratedScore(musicxml=musicxml, abc=abc, note_events=note_events)
+        return GeneratedScore(
+            musicxml=musicxml,
+            abc=abc,
+            note_events=note_events,
+            metadata={"generator_mode": "rule_based", "model_loaded": False},
+        )
 
     @staticmethod
     def _use_two_staff(instruments: list[str], texture: str) -> bool:

@@ -177,9 +177,22 @@ D:\Sera\run_app.bat
 Invoke-RestMethod http://127.0.0.1:8000/model/status
 ```
 
-The backend now uses `SERA_GENERATOR_BACKEND=model` by default in the launcher. Current model output is still
-token-level research evidence, so `/generate` keeps a rule-based fallback until constrained MusicXML detokenization is
-complete. TODO: add grammar-constrained detokenization before routing unchecked model tokens into the final score export.
+The backend now uses `SERA_GENERATOR_BACKEND=model` by default in the launcher. The main `/generate` route is
+model-conditioned: it calls the active checkpoint first, extracts pitch/duration hints from the model tokens, and then
+uses Sera's safe MusicXML assembler to produce valid MusicXML, MIDI, and PDF. The experiment log records this as
+`generator_mode: model_conditioned` with `metadata.symbolic_model.loaded: true`.
+
+Future larger checkpoints can be called without code changes:
+
+```powershell
+$env:SERA_ACTIVE_SYMBOLIC_MODEL = "sera_symbolic_large"
+$env:SERA_SYMBOLIC_MODEL_DIR = "D:\Sera\models\sera_symbolic_large"
+$env:SERA_GENERATOR_BACKEND = "model"
+D:\Sera\stop_app.bat
+D:\Sera\run_app.bat
+```
+
+TODO: add grammar-constrained detokenization before routing unchecked model tokens directly into the final score export.
 
 ## Tests
 

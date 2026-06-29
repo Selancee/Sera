@@ -13,6 +13,7 @@ from backend.agents.revision_agent import RevisionAgent
 from backend.export.midi_exporter import MidiExporter
 from backend.export.musicxml_exporter import MusicXMLExporter
 from backend.export.pdf_exporter import PDFExporter
+from backend.generation.rule_based_generator import GeneratedScore
 from backend.generation.model_generator import ModelGenerator
 from backend.generation.symbolic_generator import SymbolicMusicGenerator
 from backend.models.schemas import CompositionPlan, GenerationArtifacts, ValidationResult
@@ -201,14 +202,14 @@ class SeraPipeline:
         evaluation = self.evaluate_payload(plan, validation, revision)
 
         self.logger.write_json(artifacts.validation_report_path, validation.to_report())
-        metadata = self._metadata(prompt, plan, artifacts, validation, revision)
+        metadata = self._metadata(prompt, plan, artifacts, validation, revision, generated)
         self.logger.write_json(artifacts.metadata_path, metadata)
         self.logger.write_json(
             artifacts.revision_history_path,
             self._revision_history(previous_record, plan, revision, preliminary),
         )
 
-        record = self._record(run_id, prompt, plan, artifacts, validation, revision, evaluation, metadata)
+        record = self._record(run_id, prompt, plan, artifacts, validation, revision, evaluation, metadata, generated)
         self.logger.write_json(artifacts.experiment_log_path, record)
         self.logger.append(record)
         return record | {"musicxml": generated.musicxml, "abc": generated.abc}
@@ -291,12 +292,20 @@ class SeraPipeline:
         artifacts: GenerationArtifacts,
         validation: ValidationResult,
         revision: dict[str, Any],
+        generated: GeneratedScore,
     ) -> dict[str, Any]:
+        generation = dict(generated.metadata or {})
         return {
             "timestamp": datetime.now(UTC).isoformat(),
             "model_provider": plan.intent.llm_provider,
             "agent_mode": plan.intent.agent_mode,
-            "generator_mode": "rule_based",
+            "generator_mode": generation.get("generator_mode", "rule_based"),
+            "symbolic_model": {
+                "name": generation.get("model_name", ""),
+                "backend": generation.get("model_backend", ""),
+                "loaded": bool(generation.get("model_loaded", False)),
+                "checkpoint_path": generation.get("checkpoint_path", ""),
+            },
             "prompt": prompt,
             "style": plan.intent.style,
             "key": plan.intent.key,
@@ -306,6 +315,7 @@ class SeraPipeline:
             "export_files": artifacts.export_files,
             "validation_passed": validation.valid,
             "revision_changes": revision.get("changes", []),
+            "generation_warnings": generation.get("warnings", []),
         }
 
     @staticmethod
@@ -364,6 +374,7 @@ class SeraPipeline:
         revision: dict[str, Any],
         evaluation: dict[str, Any],
         metadata: dict[str, Any],
+        generated: GeneratedScore,
     ) -> dict[str, Any]:
         return {
             "run_id": run_id,
@@ -376,5 +387,6 @@ class SeraPipeline:
             "revision": revision,
             "evaluation": evaluation,
             "metadata": metadata,
+            "generation": generated.metadata or {},
             "user_rating": None,
         }

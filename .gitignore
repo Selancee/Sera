@@ -24,6 +24,7 @@ examples/pdf/*.pdf
 !data/metadata/.gitkeep
 !experiments/.gitkeep
 !models/.gitkeep
+!models/README.md
 !examples/scores/.gitkeep
 !examples/midi/.gitkeep
 !examples/abc/.gitkeep

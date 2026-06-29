@@ -493,6 +493,14 @@ input:focus {
   white-space: nowrap;
 }
 
+.generation-strip {
+  background: #f3f7f1;
+}
+
+.generation-strip span {
+  color: var(--teal-dark);
+}
+
 .transport {
   align-items: center;
   background: #203037;

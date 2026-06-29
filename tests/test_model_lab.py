@@ -67,3 +67,55 @@ def test_pipeline_uses_configured_model_backend_with_safe_fallback(tmp_path: Pat
     assert status["generator_backend"] == "model"
     assert result["validation"]["valid"] is True
     assert Path(result["artifacts"]["musicxml_path"]).exists()
+
+
+def test_main_generation_uses_checkpoint_conditioning(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("SERA_GENERATOR_BACKEND", "model")
+    monkeypatch.setenv("SERA_ACTIVE_SYMBOLIC_MODEL", "unit_test_model")
+
+    pipeline = SeraPipeline(tmp_path)
+    monkeypatch.setattr(
+        pipeline.generator.model_generator,
+        "status",
+        lambda: {
+            "available": True,
+            "mode": "checkpoint",
+            "checkpoint_path": str(tmp_path / "models" / "unit_test_model" / "model.pt"),
+            "warnings": [],
+        },
+    )
+    monkeypatch.setattr(
+        pipeline.generator.model_generator,
+        "_sample_from_checkpoint",
+        lambda prompt, max_tokens, status: {
+            "mode": "checkpoint",
+            "tokens": [
+                "<step>",
+                "F",
+                "</step>",
+                "<octave>",
+                "5",
+                "</octave>",
+                "<duration>",
+                "2",
+                "</duration>",
+                "<step>",
+                "G",
+                "</step>",
+                "<octave>",
+                "5",
+                "</octave>",
+            ],
+            "token_text": "F5 G5",
+            "warnings": [],
+        },
+    )
+
+    result = pipeline.generate("Create an 8 bar calm piano sketch in C major.")
+
+    assert result["metadata"]["generator_mode"] == "model_conditioned"
+    assert result["metadata"]["symbolic_model"]["loaded"] is True
+    assert result["metadata"]["symbolic_model"]["name"] == "unit_test_model"
+    assert result["generation"]["conditioning"]["degree_hints"][:2] == ["4", "5"]
+    assert "Model-conditioned motif" in result["plan"]["measures"][0]["description"]
+    assert result["validation"]["valid"] is True

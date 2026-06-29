@@ -3,6 +3,7 @@ param(
     [string]$SshTarget,
     [int]$Port = 22,
     [string]$RemoteRunDir = "/root/autodl-tmp/sera_runs/autodl_fast_20260628_221042",
+    [string]$ModelName = "sera_symbolic_small",
     [string]$Destination,
     [string]$IdentityFile = ""
 )
@@ -11,7 +12,7 @@ $ErrorActionPreference = "Stop"
 
 $ProjectRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if ([string]::IsNullOrWhiteSpace($Destination)) {
-    $Destination = Join-Path $ProjectRoot "models\sera_symbolic_small"
+    $Destination = Join-Path $ProjectRoot "models\$ModelName"
 }
 
 if (-not (Get-Command scp.exe -ErrorAction SilentlyContinue)) {
@@ -50,6 +51,7 @@ foreach ($fileName in $optionalFiles) {
 }
 
 $envPath = Join-Path $ProjectRoot ".env"
+$activeModelLine = "SERA_ACTIVE_SYMBOLIC_MODEL=$ModelName"
 $modelDirLine = "SERA_SYMBOLIC_MODEL_DIR=$Destination"
 $backendLine = "SERA_GENERATOR_BACKEND=model"
 $existing = @()
@@ -58,11 +60,12 @@ if (Test-Path -LiteralPath $envPath) {
 }
 $filtered = @(
     $existing | Where-Object {
+        $_ -notmatch "^SERA_ACTIVE_SYMBOLIC_MODEL=" -and
         $_ -notmatch "^SERA_SYMBOLIC_MODEL_DIR=" -and
         $_ -notmatch "^SERA_GENERATOR_BACKEND="
     }
 )
-($filtered + @($modelDirLine, $backendLine)) | Set-Content -LiteralPath $envPath -Encoding ASCII
+($filtered + @($activeModelLine, $modelDirLine, $backendLine)) | Set-Content -LiteralPath $envPath -Encoding ASCII
 
 Write-Host ""
 Write-Host "[Sera] Model artifacts are ready in $Destination"

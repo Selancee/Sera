@@ -5,6 +5,7 @@ if not exist .venv (
   python -m venv .venv
 )
 call .venv\Scripts\activate.bat
+if "%SERA_ACTIVE_SYMBOLIC_MODEL%"=="" set SERA_ACTIVE_SYMBOLIC_MODEL=sera_symbolic_small
 if "%SERA_SYMBOLIC_MODEL_DIR%"=="" set SERA_SYMBOLIC_MODEL_DIR=%CD%\models\sera_symbolic_small
 if "%SERA_GENERATOR_BACKEND%"=="" set SERA_GENERATOR_BACKEND=model
 python -m pip install --upgrade pip
