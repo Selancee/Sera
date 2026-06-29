@@ -70,6 +70,8 @@ Open:
 - `POST /revise`: revise an existing run with user feedback.
 - `POST /rate`: save local human evaluation ratings for a run.
 - `GET /model/status`: inspect the optional trained symbolic model and latest AutoDL run metrics.
+- `GET /model/registry`: list local `models/<model_name>` folders selectable by the app.
+- `POST /model/select`: switch the active symbolic model for subsequent main-page generation.
 - `POST /model/sample`: generate or replay token-level symbolic model samples for the frontend Model Lab.
 - `GET /export/{run_id}/{format}`: download `musicxml`, `midi`, `abc`, `pdf`, `plan`, `validation_report`, or `experiment_log`.
 - `POST /evaluate`: return saved metrics for one run.
@@ -181,6 +183,18 @@ The backend now uses `SERA_GENERATOR_BACKEND=model` by default in the launcher. 
 model-conditioned: it calls the active checkpoint first, extracts pitch/duration hints from the model tokens, and then
 uses Sera's safe MusicXML assembler to produce valid MusicXML, MIDI, and PDF. The experiment log records this as
 `generator_mode: model_conditioned` with `metadata.symbolic_model.loaded: true`.
+
+The `Model` tab also exposes the local model registry. Put future checkpoints under `models/<model_name>/model.pt`,
+restart or refresh the backend, and select that model from the UI to use it for later main-page generation. The same
+runtime switch is available through the API:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/model/registry
+Invoke-RestMethod http://127.0.0.1:8000/model/select `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body '{"model_name":"sera_symbolic_small"}'
+```
 
 Future larger checkpoints can be called without code changes:
 

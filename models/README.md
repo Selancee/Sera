@@ -33,3 +33,16 @@ D:\Sera\run_app.bat
 The current production score path is model-conditioned: the checkpoint supplies token-level musical hints, and Sera's safe
 MusicXML assembler produces valid score, MIDI, and PDF artifacts. TODO: route future large models through a constrained
 MusicXML decoder when their output can be validated directly.
+
+Runtime selection is exposed in the Model tab and through the API:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/model/registry
+Invoke-RestMethod http://127.0.0.1:8000/model/select `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body '{"model_name":"sera_symbolic_large"}'
+```
+
+The switch is process-local; keep `.env` updated or use `scripts/fetch_autodl_model.ps1 -ModelName <name>` when the
+selected checkpoint should survive a backend restart.

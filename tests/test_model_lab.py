@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 from backend.generation.model_generator import ModelGenerator
@@ -67,6 +68,28 @@ def test_pipeline_uses_configured_model_backend_with_safe_fallback(tmp_path: Pat
     assert status["generator_backend"] == "model"
     assert result["validation"]["valid"] is True
     assert Path(result["artifacts"]["musicxml_path"]).exists()
+
+
+def test_pipeline_selects_local_symbolic_model_for_future_generation(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_CHECKPOINT", raising=False)
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_DIR", raising=False)
+    monkeypatch.delenv("SERA_ACTIVE_SYMBOLIC_MODEL", raising=False)
+    monkeypatch.setenv("SERA_GENERATOR_BACKEND", "rule_based")
+    model_dir = tmp_path / "models" / "sera_symbolic_large"
+    model_dir.mkdir(parents=True)
+    (model_dir / "model.pt").write_bytes(b"stub checkpoint")
+
+    pipeline = SeraPipeline(tmp_path)
+    registry = pipeline.symbolic_model_registry()
+    status = pipeline.select_symbolic_model("sera_symbolic_large")
+
+    assert registry["models"][0]["name"] == "sera_symbolic_large"
+    assert status["active_model"] == "sera_symbolic_large"
+    assert status["generator_backend"] == "model"
+    assert status["expected_model_dir"] == str(model_dir)
+    assert str(model_dir / "model.pt") in status["checkpoint_candidates"]
+    assert os.environ["SERA_ACTIVE_SYMBOLIC_MODEL"] == "sera_symbolic_large"
+    assert os.environ["SERA_SYMBOLIC_MODEL_DIR"] == str(model_dir)
 
 
 def test_main_generation_uses_checkpoint_conditioning(tmp_path: Path, monkeypatch) -> None:

@@ -3,9 +3,11 @@ import {
   evaluateRun,
   generateScore,
   generateSymbolicModelSample,
+  getSymbolicModelRegistry,
   getSymbolicModelStatus,
   listExperiments,
   reviseScore,
+  selectSymbolicModel,
   submitRating
 } from "./api.js";
 import AgentPlanPanel from "./components/AgentPlanPanel.jsx";
@@ -48,6 +50,7 @@ export default function App() {
   const [feedback, setFeedback] = useState("更忧郁，左手更流动。");
   const [modelPrompt, setModelPrompt] = useState(DEFAULT_PROMPT);
   const [modelStatus, setModelStatus] = useState(null);
+  const [modelRegistry, setModelRegistry] = useState({ models: [] });
   const [modelSample, setModelSample] = useState(null);
   const [status, setStatus] = useState("ready");
   const [error, setError] = useState("");
@@ -68,14 +71,19 @@ export default function App() {
 
   const refreshModelStatus = useCallback(async () => {
     try {
-      const payload = await getSymbolicModelStatus();
-      setModelStatus(payload);
+      const [statusPayload, registryPayload] = await Promise.all([
+        getSymbolicModelStatus(),
+        getSymbolicModelRegistry()
+      ]);
+      setModelStatus(statusPayload);
+      setModelRegistry(registryPayload);
     } catch (err) {
       setModelStatus({
         available: false,
         mode: "unavailable",
         warnings: [err.message]
       });
+      setModelRegistry({ models: [] });
     }
   }, []);
 
@@ -145,6 +153,27 @@ export default function App() {
     }
   }, [modelPrompt, modelStatus]);
 
+  const handleSelectModel = useCallback(async (modelName) => {
+    if (!modelName) return;
+    setStatus("modeling");
+    setError("");
+    try {
+      const payload = await selectSymbolicModel(modelName);
+      setModelStatus(payload);
+      setModelRegistry({
+        active_model: payload.active_model,
+        expected_model_dir: payload.expected_model_dir,
+        models: payload.known_models || []
+      });
+      setModelSample(null);
+      setActiveTab("Model");
+      setStatus("success");
+    } catch (err) {
+      setError(err.message);
+      setStatus("error");
+    }
+  }, []);
+
   const handleRating = useCallback(
     async (rating) => {
       if (!runId) return;
@@ -164,10 +193,13 @@ export default function App() {
   const modelPanel = (
     <SymbolicModelPanel
       disabled={status === "modeling"}
+      modelRegistry={modelRegistry}
       modelSample={modelSample}
       modelStatus={modelStatus}
       onGenerateSample={handleModelSample}
+      onSelectModel={handleSelectModel}
       prompt={modelPrompt}
+      selectingModel={status === "modeling"}
       setPrompt={setModelPrompt}
     />
   );

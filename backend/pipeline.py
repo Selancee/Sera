@@ -29,8 +29,7 @@ class SeraPipeline:
         self.project_root = Path(project_root) if project_root else Path(__file__).resolve().parents[1]
         self.prompt_agent = PromptUnderstandingAgent()
         self.planning_agent = CompositionPlanningAgent()
-        generator_backend = os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
-        self.generator = SymbolicMusicGenerator(backend=generator_backend, project_root=self.project_root)
+        self.generator = self._build_generator()
         self.musicxml_validator = MusicXMLValidator()
         self.theory_validator = TheoryValidator()
         self.revision_agent = RevisionAgent()
@@ -38,7 +37,7 @@ class SeraPipeline:
         self.midi_exporter = MidiExporter()
         self.pdf_exporter = PDFExporter()
         self.logger = ExperimentLogger(self.project_root)
-        self.model_lab = ModelGenerator(self.project_root)
+        self.model_lab = self.generator.model_generator
 
     def generate(self, prompt: str) -> dict[str, Any]:
         """Run the full generation pipeline and persist all artifacts."""
@@ -85,6 +84,22 @@ class SeraPipeline:
         status["generator_backend"] = self.generator.backend
         return status
 
+    def symbolic_model_registry(self) -> dict[str, Any]:
+        """Return local symbolic models that can be selected at runtime."""
+
+        registry = self.model_lab.model_registry()
+        registry["generator_backend"] = self.generator.backend
+        return registry
+
+    def select_symbolic_model(self, model_name: str) -> dict[str, Any]:
+        """Switch the active symbolic model for subsequent generation calls."""
+
+        self.model_lab.set_active_model(model_name)
+        os.environ["SERA_GENERATOR_BACKEND"] = "model"
+        self.generator = self._build_generator()
+        self.model_lab = self.generator.model_generator
+        return self.symbolic_model_status()
+
     def symbolic_model_sample(self, prompt: str, max_tokens: int = 96) -> dict[str, Any]:
         """Generate or replay a qualitative symbolic-model token sample."""
 
@@ -92,6 +107,12 @@ class SeraPipeline:
         if isinstance(payload.get("status"), dict):
             payload["status"]["generator_backend"] = self.generator.backend
         return payload
+
+    def _build_generator(self) -> SymbolicMusicGenerator:
+        """Create the configured symbolic generator facade."""
+
+        generator_backend = os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
+        return SymbolicMusicGenerator(backend=generator_backend, project_root=self.project_root)
 
     def rate_run(self, run_id: str, rating: dict[str, Any]) -> dict[str, Any]:
         """Persist a human evaluation rating for one generated run."""

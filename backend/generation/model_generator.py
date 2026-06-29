@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +33,25 @@ class ModelGenerator:
         self.active_model_name = os.getenv("SERA_ACTIVE_SYMBOLIC_MODEL", "sera_symbolic_small").strip()
         self.default_model_dir = self.project_root / "models" / self.active_model_name
         self.safe_generator = RuleBasedGenerator()
+
+    def set_active_model(self, model_name: str) -> dict[str, Any]:
+        """Select a local model folder for token sampling and main generation.
+
+        TODO: persist runtime model selection through a dedicated settings store
+        instead of process environment variables once Sera has user accounts.
+        """
+
+        clean_name = self._validate_model_name(model_name)
+        model_dir = self.project_root / "models" / clean_name
+        if not model_dir.exists() or not model_dir.is_dir():
+            raise ValueError(f"Unknown local model: {clean_name}")
+
+        self.active_model_name = clean_name
+        self.default_model_dir = model_dir
+        os.environ["SERA_ACTIVE_SYMBOLIC_MODEL"] = clean_name
+        os.environ["SERA_SYMBOLIC_MODEL_DIR"] = str(model_dir)
+        os.environ.pop("SERA_SYMBOLIC_MODEL_CHECKPOINT", None)
+        return self.status()
 
     def generate(self, plan: CompositionPlan) -> GeneratedScore | None:
         """Generate a valid score conditioned by the active neural checkpoint.
@@ -76,8 +96,9 @@ class ModelGenerator:
         """Return model availability and the latest training evidence."""
 
         run_dir = self.latest_run_dir()
-        metrics = self._read_json(run_dir / "training_metrics.json") if run_dir else {}
-        samples = self._read_json(run_dir / "samples.json") if run_dir else []
+        evidence_dir = self._active_evidence_dir(run_dir)
+        metrics = self._read_json(evidence_dir / "training_metrics.json") if evidence_dir else {}
+        samples = self._read_json(evidence_dir / "samples.json") if evidence_dir else []
         checkpoint_path = self.checkpoint_path(run_dir)
         torch_available = self._torch_available()
         checkpoint_candidates = self.checkpoint_candidates(run_dir)
@@ -95,8 +116,8 @@ class ModelGenerator:
             "mode": "checkpoint" if checkpoint_path and torch_available else "recorded_sample",
             "active_model": self.active_model_name,
             "known_models": self.known_models(),
-            "run_id": run_dir.name if run_dir else "",
-            "run_dir": str(run_dir) if run_dir else "",
+            "run_id": evidence_dir.name if evidence_dir else "",
+            "run_dir": str(evidence_dir) if evidence_dir else "",
             "checkpoint_path": str(checkpoint_path) if checkpoint_path else "",
             "expected_model_dir": str(self.default_model_dir),
             "checkpoint_candidates": [str(path) for path in checkpoint_candidates],
@@ -107,20 +128,32 @@ class ModelGenerator:
             "todo": "Constrain decoded tokens into valid MusicXML before routing this model into /generate.",
         }
 
-    def known_models(self) -> list[dict[str, str]]:
+    def model_registry(self) -> dict[str, Any]:
+        """Return local model folders that can be selected by the app."""
+
+        return {
+            "active_model": self.active_model_name,
+            "expected_model_dir": str(self.default_model_dir),
+            "models": self.known_models(),
+            "todo": "Drop new trained checkpoints under models/<model_name> to make them selectable.",
+        }
+
+    def known_models(self) -> list[dict[str, Any]]:
         """List local model directories available for current and future runs."""
 
         models_dir = self.project_root / "models"
         if not models_dir.exists():
             return []
-        known: list[dict[str, str]] = []
+        known: list[dict[str, Any]] = []
         for path in sorted(item for item in models_dir.iterdir() if item.is_dir()):
+            checkpoint = path / "model.pt"
             known.append(
                 {
                     "name": path.name,
                     "path": str(path),
-                    "checkpoint": str(path / "model.pt"),
-                    "available": str((path / "model.pt").exists()).lower(),
+                    "checkpoint": str(checkpoint),
+                    "available": checkpoint.exists(),
+                    "is_active": path.name == self.active_model_name,
                 }
             )
         return known
@@ -273,6 +306,13 @@ class ModelGenerator:
             return None
         return max(runs, key=lambda path: path.stat().st_mtime)
 
+    def _active_evidence_dir(self, fallback_run_dir: Path | None = None) -> Path | None:
+        """Prefer metrics copied with the active checkpoint over old docs runs."""
+
+        if (self.default_model_dir / "training_metrics.json").exists() or (self.default_model_dir / "samples.json").exists():
+            return self.default_model_dir
+        return fallback_run_dir
+
     def _sample_from_recorded_run(self, prompt: str, max_tokens: int, status: dict[str, Any]) -> dict[str, Any]:
         """Use committed AutoDL samples when the checkpoint is not local."""
 
@@ -363,6 +403,13 @@ class ModelGenerator:
                 best_score = score
                 best_sample = sample
         return best_sample
+
+    @staticmethod
+    def _validate_model_name(model_name: str) -> str:
+        clean_name = str(model_name).strip()
+        if not re.fullmatch(r"[A-Za-z0-9_.-]{1,120}", clean_name):
+            raise ValueError("Model name must use letters, numbers, dots, dashes, or underscores.")
+        return clean_name
 
     @staticmethod
     def _tokens_to_text(tokens: list[str]) -> str:

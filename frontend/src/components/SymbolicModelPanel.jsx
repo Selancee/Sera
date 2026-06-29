@@ -1,6 +1,12 @@
+import { useEffect, useMemo, useState } from "react";
+
 function formatNumber(value) {
   if (typeof value !== "number") return value || "n/a";
   return Number.isInteger(value) ? value.toLocaleString() : value.toFixed(4);
+}
+
+function checkpointLabel(model) {
+  return model?.available === true || model?.available === "true" ? "checkpoint ready" : "waiting for model.pt";
 }
 
 function metricRows(metrics) {
@@ -20,16 +26,30 @@ function metricRows(metrics) {
 
 export default function SymbolicModelPanel({
   disabled,
+  modelRegistry,
   modelSample,
   modelStatus,
   onGenerateSample,
+  onSelectModel,
   prompt,
+  selectingModel,
   setPrompt
 }) {
+  const models = useMemo(() => {
+    const registryModels = modelRegistry?.models || [];
+    return registryModels.length ? registryModels : modelStatus?.known_models || [];
+  }, [modelRegistry, modelStatus]);
+  const activeModel = modelStatus?.active_model || modelRegistry?.active_model || "";
+  const activeInfo = models.find((model) => model.name === activeModel);
+  const [pendingModel, setPendingModel] = useState(activeModel);
   const metrics = modelStatus?.metrics || {};
   const rows = metricRows(metrics);
   const warnings = modelSample?.warnings || modelStatus?.warnings || [];
   const tokens = modelSample?.tokens || [];
+
+  useEffect(() => {
+    setPendingModel(activeModel);
+  }, [activeModel]);
 
   return (
     <section className="panel model-panel">
@@ -40,7 +60,51 @@ export default function SymbolicModelPanel({
 
       <div className="model-status-strip">
         <strong>{modelStatus?.available ? "Checkpoint inference enabled" : "Recorded AutoDL sample mode"}</strong>
-        <span>{modelStatus?.run_id || "No training run detected"}</span>
+        <span>
+          {activeModel || "No model selected"} · {modelStatus?.generator_backend || "rule_based"} backend
+        </span>
+      </div>
+
+      <div className="model-selector">
+        <label htmlFor="symbolic-model-select">
+          <span>Runtime model</span>
+          <select
+            disabled={selectingModel || models.length === 0}
+            id="symbolic-model-select"
+            onChange={(event) => setPendingModel(event.target.value)}
+            value={pendingModel}
+          >
+            {models.length === 0 && <option value="">No local model folders</option>}
+            {models.map((model) => (
+              <option key={model.name} value={model.name}>
+                {model.name} · {checkpointLabel(model)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          className="secondary-action compact-action"
+          disabled={selectingModel || !pendingModel || pendingModel === activeModel}
+          onClick={() => onSelectModel?.(pendingModel)}
+          type="button"
+        >
+          {selectingModel ? "Switching..." : "Use for generation"}
+        </button>
+      </div>
+
+      <div className="model-registry" aria-label="Local symbolic models">
+        {models.map((model) => (
+          <div className={model.name === activeModel ? "model-row active" : "model-row"} key={model.name}>
+            <strong>{model.name}</strong>
+            <span>{checkpointLabel(model)}</span>
+          </div>
+        ))}
+        {models.length === 0 && <p className="muted-note">Create models/&lt;model_name&gt; to register a future checkpoint.</p>}
+      </div>
+
+      <div className="model-path-row">
+        <span>Current evidence</span>
+        <code>{activeInfo?.checkpoint || modelStatus?.checkpoint_path || modelStatus?.expected_model_dir || "n/a"}</code>
       </div>
 
       {rows.length > 0 && (

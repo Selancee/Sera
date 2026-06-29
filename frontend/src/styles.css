@@ -309,6 +309,10 @@ input:focus {
   margin-top: 12px;
 }
 
+.compact-action {
+  margin-top: 0;
+}
+
 .intent-grid {
   display: grid;
   gap: 8px;
@@ -700,6 +704,76 @@ input:focus {
   text-align: right;
 }
 
+.model-selector {
+  align-items: end;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(180px, 1fr) minmax(150px, 210px);
+}
+
+.model-selector label {
+  color: var(--muted);
+  display: grid;
+  font-size: 11px;
+  font-weight: 800;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.model-registry {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.model-row {
+  align-items: center;
+  background: #f8fbfb;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.model-row.active {
+  border-color: var(--teal);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
+.model-row strong {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.model-row span,
+.model-path-row span,
+.muted-note {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.model-path-row {
+  align-items: center;
+  background: #fbfdfd;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 120px minmax(0, 1fr);
+  padding: 9px 10px;
+}
+
+.model-path-row code {
+  color: var(--teal-dark);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .model-metrics {
   display: grid;
   gap: 8px;
@@ -916,6 +990,20 @@ input:focus {
 
   .transport {
     grid-template-columns: 1fr;
+  }
+
+  .model-selector,
+  .model-path-row {
+    grid-template-columns: 1fr;
+  }
+
+  .model-status-strip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .model-status-strip span {
+    text-align: left;
   }
 
   .model-output-grid {

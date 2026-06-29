@@ -40,6 +40,17 @@ export function getSymbolicModelStatus() {
   return request("/model/status");
 }
 
+export function getSymbolicModelRegistry() {
+  return request("/model/registry");
+}
+
+export function selectSymbolicModel(modelName) {
+  return request("/model/select", {
+    method: "POST",
+    body: JSON.stringify({ model_name: modelName })
+  });
+}
+
 export function generateSymbolicModelSample(prompt, maxTokens = 96) {
   return request("/model/sample", {
     method: "POST",

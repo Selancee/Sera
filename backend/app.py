@@ -72,6 +72,12 @@ class ModelSampleRequest(BaseModel):
     max_tokens: int = Field(default=96, ge=8, le=256)
 
 
+class ModelSelectRequest(BaseModel):
+    """Request body for /model/select."""
+
+    model_name: str = Field(min_length=1, max_length=120, pattern=r"^[A-Za-z0-9_.-]+$")
+
+
 class RatingRequest(BaseModel):
     """Request body for /rate."""
 
@@ -163,6 +169,23 @@ def model_status() -> dict[str, object]:
     """Return trained symbolic model status and latest run metrics."""
 
     return pipeline.symbolic_model_status()
+
+
+@app.get("/model/registry")
+def model_registry() -> dict[str, object]:
+    """Return local symbolic models available for runtime selection."""
+
+    return pipeline.symbolic_model_registry()
+
+
+@app.post("/model/select")
+def model_select(request: ModelSelectRequest) -> dict[str, object]:
+    """Switch the main score generator to a local symbolic model."""
+
+    try:
+        return pipeline.select_symbolic_model(request.model_name)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @app.post("/model/sample")
