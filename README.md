@@ -185,18 +185,19 @@ uses Sera's safe MusicXML assembler to produce valid MusicXML, MIDI, and PDF. Th
 `generator_mode: model_conditioned` with `metadata.symbolic_model.loaded: true`.
 
 The `Model` tab also exposes the local model registry. Put future checkpoints under `models/<model_name>/model.pt`,
-restart or refresh the backend, and select that model from the UI to use it for later main-page generation. The same
-runtime switch is available through the API:
+refresh the backend, and select that model from the UI to use it for later main-page generation. UI selection persists
+the active model to `.env` while preserving unrelated keys such as `OPENAI_API_KEY`. The same switch is available through
+the API:
 
 ```powershell
 Invoke-RestMethod http://127.0.0.1:8000/model/registry
 Invoke-RestMethod http://127.0.0.1:8000/model/select `
   -Method Post `
   -ContentType "application/json" `
-  -Body '{"model_name":"sera_symbolic_small"}'
+  -Body '{"model_name":"sera_symbolic_small","persist":true}'
 ```
 
-Future larger checkpoints can be called without code changes:
+Future larger checkpoints can also be called without code changes by setting environment variables directly:
 
 ```powershell
 $env:SERA_ACTIVE_SYMBOLIC_MODEL = "sera_symbolic_large"

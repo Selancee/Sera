@@ -91,14 +91,20 @@ class SeraPipeline:
         registry["generator_backend"] = self.generator.backend
         return registry
 
-    def select_symbolic_model(self, model_name: str) -> dict[str, Any]:
+    def select_symbolic_model(self, model_name: str, persist: bool = False) -> dict[str, Any]:
         """Switch the active symbolic model for subsequent generation calls."""
 
-        self.model_lab.set_active_model(model_name)
+        selection = self.model_lab.set_active_model(model_name)
         os.environ["SERA_GENERATOR_BACKEND"] = "model"
+        env_path = ""
+        if persist:
+            env_path = str(self._persist_model_environment(selection["active_model"], selection["expected_model_dir"]))
         self.generator = self._build_generator()
         self.model_lab = self.generator.model_generator
-        return self.symbolic_model_status()
+        status = self.symbolic_model_status()
+        status["selection_persisted"] = persist
+        status["env_path"] = env_path
+        return status
 
     def symbolic_model_sample(self, prompt: str, max_tokens: int = 96) -> dict[str, Any]:
         """Generate or replay a qualitative symbolic-model token sample."""
@@ -113,6 +119,28 @@ class SeraPipeline:
 
         generator_backend = os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
         return SymbolicMusicGenerator(backend=generator_backend, project_root=self.project_root)
+
+    def _persist_model_environment(self, model_name: str, model_dir: str) -> Path:
+        """Persist the active model without touching API keys or user secrets."""
+
+        env_path = self.project_root / ".env"
+        model_env = {
+            "SERA_ACTIVE_SYMBOLIC_MODEL": model_name,
+            "SERA_SYMBOLIC_MODEL_DIR": model_dir,
+            "SERA_SYMBOLIC_MODEL_CHECKPOINT": "",
+            "SERA_GENERATOR_BACKEND": "model",
+        }
+        existing = env_path.read_text(encoding="utf-8").splitlines() if env_path.exists() else []
+        filtered = [
+            line
+            for line in existing
+            if not any(line.startswith(f"{key}=") for key in model_env)
+        ]
+        if filtered and filtered[-1].strip():
+            filtered.append("")
+        filtered.extend(f"{key}={value}" for key, value in model_env.items())
+        env_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
+        return env_path
 
     def rate_run(self, run_id: str, rating: dict[str, Any]) -> dict[str, Any]:
         """Persist a human evaluation rating for one generated run."""

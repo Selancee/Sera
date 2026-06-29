@@ -44,10 +44,10 @@ export function getSymbolicModelRegistry() {
   return request("/model/registry");
 }
 
-export function selectSymbolicModel(modelName) {
+export function selectSymbolicModel(modelName, persist = true) {
   return request("/model/select", {
     method: "POST",
-    body: JSON.stringify({ model_name: modelName })
+    body: JSON.stringify({ model_name: modelName, persist })
   });
 }
 

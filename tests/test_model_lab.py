@@ -92,6 +92,44 @@ def test_pipeline_selects_local_symbolic_model_for_future_generation(tmp_path: P
     assert os.environ["SERA_SYMBOLIC_MODEL_DIR"] == str(model_dir)
 
 
+def test_pipeline_persists_symbolic_model_selection_without_touching_secrets(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_CHECKPOINT", raising=False)
+    monkeypatch.delenv("SERA_SYMBOLIC_MODEL_DIR", raising=False)
+    monkeypatch.delenv("SERA_ACTIVE_SYMBOLIC_MODEL", raising=False)
+    monkeypatch.setenv("SERA_GENERATOR_BACKEND", "rule_based")
+    model_dir = tmp_path / "models" / "sera_symbolic_large"
+    model_dir.mkdir(parents=True)
+    (model_dir / "model.pt").write_bytes(b"stub checkpoint")
+    (tmp_path / ".env").write_text(
+        "\n".join(
+            [
+                "OPENAI_API_KEY=keep-this-secret",
+                "SERA_ACTIVE_SYMBOLIC_MODEL=old_model",
+                "SERA_SYMBOLIC_MODEL_DIR=C:\\old",
+                "SERA_GENERATOR_BACKEND=rule_based",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    pipeline = SeraPipeline(tmp_path)
+    status = pipeline.select_symbolic_model("sera_symbolic_large", persist=True)
+    env_text = (tmp_path / ".env").read_text(encoding="utf-8")
+
+    assert status["selection_persisted"] is True
+    assert status["env_path"] == str(tmp_path / ".env")
+    assert "OPENAI_API_KEY=keep-this-secret" in env_text
+    assert "SERA_ACTIVE_SYMBOLIC_MODEL=sera_symbolic_large" in env_text
+    assert f"SERA_SYMBOLIC_MODEL_DIR={model_dir}" in env_text
+    assert "SERA_SYMBOLIC_MODEL_CHECKPOINT=" in env_text
+    assert "SERA_GENERATOR_BACKEND=model" in env_text
+    assert "old_model" not in env_text
+
+
 def test_main_generation_uses_checkpoint_conditioning(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setenv("SERA_GENERATOR_BACKEND", "model")
     monkeypatch.setenv("SERA_ACTIVE_SYMBOLIC_MODEL", "unit_test_model")

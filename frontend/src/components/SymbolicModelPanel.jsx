@@ -61,7 +61,7 @@ export default function SymbolicModelPanel({
       <div className="model-status-strip">
         <strong>{modelStatus?.available ? "Checkpoint inference enabled" : "Recorded AutoDL sample mode"}</strong>
         <span>
-          {activeModel || "No model selected"} · {modelStatus?.generator_backend || "rule_based"} backend
+          {activeModel || "No model selected"} - {modelStatus?.generator_backend || "rule_based"} backend
         </span>
       </div>
 
@@ -77,7 +77,7 @@ export default function SymbolicModelPanel({
             {models.length === 0 && <option value="">No local model folders</option>}
             {models.map((model) => (
               <option key={model.name} value={model.name}>
-                {model.name} · {checkpointLabel(model)}
+                {model.name} - {checkpointLabel(model)}
               </option>
             ))}
           </select>

@@ -158,7 +158,7 @@ export default function App() {
     setStatus("modeling");
     setError("");
     try {
-      const payload = await selectSymbolicModel(modelName);
+      const payload = await selectSymbolicModel(modelName, true);
       setModelStatus(payload);
       setModelRegistry({
         active_model: payload.active_model,

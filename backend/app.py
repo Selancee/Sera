@@ -76,6 +76,7 @@ class ModelSelectRequest(BaseModel):
     """Request body for /model/select."""
 
     model_name: str = Field(min_length=1, max_length=120, pattern=r"^[A-Za-z0-9_.-]+$")
+    persist: bool = True
 
 
 class RatingRequest(BaseModel):
@@ -183,7 +184,7 @@ def model_select(request: ModelSelectRequest) -> dict[str, object]:
     """Switch the main score generator to a local symbolic model."""
 
     try:
-        return pipeline.select_symbolic_model(request.model_name)
+        return pipeline.select_symbolic_model(request.model_name, persist=request.persist)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
