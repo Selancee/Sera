@@ -1,0 +1,4 @@
+prompt_id,instruction,patch_validity_rate,patch_application_success_rate,musicxml_valid_after_edit_rate,selection_respect_score,constraint_respect_score,preserve_harmony_score,preserve_melody_score,preserve_rhythm_score,prompt_alignment_edit_score,over_editing_penalty,partial_apply_success_rate,undo_redo_success_rate,explanation_success_rate,average_patch_latency_ms,validation_warning_reduction,average_patch_size
+v07_001,make measures 1-2 more lyrical,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.939,0.0,1.0,1.0,0.0,0.0,1.0,1.0
+v07_002,simplify the left hand for a beginner,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.95,0.0,1.0,1.0,0.0,0.0,1.0,1.0
+v07_003,add cadence to the ending,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.935,0.0,1.0,1.0,0.0,0.0,1.0,1.0

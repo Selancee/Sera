@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScoreEditRequest V0.6",
+  "type": "object",
+  "required": ["request_id", "instruction", "selected_range", "constraints", "current_score_summary", "current_score_excerpt", "agent_plan"],
+  "properties": {
+    "request_id": { "type": "string" },
+    "instruction": { "type": "string" },
+    "selected_range": {
+      "type": "object",
+      "required": ["start_measure", "end_measure"],
+      "properties": {
+        "start_measure": { "type": "integer", "minimum": 1 },
+        "end_measure": { "type": "integer", "minimum": 1 },
+        "part_id": { "type": "string" },
+        "staff": { "type": "string" }
+      }
+    },
+    "constraints": { "type": "object" },
+    "current_score_summary": { "type": "object" },
+    "current_score_excerpt": { "type": "object" },
+    "agent_plan": { "type": "object" }
+  }
+}
+

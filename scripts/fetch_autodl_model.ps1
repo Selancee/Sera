@@ -30,7 +30,17 @@ if (-not [string]::IsNullOrWhiteSpace($IdentityFile)) {
 }
 
 $requiredFiles = @("model.pt", "vocab.json")
-$optionalFiles = @("training_metrics.json", "samples.json", "train.log", "baseline_score_eval.json")
+$optionalFiles = @(
+    "training_metrics.json",
+    "training_config_snapshot.json",
+    "samples.json",
+    "train.log",
+    "baseline_score_eval.json",
+    "run_status.json",
+    "README.md",
+    "model_card.json",
+    "sha256_manifest.txt"
+)
 
 foreach ($fileName in $requiredFiles) {
     $remote = "${SshTarget}:$RemoteRunDir/$fileName"
@@ -50,9 +60,41 @@ foreach ($fileName in $optionalFiles) {
     }
 }
 
+$manifestPath = Join-Path $Destination "sha256_manifest.txt"
+if (Test-Path -LiteralPath $manifestPath) {
+    $hashErrors = @()
+    foreach ($line in Get-Content -LiteralPath $manifestPath) {
+        if ([string]::IsNullOrWhiteSpace($line)) {
+            continue
+        }
+        $parts = $line -split "\s+", 2
+        if ($parts.Count -lt 2) {
+            continue
+        }
+        $expectedHash = $parts[0].Trim().ToLowerInvariant()
+        $fileName = $parts[1].Trim()
+        $localFile = Join-Path $Destination $fileName
+        if (-not (Test-Path -LiteralPath $localFile)) {
+            Write-Host "[Sera] Manifest file not copied locally, skipping hash: $fileName"
+            continue
+        }
+        $actualHash = (Get-FileHash -LiteralPath $localFile -Algorithm SHA256).Hash.ToLowerInvariant()
+        if ($actualHash -ne $expectedHash) {
+            $hashErrors += $fileName
+        }
+    }
+    if ($hashErrors.Count -gt 0) {
+        throw "SHA256 verification failed for: $($hashErrors -join ', ')"
+    }
+    Write-Host "[Sera] SHA256 manifest verification passed."
+} else {
+    Write-Host "[Sera] No sha256_manifest.txt found; run scripts\verify_model_artifacts.ps1 after copying if needed."
+}
+
 $envPath = Join-Path $ProjectRoot ".env"
 $activeModelLine = "SERA_ACTIVE_SYMBOLIC_MODEL=$ModelName"
 $modelDirLine = "SERA_SYMBOLIC_MODEL_DIR=$Destination"
+$checkpointLine = "SERA_SYMBOLIC_MODEL_CHECKPOINT="
 $backendLine = "SERA_GENERATOR_BACKEND=model"
 $existing = @()
 if (Test-Path -LiteralPath $envPath) {
@@ -62,10 +104,11 @@ $filtered = @(
     $existing | Where-Object {
         $_ -notmatch "^SERA_ACTIVE_SYMBOLIC_MODEL=" -and
         $_ -notmatch "^SERA_SYMBOLIC_MODEL_DIR=" -and
+        $_ -notmatch "^SERA_SYMBOLIC_MODEL_CHECKPOINT=" -and
         $_ -notmatch "^SERA_GENERATOR_BACKEND="
     }
 )
-($filtered + @($activeModelLine, $modelDirLine, $backendLine)) | Set-Content -LiteralPath $envPath -Encoding ASCII
+($filtered + @($activeModelLine, $modelDirLine, $checkpointLine, $backendLine)) | Set-Content -LiteralPath $envPath -Encoding ASCII
 
 Write-Host ""
 Write-Host "[Sera] Model artifacts are ready in $Destination"

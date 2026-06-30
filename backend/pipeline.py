@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -20,6 +21,8 @@ from backend.models.schemas import CompositionPlan, GenerationArtifacts, Validat
 from backend.storage.experiment_logger import ExperimentLogger
 from backend.validation.musicxml_validator import MusicXMLValidator
 from backend.validation.theory_validator import TheoryValidator
+from evaluation.metrics.musicality_metrics import musicality_metrics_from_musicxml
+from backend.services.score_document_service import musicxml_to_score_document
 
 
 class SeraPipeline:
@@ -39,12 +42,12 @@ class SeraPipeline:
         self.logger = ExperimentLogger(self.project_root)
         self.model_lab = self.generator.model_generator
 
-    def generate(self, prompt: str) -> dict[str, Any]:
+    def generate(self, prompt: str, generator_mode: str | None = None) -> dict[str, Any]:
         """Run the full generation pipeline and persist all artifacts."""
 
         intent = self.prompt_agent.understand(prompt)
         plan = self.planning_agent.plan(intent)
-        return self._persist_generated_plan(prompt=prompt, plan=plan)
+        return self._persist_generated_plan(prompt=prompt, plan=plan, generator_mode=generator_mode)
 
     def revise(self, run_id: str, feedback: str) -> dict[str, Any]:
         """Revise an existing run using feedback and persist a new run."""
@@ -114,10 +117,10 @@ class SeraPipeline:
             payload["status"]["generator_backend"] = self.generator.backend
         return payload
 
-    def _build_generator(self) -> SymbolicMusicGenerator:
+    def _build_generator(self, backend: str | None = None) -> SymbolicMusicGenerator:
         """Create the configured symbolic generator facade."""
 
-        generator_backend = os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
+        generator_backend = backend or os.getenv("SERA_GENERATOR_BACKEND", "rule_based").strip() or "rule_based"
         return SymbolicMusicGenerator(backend=generator_backend, project_root=self.project_root)
 
     def _persist_model_environment(self, model_name: str, model_dir: str) -> Path:
@@ -170,6 +173,8 @@ class SeraPipeline:
         plan: CompositionPlan,
         validation: ValidationResult,
         revision: dict[str, Any],
+        musicxml: str = "",
+        generation_seconds: float = 0.0,
     ) -> dict[str, Any]:
         """Compute paper-facing metrics for one generated score."""
 
@@ -182,6 +187,7 @@ class SeraPipeline:
         pitch_success = 1.0 if validation.metrics.get("pitch_range_valid") else 0.0
         prompt_score = structural.metrics.get("prompt_adherence_proxy", 0.0)
         revision_success = 1.0 if validation.valid else 0.0
+        musicality = musicality_metrics_from_musicxml(musicxml) if musicxml else {}
         return {
             "musicxml_validity_rate": valid_musicxml,
             "midi_export_success_rate": midi_success,
@@ -199,6 +205,8 @@ class SeraPipeline:
             "structural_consistency": structural.metrics.get("structural_consistency", 0.0),
             "revision_changes": revision.get("changes", []),
             "baseline": plan.baseline,
+            "average_generation_time": round(float(generation_seconds), 4),
+            **musicality,
         }
 
     def artifact_path(self, run_id: str, file_format: str) -> Path:
@@ -226,8 +234,11 @@ class SeraPipeline:
         plan: CompositionPlan,
         revision: dict[str, Any] | None = None,
         previous_record: dict[str, Any] | None = None,
+        generator_mode: str | None = None,
     ) -> dict[str, Any]:
-        generated = self.generator.generate(plan)
+        started = time.perf_counter()
+        runtime_generator = self._build_generator(generator_mode) if generator_mode else self.generator
+        generated = runtime_generator.generate(plan)
         preliminary = self._combined_validation(plan, generated.musicxml)
         revision = revision or {
             "agent": "revision_agent_v0_2",
@@ -239,7 +250,7 @@ class SeraPipeline:
         if not preliminary.valid and previous_record is None:
             repaired_plan, revision = self.revision_agent.revise(plan, preliminary)
             plan = repaired_plan
-            generated = self.generator.generate(plan)
+            generated = runtime_generator.generate(plan)
             preliminary = self._combined_validation(plan, generated.musicxml)
 
         run_id = self.logger.new_run_id(prompt)
@@ -248,7 +259,10 @@ class SeraPipeline:
         self.logger.write_text(prompt_path, prompt)
         artifacts.export_files.append(str(prompt_path))
         validation = self._combined_validation(plan, generated.musicxml, artifacts)
-        evaluation = self.evaluate_payload(plan, validation, revision)
+        generation_seconds = time.perf_counter() - started
+        generated.metadata = dict(generated.metadata or {})
+        generated.metadata["final_validation_report"] = validation.to_report()
+        evaluation = self.evaluate_payload(plan, validation, revision, generated.musicxml, generation_seconds)
 
         self.logger.write_json(artifacts.validation_report_path, validation.to_report())
         metadata = self._metadata(prompt, plan, artifacts, validation, revision, generated)
@@ -365,6 +379,10 @@ class SeraPipeline:
             "validation_passed": validation.valid,
             "revision_changes": revision.get("changes", []),
             "generation_warnings": generation.get("warnings", []),
+            "model_task_type": generation.get("model_task_type", ""),
+            "decoding": generation.get("decoding", {}),
+            "postprocess_report": generation.get("postprocess_report", {}),
+            "fallback_reason": generation.get("fallback_reason", ""),
         }
 
     @staticmethod
@@ -425,11 +443,16 @@ class SeraPipeline:
         metadata: dict[str, Any],
         generated: GeneratedScore,
     ) -> dict[str, Any]:
+        try:
+            score_document = musicxml_to_score_document(generated.musicxml, prompt=prompt, source="generated")
+        except Exception:  # noqa: BLE001 - generation records must remain writable.
+            score_document = {}
         return {
             "run_id": run_id,
             "prompt": prompt,
             "intent": plan.intent.to_dict(),
             "plan": plan.to_dict(),
+            "score_document": score_document,
             "artifacts": artifacts.to_dict(),
             "validation": validation.to_dict(),
             "validation_report": validation.to_report(),

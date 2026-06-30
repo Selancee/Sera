@@ -92,6 +92,52 @@ class ModelGenerator:
         }
         return generated
 
+    def generate_task_fragment(
+        self,
+        plan: CompositionPlan,
+        measure_index: int = 1,
+        task_type: str = "melody_fragment",
+        max_tokens: int = 48,
+    ) -> dict[str, Any]:
+        """Generate a local V0.5 symbolic task fragment with safe fallback.
+
+        The main V0.5 path does not ask the small model to emit full MusicXML.
+        It only asks for local melody, motif, cadence, or rhythm tokens; rule
+        logic still assembles the legal score.
+        """
+
+        measure = plan.measures[max(0, min(len(plan.measures) - 1, measure_index - 1))] if plan.measures else None
+        prompt = self._task_prompt(plan, measure, task_type)
+        status = self.status()
+        fallback = self._fallback_fragment(plan, measure, task_type)
+        if not status["available"]:
+            return {
+                "task_type": task_type,
+                "model_loaded": False,
+                "tokens": fallback,
+                "fallback_reason": "checkpoint unavailable; rule-based local fragment used",
+                "prompt": prompt,
+            }
+        try:
+            sample = self._sample_from_checkpoint(prompt, max_tokens=max_tokens, status=status)
+            tokens = self._extract_v05_tokens(sample.get("tokens", [])) or fallback
+            return {
+                "task_type": task_type,
+                "model_loaded": True,
+                "tokens": tokens,
+                "fallback_reason": "" if tokens != fallback else "checkpoint emitted no usable local tokens",
+                "prompt": prompt,
+                "raw_model_tokens": sample.get("tokens", [])[:max_tokens],
+            }
+        except Exception as exc:  # noqa: BLE001 - generation must keep a fallback.
+            return {
+                "task_type": task_type,
+                "model_loaded": False,
+                "tokens": fallback,
+                "fallback_reason": f"checkpoint task generation failed: {exc}",
+                "prompt": prompt,
+            }
+
     def status(self) -> dict[str, Any]:
         """Return model availability and the latest training evidence."""
 
@@ -204,6 +250,46 @@ class ModelGenerator:
             f"{intent.tempo_bpm} bpm, {intent.bars} measures, {intent.texture}, "
             f"{intent.difficulty}. Harmony: {' '.join(intent.harmony_plan)}."
         )
+
+    @staticmethod
+    def _task_prompt(plan: CompositionPlan, measure: Any, task_type: str) -> str:
+        intent = plan.intent
+        if measure is None:
+            return f"TASK_{task_type.upper()} KEY_{intent.key} METER_{intent.time_signature}"
+        return (
+            f"TASK_{task_type.upper()} KEY_{intent.key} METER_{intent.time_signature} "
+            f"HARMONY_{measure.chord} RHYTHMIC_DENSITY_{measure.rhythmic_density} "
+            f"MELODIC_CONTOUR_{measure.melodic_contour} INTERVAL_PROFILE_{measure.interval_profile} "
+            f"CADENCE_{measure.cadence}"
+        )
+
+    @staticmethod
+    def _fallback_fragment(plan: CompositionPlan, measure: Any, task_type: str) -> list[str]:
+        key_root = plan.intent.key.split()[0].replace("-flat", "b")
+        minor = "minor" in plan.intent.key.lower()
+        tonic = "A4" if minor and key_root.upper().startswith("A") else "C5"
+        if task_type == "rhythm_rewrite":
+            return ["RHYTHM_EIGHTH", "RHYTHM_EIGHTH", "RHYTHM_QUARTER", "RHYTHM_EIGHTH", "RHYTHM_EIGHTH", "RHYTHM_QUARTER"]
+        if task_type == "cadence_generation" or (measure and measure.cadence == "authentic"):
+            return ["NOTE_G4", "NOTE_B4", "NOTE_D5", f"NOTE_{tonic}"]
+        if task_type == "motif_variation":
+            return ["NOTE_E4", "NOTE_G4", "NOTE_F4", "NOTE_D4"] if minor else ["NOTE_D4", "NOTE_F4", "NOTE_E4", "NOTE_C4"]
+        contour = getattr(measure, "melodic_contour", "wave") if measure else "wave"
+        if contour == "ascending":
+            return ["NOTE_C4", "NOTE_D4", "NOTE_E4", "NOTE_G4", "NOTE_A4"]
+        if contour == "descending":
+            return ["NOTE_A4", "NOTE_G4", "NOTE_E4", "NOTE_D4", "NOTE_C4"]
+        if contour == "arch":
+            return ["NOTE_C4", "NOTE_E4", "NOTE_G4", "NOTE_A4", "NOTE_E4"]
+        return ["NOTE_C4", "NOTE_E4", "NOTE_D4", "NOTE_G4", "NOTE_F4"]
+
+    @staticmethod
+    def _extract_v05_tokens(tokens: list[str]) -> list[str]:
+        structured = [str(token) for token in tokens if str(token).startswith(("NOTE_", "RHYTHM_", "CADENCE_", "MOTIF_"))]
+        if structured:
+            return structured
+        pitches = ModelGenerator._extract_pitch_names([str(token) for token in tokens])
+        return [f"NOTE_{pitch.replace('#', 'SHARP').replace('b', 'FLAT')}" for pitch in pitches[:8]]
 
     def _condition_plan_from_tokens(
         self,

@@ -1,0 +1,12 @@
+{
+  "patch_validity_rate": 1.0,
+  "patch_application_success_rate": 1.0,
+  "musicxml_valid_after_edit_rate": 1.0,
+  "constraint_respect_score": 1.0,
+  "selection_respect_score": 1.0,
+  "prompt_alignment_edit_score": 0.9583,
+  "validation_warning_reduction": 1.0,
+  "average_patch_size": 1.0,
+  "undo_redo_success_rate": 1.0,
+  "user_acceptance_proxy_score": 0.9792
+}

@@ -11,6 +11,14 @@ models/
   sera_symbolic_large/
     model.pt
     vocab.json
+  sera_v05_50rmb/
+    model.pt
+    vocab.json
+    training_metrics.json
+    training_config_snapshot.json
+    samples.json
+    sha256_manifest.txt
+    model_card.json
 ```
 
 Default runtime:
@@ -46,3 +54,27 @@ Invoke-RestMethod http://127.0.0.1:8000/model/select `
 
 The UI and API persist the selected model to `.env` by default, replacing only Sera's model-related keys. Use
 `"persist":false` for a process-local switch.
+
+## 50 RMB Verification Model
+
+The budget-capped AutoDL run writes two remote copies:
+
+```text
+/root/autodl-tmp/sera_runs/<run_id>
+/root/autodl-tmp/sera_models/<run_id>
+```
+
+Fetch the persistent copy into Sera:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\Sera\scripts\fetch_autodl_model.ps1 `
+  -SshTarget root@<autodl-host> `
+  -Port <ssh-port> `
+  -RemoteRunDir /root/autodl-tmp/sera_models/<run_id> `
+  -ModelName sera_v05_50rmb
+
+powershell -ExecutionPolicy Bypass -File D:\Sera\scripts\verify_model_artifacts.ps1 `
+  -ModelDir D:\Sera\models\sera_v05_50rmb
+```
+
+Keep `sha256_manifest.txt` and `model_card.json` with the checkpoint. They are the recovery record for the technical verification run.

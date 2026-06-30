@@ -23,7 +23,7 @@ class ExperimentLogger:
     def new_run_id(self, prompt: str = "") -> str:
         """Create a timestamp plus prompt-hash run id."""
 
-        stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+        stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S_%f")
         digest = hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:8] if prompt else "noprompt"
         return f"{stamp}_{digest}"
 

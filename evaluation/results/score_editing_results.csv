@@ -1,0 +1,4 @@
+prompt_id,instruction,patch_validity_rate,patch_application_success_rate,musicxml_valid_after_edit_rate,constraint_respect_score,selection_respect_score,prompt_alignment_edit_score,validation_warning_reduction,average_patch_size,undo_redo_success_rate,user_acceptance_proxy_score
+edit_001,make measures 5-8 more lyrical,1.0,1.0,1.0,1.0,1.0,0.975,1.0,1.0,1.0,0.9875
+edit_002,simplify the left hand,1.0,1.0,1.0,1.0,1.0,0.9625,1.0,1.0,1.0,0.98125
+edit_003,add cadence to the ending,1.0,1.0,1.0,1.0,1.0,0.9375,1.0,1.0,1.0,0.96875

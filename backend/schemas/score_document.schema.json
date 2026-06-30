@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScoreDocument V0.6",
+  "type": "object",
+  "required": ["schema_version", "score_id", "title", "composer", "metadata", "global", "parts", "measures", "annotations"],
+  "properties": {
+    "schema_version": { "const": "0.6" },
+    "score_id": { "type": "string" },
+    "title": { "type": "string" },
+    "composer": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["created_at", "updated_at", "source", "prompt", "agent_plan_id"],
+      "properties": {
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "source": { "type": "string", "enum": ["generated", "imported", "edited"] },
+        "prompt": { "type": "string" },
+        "agent_plan_id": { "type": "string" }
+      }
+    },
+    "global": {
+      "type": "object",
+      "required": ["key", "meter", "tempo", "pickup"],
+      "properties": {
+        "key": { "type": "string" },
+        "meter": { "type": "string" },
+        "tempo": { "type": "integer", "minimum": 20, "maximum": 260 },
+        "pickup": { "type": "boolean" }
+      }
+    },
+    "parts": { "type": "array" },
+    "measures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["measure_id", "number", "section", "harmony", "cadence", "events"],
+        "properties": {
+          "measure_id": { "type": "string" },
+          "number": { "type": "integer", "minimum": 1 },
+          "section": { "type": "string" },
+          "harmony": { "type": "string" },
+          "cadence": { "type": "string" },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["event_id", "type", "duration", "offset", "voice", "staff"],
+              "properties": {
+                "event_id": { "type": "string" },
+                "type": { "type": "string", "enum": ["note", "rest", "chord"] },
+                "pitch": { "type": "string" },
+                "duration": { "type": "string" },
+                "offset": { "type": "number" },
+                "voice": { "type": "integer" },
+                "staff": { "type": "string" },
+                "tie": {},
+                "dynamic": { "type": "string" },
+                "articulations": { "type": "array" },
+                "selected": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "annotations": { "type": "array" }
+  }
+}
+

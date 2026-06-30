@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScorePatch V0.7",
+  "type": "object",
+  "required": ["patch_id", "patch_type", "target_range", "operations", "rationale", "expected_effect", "prompt_alignment", "validation_expectations"],
+  "properties": {
+    "patch_id": { "type": "string" },
+    "patch_type": {
+      "type": "string",
+      "enum": ["replace_measures", "transform_notes", "update_harmony", "update_texture", "add_cadence", "simplify", "regenerate", "no_op"]
+    },
+    "target_range": {
+      "type": "object",
+      "required": ["start_measure", "end_measure"],
+      "properties": {
+        "start_measure": { "type": "integer", "minimum": 1 },
+        "end_measure": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "operations": { "type": "array" },
+    "rationale": { "type": "string" },
+    "expected_effect": { "type": "string" },
+    "prompt_alignment": {
+      "type": "object",
+      "required": ["instruction", "matched_aspects", "risk_aspects"],
+      "properties": {
+        "instruction": { "type": "string" },
+        "matched_aspects": { "type": "array" },
+        "risk_aspects": { "type": "array" }
+      }
+    },
+    "validation_expectations": { "type": "object" }
+  }
+}

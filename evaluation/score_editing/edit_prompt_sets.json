@@ -1,0 +1,13 @@
+[
+  {"prompt_id": "edit_001", "instruction": "make measures 5-8 more lyrical", "start_measure": 5, "end_measure": 8, "constraints": {"preserve_harmony": true}},
+  {"prompt_id": "edit_002", "instruction": "simplify the left hand", "start_measure": 1, "end_measure": 4, "constraints": {"preserve_harmony": true, "preserve_melody": true}},
+  {"prompt_id": "edit_003", "instruction": "add cadence to the ending", "start_measure": 7, "end_measure": 8, "constraints": {"preserve_form": true}},
+  {"prompt_id": "edit_004", "instruction": "increase rhythmic density in section B", "start_measure": 5, "end_measure": 8, "constraints": {"preserve_harmony": true}},
+  {"prompt_id": "edit_005", "instruction": "preserve melody but rewrite accompaniment", "start_measure": 1, "end_measure": 4, "constraints": {"preserve_melody": true}},
+  {"prompt_id": "edit_006", "instruction": "preserve harmony but make melody more expressive", "start_measure": 1, "end_measure": 4, "constraints": {"preserve_harmony": true}},
+  {"prompt_id": "edit_007", "instruction": "turn selected passage into waltz-like texture", "start_measure": 1, "end_measure": 4, "constraints": {"preserve_harmony": true}},
+  {"prompt_id": "edit_008", "instruction": "make it more beginner-friendly", "start_measure": 1, "end_measure": 8, "constraints": {"preserve_form": true}},
+  {"prompt_id": "edit_009", "instruction": "make the ending more conclusive", "start_measure": 7, "end_measure": 8, "constraints": {"preserve_harmony": false}},
+  {"prompt_id": "edit_010", "instruction": "add Chinese pentatonic flavor", "start_measure": 1, "end_measure": 4, "constraints": {"preserve_rhythm": true}}
+]
+

@@ -19,6 +19,7 @@ import PromptInput from "./components/PromptInput.jsx";
 import ScoreViewer from "./components/ScoreViewer.jsx";
 import SymbolicModelPanel from "./components/SymbolicModelPanel.jsx";
 import ValidationReportPanel from "./components/ValidationReportPanel.jsx";
+import ScoreWorkbench from "./workbench/ScoreWorkbench";
 
 const DEFAULT_PROMPT =
   "Compose a 16 measure romantic piano nocturne with a clear melody and flowing left hand.";
@@ -30,10 +31,12 @@ const DEFAULT_PARAMS = {
   meter: "4/4",
   tempo: 84,
   length: 16,
-  difficulty: "intermediate"
+  difficulty: "intermediate",
+  generator_mode: "hybrid_v05",
+  model_task_type: "melody_fragment"
 };
 
-const MAIN_TABS = ["Score", "Plan", "Validation", "Evaluation", "Model"];
+const MAIN_TABS = ["Score", "Workbench", "Plan", "Validation", "Evaluation", "Model"];
 
 function promptWithParams(prompt, params) {
   return [
@@ -47,7 +50,7 @@ export default function App() {
   const [params, setParams] = useState(DEFAULT_PARAMS);
   const [result, setResult] = useState(null);
   const [experiments, setExperiments] = useState([]);
-  const [feedback, setFeedback] = useState("更忧郁，左手更流动。");
+  const [feedback, setFeedback] = useState("Make the cadence clearer and add more rhythmic contrast.");
   const [modelPrompt, setModelPrompt] = useState(DEFAULT_PROMPT);
   const [modelStatus, setModelStatus] = useState(null);
   const [modelRegistry, setModelRegistry] = useState({ models: [] });
@@ -96,7 +99,10 @@ export default function App() {
     setStatus("generating");
     setError("");
     try {
-      const payload = await generateScore(promptWithParams(prompt, params));
+      const payload = await generateScore(promptWithParams(prompt, params), {
+        generator_mode: params.generator_mode,
+        model_task_type: params.model_task_type
+      });
       setResult(payload);
       setActiveTab("Score");
       await refreshExperiments();
@@ -213,7 +219,7 @@ export default function App() {
           </div>
           <div>
             <h1>Sera - Agentic Text-to-Score Composition System</h1>
-            <p>Research workbench V0.2</p>
+            <p>Score Workbench V0.6</p>
           </div>
         </div>
         <nav className="tabs" aria-label="Main views">
@@ -246,6 +252,7 @@ export default function App() {
 
         <section className="score-stage" aria-label="Score workspace">
           {activeTab === "Plan" && <AgentPlanPanel result={result} />}
+          {activeTab === "Workbench" && <ScoreWorkbench result={result} />}
           {activeTab === "Score" && (
             <>
               <ScoreViewer measures={measures} result={result} />
@@ -255,17 +262,20 @@ export default function App() {
           )}
           {activeTab === "Validation" && <ValidationReportPanel detailed result={result} />}
           {activeTab === "Evaluation" && (
-            <div className="evaluation-grid">
-              {Object.entries(evaluation).map(([key, value]) => (
-                <div className="metric-tile" key={key}>
-                  <span>{key.replaceAll("_", " ")}</span>
-                  <strong>{Array.isArray(value) ? value.length : String(value)}</strong>
-                </div>
-              ))}
-            </div>
+            <>
+              <ResearchModePanel result={result} />
+              <div className="evaluation-grid">
+                {Object.entries(evaluation).map(([key, value]) => (
+                  <div className="metric-tile" key={key}>
+                    <span>{key.replaceAll("_", " ")}</span>
+                    <strong>{Array.isArray(value) ? value.length : String(value)}</strong>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
           {activeTab === "Model" && modelPanel}
-          {!result && activeTab !== "Model" && (
+          {!result && activeTab !== "Model" && activeTab !== "Workbench" && (
             <div className="empty-state">
               <strong>Ready for first generation</strong>
               <span>Run the prompt to create MusicXML, MIDI, ABC, PDF, and an experiment log.</span>
@@ -297,5 +307,67 @@ export default function App() {
         </aside>
       </main>
     </div>
+  );
+}
+
+function ResearchModePanel({ result }) {
+  const generation = result?.generation || {};
+  const metadata = result?.metadata || {};
+  const decoding = metadata.decoding || generation.decoding || {};
+  const postprocess = metadata.postprocess_report || generation.postprocess_report || {};
+  const evaluation = result?.evaluation || {};
+  const postprocessRows = [
+    ["fixed consecutive quarters", postprocess.fixed_consecutive_quarters],
+    ["added leap", postprocess.added_leap],
+    ["added cadence", postprocess.added_cadence],
+    ["filled measure", postprocess.filled_measure],
+    ["fixed pitch range", postprocess.fixed_pitch_range]
+  ];
+  const metricRows = [
+    ["rhythmic diversity", evaluation.rhythmic_diversity_score],
+    ["quarter-note dominance", evaluation.quarter_note_dominance_score],
+    ["interval variety", evaluation.melodic_interval_variety_score],
+    ["cadence presence", evaluation.cadence_presence_score],
+    ["overall musicality proxy score", evaluation.overall_musicality_proxy_score]
+  ];
+  return (
+    <section className="panel research-panel">
+      <div className="panel-heading">
+        <h2>Research Mode</h2>
+        <span>{metadata.generator_mode || generation.generator_mode || "pending"}</span>
+      </div>
+      <div className="research-grid">
+        <div className="intent-item">
+          <span>generator mode</span>
+          <strong>{metadata.generator_mode || generation.generator_mode || "-"}</strong>
+        </div>
+        <div className="intent-item">
+          <span>model task type</span>
+          <strong>{metadata.model_task_type || generation.model_task_type || "melody_fragment"}</strong>
+        </div>
+        {["temperature", "top_p", "top_k", "repetition_penalty"].map((key) => (
+          <div className="intent-item" key={key}>
+            <span>{key.replaceAll("_", " ")}</span>
+            <strong>{decoding[key] ?? "-"}</strong>
+          </div>
+        ))}
+      </div>
+      <div className="research-grid">
+        {postprocessRows.map(([label, value]) => (
+          <div className="intent-item" key={label}>
+            <span>{label}</span>
+            <strong>{value ? "yes" : "no"}</strong>
+          </div>
+        ))}
+      </div>
+      <div className="research-grid">
+        {metricRows.map(([label, value]) => (
+          <div className="intent-item" key={label}>
+            <span>{label}</span>
+            <strong>{value ?? "-"}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

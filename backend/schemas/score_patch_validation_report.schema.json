@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScorePatchValidationReport V0.7",
+  "type": "object",
+  "required": [
+    "patch_id",
+    "valid",
+    "target_range_valid",
+    "constraint_violations",
+    "structural_risks",
+    "musicxml_valid_after_patch",
+    "patch_size",
+    "over_editing_risk",
+    "recommendation",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "patch_id": { "type": "string" },
+    "valid": { "type": "boolean" },
+    "target_range_valid": { "type": "boolean" },
+    "constraint_violations": { "type": "array", "items": { "type": "string" } },
+    "structural_risks": { "type": "array", "items": { "type": "string" } },
+    "musicxml_valid_after_patch": { "type": "boolean" },
+    "patch_size": { "type": "integer", "minimum": 0 },
+    "over_editing_risk": { "type": "string", "enum": ["low", "medium", "high"] },
+    "recommendation": { "type": "string", "enum": ["accept", "review", "reject"] },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "errors": { "type": "array", "items": { "type": "string" } }
+  }
+}

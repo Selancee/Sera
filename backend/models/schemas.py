@@ -31,6 +31,30 @@ SUPPORTED_TEXTURES = {
     "single_line",
 }
 SUPPORTED_DIFFICULTIES = {"beginner", "intermediate", "advanced"}
+SUPPORTED_RHYTHMIC_DENSITIES = {"low", "medium", "high"}
+SUPPORTED_MELODIC_CONTOURS = {"ascending", "descending", "arch", "wave", "static"}
+SUPPORTED_INTERVAL_PROFILES = {"stepwise", "mixed", "leaping"}
+SUPPORTED_CADENCES = {"none", "half", "authentic"}
+SUPPORTED_POLYPHONY = {"monophonic", "dyadic", "chordal"}
+SUPPORTED_TENSIONS = {"low", "medium", "high"}
+SUPPORTED_MOTIF_STRATEGIES = {
+    "repeat",
+    "sequence_up",
+    "sequence_down",
+    "inversion",
+    "rhythmic_variation",
+    "cadence",
+}
+V05_CONTROL_DEFAULTS = {
+    "rhythmic_density": "medium",
+    "melodic_contour": "wave",
+    "interval_profile": "mixed",
+    "cadence": "none",
+    "polyphony": "monophonic",
+    "tension": "medium",
+    "motif_id": "A",
+    "motif_strategy": "repeat",
+}
 
 
 AGENT_PLAN_JSON_SCHEMA: dict[str, Any] = {
@@ -49,6 +73,7 @@ AGENT_PLAN_JSON_SCHEMA: dict[str, Any] = {
         "difficulty",
         "harmony_plan",
         "section_plan",
+        "musical_controls",
         "revision_goals",
     ],
     "properties": {
@@ -65,9 +90,59 @@ AGENT_PLAN_JSON_SCHEMA: dict[str, Any] = {
         "difficulty": {"type": "string", "enum": sorted(SUPPORTED_DIFFICULTIES)},
         "harmony_plan": {"type": "array", "items": {"type": "string"}, "minItems": 1},
         "section_plan": {"type": "array", "items": {"type": "object"}, "minItems": 1},
+        "musical_controls": {
+            "type": "object",
+            "properties": {
+                "rhythmic_density": {"type": "string", "enum": sorted(SUPPORTED_RHYTHMIC_DENSITIES)},
+                "melodic_contour": {"type": "string", "enum": sorted(SUPPORTED_MELODIC_CONTOURS)},
+                "interval_profile": {"type": "string", "enum": sorted(SUPPORTED_INTERVAL_PROFILES)},
+                "cadence": {"type": "string", "enum": sorted(SUPPORTED_CADENCES)},
+                "polyphony": {"type": "string", "enum": sorted(SUPPORTED_POLYPHONY)},
+                "tension": {"type": "string", "enum": sorted(SUPPORTED_TENSIONS)},
+                "motif_id": {"type": "string"},
+                "motif_strategy": {"type": "string", "enum": sorted(SUPPORTED_MOTIF_STRATEGIES)},
+            },
+        },
         "revision_goals": {"type": "array", "items": {"type": "string"}},
     },
 }
+
+
+def normalize_agent_plan_json(data: dict[str, Any]) -> dict[str, Any]:
+    """Fill V0.5 control defaults before lightweight schema validation."""
+
+    normalized = dict(data)
+    controls = dict(normalized.get("musical_controls") or {})
+    for key, value in V05_CONTROL_DEFAULTS.items():
+        controls.setdefault(key, value)
+    controls["rhythmic_density"] = _safe_choice(
+        controls.get("rhythmic_density"), SUPPORTED_RHYTHMIC_DENSITIES, "medium"
+    )
+    controls["melodic_contour"] = _safe_choice(
+        controls.get("melodic_contour"), SUPPORTED_MELODIC_CONTOURS, "wave"
+    )
+    controls["interval_profile"] = _safe_choice(
+        controls.get("interval_profile"), SUPPORTED_INTERVAL_PROFILES, "mixed"
+    )
+    controls["cadence"] = _safe_choice(controls.get("cadence"), SUPPORTED_CADENCES, "none")
+    controls["polyphony"] = _safe_choice(controls.get("polyphony"), SUPPORTED_POLYPHONY, "monophonic")
+    controls["tension"] = _safe_choice(controls.get("tension"), SUPPORTED_TENSIONS, "medium")
+    controls["motif_strategy"] = _safe_choice(
+        controls.get("motif_strategy"), SUPPORTED_MOTIF_STRATEGIES, "repeat"
+    )
+    controls["motif_id"] = str(controls.get("motif_id") or "A")[:32]
+    normalized["musical_controls"] = controls
+
+    section_plan = []
+    for item in normalized.get("section_plan") or []:
+        section = dict(item)
+        section.setdefault("rhythmic_density", controls["rhythmic_density"])
+        section.setdefault("melodic_contour", controls["melodic_contour"])
+        section.setdefault("cadence", controls["cadence"])
+        section.setdefault("motif_strategy", controls["motif_strategy"])
+        section_plan.append(section)
+    normalized["section_plan"] = section_plan
+    return normalized
 
 
 def validate_agent_plan_json(data: dict[str, Any]) -> tuple[bool, list[str]]:
@@ -77,6 +152,7 @@ def validate_agent_plan_json(data: dict[str, Any]) -> tuple[bool, list[str]]:
     a schema dependency for model-constrained LLM calls.
     """
 
+    data = normalize_agent_plan_json(data)
     errors: list[str] = []
     for key in AGENT_PLAN_JSON_SCHEMA["required"]:
         if key not in data:
@@ -103,7 +179,19 @@ def validate_agent_plan_json(data: dict[str, Any]) -> tuple[bool, list[str]]:
         errors.append("harmony_plan must be a non-empty list")
     if not isinstance(data.get("section_plan"), list) or not data.get("section_plan"):
         errors.append("section_plan must be a non-empty list")
+    controls = data.get("musical_controls") or {}
+    if controls.get("rhythmic_density") not in SUPPORTED_RHYTHMIC_DENSITIES:
+        errors.append(f"rhythmic_density must be one of {sorted(SUPPORTED_RHYTHMIC_DENSITIES)}")
+    if controls.get("melodic_contour") not in SUPPORTED_MELODIC_CONTOURS:
+        errors.append(f"melodic_contour must be one of {sorted(SUPPORTED_MELODIC_CONTOURS)}")
+    if controls.get("cadence") not in SUPPORTED_CADENCES:
+        errors.append(f"cadence must be one of {sorted(SUPPORTED_CADENCES)}")
     return not errors, errors
+
+
+def _safe_choice(value: Any, allowed: set[str], fallback: str) -> str:
+    clean = str(value or fallback).replace("-", "_").replace(" ", "_").lower()
+    return clean if clean in allowed else fallback
 
 
 @dataclass(slots=True)
@@ -127,6 +215,14 @@ class StructuredMusicIntent:
     section_plan: list[dict[str, Any]] = field(default_factory=list)
     revision_goals: list[str] = field(default_factory=list)
     constraints: list[str] = field(default_factory=list)
+    rhythmic_density: str = "medium"
+    melodic_contour: str = "wave"
+    interval_profile: str = "mixed"
+    cadence: str = "none"
+    polyphony: str = "monophonic"
+    tension: str = "medium"
+    motif_id: str = "A"
+    motif_strategy: str = "repeat"
     llm_provider: str = "mock"
     llm_model: str = "mock-rule-system"
     agent_mode: str = "mock"
@@ -139,6 +235,14 @@ class StructuredMusicIntent:
         self.bars = self.bars if self.bars in {8, 16, 32} else min({8, 16, 32}, key=lambda item: abs(item - self.bars))
         self.texture = self.texture if self.texture in SUPPORTED_TEXTURES else "melody_accompaniment"
         self.difficulty = self.difficulty if self.difficulty in SUPPORTED_DIFFICULTIES else "intermediate"
+        self.rhythmic_density = _safe_choice(self.rhythmic_density, SUPPORTED_RHYTHMIC_DENSITIES, "medium")
+        self.melodic_contour = _safe_choice(self.melodic_contour, SUPPORTED_MELODIC_CONTOURS, "wave")
+        self.interval_profile = _safe_choice(self.interval_profile, SUPPORTED_INTERVAL_PROFILES, "mixed")
+        self.cadence = _safe_choice(self.cadence, SUPPORTED_CADENCES, "none")
+        self.polyphony = _safe_choice(self.polyphony, SUPPORTED_POLYPHONY, "monophonic")
+        self.tension = _safe_choice(self.tension, SUPPORTED_TENSIONS, "medium")
+        self.motif_strategy = _safe_choice(self.motif_strategy, SUPPORTED_MOTIF_STRATEGIES, "repeat")
+        self.motif_id = str(self.motif_id or "A")[:32]
         self.instruments = self.instruments or ["piano"]
         if not self.title:
             self.title = f"{self.style.title()} Sketch in {self.key}"
@@ -164,7 +268,7 @@ class StructuredMusicIntent:
     def to_agent_plan_json(self) -> dict[str, Any]:
         """Return the stable V0.2 JSON object shown to users and papers."""
 
-        return {
+        return normalize_agent_plan_json({
             "title": self.title,
             "style": self.style,
             "mood": self.mood,
@@ -178,8 +282,18 @@ class StructuredMusicIntent:
             "difficulty": self.difficulty,
             "harmony_plan": list(self.harmony_plan),
             "section_plan": list(self.section_plan),
+            "musical_controls": {
+                "rhythmic_density": self.rhythmic_density,
+                "melodic_contour": self.melodic_contour,
+                "interval_profile": self.interval_profile,
+                "cadence": self.cadence,
+                "polyphony": self.polyphony,
+                "tension": self.tension,
+                "motif_id": self.motif_id,
+                "motif_strategy": self.motif_strategy,
+            },
             "revision_goals": list(self.revision_goals),
-        }
+        })
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "StructuredMusicIntent":
@@ -203,6 +317,14 @@ class StructuredMusicIntent:
             section_plan=list(data.get("section_plan") or []),
             revision_goals=list(data.get("revision_goals") or []),
             constraints=list(data.get("constraints") or []),
+            rhythmic_density=str(data.get("rhythmic_density", "medium")),
+            melodic_contour=str(data.get("melodic_contour", "wave")),
+            interval_profile=str(data.get("interval_profile", "mixed")),
+            cadence=str(data.get("cadence", "none")),
+            polyphony=str(data.get("polyphony", "monophonic")),
+            tension=str(data.get("tension", "medium")),
+            motif_id=str(data.get("motif_id", "A")),
+            motif_strategy=str(data.get("motif_strategy", "repeat")),
             llm_provider=str(data.get("llm_provider", "mock")),
             llm_model=str(data.get("llm_model", "mock-rule-system")),
             agent_mode=str(data.get("agent_mode", "mock")),
@@ -219,7 +341,14 @@ class MeasurePlan:
     function: str
     rhythm: str
     density: str
-    cadence: str = ""
+    cadence: str = "none"
+    rhythmic_density: str = "medium"
+    melodic_contour: str = "wave"
+    interval_profile: str = "mixed"
+    polyphony: str = "monophonic"
+    tension: str = "medium"
+    motif_id: str = "A"
+    motif_strategy: str = "repeat"
     notes: list[str] = field(default_factory=list)
     texture: str = "melody_accompaniment"
     description: str = ""
@@ -240,7 +369,14 @@ class MeasurePlan:
             function=str(data.get("function", "tonic")),
             rhythm=str(data.get("rhythm", "quarter pulse")),
             density=str(data.get("density", "medium")),
-            cadence=str(data.get("cadence", "")),
+            cadence=str(data.get("cadence", "none") or "none").replace(" cadence", ""),
+            rhythmic_density=str(data.get("rhythmic_density") or data.get("density") or "medium"),
+            melodic_contour=str(data.get("melodic_contour", "wave")),
+            interval_profile=str(data.get("interval_profile", "mixed")),
+            polyphony=str(data.get("polyphony", "monophonic")),
+            tension=str(data.get("tension", "medium")),
+            motif_id=str(data.get("motif_id", "A")),
+            motif_strategy=str(data.get("motif_strategy", "repeat")),
             notes=list(data.get("notes") or []),
             texture=str(data.get("texture", "melody_accompaniment")),
             description=str(data.get("description", "")),

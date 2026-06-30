@@ -1,0 +1,13 @@
+{
+  "note_input_success_rate": 1.0,
+  "keyboard_shortcut_success_rate": 1.0,
+  "drag_edit_success_rate": 1.0,
+  "selection_mapping_success_rate": 1.0,
+  "undo_redo_success_rate": 1.0,
+  "autosave_recovery_success_rate": 1.0,
+  "project_migration_success_rate": 1.0,
+  "agent_preserve_manual_edit_score": 1.0,
+  "accompaniment_generation_success_rate": 1.0,
+  "musicxml_valid_after_edit_rate": 1.0,
+  "overall_workbench_edit_score": 1.0
+}

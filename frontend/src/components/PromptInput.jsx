@@ -4,7 +4,9 @@ const OPTIONS = {
   key: ["C major", "G major", "D major", "A minor", "D minor", "E minor", "F major"],
   meter: ["4/4", "3/4", "6/8"],
   length: [8, 16, 32],
-  difficulty: ["beginner", "intermediate", "advanced"]
+  difficulty: ["beginner", "intermediate", "advanced"],
+  generator_mode: ["rule_based", "model_based", "hybrid_v04", "hybrid_v05"],
+  model_task_type: ["melody_fragment", "motif_variation", "cadence_generation", "rhythm_rewrite"]
 };
 
 function updateParam(params, setParams, key, value) {
@@ -28,7 +30,7 @@ export default function PromptInput({ disabled, onGenerate, params, prompt, setP
       />
 
       <div className="parameter-panel" aria-label="Quick parameters">
-        {["style", "instrument", "key", "meter", "length", "difficulty"].map((key) => (
+        {["style", "instrument", "key", "meter", "length", "difficulty", "generator_mode", "model_task_type"].map((key) => (
           <label key={key}>
             <span>{key}</span>
             <select

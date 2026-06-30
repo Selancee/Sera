@@ -1,0 +1,65 @@
+{
+  "rows": 5,
+  "summary": {
+    "v04_model_based": {
+      "musicxml_validity_rate": 1.0,
+      "midi_export_success_rate": 1.0,
+      "rhythmic_diversity_score": 0.6,
+      "quarter_note_dominance_score": 0.1095,
+      "melodic_interval_variety_score": 0.5,
+      "stepwise_overuse_penalty": 0.0,
+      "cadence_presence_score": 1.0,
+      "overall_musicality_proxy_score": 0.6086,
+      "average_generation_time": 0.4485,
+      "count": 1.0
+    },
+    "v04_rule_based": {
+      "musicxml_validity_rate": 1.0,
+      "midi_export_success_rate": 1.0,
+      "rhythmic_diversity_score": 0.6,
+      "quarter_note_dominance_score": 0.1095,
+      "melodic_interval_variety_score": 0.5,
+      "stepwise_overuse_penalty": 0.0,
+      "cadence_presence_score": 1.0,
+      "overall_musicality_proxy_score": 0.6086,
+      "average_generation_time": 0.0886,
+      "count": 1.0
+    },
+    "v05_model_fragment": {
+      "musicxml_validity_rate": 1.0,
+      "midi_export_success_rate": 1.0,
+      "rhythmic_diversity_score": 0.6,
+      "quarter_note_dominance_score": 0.1095,
+      "melodic_interval_variety_score": 0.5,
+      "stepwise_overuse_penalty": 0.0,
+      "cadence_presence_score": 0.0,
+      "overall_musicality_proxy_score": 0.5086,
+      "average_generation_time": 0.0965,
+      "count": 1.0
+    },
+    "v05_hybrid": {
+      "musicxml_validity_rate": 1.0,
+      "midi_export_success_rate": 1.0,
+      "rhythmic_diversity_score": 0.6,
+      "quarter_note_dominance_score": 0.3014,
+      "melodic_interval_variety_score": 1.0,
+      "stepwise_overuse_penalty": 0.0,
+      "cadence_presence_score": 1.0,
+      "overall_musicality_proxy_score": 0.769,
+      "average_generation_time": 0.0639,
+      "count": 1.0
+    },
+    "v05_hybrid_without_postprocess": {
+      "musicxml_validity_rate": 1.0,
+      "midi_export_success_rate": 1.0,
+      "rhythmic_diversity_score": 0.6,
+      "quarter_note_dominance_score": 0.1095,
+      "melodic_interval_variety_score": 0.5,
+      "stepwise_overuse_penalty": 0.0,
+      "cadence_presence_score": 0.0,
+      "overall_musicality_proxy_score": 0.5086,
+      "average_generation_time": 0.103,
+      "count": 1.0
+    }
+  }
+}

@@ -23,7 +23,16 @@ class CompositionPlanningAgent:
         progression = self._progression_for_intent(intent, mode)
         sections = self._sections_for_form(intent.form, bars)
         section_ranges = self._section_plan_from_sections(sections)
+        section_ranges = self._add_section_controls(section_ranges, intent)
         intent.section_plan = section_ranges
+        intent.rhythmic_density = self._density_for_index(1, bars, intent.mood, intent.difficulty)
+        intent.melodic_contour = self._contour_for_section(sections[0], 1, bars)
+        intent.interval_profile = "mixed"
+        intent.cadence = "authentic"
+        intent.polyphony = "chordal" if intent.texture == "chordal" else "monophonic"
+        intent.tension = "medium"
+        intent.motif_id = "A"
+        intent.motif_strategy = "repeat"
 
         measures: list[MeasurePlan] = []
         section_end_indexes = {self._range_end(item["measures"]) for item in section_ranges}
@@ -32,16 +41,19 @@ class CompositionPlanningAgent:
         for index in range(1, bars + 1):
             section = sections[index - 1]
             chord = progression[(index - 1) % len(progression)]
-            cadence = ""
+            cadence = "none"
             if index == bars:
-                cadence = "authentic cadence"
+                cadence = "authentic"
                 chord = "i" if mode == "minor" else "I"
             elif index in phrase_end_indexes:
-                cadence = "half cadence" if index < bars else "authentic cadence"
-                if cadence == "half cadence":
+                cadence = "half" if index < bars else "authentic"
+                if cadence == "half":
                     chord = "V"
             rhythm = self._rhythm_for_signature(intent.time_signature, index, intent.texture, cadence)
             density = self._density_for_index(index, bars, intent.mood, intent.difficulty)
+            contour = self._contour_for_section(section, index, bars)
+            interval_profile = self._interval_profile_for_index(index, contour, intent.difficulty)
+            motif_strategy = self._motif_strategy(index, section, cadence)
             measures.append(
                 MeasurePlan(
                     index=index,
@@ -51,6 +63,13 @@ class CompositionPlanningAgent:
                     rhythm=rhythm,
                     density=density,
                     cadence=cadence,
+                    rhythmic_density=density if density in {"low", "medium", "high"} else "low",
+                    melodic_contour=contour,
+                    interval_profile=interval_profile,
+                    polyphony="chordal" if intent.texture == "chordal" else "monophonic",
+                    tension="high" if chord in {"V", "V7"} or cadence == "half" else "low" if cadence == "authentic" else "medium",
+                    motif_id="cadence" if cadence != "none" else ("B" if section == "B" else "A"),
+                    motif_strategy=motif_strategy,
                     notes=self._motif_hint(index, mode, section, cadence),
                     texture=intent.texture,
                     description=self._measure_description(section, index, bars, cadence),
@@ -67,6 +86,12 @@ class CompositionPlanningAgent:
             "harmony": intent.harmony,
             "harmony_plan": progression,
             "section_plan": section_ranges,
+            "v05_controls": {
+                "rhythmic_density": "planned per section and measure",
+                "melodic_contour": "planned per section and measure",
+                "cadence": "half cadences at phrase ends, authentic cadence at final bar",
+                "model_task_type": "melody_fragment",
+            },
             "schema_valid": schema_valid,
             "schema_errors": schema_errors,
             "revision_targets": [
@@ -77,9 +102,9 @@ class CompositionPlanningAgent:
             ],
             # TODO: make this phrase graph editable in the UI for user-directed
             # planning experiments instead of regenerating the whole plan.
-            "planning_notes": "Rule-based V0.2 phrase graph with deterministic motif repetition and variation.",
+            "planning_notes": "V0.5 phrase graph with explicit rhythmic density, contour, cadence, and motif controls.",
         }
-        return CompositionPlan(intent=intent, measures=measures, global_plan=global_plan, baseline="rule_based_v0_2")
+        return CompositionPlan(intent=intent, measures=measures, global_plan=global_plan, baseline="rule_based_v0_5_plan")
 
     @staticmethod
     def _progression_for_intent(intent: StructuredMusicIntent, mode: str) -> list[str]:
@@ -131,6 +156,19 @@ class CompositionPlanningAgent:
         return plan
 
     @staticmethod
+    def _add_section_controls(section_ranges: list[dict[str, str]], intent: StructuredMusicIntent) -> list[dict[str, str]]:
+        controlled: list[dict[str, str]] = []
+        for index, section in enumerate(section_ranges):
+            label = section["section"]
+            controls = dict(section)
+            controls["rhythmic_density"] = "high" if label == "B" and intent.difficulty != "beginner" else "medium"
+            controls["melodic_contour"] = "arch" if label == "A" else "wave"
+            controls["cadence"] = "authentic" if index == len(section_ranges) - 1 else "half"
+            controls["motif_strategy"] = "sequence_up" if label == "B" else "repeat"
+            controlled.append(controls)
+        return controlled
+
+    @staticmethod
     def _range_end(range_text: str) -> int:
         return int(range_text.split("-")[-1])
 
@@ -152,7 +190,7 @@ class CompositionPlanningAgent:
 
     @staticmethod
     def _rhythm_for_signature(time_signature: str, index: int, texture: str, cadence: str) -> str:
-        if cadence:
+        if cadence != "none":
             return "cadential long-short closure"
         if time_signature == "3/4":
             return "three quarter pulses" if index % 2 else "half plus quarter"
@@ -169,12 +207,44 @@ class CompositionPlanningAgent:
         if difficulty == "advanced":
             return "high" if index > bars // 3 else "medium"
         if index == bars:
-            return "cadential"
+            return "low"
         if mood == "energetic" and index > bars // 2:
             return "high"
         if index % 4 == 0:
             return "low"
         return "medium"
+
+    @staticmethod
+    def _contour_for_section(section: str, index: int, bars: int) -> str:
+        if index > bars - 4:
+            return "descending"
+        if section == "B":
+            return "wave"
+        if index % 4 in {1, 2}:
+            return "ascending"
+        if index % 4 == 3:
+            return "arch"
+        return "descending"
+
+    @staticmethod
+    def _interval_profile_for_index(index: int, contour: str, difficulty: str) -> str:
+        if difficulty == "beginner":
+            return "stepwise"
+        if contour in {"arch", "wave"} or index % 3 == 0:
+            return "mixed"
+        if difficulty == "advanced" and index % 5 == 0:
+            return "leaping"
+        return "mixed"
+
+    @staticmethod
+    def _motif_strategy(index: int, section: str, cadence: str) -> str:
+        if cadence != "none":
+            return "cadence"
+        if section == "B":
+            return "sequence_up" if index % 2 else "sequence_down"
+        if index > 8:
+            return "rhythmic_variation"
+        return "repeat"
 
     @staticmethod
     def _function_for_chord(chord: str) -> str:
@@ -205,7 +275,7 @@ class CompositionPlanningAgent:
             ["b3", "4", "5", "b6"],
             ["5", "4", "7", "1"],
         ]
-        if cadence == "authentic cadence":
+        if cadence == "authentic":
             return ["5", "4", "2", "1"] if mode == "major" else ["5", "4", "7", "1"]
         source = minor if mode == "minor" else major
         motif = list(source[(index - 1) % len(source)])
@@ -217,9 +287,9 @@ class CompositionPlanningAgent:
 
     @staticmethod
     def _measure_description(section: str, index: int, bars: int, cadence: str) -> str:
-        if cadence == "authentic cadence":
+        if cadence == "authentic":
             return "final cadence and closure"
-        if cadence:
+        if cadence != "none":
             return "phrase cadence"
         if index <= 4:
             return "opening motif"

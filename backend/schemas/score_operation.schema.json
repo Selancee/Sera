@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScoreOperation V0.6",
+  "type": "object",
+  "required": ["operation_id", "timestamp", "source", "type", "target", "before", "after", "description"],
+  "properties": {
+    "operation_id": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "source": { "type": "string", "enum": ["user", "agent", "validator", "system"] },
+    "type": { "type": "string" },
+    "target": { "type": "object" },
+    "before": { "type": "object" },
+    "after": { "type": "object" },
+    "description": { "type": "string" }
+  }
+}
+

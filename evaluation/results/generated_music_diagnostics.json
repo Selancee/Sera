@@ -1,0 +1,189 @@
+{
+  "input_dir": "examples/scores",
+  "summary": {
+    "file_count": 3,
+    "rhythm_distribution": {
+      "dotted_rhythm_ratio": 0.0,
+      "eighth_note_ratio": 0.0,
+      "quarter_note_ratio": 1.0,
+      "rest_ratio": 0.0,
+      "sixteenth_note_ratio": 0.0,
+      "syncopation_ratio": 0.0,
+      "triplet_ratio": 0.0
+    },
+    "pitch_interval_distribution": {
+      "ascending_ratio": 0.45161290322580644,
+      "average_interval_size": 2.064516129032258,
+      "descending_ratio": 0.45161290322580644,
+      "fourth_plus_leap_ratio": 0.0,
+      "max_leap": 4.0,
+      "same_pitch_ratio": 0.09677419354838708,
+      "stepwise_second_ratio": 0.6451612903225806,
+      "third_leap_ratio": 0.25806451612903225
+    },
+    "rhythm_complexity": {
+      "average_notes_per_bar": 4.0,
+      "max_consecutive_same_duration": 32.0,
+      "quarter_note_dominance_score": 1.0,
+      "rhythmic_entropy": 0.0,
+      "unique_duration_count": 1.0
+    },
+    "phrase_metrics": {
+      "cadence_like_ending_ratio": 1.0,
+      "motif_recurrence_ratio": 0.9333333333333332,
+      "phrase_length_estimate": 4.0,
+      "repetition_ratio": 0.09677419354838708
+    },
+    "failure_modes": {
+      "identical_bar_rhythm": 1.0,
+      "missing_cadence": 0.0,
+      "narrow_pitch_range": 0.0,
+      "too_many_consecutive_quarters": 1.0,
+      "too_many_same_direction_steps": 0.0
+    },
+    "melody_contour_distribution": {
+      "wave": 1.0
+    }
+  },
+  "files": [
+    {
+      "source": "examples\\scores\\20260627T162313753230Z.musicxml",
+      "note_count": 32,
+      "pitched_note_count": 32,
+      "measure_count": 8,
+      "rhythm_distribution": {
+        "quarter_note_ratio": 1.0,
+        "eighth_note_ratio": 0.0,
+        "sixteenth_note_ratio": 0.0,
+        "dotted_rhythm_ratio": 0.0,
+        "triplet_ratio": 0.0,
+        "rest_ratio": 0.0,
+        "syncopation_ratio": 0.0
+      },
+      "pitch_interval_distribution": {
+        "same_pitch_ratio": 0.0967741935483871,
+        "stepwise_second_ratio": 0.6451612903225806,
+        "third_leap_ratio": 0.25806451612903225,
+        "fourth_plus_leap_ratio": 0.0,
+        "ascending_ratio": 0.45161290322580644,
+        "descending_ratio": 0.45161290322580644,
+        "max_leap": 4,
+        "average_interval_size": 2.064516129032258
+      },
+      "melody_contour": "wave",
+      "rhythm_complexity": {
+        "unique_duration_count": 1,
+        "rhythmic_entropy": 0.0,
+        "average_notes_per_bar": 4.0,
+        "max_consecutive_same_duration": 32,
+        "quarter_note_dominance_score": 1.0
+      },
+      "phrase_metrics": {
+        "phrase_length_estimate": 4,
+        "cadence_like_ending_ratio": 1.0,
+        "repetition_ratio": 0.0967741935483871,
+        "motif_recurrence_ratio": 0.9333333333333333
+      },
+      "failure_modes": {
+        "too_many_consecutive_quarters": true,
+        "too_many_same_direction_steps": false,
+        "narrow_pitch_range": false,
+        "missing_cadence": false,
+        "identical_bar_rhythm": true
+      }
+    },
+    {
+      "source": "examples\\scores\\20260627T162900357847Z.musicxml",
+      "note_count": 32,
+      "pitched_note_count": 32,
+      "measure_count": 8,
+      "rhythm_distribution": {
+        "quarter_note_ratio": 1.0,
+        "eighth_note_ratio": 0.0,
+        "sixteenth_note_ratio": 0.0,
+        "dotted_rhythm_ratio": 0.0,
+        "triplet_ratio": 0.0,
+        "rest_ratio": 0.0,
+        "syncopation_ratio": 0.0
+      },
+      "pitch_interval_distribution": {
+        "same_pitch_ratio": 0.0967741935483871,
+        "stepwise_second_ratio": 0.6451612903225806,
+        "third_leap_ratio": 0.25806451612903225,
+        "fourth_plus_leap_ratio": 0.0,
+        "ascending_ratio": 0.45161290322580644,
+        "descending_ratio": 0.45161290322580644,
+        "max_leap": 4,
+        "average_interval_size": 2.064516129032258
+      },
+      "melody_contour": "wave",
+      "rhythm_complexity": {
+        "unique_duration_count": 1,
+        "rhythmic_entropy": 0.0,
+        "average_notes_per_bar": 4.0,
+        "max_consecutive_same_duration": 32,
+        "quarter_note_dominance_score": 1.0
+      },
+      "phrase_metrics": {
+        "phrase_length_estimate": 4,
+        "cadence_like_ending_ratio": 1.0,
+        "repetition_ratio": 0.0967741935483871,
+        "motif_recurrence_ratio": 0.9333333333333333
+      },
+      "failure_modes": {
+        "too_many_consecutive_quarters": true,
+        "too_many_same_direction_steps": false,
+        "narrow_pitch_range": false,
+        "missing_cadence": false,
+        "identical_bar_rhythm": true
+      }
+    },
+    {
+      "source": "examples\\scores\\20260627T163136556317Z.musicxml",
+      "note_count": 32,
+      "pitched_note_count": 32,
+      "measure_count": 8,
+      "rhythm_distribution": {
+        "quarter_note_ratio": 1.0,
+        "eighth_note_ratio": 0.0,
+        "sixteenth_note_ratio": 0.0,
+        "dotted_rhythm_ratio": 0.0,
+        "triplet_ratio": 0.0,
+        "rest_ratio": 0.0,
+        "syncopation_ratio": 0.0
+      },
+      "pitch_interval_distribution": {
+        "same_pitch_ratio": 0.0967741935483871,
+        "stepwise_second_ratio": 0.6451612903225806,
+        "third_leap_ratio": 0.25806451612903225,
+        "fourth_plus_leap_ratio": 0.0,
+        "ascending_ratio": 0.45161290322580644,
+        "descending_ratio": 0.45161290322580644,
+        "max_leap": 4,
+        "average_interval_size": 2.064516129032258
+      },
+      "melody_contour": "wave",
+      "rhythm_complexity": {
+        "unique_duration_count": 1,
+        "rhythmic_entropy": 0.0,
+        "average_notes_per_bar": 4.0,
+        "max_consecutive_same_duration": 32,
+        "quarter_note_dominance_score": 1.0
+      },
+      "phrase_metrics": {
+        "phrase_length_estimate": 4,
+        "cadence_like_ending_ratio": 1.0,
+        "repetition_ratio": 0.0967741935483871,
+        "motif_recurrence_ratio": 0.9333333333333333
+      },
+      "failure_modes": {
+        "too_many_consecutive_quarters": true,
+        "too_many_same_direction_steps": false,
+        "narrow_pitch_range": false,
+        "missing_cadence": false,
+        "identical_bar_rhythm": true
+      }
+    }
+  ],
+  "failures": []
+}

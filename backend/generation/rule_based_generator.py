@@ -156,9 +156,23 @@ class RuleBasedGenerator:
         mode: str,
         time: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        durations = self._melody_durations(time, measure.cadence, texture)
+        durations = self._melody_durations(
+            time,
+            measure.cadence,
+            texture,
+            getattr(measure, "rhythmic_density", measure.density),
+            measure.index,
+        )
         count = len(durations)
-        melody = self._melody_pitches(measure.notes, tonic_pc, mode, count, measure.cadence)
+        melody = self._melody_pitches(
+            measure.notes,
+            tonic_pc,
+            mode,
+            count,
+            measure.cadence,
+            getattr(measure, "melodic_contour", "wave"),
+            getattr(measure, "interval_profile", "mixed"),
+        )
         if texture == "chordal":
             chord = self._chord_pitches(measure.chord, tonic_pc, mode, octave=4, low=57, high=84)
             return [
@@ -187,7 +201,13 @@ class RuleBasedGenerator:
             pitches = [pattern[index % len(pattern)] for index in range(len(durations))]
             return [self._event([pitch], duration, 2, 2, offset) for pitch, (offset, duration) in zip(pitches, self._offsets(durations), strict=False)]
         if texture == "simple_counterpoint":
-            durations = self._melody_durations(time, measure.cadence, texture)
+            durations = self._melody_durations(
+                time,
+                measure.cadence,
+                texture,
+                getattr(measure, "rhythmic_density", measure.density),
+                measure.index,
+            )
             contour = [chord[2], chord[1], chord[0], bass]
             pitches = [self._bass_pitch(contour[index % len(contour)]) for index in range(len(durations))]
             return [self._event([pitch], duration, 2, 2, offset) for pitch, (offset, duration) in zip(pitches, self._offsets(durations), strict=False)]
@@ -213,17 +233,39 @@ class RuleBasedGenerator:
         return pairs
 
     @staticmethod
-    def _melody_durations(time: dict[str, Any], cadence: str, texture: str) -> list[int]:
+    def _melody_durations(
+        time: dict[str, Any],
+        cadence: str,
+        texture: str,
+        density: str = "medium",
+        measure_index: int = 1,
+    ) -> list[int]:
         total = time["expected_duration"]
-        if cadence:
+        if cadence in {"authentic", "half", "authentic cadence", "half cadence"}:
+            if total >= 8 and cadence in {"authentic", "authentic cadence"}:
+                return [2, 2, 4]
             return [total // 2, total - (total // 2)]
         if time["beat_type"] == 8:
-            return [1] * total if texture in {"arpeggiated", "simple_counterpoint"} else [3, 3]
+            if density == "high" or texture in {"arpeggiated", "simple_counterpoint"}:
+                return [1] * total
+            if density == "medium":
+                return [1, 1, 2, 2] if total == 6 else [1] * total
+            return [3, 3]
         if time["beats"] == 3:
-            return [2, 2, 2]
+            if density == "high":
+                return [1, 1, 1, 1, 2]
+            if density == "medium":
+                return [2, 1, 1, 2] if measure_index % 2 else [1, 1, 2, 2]
+            return [4, 2]
         if texture == "arpeggiated":
-            return [2, 2, 2, 2]
-        return [2, 2, 2, 2]
+            return [1, 1, 2, 1, 1, 2] if density != "low" else [2, 2, 2, 2]
+        if density == "high":
+            patterns = [[1, 1, 1, 1, 2, 2], [1, 1, 2, 1, 1, 2], [2, 1, 1, 1, 1, 2]]
+            return patterns[(measure_index - 1) % len(patterns)]
+        if density == "low":
+            return [4, 4] if measure_index % 2 else [6, 2]
+        patterns = [[1, 1, 2, 2, 2], [2, 1, 1, 2, 2], [3, 1, 2, 2], [2, 2, 1, 1, 2]]
+        return patterns[(measure_index - 1) % len(patterns)]
 
     @staticmethod
     def _melody_pitches(
@@ -232,10 +274,21 @@ class RuleBasedGenerator:
         mode: str,
         count: int,
         cadence: str,
+        contour: str = "wave",
+        interval_profile: str = "mixed",
     ) -> list[int]:
-        if cadence == "authentic cadence":
-            degree_hints = ["5", "1"]
-        hints = list(degree_hints or ["1", "2", "3", "5"])
+        if cadence in {"authentic", "authentic cadence"}:
+            degree_hints = ["5", "7", "1"]
+        elif cadence in {"half", "half cadence"}:
+            degree_hints = ["2", "4", "5"]
+        hints = list(degree_hints or RuleBasedGenerator._contour_degrees(contour, interval_profile, mode))
+        if interval_profile == "leaping" and cadence in {"none", ""}:
+            hints = ["1", "5", "3", "6", "4", "7"]
+        elif contour in {"ascending", "descending", "arch", "wave", "static"}:
+            hints = RuleBasedGenerator._merge_degree_hints(
+                hints,
+                RuleBasedGenerator._contour_degrees(contour, interval_profile, mode),
+            )
         while len(hints) < count:
             hints.extend(hints)
         hints = hints[:count]
@@ -244,7 +297,7 @@ class RuleBasedGenerator:
         for pos, degree in enumerate(hints):
             semitone = degree_map.get(degree, 0)
             midi_number = 60 + tonic_pc + semitone
-            if pos >= count - 2 and cadence:
+            if pos >= count - 2 and cadence not in {"none", ""}:
                 midi_number = 60 + tonic_pc + (7 if degree == "5" else 0)
             while midi_number > 81:
                 midi_number -= 12
@@ -252,6 +305,35 @@ class RuleBasedGenerator:
                 midi_number += 12
             pitches.append(midi_number)
         return pitches
+
+    @staticmethod
+    def _contour_degrees(contour: str, interval_profile: str, mode: str) -> list[str]:
+        third = "b3" if mode == "minor" else "3"
+        sixth = "b6" if mode == "minor" else "6"
+        if contour == "ascending":
+            return ["1", "2", third, "5", sixth]
+        if contour == "descending":
+            return [sixth, "5", third, "2", "1"]
+        if contour == "arch":
+            return ["1", third, "5", sixth, "5", third]
+        if contour == "static":
+            return [third, third, "2", third]
+        if interval_profile == "leaping":
+            return ["1", "5", third, sixth, "4", "2"]
+        return ["1", third, "2", "5", "4", sixth]
+
+    @staticmethod
+    def _merge_degree_hints(primary: list[str], contour: list[str]) -> list[str]:
+        merged: list[str] = []
+        for index in range(max(len(primary), len(contour))):
+            source = contour if index % 2 else primary
+            if index < len(source):
+                merged.append(source[index])
+            elif index < len(primary):
+                merged.append(primary[index])
+            elif index < len(contour):
+                merged.append(contour[index])
+        return merged or contour
 
     @staticmethod
     def _chord_pitches(chord: str, tonic_pc: int, mode: str, octave: int, low: int, high: int) -> list[int]:

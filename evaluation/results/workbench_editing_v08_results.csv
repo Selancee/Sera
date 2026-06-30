@@ -1,0 +1,4 @@
+case_id,type,prompt,note_input_success_rate,keyboard_shortcut_success_rate,drag_edit_success_rate,selection_mapping_success_rate,undo_redo_success_rate,autosave_recovery_success_rate,project_migration_success_rate,agent_preserve_manual_edit_score,accompaniment_generation_success_rate,musicxml_valid_after_edit_rate,overall_workbench_edit_score
+v08_001,note_input,Insert a quarter-note C in measure 1.,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+v08_002,note_input,Input an eighth-note melody in the right hand.,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+v08_003,note_input,Add a rest after the selected note.,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0

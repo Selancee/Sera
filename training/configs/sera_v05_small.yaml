@@ -1,0 +1,41 @@
+seed: 42
+model:
+  architecture: decoder_only_transformer
+  implementation: torch_native
+  max_sequence_length: 1024
+  seq_len: 1024
+  d_model: 384
+  n_layers: 6
+  n_heads: 6
+  dim_feedforward: 1536
+  dropout: 0.15
+  sample_max_new_tokens: 192
+data:
+  dataset_path: data/tokenized_v05/multitask_dataset.jsonl
+  train_tokens: data/tokenized_v05/multitask_dataset.jsonl
+  seq_len: 1024
+  validation_split: 0.1
+  min_frequency: 1
+  max_examples: 0
+  tasks:
+    - melody_fragment_generation
+    - motif_variation
+    - cadence_generation
+    - rhythm_rewrite
+training:
+  batch_size: 4
+  gradient_accumulation_steps: 8
+  learning_rate: 0.0003
+  num_epochs: 30
+  fp16: true
+  save_every_steps: 500
+  eval_every_steps: 500
+generation:
+  temperature: 1.15
+  top_p: 0.92
+  top_k: 60
+  repetition_penalty: 1.2
+  no_repeat_ngram_size: 4
+  max_consecutive_same_duration: 3
+  max_consecutive_stepwise_motion: 4
+  duration_diversity_penalty: true

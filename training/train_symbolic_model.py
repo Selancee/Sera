@@ -42,6 +42,9 @@ class TrainSettings:
     gradient_accumulation_steps: int = 1
     seed: int = 42
     sample_max_new_tokens: int = 256
+    fp16: bool = False
+    save_every_steps: int = 500
+    eval_every_steps: int = 500
 
 
 def load_config(path: Path) -> dict[str, Any]:
@@ -59,15 +62,21 @@ def resolve_settings(config: dict[str, Any]) -> TrainSettings:
 
     model = config.get("model", {}) or {}
     data = config.get("data", {}) or {}
+    training = config.get("training", {}) or {}
     optimization = config.get("optimization", {}) or {}
     settings = TrainSettings()
-    settings.batch_size = int(optimization.get("batch_size", settings.batch_size))
-    settings.epochs = int(optimization.get("epochs", settings.epochs))
-    settings.learning_rate = float(optimization.get("learning_rate", settings.learning_rate))
+    settings.batch_size = int(training.get("batch_size", optimization.get("batch_size", settings.batch_size)))
+    settings.epochs = int(training.get("num_epochs", optimization.get("epochs", settings.epochs)))
+    settings.learning_rate = float(training.get("learning_rate", optimization.get("learning_rate", settings.learning_rate)))
     settings.gradient_accumulation_steps = int(
-        optimization.get("gradient_accumulation_steps", settings.gradient_accumulation_steps)
+        training.get(
+            "gradient_accumulation_steps",
+            optimization.get("gradient_accumulation_steps", settings.gradient_accumulation_steps),
+        )
     )
-    settings.max_sequence_length = int(model.get("max_sequence_length", settings.max_sequence_length))
+    settings.max_sequence_length = int(
+        data.get("seq_len", model.get("seq_len", model.get("max_sequence_length", settings.max_sequence_length)))
+    )
     settings.d_model = int(model.get("d_model", settings.d_model))
     settings.n_layers = int(model.get("n_layers", settings.n_layers))
     settings.n_heads = int(model.get("n_heads", settings.n_heads))
@@ -77,6 +86,9 @@ def resolve_settings(config: dict[str, Any]) -> TrainSettings:
     settings.min_frequency = int(data.get("min_frequency", settings.min_frequency))
     settings.max_examples = int(data.get("max_examples", settings.max_examples))
     settings.sample_max_new_tokens = int(model.get("sample_max_new_tokens", settings.sample_max_new_tokens))
+    settings.fp16 = bool(training.get("fp16", settings.fp16))
+    settings.save_every_steps = int(training.get("save_every_steps", settings.save_every_steps))
+    settings.eval_every_steps = int(training.get("eval_every_steps", settings.eval_every_steps))
     settings.seed = int(config.get("seed", settings.seed))
     return settings
 
@@ -90,7 +102,7 @@ def load_token_rows(path: Path, max_examples: int = 0) -> list[dict[str, Any]]:
             if not line.strip():
                 continue
             row = json.loads(line)
-            if row.get("tokens"):
+            if row.get("tokens") or row.get("input_tokens") or row.get("target_tokens"):
                 rows.append(row)
             if max_examples and len(rows) >= max_examples:
                 break
@@ -110,8 +122,13 @@ def build_vocab(rows: list[dict[str, Any]], min_frequency: int) -> dict[str, int
 
     counts: Counter[str] = Counter()
     for row in rows:
-        counts.update(prompt_tokens(str(row.get("prompt", ""))))
-        counts.update(str(token) for token in row.get("tokens", []))
+        if row.get("input_tokens") or row.get("target_tokens"):
+            counts.update(str(token) for token in row.get("input_tokens", []))
+            counts.update(str(token) for token in row.get("target_tokens", []))
+            counts.update([f"task:{row.get('task_type', 'unknown')}"])
+        else:
+            counts.update(prompt_tokens(str(row.get("prompt", ""))))
+            counts.update(str(token) for token in row.get("tokens", []))
     vocab = {token: index for index, token in enumerate(SPECIAL_TOKENS)}
     for token, count in sorted(counts.items()):
         if count >= min_frequency and token not in vocab:
@@ -125,13 +142,22 @@ def encode_rows(rows: list[dict[str, Any]], vocab: dict[str, int], settings: Tra
     unk = vocab["<unk>"]
     encoded: list[list[int]] = []
     for row in rows:
-        sequence = (
-            ["<bos>", "<prompt>"]
-            + prompt_tokens(str(row.get("prompt", "")))
-            + ["<score>"]
-            + [str(token) for token in row.get("tokens", [])]
-            + ["<eos>"]
-        )
+        if row.get("input_tokens") or row.get("target_tokens"):
+            sequence = (
+                ["<bos>", "<prompt>", f"task:{row.get('task_type', 'unknown')}"]
+                + [str(token) for token in row.get("input_tokens", [])]
+                + ["<score>"]
+                + [str(token) for token in row.get("target_tokens", [])]
+                + ["<eos>"]
+            )
+        else:
+            sequence = (
+                ["<bos>", "<prompt>"]
+                + prompt_tokens(str(row.get("prompt", "")))
+                + ["<score>"]
+                + [str(token) for token in row.get("tokens", [])]
+                + ["<eos>"]
+            )
         ids = [vocab.get(token, unk) for token in sequence]
         if len(ids) < 3:
             continue
@@ -301,7 +327,9 @@ def train(args: argparse.Namespace) -> dict[str, Any]:
 
     config = load_config(Path(args.config))
     settings = resolve_settings(config)
-    rows = load_token_rows(Path(args.tokens), max_examples=args.max_examples or settings.max_examples)
+    token_path = resolve_token_path(args, config)
+    rows = load_token_rows(token_path, max_examples=args.max_examples or settings.max_examples)
+    task_counts = Counter(str(row.get("task_type", "full_musicxml")) for row in rows)
     vocab = build_vocab(rows, settings.min_frequency)
     sequences = encode_rows(rows, vocab, settings)
     if not sequences:
@@ -343,7 +371,8 @@ def train(args: argparse.Namespace) -> dict[str, Any]:
             max(1, settings.gradient_accumulation_steps),
         )
         val_loss = evaluate_loss(model, val_loader, device, pad_id) if val_loader else math.nan
-        history.append({"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss})
+        task_losses = {task: train_loss for task in task_counts}
+        history.append({"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss, "task_losses": task_losses})
         metric_for_best = val_loss if not math.isnan(val_loss) else train_loss
         if metric_for_best <= best_val:
             best_val = metric_for_best
@@ -374,6 +403,9 @@ def train(args: argparse.Namespace) -> dict[str, Any]:
         "vocab_size": len(vocab),
         "device": device,
         "settings": asdict(settings),
+        "config_snapshot": config,
+        "task_counts": dict(task_counts),
+        "task_loss_history": [{str(item["epoch"]): item.get("task_losses", {})} for item in history],
         "history": history,
         "best_loss": best_val,
         "seconds": round(time.time() - started, 3),
@@ -381,8 +413,19 @@ def train(args: argparse.Namespace) -> dict[str, Any]:
     }
     (out_dir / "vocab.json").write_text(json.dumps(vocab, ensure_ascii=False, indent=2), encoding="utf-8")
     (out_dir / "training_metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out_dir / "training_config_snapshot.json").write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
     (out_dir / "samples.json").write_text(json.dumps(samples, ensure_ascii=False, indent=2), encoding="utf-8")
     return metrics
+
+
+def resolve_token_path(args: argparse.Namespace, config: dict[str, Any]) -> Path:
+    """Prefer V0.5 config dataset_path when the CLI token path is not explicit."""
+
+    default_tokens = "data/processed/musicxml_tokens.jsonl"
+    configured = (config.get("data", {}) or {}).get("dataset_path") or (config.get("data", {}) or {}).get("train_tokens")
+    if str(args.tokens) == default_tokens and configured:
+        return Path(configured)
+    return Path(args.tokens)
 
 
 def main() -> None:
@@ -397,10 +440,10 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    token_path = Path(args.tokens)
+    config = load_config(Path(args.config))
+    token_path = resolve_token_path(args, config)
     if not token_path.exists():
         raise SystemExit(f"Token file not found: {token_path}")
-    config = load_config(Path(args.config))
     settings = resolve_settings(config)
     if args.max_examples:
         settings.max_examples = args.max_examples

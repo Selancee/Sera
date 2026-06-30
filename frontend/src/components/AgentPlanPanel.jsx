@@ -1,6 +1,14 @@
 function formatValue(value) {
   if (Array.isArray(value)) return value.join(", ");
-  if (value && typeof value === "object") return JSON.stringify(value);
+  if (value && typeof value === "object") {
+    const controls = [
+      value.rhythmic_density,
+      value.melodic_contour,
+      value.cadence,
+      value.motif_strategy
+    ].filter(Boolean);
+    return controls.length ? controls.join(" / ") : JSON.stringify(value);
+  }
   return value ?? "";
 }
 
@@ -15,7 +23,8 @@ const PLAN_KEYS = [
   "length_measures",
   "form",
   "texture",
-  "difficulty"
+  "difficulty",
+  "musical_controls"
 ];
 
 export default function AgentPlanPanel({ compact = false, result }) {
@@ -57,7 +66,8 @@ export default function AgentPlanPanel({ compact = false, result }) {
               <span>Bar</span>
               <span>Section</span>
               <span>Chord</span>
-              <span>Rhythm</span>
+              <span>Density</span>
+              <span>Contour</span>
               <span>Cadence</span>
             </div>
             {measures.map((measure) => (
@@ -65,7 +75,8 @@ export default function AgentPlanPanel({ compact = false, result }) {
                 <span>{measure.index}</span>
                 <span>{measure.section}</span>
                 <span>{measure.chord}</span>
-                <span>{measure.rhythm}</span>
+                <span>{measure.rhythmic_density || measure.density}</span>
+                <span>{measure.melodic_contour || "-"}</span>
                 <span>{measure.cadence || "-"}</span>
               </div>
             ))}

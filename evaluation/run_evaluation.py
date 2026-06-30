@@ -68,6 +68,11 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "revision_success_rate",
         "human_rating_present",
         "human_average_score",
+        "rhythmic_diversity_score",
+        "quarter_note_dominance_score",
+        "melodic_interval_variety_score",
+        "cadence_presence_score",
+        "overall_musicality_proxy_score",
         "issue_count",
         "prompt",
     ]

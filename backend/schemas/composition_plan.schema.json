@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera CompositionPlan V0.5",
+  "type": "object",
+  "required": ["intent", "measures", "global_plan"],
+  "properties": {
+    "intent": {
+      "type": "object",
+      "properties": {
+        "rhythmic_density": { "enum": ["low", "medium", "high"] },
+        "melodic_contour": { "enum": ["ascending", "descending", "arch", "wave", "static"] },
+        "interval_profile": { "enum": ["stepwise", "mixed", "leaping"] },
+        "cadence": { "enum": ["none", "half", "authentic"] },
+        "polyphony": { "enum": ["monophonic", "dyadic", "chordal"] },
+        "tension": { "enum": ["low", "medium", "high"] },
+        "motif_id": { "type": "string" },
+        "motif_strategy": {
+          "enum": ["repeat", "sequence_up", "sequence_down", "inversion", "rhythmic_variation", "cadence"]
+        }
+      }
+    },
+    "measures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["index", "section", "chord", "rhythmic_density", "melodic_contour", "cadence"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 1 },
+          "section": { "type": "string" },
+          "chord": { "type": "string" },
+          "harmony": { "type": "string" },
+          "rhythmic_density": { "enum": ["low", "medium", "high"] },
+          "melodic_contour": { "enum": ["ascending", "descending", "arch", "wave", "static"] },
+          "interval_profile": { "enum": ["stepwise", "mixed", "leaping"] },
+          "cadence": { "enum": ["none", "half", "authentic"] },
+          "polyphony": { "enum": ["monophonic", "dyadic", "chordal"] },
+          "tension": { "enum": ["low", "medium", "high"] },
+          "motif_id": { "type": "string" },
+          "motif_strategy": {
+            "enum": ["repeat", "sequence_up", "sequence_down", "inversion", "rhythmic_variation", "cadence"]
+          }
+        }
+      }
+    }
+  }
+}
