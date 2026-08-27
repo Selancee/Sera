@@ -5,6 +5,7 @@ from scripts.verify_softwarex_package import (
     keyword_count,
     main_text_word_count,
     normalized_version,
+    valid_email,
     valid_mit_license,
     valid_orcid,
     versions_match,
@@ -58,6 +59,12 @@ def test_orcid_validation_uses_iso_7064_checksum():
     assert valid_orcid("https://orcid.org/0009-0005-0394-3623")
     assert not valid_orcid("0009-0005-0394-3624")
     assert not valid_orcid("[ORCID]")
+
+
+def test_support_email_validation_rejects_placeholders_and_malformed_values():
+    assert valid_email("selanceg@gmail.com")
+    assert not valid_email("[SUPPORT EMAIL]")
+    assert not valid_email("selanceg@gmail")
 
 
 def test_tested_windows_constraints_pin_direct_dependencies():

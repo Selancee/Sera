@@ -7,6 +7,7 @@ authors:
     given-names: "Yuan"
     orcid: "https://orcid.org/0009-0005-0394-3623"
     affiliation: "Zhejiang Conservatory of Music"
+    email: "selanceg@gmail.com"
 version: "1.0.0-dev.14"
 date-released: 2026-08-23
 repository-code: "https://github.com/Selancee/Sera"

@@ -438,3 +438,19 @@
   CFF/CodeMeta/manuscript consistency checks. All 410 Python tests and the draft
   SoftwareX verifier pass; nine author-controlled submission gates remain, including
   separate MIT-code and CC0-benchmark rights confirmations.
+
+# 2026-08-27 - Phase SX24: author declarations and publication metadata closure
+
+- Recorded the author-supplied corresponding email consistently in the manuscript,
+  CFF, CodeMeta, cover letter and publication configuration.
+- Recorded explicit confirmation of the sole-author CRediT roles, no known competing
+  interests, manuscript originality/exclusive submission, MIT code authorization and
+  CC0 benchmark dedication authorization.
+- Replaced declaration and cover-letter placeholders with the confirmed statements;
+  retained public repository visibility, immutable tagging and archive DOI as the only
+  remaining strict submission gates.
+- Added support-email format and cross-file consistency validation so a malformed or
+  drifting email fails package verification rather than reaching submission artifacts.
+- Rebuilt and visually checked the eight-page PDF plus line-numbered DOCX. All 411 Python
+  tests pass; draft package verification passes; strict verification now reports exactly
+  three external blockers: public repository visibility, immutable tag and archive DOI.

@@ -2093,3 +2093,21 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
   drafted CRediT roles, manuscript originality/exclusive-submission statement, and MIT/CC0
   release authority. Public visibility, immutable tagging, archive DOI creation and
   submission remain deliberately unperformed.
+
+## 2026-08-27 - Phase 50: author-controlled declaration closure
+
+### Completed
+
+- Recorded the corresponding email and the author's explicit confirmation of the CRediT,
+  no-known-competing-interest, originality/exclusive-submission, MIT and CC0 statements.
+- Added email format and CFF/CodeMeta/manuscript consistency validation, and removed the
+  associated placeholders from the manuscript and submission documents.
+- Rebuilt and inspected the manuscript PDF/DOCX. The complete Python suite passes 411/411,
+  and strict SoftwareX verification now retains only the public repository, immutable tag
+  and permanent DOI gates.
+
+### Remaining external publication work
+
+- The private repository must remain private until the author separately authorizes public
+  visibility. An immutable release tag and permanent archive DOI can only be completed
+  after that authorization.

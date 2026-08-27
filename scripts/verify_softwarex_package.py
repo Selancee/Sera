@@ -151,6 +151,10 @@ def valid_orcid(value: str) -> bool:
     return compact[-1] == expected
 
 
+def valid_email(value: str) -> bool:
+    return bool(re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", value.strip()))
+
+
 def _manifest_hashes_match(directory: Path, manifest: dict[str, Any]) -> bool:
     files = manifest.get("files") or []
     if not files or manifest.get("file_count") != len(files):
@@ -381,9 +385,11 @@ def verify(root: Path, profile: str) -> VerificationResult:
     identity_errors: list[str] = []
     try:
         cff_author = yaml.safe_load((root / "CITATION.cff").read_text(encoding="utf-8"))["authors"][0]
-        codemeta_author = json.loads((root / "codemeta.json").read_text(encoding="utf-8"))["author"][0]
+        codemeta = json.loads((root / "codemeta.json").read_text(encoding="utf-8"))
+        codemeta_author = codemeta["author"][0]
         publication_author = str(publication.get("author_name", ""))
         publication_orcid = str(publication.get("orcid", ""))
+        support_email = str(publication.get("support_email", ""))
         if not valid_orcid(publication_orcid):
             identity_errors.append("publication ORCID is missing or fails its checksum")
         if publication_author != f"{cff_author.get('given-names', '')} {cff_author.get('family-names', '')}".strip():
@@ -396,6 +402,14 @@ def verify(root: Path, profile: str) -> VerificationResult:
             identity_errors.append("publication and CodeMeta ORCIDs differ")
         if publication_author not in manuscript or publication_orcid not in manuscript:
             identity_errors.append("manuscript author name or ORCID differs from publication metadata")
+        if not valid_email(support_email):
+            identity_errors.append("publication support email is missing or invalid")
+        if str(cff_author.get("email", "")) != support_email:
+            identity_errors.append("publication and CFF support emails differ")
+        if str(codemeta.get("maintainer", {}).get("email", "")) != support_email:
+            identity_errors.append("publication and CodeMeta support emails differ")
+        if support_email not in manuscript:
+            identity_errors.append("manuscript support email differs from publication metadata")
         for key in ("orcid", "funding_statement"):
             value = str(publication.get(key, ""))
             if not value or PLACEHOLDER_RE.search(value):

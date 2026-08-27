@@ -102,13 +102,7 @@
       "blockers": [
         "GitHub repository is not confirmed public",
         "immutable release tag is missing",
-        "permanent archive DOI is missing",
-        "copyright owner has not confirmed the MIT release",
-        "benchmark owner has not confirmed the CC0 dedication",
-        "sole-author CRediT roles have not been confirmed",
-        "competing-interest declaration has not been confirmed",
-        "manuscript originality and exclusive-submission statement has not been confirmed",
-        "publication field support_email is not supplied"
+        "permanent archive DOI is missing"
       ]
     }
   },
@@ -120,12 +114,6 @@
   "submission_blockers": [
     "GitHub repository is not confirmed public",
     "immutable release tag is missing",
-    "permanent archive DOI is missing",
-    "copyright owner has not confirmed the MIT release",
-    "benchmark owner has not confirmed the CC0 dedication",
-    "sole-author CRediT roles have not been confirmed",
-    "competing-interest declaration has not been confirmed",
-    "manuscript originality and exclusive-submission statement has not been confirmed",
-    "publication field support_email is not supplied"
+    "permanent archive DOI is missing"
   ]
 }

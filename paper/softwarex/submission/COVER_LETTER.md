@@ -33,8 +33,8 @@ Before submission, replace this paragraph with the permanent tagged repository a
 archive DOI: [PUBLIC RELEASE URL AND DOI]. The code is prepared under the MIT License
 and the synthetic benchmark under CC0-1.0.
 
-The sole author will confirm before submission that this manuscript is original and
-is not under consideration elsewhere. [CONFIRM OR EDIT THIS STATEMENT.]
+The sole author confirms that this manuscript is original and is not under
+consideration elsewhere.
 
 Sincerely,
 
@@ -42,4 +42,4 @@ Yuan Gao
 
 Zhejiang Conservatory of Music
 
-[SUPPORT EMAIL]
+selanceg@gmail.com

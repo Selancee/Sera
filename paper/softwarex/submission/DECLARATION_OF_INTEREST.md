@@ -1,5 +1,4 @@
 # Declaration of competing interest
 
-[THE AUTHORS DECLARE THAT THEY HAVE NO KNOWN COMPETING FINANCIAL INTERESTS OR
-PERSONAL RELATIONSHIPS THAT COULD HAVE APPEARED TO INFLUENCE THE WORK REPORTED IN
-THIS PAPER. IF THIS IS NOT ACCURATE, REPLACE IT WITH THE COMPLETE DISCLOSURE.]
+The author declares that there are no known competing financial interests or personal
+relationships that could have appeared to influence the work reported in this paper.

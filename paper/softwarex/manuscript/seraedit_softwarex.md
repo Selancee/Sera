@@ -4,7 +4,7 @@
 
 **Zhejiang Conservatory of Music, No. 1 Zheyin Road, Zhuantang Street, Xihu District, Hangzhou, Zhejiang Province, China 310024**
 
-**Corresponding author:** [SUPPORT EMAIL]
+**Corresponding author:** selanceg@gmail.com
 
 **ORCID:** 0009-0005-0394-3623
 
@@ -241,7 +241,7 @@ evaluation rather than weakening transaction safeguards.
 | C6 | Software code languages, tools and services used | Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML |
 | C7 | Compilation requirements, operating environments and dependencies | Python >=3.10; Node.js/npm for interface development; Windows 10/11 desktop; requirements, tested Windows constraints, and npm lock files |
 | C8 | Developer documentation/manual | `docs/softwarex/API_REFERENCE.md`, `INSTALLATION.md`, `USER_MANUAL.md`, `REVIEWER_GUIDE.md`, and generated OpenAPI `/docs` |
-| C9 | Support email for questions | `[SUPPORT EMAIL]` |
+| C9 | Support email for questions | `selanceg@gmail.com` |
 
 ## Software metadata
 
@@ -254,7 +254,7 @@ evaluation rather than weakening transaction safeguards.
 | S5 | Computing platforms/operating systems | Windows 10/11 x64; source-level core also uses Python >=3.10 |
 | S6 | Installation requirements and dependencies | See `docs/softwarex/INSTALLATION.md` |
 | S7 | User manual | `docs/softwarex/USER_MANUAL.md` |
-| S8 | Support email | `[SUPPORT EMAIL]` |
+| S8 | Support email | `selanceg@gmail.com` |
 
 ## Author contributions
 
@@ -268,7 +268,8 @@ commercial, or not-for-profit sectors.
 
 ## Declaration of competing interest
 
-[THE AUTHORS DECLARE NO KNOWN COMPETING INTERESTS, OR INSERT THE REQUIRED DISCLOSURE.]
+The author declares that there are no known competing financial interests or personal
+relationships that could have appeared to influence the work reported in this paper.
 
 ## Data and code availability
 
