@@ -24,11 +24,11 @@ MAX_FILE_BYTES = 20 * 1024 * 1024
 ROOT_FILES = (
     ".env.example", "LICENSE", "THIRD_PARTY_NOTICES.md", "CITATION.cff",
     "codemeta.json", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "SECURITY.md",
-    "pyproject.toml", "requirements.txt",
+    "pyproject.toml", "requirements.txt", "requirements-tested-windows.txt",
     "requirements-training.txt", "requirements-publication.txt",
 )
 SOURCE_TREES = (
-    "backend", "sera_edit", "frontend", "electron", "integrations/musescore",
+    ".github", "backend", "sera_edit", "frontend", "electron", "integrations/musescore",
     "benchmark", "demo", "scripts", "tests", "packaging/windows",
     "docs/softwarex", "docs/architecture", "evaluation/conditions",
     "evaluation/metrics", "evaluation/runners", "evaluation/statistics",

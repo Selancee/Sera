@@ -267,7 +267,27 @@ def validate_split(benchmark_root: Path, split_name: str) -> dict[str, Any]:
             }
         )
     valid_count = sum(1 for item in details if item["valid"])
-    pending_review = sum(1 for item in details if item.get("review_status") == "pending_human_review")
+    metadata_pending = sum(1 for item in details if item.get("review_status") == "pending_human_review")
+    external_review: dict[str, Any] = {"available": False, "review_complete": False}
+    evidence_path = ROOT / "experiments" / "softwarex_human_review_120_v1" / "summary.json"
+    if benchmark_root.resolve() == (ROOT / "benchmark").resolve() and evidence_path.is_file():
+        evidence = _load(evidence_path)
+        if str(evidence.get("split_id")) == split_name:
+            externally_complete = bool(
+                evidence.get("review_complete")
+                and int(evidence.get("primary_reviewed", 0)) == len(details)
+                and int(evidence.get("stale_records", -1)) == 0
+            )
+            external_review = {
+                "available": True,
+                "review_complete": externally_complete,
+                "primary_reviewed": int(evidence.get("primary_reviewed", 0)),
+                "secondary_reviewed": int(evidence.get("secondary_reviewed", 0)),
+                "stale_records": int(evidence.get("stale_records", -1)),
+                "independent_secondary_reviewer": bool(evidence.get("independent_secondary_reviewer")),
+                "evidence_path": evidence_path.relative_to(ROOT).as_posix(),
+            }
+    pending_review = 0 if external_review["review_complete"] else metadata_pending
     return {
         "split_id": split_name,
         "task_count": len(details),
@@ -275,6 +295,8 @@ def validate_split(benchmark_root: Path, split_name: str) -> dict[str, Any]:
         "invalid_count": len(details) - valid_count,
         "automatic_validation_passed": valid_count == len(details),
         "human_review_pending": pending_review,
+        "task_metadata_review_status_pending": metadata_pending,
+        "external_human_review": external_review,
         "details": details,
     }
 

@@ -22,7 +22,10 @@ def test_core_has_120_automatically_valid_tasks_with_planned_distribution() -> N
     assert report["task_count"] == 120
     assert report["valid_count"] == 120
     assert report["invalid_count"] == 0
-    assert report["human_review_pending"] == 120
+    assert report["human_review_pending"] == 0
+    assert report["task_metadata_review_status_pending"] == 120
+    assert report["external_human_review"]["review_complete"] is True
+    assert report["external_human_review"]["primary_reviewed"] == 120
     assert split["category_counts"] == {
         "compound_multi_step": 10,
         "conflicting_or_unsupported": 10,

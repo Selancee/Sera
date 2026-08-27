@@ -18,6 +18,11 @@ bridge, 20 synthetic CC0 source scores, 120 editing tasks, three experimental
 conditions, deterministic metrics, resumable runners, automated tests, and an offline
 verification fixture.
 
+For review, a single offline command exercises six representative success/refusal
+tasks through proposal generation, validation, transaction commit, source-preserving
+MusicXML export, re-import, and evidence reporting. The same checks run in the included
+Windows continuous-integration workflow, without an API key or network service.
+
 The manuscript clearly separates verified software behavior from unverified model or
 aesthetic claims. The included mock-fixture experiment establishes reproducible
 pipeline execution only; it is not reported as LLM performance. This distinction,

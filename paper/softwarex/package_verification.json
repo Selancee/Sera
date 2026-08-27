@@ -4,7 +4,7 @@
   "checks": {
     "required_files": {
       "missing": [],
-      "count": 27
+      "count": 33
     },
     "version_consistency": {
       "passed": true,
@@ -22,7 +22,7 @@
       "spdx": "MIT"
     },
     "manuscript_limits": {
-      "main_text_words": 1675,
+      "main_text_words": 1747,
       "main_text_limit": 3000,
       "abstract_words": 105,
       "abstract_target": "approximately 100",

@@ -7,14 +7,33 @@ The Python package declares Python 3.10 or newer. The Electron desktop package i
 currently Windows-only. MuseScore Studio 4.x is optional and is required only for
 the notation-host bridge; the benchmark and core transaction tests run without it.
 
-## Source installation
+## Minimum reviewer installation
 
 From PowerShell in the repository root:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt -r requirements-publication.txt -c requirements-tested-windows.txt
+.\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
+```
+
+The last command is an offline, six-task end-to-end demonstration and should report
+`6/6 passed` with five host-openable MusicXML revisions. It requires neither Node.js,
+MuseScore, an API key, nor a network connection. See `docs/softwarex/REVIEWER_GUIDE.md`
+for the evidence map.
+
+`requirements-tested-windows.txt` pins the direct dependency versions used for the
+2026-08-27 verification. It is intentionally a constraints file: pip still resolves
+transitive packages, while experiment manifests preserve a dependency inventory and
+hash for drift checking.
+
+## Optional frontend and desktop development
+
+The reviewer demo and research runners do not require this section. To modify the
+React/Electron interface, install Node.js and run:
+
+```powershell
 
 Set-Location frontend
 npm.cmd ci
@@ -26,10 +45,8 @@ npm.cmd ci
 Set-Location ..
 ```
 
-`npm ci` uses the committed lock files. Python dependencies currently use bounded
-minimum versions rather than a frozen cross-platform lock; the experiment manifest
-records a dependency hash and interpreter/platform details. A release archive must
-include an exported environment inventory from the verification report.
+`npm ci` uses committed lock files. MuseScore Studio 4.x is required only for visual
+host inspection and the optional bridge workflow.
 
 ## Run the development application
 
@@ -53,19 +70,20 @@ The deterministic mock path and benchmark do not require a network connection.
 The current locally verified executable is:
 
 ```text
-dist_desktop\release-dev14\win-unpacked\Sera.exe
+dist_desktop\release\win-unpacked\Sera.exe
 ```
 
 This build directory is not the archival source distribution. Rebuild and verify it:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File packaging\windows\build_windows_app.ps1 -ReleaseDir dist_desktop\release-dev14
-powershell -NoProfile -ExecutionPolicy Bypass -File packaging\windows\smoke_test_packaged_app.ps1 -ReleaseDir dist_desktop\release-dev14
+powershell -NoProfile -ExecutionPolicy Bypass -File packaging\windows\build_windows_app.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File packaging\windows\smoke_test_packaged_app.ps1
 ```
 
 ## Reproduce the software verification
 
 ```powershell
+.\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
 .\.venv\Scripts\python.exe scripts\validate_benchmark.py --split core --write-report
 .\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\core_mock.yaml --experiment-id softwarex_verification_120_v1
 .\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_verification_120_v1 --skip-tests
@@ -79,8 +97,8 @@ validation, transaction, round-trip and metric plumbing; it is not an LLM benchm
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
-npm.cmd test -- --run --prefix frontend
-npm.cmd run build --prefix frontend
+npm.cmd --prefix frontend test -- --run
+npm.cmd --prefix frontend run build
 ```
 
 The intentional error messages printed by `RuntimeErrorBoundary.test.jsx` exercise

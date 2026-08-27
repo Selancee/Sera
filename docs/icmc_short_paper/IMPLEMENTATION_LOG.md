@@ -2049,3 +2049,27 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
   inspect and commit the release, publish an immutable tag, mint the archive DOI, and complete the
   final official-template/Editorial Manager submission. These actions are intentionally not
   automated because they require identity, legal authority, or external publication.
+
+## 2026-08-27 - Phase 48: SoftwareX reviewer reproducibility closure
+
+### Completed
+
+- Added an offline six-task reviewer demo that uses the product runtime generator,
+  transaction, protected-scope validation and source-preserving host MusicXML round trip.
+  All six tasks pass; five executable cases produce MusicXML and one conflict refuses safely.
+- Added Windows research CI, tested direct-dependency constraints, a reviewer guide and a
+  minimum Python-only installation path. Corrected the previously invalid documented npm
+  prefix ordering and protected it with a regression test.
+- Kept benchmark task metadata immutable while resolving the misleading review summary:
+  automatic core validation now shows zero effective human reviews pending and separately
+  reports the 120 original metadata flags plus the complete 120+30 frozen review evidence.
+- Added a compact manuscript evidence/claim-boundary table, rebuilt the DOCX, and compiled
+  an eight-page SoftwareX PDF with Tectonic. All PDF pages were visually inspected and
+  contain readable tables, figure, line numbers and references.
+
+### Validation and research boundary
+
+- 408/408 Python tests, 120/120 frontend tests, the 216-module build, 120/120 benchmark
+  validation, 6/6 reviewer demo and draft SoftwareX audit pass.
+- This phase increases installation and review reproducibility. It does not claim live-LLM
+  accuracy, inter-rater reliability or musical/aesthetic quality.

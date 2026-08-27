@@ -4,7 +4,17 @@
   "valid_count": 120,
   "invalid_count": 0,
   "automatic_validation_passed": true,
-  "human_review_pending": 120,
+  "human_review_pending": 0,
+  "task_metadata_review_status_pending": 120,
+  "external_human_review": {
+    "available": true,
+    "review_complete": true,
+    "primary_reviewed": 120,
+    "secondary_reviewed": 30,
+    "stale_records": 0,
+    "independent_secondary_reviewer": false,
+    "evidence_path": "experiments/softwarex_human_review_120_v1/summary.json"
+  },
   "details": [
     {
       "task_id": "conflict_001",

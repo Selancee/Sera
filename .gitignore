@@ -38,6 +38,7 @@ dist_upload/
 evaluation/tmp_v096_runs/
 paper/anonymous_release/
 paper/softwarex/release/
+artifacts/
 examples/scores/*.musicxml
 examples/midi/*.mid
 examples/abc/*.abc

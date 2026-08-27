@@ -24,14 +24,17 @@ Worktree: dirty; release archives therefore use an explicit file/hash manifest.
 | Host-selection localization replay | `scripts/run_runtime_acceptance.py ... --host-scope-mode expanded_adjacent` | 240/240 passed; 220/220 executable runs completed source-preserving host export/re-import; 174/174 widened-selection runs passed; 0 unsafe executions |
 | Experiment drift/recompute | `scripts/verify_reproducibility.py --experiment softwarex_verification_120_v1 --skip-tests` | All 7 evidence checks true |
 | Human-review evidence/API | frozen API export plus `tests/test_human_review_evidence_export.py` | 120/120 primary, 30/30 repeated checks, 194 audit records; frozen hashes match |
-| Python regression | `.venv\Scripts\python.exe -m pytest -q` | 404 collected and passed |
+| Python regression | `.venv\Scripts\python.exe -m pytest -q` | 408 collected and passed |
 | Frontend regression | `npm.cmd test -- --run` | 72 files, 120 tests passed |
 | Frontend production build | `npm.cmd run build` | 216 modules transformed; build passed |
+| Offline reviewer demo | `scripts/run_reviewer_demo.py` | 6/6 representative tasks passed; 5/5 executable tasks produced host-openable MusicXML |
+| Windows research CI | `.github/workflows/research-ci.yml` | Workflow prepared; local equivalents passed before push |
 | Rendered review workflow | Agent -> Research review -> save -> progress/next task | Passed against real local API; no console warnings/errors |
 | Ordinary packaged runtime | `dist_desktop/release/win-unpacked/Sera.exe` | Review entry hidden by default; backend readiness, launcher and Electron startup passed |
 | Windows package smoke | `smoke_test_packaged_app.ps1` | Frozen 120-task evidence, exact `compound_001` scope, `meter_001`, `voice_010`/`voice_004` source-preserving revisions and launcher/Electron runtime passed |
 | Architecture figure | Mermaid CLI validation and SVG/PNG/PDF export; PNG visually inspected | Passed after one layout refinement |
-| DOCX structure | ZIP/XML inspection | 2 metadata tables, 1 embedded figure, line numbers, title present |
+| DOCX structure | `python-docx` inspection | 3 tables, 1 embedded figure, line numbers, title present |
+| PDF compilation and visual QA | bundled Tectonic 0.17.0 plus 8 rendered-page inspection | 8 pages, all pages readable, figure/table visible, no replacement characters; only minor box-spacing warnings |
 | Draft package verifier | `verify_softwarex_package.py --profile draft` | Passed; strict profile has only seven author-controlled blockers |
 | Release archive integrity | `ZipFile.testzip()` plus allowlist inspection | Source/reviewer ZIP CRC passed; frozen human summary/manifest present; no `.env` or `node_modules` |
 
@@ -66,7 +69,7 @@ also replayed `compound_001` with host measures 2-3 and verified that only
 
 ## Manuscript checks
 
-- Numbered Sections 1-5: 1675 words by the repository verifier;
+- Numbered Sections 1-5: 1747 words by the repository verifier;
 - Abstract: 105 words;
 - Keywords: 6;
 - Numbered manuscript figures: 1;
@@ -74,12 +77,13 @@ also replayed `compound_001` with host measures 2-3 and verified that only
 - Official v4 structural basis: `elsarticle`, preprint single column, line numbers,
   numbered Sections 1-5, metadata tables and numeric references.
 
-The LaTeX source was inspected by the compile helper, but a final PDF was not produced:
-no TeX Live installation exists and the bundled Tectonic package fetch failed while
-retrieving a hyphenation resource because the TLS connection ended early. The line-numbered DOCX
-was generated and structurally validated. A final submission PDF should be compiled on
-Overleaf/TeX Live, or the user may explicitly authorize the large managed TeX Live
-installation.
+The LaTeX source compiled successfully with bundled Tectonic 0.17.0 to an eight-page
+review PDF. All eight pages were rasterized and visually inspected: text, metadata
+tables, architecture figure, evidence table, line numbers and references are present
+and readable. Extracted text contains no Unicode replacement characters. The remaining
+TeX messages are minor underfull/overfull box-spacing warnings rather than compilation
+errors. The line-numbered DOCX was regenerated and structurally validated as an
+alternative review format.
 
 ## Release hashes
 

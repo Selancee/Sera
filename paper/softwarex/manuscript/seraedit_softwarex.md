@@ -124,6 +124,13 @@ target/protected scope and deterministic expected constraints. The fixture provi
 returns known outputs to exercise all runner and metric paths without network access or
 token cost.
 
+For review, `scripts/run_reviewer_demo.py` runs six representative tasks through the
+actual local product entry point and writes a compact evidence report plus five
+host-openable MusicXML revisions (the sixth task is an expected refusal). It requires
+neither an API key nor a network connection. The included Windows CI workflow repeats
+the Python regression suite, benchmark validation, this reviewer demo, package audit,
+frontend tests, and production build on each push or pull request.
+
 On Windows 11 (build 10.0.26200), Python 3.12.5, Node.js 24.16.0, and npm 11.13.0,
 the 2026-08-27 verification produced the following results. Automatic benchmark
 validation accepted 120/120 task definitions. Human inspection then completed 120/120
@@ -132,7 +139,7 @@ all current decisions were compliant after the correction cycle. The append-only
 retains 194 records, including superseded revision findings. Both passes used the same
 pseudonymous reviewer, so these data verify task instructions, scopes, Gold outputs,
 and host-visible notation but do not measure inter-rater reliability. The Python suite
-collected and passed 404 tests. Vitest passed 120 tests in 72 files, the Vite production
+collected and passed 408 tests. Vitest passed 120 tests in 72 files, the Vite production
 build transformed 216 modules, and staged
 backend, compatibility launcher, and Electron desktop runtime smoke checks passed.
 The fresh `softwarex_verification_120_v1` fixture run completed all 360 expected
@@ -164,6 +171,15 @@ protected content, and valid MusicXML. The remaining 66 tasks were not widened b
 the instruction did not name a specific measure, the source lacked an adjacent measure,
 or the operation was global. This regression set directly tests host-selection versus
 semantic-target resolution and remains deterministic product evidence, not model accuracy.
+
+| Evidence layer | Scale | Verified result | Claim boundary |
+| --- | ---: | --- | --- |
+| Benchmark definition | 120 tasks / 20 scores | 120/120 valid | Schema, Gold application, constraints, round trip |
+| Automated regression | 408 Python; 120 frontend | All passed | Software behavior on the tested environment |
+| Reviewer demo | 6 representative tasks | 6/6 passed; five host files | Offline product-path reproducibility |
+| Product replay | 720 bilingual runs | 720/720; 660 host exports | Deterministic local generator, not remote-LLM accuracy |
+| Wider host selection | 240 bilingual runs | 240/240; 174 widened | Semantic target remains narrower than authorization |
+| Human task review | 120 primary + 30 repeat | Complete; zero stale | Same reviewer; no inter-rater or aesthetic claim |
 
 ## 4. Impact
 
@@ -220,8 +236,8 @@ evaluation rather than weakening transaction safeguards.
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
 | C5 | Code versioning system used | Git |
 | C6 | Software code languages, tools and services used | Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML |
-| C7 | Compilation requirements, operating environments and dependencies | Python >=3.10; Node.js/npm for development; Windows 10/11 desktop; dependencies in `requirements.txt` and npm lock files |
-| C8 | Developer documentation/manual | `docs/softwarex/API_REFERENCE.md`, `INSTALLATION.md`, `USER_MANUAL.md`, and generated OpenAPI `/docs` |
+| C7 | Compilation requirements, operating environments and dependencies | Python >=3.10; Node.js/npm for interface development; Windows 10/11 desktop; requirements, tested Windows constraints, and npm lock files |
+| C8 | Developer documentation/manual | `docs/softwarex/API_REFERENCE.md`, `INSTALLATION.md`, `USER_MANUAL.md`, `REVIEWER_GUIDE.md`, and generated OpenAPI `/docs` |
 | C9 | Support email for questions | `[SUPPORT EMAIL]` |
 
 ## Software metadata

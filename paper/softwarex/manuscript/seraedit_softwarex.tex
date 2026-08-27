@@ -49,8 +49,8 @@ C3 & Reproducible capsule & [ZENODO OR CODE OCEAN DOI/URL] \\
 C4 & Legal code license & MIT; benchmark data CC0-1.0 \\
 C5 & Versioning system & Git \\
 C6 & Languages, tools and services & Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML \\
-C7 & Build, environment and dependencies & Python $\geq$3.10; Node.js/npm for development; Windows 10/11 desktop; requirements and npm lock files \\
-C8 & Developer documentation/manual & \texttt{docs/softwarex/} and generated OpenAPI at \texttt{/docs} \\
+C7 & Build, environment and dependencies & Python $\geq$3.10; Node.js/npm for interface development; Windows 10/11 desktop; requirements, tested Windows constraints and npm lock files \\
+C8 & Developer documentation/manual & \texttt{docs/softwarex/}, reviewer guide and generated OpenAPI at \texttt{/docs} \\
 C9 & Support email & [SUPPORT EMAIL] \\
 \bottomrule
 \end{tabularx}
@@ -137,8 +137,8 @@ failure cannot leave a partially modified score.
 A \texttt{ScoreScope} selects measures, parts, staves, voices, event identifiers, and
 optional time ranges. Every patch declares editable and protected regions. Operations
 use a versioned JSON schema and include selectors, arguments, preconditions, and
-expected change counts. The research schema supports pitch/duration changes,
-insertion/deletion, dynamics, articulations, ties, slurs, signature changes, voice
+expected change counts. The research schema supports pitch and duration changes,
+insertions and deletions, dynamics, articulations, ties, slurs, signature changes, voice
 moves, motif duplication, chord replacement, and transactional batches. The product
 enables only operation families with an established host round-trip contract; unknown
 operations fail closed.
@@ -154,8 +154,8 @@ finish reason, raw output, parsed output, and normalized errors. Secrets stay ou
 source and experiment artifacts. The desktop can return local candidates before an
 optional asynchronous model refinement completes. Neither path auto-applies a result.
 
-The evaluation subsystem contains \texttt{full\_rewrite}, \texttt{patch\_only}, and
-\texttt{sera\_full} conditions. Runs preserve configuration, prompt, benchmark and
+The evaluation subsystem contains Full Rewrite, Patch Only, and Sera Full conditions.
+Runs preserve configuration, prompt, benchmark and
 dependency hashes, request caches, raw/normalized outputs, metrics, error records, and
 resume state. Metrics are recomputed without another provider call.
 
@@ -175,10 +175,16 @@ in-place control of MuseScore's internal document: the original open score is no
 overwritten and final visual inspection remains a user action.
 
 The offline core split contains 120 tasks over 20 short CC0 synthetic scores, spanning
-pitch, rhythm, key/harmony, voice/texture, dynamics, insertion/deletion, relations,
+pitch, rhythm, key and harmony, voice and texture, dynamics, insertion and deletion, relations,
 meter, compound edits, and expected refusals. Each task declares target/protected scope
 and deterministic constraints. The fixture provider returns known outputs to exercise
 all runner and metric paths without network access or token cost.
+
+For review, \texttt{scripts/run\_reviewer\_demo.py} runs six representative tasks
+through the actual local product entry point and writes a compact report plus five
+host-openable MusicXML revisions (the sixth task is an expected refusal). It needs no
+API key or network connection. The included Windows CI workflow repeats the Python
+tests, benchmark validation, reviewer demo, package audit, frontend tests, and build.
 
 On Windows 11 build 10.0.26200 with Python 3.12.5, Node.js 24.16.0 and npm 11.13.0,
 automatic benchmark validation accepted 120/120 task definitions. Human inspection
@@ -186,7 +192,7 @@ completed 120/120 current primary decisions and a stratified 30/30 repeat check 
 zero stale records; all current decisions were compliant after correction. The
 append-only export retains 194 records, including superseded findings. Both passes used
 the same pseudonymous reviewer, so this verifies task/Gold semantics and host-visible
-notation but not inter-rater reliability. The Python suite passed 404 tests.
+notation but not inter-rater reliability. The Python suite passed 408 tests.
 Vitest passed 120 tests in 72 files; the Vite production build transformed 216 modules; and staged
 backend, compatibility-launcher and Electron runtime smoke tests passed. A fresh
 \texttt{softwarex\_verification\_120\_v1} fixture run completed 360/360 task-condition
@@ -216,6 +222,24 @@ expansion was applicable in 174 runs, and all 174 retained the intended task res
 protected content, and valid MusicXML. The remaining 66 tasks were not widened because
 the instruction did not name a specific measure, the source lacked an adjacent measure,
 or the operation was global. This is deterministic product evidence, not model accuracy.
+
+\begin{table}[!ht]
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l r X X@{}}
+\toprule
+Evidence & Scale & Verified result & Claim boundary \\
+\midrule
+Benchmark & 120 tasks & 120/120 valid & Schema, Gold, constraints, round trip \\
+Regression & 408 Python; 120 UI & All passed & Tested software environment \\
+Reviewer demo & 6 tasks & 6/6; five host files & Offline product path \\
+Product replay & 720 runs & 720/720; 660 exports & Local rules, not LLM accuracy \\
+Host scope & 240 runs & 240/240; 174 widened & Target localization \\
+Human review & 120 + 30 & Complete; zero stale & Same reviewer; no aesthetic claim \\
+\bottomrule
+\end{tabularx}
+\caption{Triangulated release evidence and the boundary of each claim.}
+\label{tab:evidence}
+\end{table}
 
 \section{Impact}
 

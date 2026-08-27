@@ -376,3 +376,41 @@
 - No public release, immutable release tag, archive DOI or visibility change was made.
   Consequently, private preservation is complete while the SoftwareX public-release gate
   intentionally remains unsatisfied.
+
+# 2026-08-27 - Phase SX22: reviewer-first reproducibility and rendered manuscript
+
+- Added a one-command, offline reviewer demonstration covering transposition, dynamics,
+  key signature, meter/deletion, staff-local voice movement and expected refusal through
+  the actual local product path. It passes 6/6 tasks and creates five host-openable
+  MusicXML revisions without an API key, network call or Gold-assisted generation.
+- Added a Windows GitHub Actions workflow for Python regression, 120-task benchmark
+  validation, reviewer demonstration, SoftwareX package audit, frontend regression and
+  production build. Added a tested-Windows direct-dependency constraints file and package
+  metadata/installation documentation for a clean reviewer environment.
+- Corrected the documented npm command order after reproducing a root-level
+  `package.json` lookup failure, then added a regression assertion for both reviewer
+  documents. The verified command passes 120/120 frontend tests; the build transforms
+  216 modules.
+- Separated immutable task-file `pending_human_review` metadata from the completed frozen
+  external review evidence. Core benchmark validation now reports 120/120 automatically
+  valid, zero effective human reviews pending, 120 immutable metadata flags, 120 primary
+  and 30 repeat reviews, zero stale records, and the same-reviewer limitation.
+- Expanded the manuscript with an evidence/claim-boundary table and reviewer reproduction
+  path. The draft verifier reports 1,747 main-text words, a 105-word abstract, six
+  keywords and one numbered figure.
+- Compiled the SoftwareX LaTeX source with bundled Tectonic 0.17.0. The eight-page PDF was
+  rasterized and inspected page by page; tables, figure, line numbers and references are
+  readable, and extracted text contains no Unicode replacement characters. The DOCX was
+  regenerated with three tables and one embedded figure.
+- Full local evidence passes 408 Python tests, 120 frontend tests, the 216-module build,
+  120/120 benchmark validation, the 6/6 reviewer demo, dependency integrity and the draft
+  package verifier. These changes improve reviewer reproducibility but do not convert the
+  offline rule/mock results into formal remote-model accuracy evidence.
+
+## Remaining author-controlled work
+
+- Supply author, affiliation, support, funding, competing-interest and CRediT metadata;
+  confirm copyright/MIT release authority; approve public visibility; create the immutable
+  tag; mint the archive DOI; and perform the final Editorial Manager submission.
+- A paid live-model three-condition experiment remains optional and must not be started
+  without an explicit model/cost decision.

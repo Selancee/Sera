@@ -29,6 +29,7 @@ Both passes use the same pseudonymous reviewer, so no inter-rater claim is made.
 Follow `INSTALLATION.md`, then run:
 
 ```powershell
+.\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
 .\.venv\Scripts\python.exe scripts\validate_benchmark.py --split core --write-report
 .\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\core_mock.yaml --experiment-id softwarex_verification_120_v1
 .\.venv\Scripts\python.exe scripts\run_runtime_acceptance.py --split core --mode local --language en --language zh --repetitions 3 --host-scope-mode exact --experiment-id runtime_acceptance_core_bilingual_r3_v4_20260826 --fail-on-task-failure
@@ -42,6 +43,11 @@ Follow `INSTALLATION.md`, then run:
 The runner saves a manifest, config/prompt/benchmark hashes, JSONL runs, raw and
 normalized outputs, metrics and errors without overwriting a completed experiment.
 The verifier recomputes metrics and detects evidence drift.
+
+For first-pass review, `scripts/run_reviewer_demo.py` is the recommended entry point.
+It exercises pitch, dynamics, key signature, meter/deletion, voice movement and safe
+refusal through the actual local product path, then verifies host MusicXML round trips.
+The larger commands above reproduce the frozen publication evidence.
 
 ## Expected verified outcome for this release candidate
 

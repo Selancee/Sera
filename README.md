@@ -1,5 +1,7 @@
 # Sera
 
+[![Research CI](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml/badge.svg)](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml)
+
 ## SoftwareX release track
 
 SeraEdit is the research-software core of Sera: a local-first, structured-patch
@@ -14,6 +16,8 @@ revision or a rejection.
 - Draft readiness check: `.\.venv\Scripts\python.exe scripts\verify_softwarex_package.py --profile draft`
 - Final readiness check: `.\.venv\Scripts\python.exe scripts\verify_softwarex_package.py --profile submission`
 - Deterministic source/manuscript archives: `.\.venv\Scripts\python.exe scripts\export_softwarex_package.py`
+- Ten-minute offline reviewer demo: `.\.venv\Scripts\python.exe scripts\run_reviewer_demo.py`
+- Reviewer evidence map: `docs/softwarex/REVIEWER_GUIDE.md`
 
 The source is prepared under the MIT License; the synthetic benchmark is CC0-1.0.
 Mock-fixture experiments verify software plumbing only and must not be reported as

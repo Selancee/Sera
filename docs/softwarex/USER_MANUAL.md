@@ -9,6 +9,16 @@ source score. It creates a reviewable revision after validation.
 
 ## Minimal offline demonstration
 
+For a command-line demonstration that creates reviewer evidence without starting the
+desktop interface, run:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
+```
+
+It should report `6/6 passed` and retain five reviewed MusicXML outputs under
+`artifacts/softwarex_reviewer_demo/`. For the interactive workflow:
+
 1. Start Sera Desktop or the backend/frontend development pair.
 2. Open the Agent view and import a MusicXML file, or use a local demo fixture.
 3. Select a narrow scope, preferably one or two measures and a specific staff/voice.
