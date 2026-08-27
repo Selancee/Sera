@@ -56,10 +56,12 @@ general music generation or a claim to replace professional notation software.
 
 1. The configured GitHub URL returns 404 to an unauthenticated reader even though
    authenticated `git ls-remote` succeeds; the repository is not publicly inspectable.
-2. Author name, affiliation, ORCID, support email, funding and CRediT roles are not
-   available in the repository and remain placeholders.
+2. Author name, affiliation, ORCID and the no-specific-funding statement are populated.
+   The corresponding support email, competing-interest declaration and final confirmation
+   of the drafted sole-author CRediT roles remain author-controlled.
 3. No immutable public release tag and no Zenodo/Code Ocean DOI exist yet.
-4. The 120 benchmark tasks require human music review if used as a research dataset.
+4. The 120-task human review is complete and frozen, but the copyright owner must still
+   confirm authority for the MIT code release and CC0 benchmark dedication.
 
 These blockers do not prevent local technical preparation, but they prevent an
 honest `submission_ready` verdict.

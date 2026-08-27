@@ -6,11 +6,15 @@ release_tag: null
 archive_url: null
 archive_doi: null
 reproducible_capsule_url: null
-author_name: "[AUTHOR NAME]"
-affiliation: "[AFFILIATION]"
-orcid: "[ORCID]"
+author_name: "Yuan Gao"
+affiliation: "Zhejiang Conservatory of Music, No. 1 Zheyin Road, Zhuantang Street, Xihu District, Hangzhou, Zhejiang Province, China 310024"
+orcid: "0009-0005-0394-3623"
 support_email: "[SUPPORT EMAIL]"
-funding_statement: "[FUNDING STATEMENT OR NO-SPECIFIC-FUNDING STATEMENT]"
+funding_statement: "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors."
+single_author_confirmed: true
+credit_roles_confirmed: false
+competing_interest_confirmed: false
+originality_statement_confirmed: false
 license_owner_confirmed: false
 benchmark_human_review_complete: true
 submission_date: null

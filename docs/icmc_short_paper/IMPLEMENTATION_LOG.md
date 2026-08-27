@@ -2073,3 +2073,23 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
   validation, 6/6 reviewer demo and draft SoftwareX audit pass.
 - This phase increases installation and review reproducibility. It does not claim live-LLM
   accuracy, inter-rater reliability or musical/aesthetic quality.
+
+## 2026-08-27 - Phase 49: publication identity metadata integration
+
+### Completed
+
+- Propagated the author-supplied sole-author identity (Yuan Gao), ORCID, institutional
+  affiliation and no-specific-funding status into the SoftwareX manuscript, citation
+  metadata, CodeMeta, cover letter, CRediT draft and publication configuration.
+- Replaced the generic MIT copyright line with Yuan Gao while keeping the formal release
+  authority gate false until the author explicitly confirms the MIT and CC0 rights.
+- Rebuilt and inspected the DOCX/PDF manuscript outputs. The full Python suite passes
+  410/410 tests and the draft SoftwareX verifier validates the MIT text, ORCID checksum
+  and author identity consistency across publication metadata, CFF, CodeMeta and manuscript.
+
+### Remaining author-controlled work
+
+- Supply the corresponding support email and competing-interest declaration; confirm the
+  drafted CRediT roles, manuscript originality/exclusive-submission statement, and MIT/CC0
+  release authority. Public visibility, immutable tagging, archive DOI creation and
+  submission remain deliberately unperformed.

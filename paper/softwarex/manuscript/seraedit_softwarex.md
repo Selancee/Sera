@@ -1,9 +1,12 @@
 # SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches
 
-**[AUTHOR GIVEN NAME] [AUTHOR FAMILY NAME]**  
-**[AFFILIATION, POSTAL ADDRESS, COUNTRY]**  
-**Corresponding author:** [SUPPORT EMAIL]  
-**ORCID:** [ORCID]
+**Yuan Gao**
+
+**Zhejiang Conservatory of Music, No. 1 Zheyin Road, Zhuantang Street, Xihu District, Hangzhou, Zhejiang Province, China 310024**
+
+**Corresponding author:** [SUPPORT EMAIL]
+
+**ORCID:** 0009-0005-0394-3623
 
 ## Abstract
 
@@ -255,14 +258,13 @@ evaluation rather than weakening transaction safeguards.
 
 ## Author contributions
 
-`[AUTHOR NAME]: Conceptualization, Methodology, Software, Validation, Investigation,
+`Yuan Gao: Conceptualization, Methodology, Software, Validation, Investigation,
 Data curation, Writing – original draft, Writing – review & editing, Visualization.`
-Edit the roles to reflect actual contributions before submission.
 
 ## Funding
 
-[FUNDING STATEMENT OR: This research did not receive any specific grant from funding
-agencies in the public, commercial, or not-for-profit sectors.]
+This research did not receive any specific grant from funding agencies in the public,
+commercial, or not-for-profit sectors.
 
 ## Declaration of competing interest
 

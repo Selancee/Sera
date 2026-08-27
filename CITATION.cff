@@ -3,8 +3,10 @@ message: "If you use SeraEdit in research, please cite the accompanying Software
 title: "SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches"
 type: software
 authors:
-  - family-names: "[AUTHOR FAMILY NAME]"
-    given-names: "[AUTHOR GIVEN NAME]"
+  - family-names: "Gao"
+    given-names: "Yuan"
+    orcid: "https://orcid.org/0009-0005-0394-3623"
+    affiliation: "Zhejiang Conservatory of Music"
 version: "1.0.0-dev.14"
 date-released: 2026-08-23
 repository-code: "https://github.com/Selancee/Sera"

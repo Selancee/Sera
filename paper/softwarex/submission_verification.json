@@ -4,7 +4,7 @@
   "checks": {
     "required_files": {
       "missing": [],
-      "count": 27
+      "count": 33
     },
     "version_consistency": {
       "passed": true,
@@ -22,7 +22,7 @@
       "spdx": "MIT"
     },
     "manuscript_limits": {
-      "main_text_words": 1675,
+      "main_text_words": 1747,
       "main_text_limit": 3000,
       "abstract_words": 105,
       "abstract_target": "approximately 100",
@@ -91,6 +91,12 @@
       "hashes_match": true,
       "claim_boundary": "The records establish human review of task instructions, scopes, Gold results, and host-visible outputs. The repeated secondary check used the same pseudonymous reviewer and therefore does not establish inter-rater reliability or general musical/aesthetic quality."
     },
+    "author_identity_metadata": {
+      "passed": true,
+      "author_name": "Yuan Gao",
+      "orcid": "0009-0005-0394-3623",
+      "errors": []
+    },
     "submission_metadata": {
       "passed": false,
       "blockers": [
@@ -98,8 +104,9 @@
         "immutable release tag is missing",
         "permanent archive DOI is missing",
         "copyright owner has not confirmed the MIT release",
-        "publication field author_name is not supplied",
-        "publication field affiliation is not supplied",
+        "sole-author CRediT roles have not been confirmed",
+        "competing-interest declaration has not been confirmed",
+        "manuscript originality and exclusive-submission statement has not been confirmed",
         "publication field support_email is not supplied"
       ]
     }
@@ -115,8 +122,9 @@
     "immutable release tag is missing",
     "permanent archive DOI is missing",
     "copyright owner has not confirmed the MIT release",
-    "publication field author_name is not supplied",
-    "publication field affiliation is not supplied",
+    "sole-author CRediT roles have not been confirmed",
+    "competing-interest declaration has not been confirmed",
+    "manuscript originality and exclusive-submission statement has not been confirmed",
     "publication field support_email is not supplied"
   ]
 }

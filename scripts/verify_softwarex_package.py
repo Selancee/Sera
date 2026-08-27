@@ -128,6 +128,29 @@ def keyword_count(markdown: str) -> int:
     return len([item for item in match.group(1).split(";") if item.strip()]) if match else 0
 
 
+def valid_mit_license(text: str) -> bool:
+    """Accept a complete MIT license without binding verification to one owner name."""
+    copyright_line = re.search(r"^Copyright \(c\) \d{4}(?:-\d{4})? \S.+$", text, re.MULTILINE)
+    return bool(
+        text.startswith("MIT License")
+        and copyright_line
+        and "Permission is hereby granted, free of charge" in text
+        and 'THE SOFTWARE IS PROVIDED "AS IS"' in text
+    )
+
+
+def valid_orcid(value: str) -> bool:
+    compact = re.sub(r"^https?://orcid\.org/", "", value.strip(), flags=re.IGNORECASE).replace("-", "")
+    if not re.fullmatch(r"\d{15}[\dX]", compact):
+        return False
+    total = 0
+    for character in compact[:15]:
+        total = (total + int(character)) * 2
+    result = (12 - (total % 11)) % 11
+    expected = "X" if result == 10 else str(result)
+    return compact[-1] == expected
+
+
 def _manifest_hashes_match(directory: Path, manifest: dict[str, Any]) -> bool:
     files = manifest.get("files") or []
     if not files or manifest.get("file_count") != len(files):
@@ -162,7 +185,7 @@ def verify(root: Path, profile: str) -> VerificationResult:
         result.fail(f"Cannot verify versions: {exc}")
 
     license_text = (root / "LICENSE").read_text(encoding="utf-8") if (root / "LICENSE").exists() else ""
-    license_ok = license_text.startswith("MIT License") and "Sera contributors" in license_text
+    license_ok = valid_mit_license(license_text)
     result.checks["software_license"] = {"passed": license_ok, "spdx": "MIT" if license_ok else None}
     if not license_ok:
         result.fail("Root MIT license is missing or incomplete")
@@ -355,6 +378,39 @@ def verify(root: Path, profile: str) -> VerificationResult:
 
     config_path = root / "docs" / "softwarex" / "publication.yml"
     publication = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
+    identity_errors: list[str] = []
+    try:
+        cff_author = yaml.safe_load((root / "CITATION.cff").read_text(encoding="utf-8"))["authors"][0]
+        codemeta_author = json.loads((root / "codemeta.json").read_text(encoding="utf-8"))["author"][0]
+        publication_author = str(publication.get("author_name", ""))
+        publication_orcid = str(publication.get("orcid", ""))
+        if not valid_orcid(publication_orcid):
+            identity_errors.append("publication ORCID is missing or fails its checksum")
+        if publication_author != f"{cff_author.get('given-names', '')} {cff_author.get('family-names', '')}".strip():
+            identity_errors.append("publication and CFF author names differ")
+        if publication_author != f"{codemeta_author.get('givenName', '')} {codemeta_author.get('familyName', '')}".strip():
+            identity_errors.append("publication and CodeMeta author names differ")
+        if str(cff_author.get("orcid", "")).removeprefix("https://orcid.org/") != publication_orcid:
+            identity_errors.append("publication and CFF ORCIDs differ")
+        if str(codemeta_author.get("@id", "")).removeprefix("https://orcid.org/") != publication_orcid:
+            identity_errors.append("publication and CodeMeta ORCIDs differ")
+        if publication_author not in manuscript or publication_orcid not in manuscript:
+            identity_errors.append("manuscript author name or ORCID differs from publication metadata")
+        for key in ("orcid", "funding_statement"):
+            value = str(publication.get(key, ""))
+            if not value or PLACEHOLDER_RE.search(value):
+                identity_errors.append(f"publication field {key} is not supplied")
+    except Exception as exc:  # pragma: no cover - defensive reporting
+        identity_errors.append(f"identity metadata could not be parsed: {exc}")
+    result.checks["author_identity_metadata"] = {
+        "passed": not identity_errors,
+        "author_name": publication.get("author_name"),
+        "orcid": publication.get("orcid"),
+        "errors": identity_errors,
+    }
+    if identity_errors:
+        result.fail("Author identity metadata is incomplete or inconsistent")
+
     blockers: list[str] = []
     if not publication.get("repository_public"):
         blockers.append("GitHub repository is not confirmed public")
@@ -364,6 +420,12 @@ def verify(root: Path, profile: str) -> VerificationResult:
         blockers.append("permanent archive DOI is missing")
     if not publication.get("license_owner_confirmed"):
         blockers.append("copyright owner has not confirmed the MIT release")
+    if not publication.get("credit_roles_confirmed"):
+        blockers.append("sole-author CRediT roles have not been confirmed")
+    if not publication.get("competing_interest_confirmed"):
+        blockers.append("competing-interest declaration has not been confirmed")
+    if not publication.get("originality_statement_confirmed"):
+        blockers.append("manuscript originality and exclusive-submission statement has not been confirmed")
     if not publication.get("benchmark_human_review_complete") or not human_ok:
         blockers.append("completed human benchmark review is not confirmed by frozen evidence")
     for key in ("author_name", "affiliation", "support_email"):

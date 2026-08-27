@@ -14,13 +14,18 @@
   "author": [
     {
       "@type": "Person",
-      "givenName": "[AUTHOR GIVEN NAME]",
-      "familyName": "[AUTHOR FAMILY NAME]"
+      "@id": "https://orcid.org/0009-0005-0394-3623",
+      "givenName": "Yuan",
+      "familyName": "Gao",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Zhejiang Conservatory of Music"
+      }
     }
   ],
   "maintainer": {
     "@type": "Person",
-    "name": "[MAINTAINER NAME]",
+    "name": "Yuan Gao",
     "email": "[SUPPORT EMAIL]"
   },
   "softwareRequirements": [

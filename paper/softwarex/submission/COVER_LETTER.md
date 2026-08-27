@@ -33,11 +33,13 @@ Before submission, replace this paragraph with the permanent tagged repository a
 archive DOI: [PUBLIC RELEASE URL AND DOI]. The code is prepared under the MIT License
 and the synthetic benchmark under CC0-1.0.
 
-We confirm that this manuscript is original, is not under consideration elsewhere,
-and that all authors approve its submission. [CONFIRM OR EDIT THIS STATEMENT.]
+The sole author will confirm before submission that this manuscript is original and
+is not under consideration elsewhere. [CONFIRM OR EDIT THIS STATEMENT.]
 
 Sincerely,
 
-[CORRESPONDING AUTHOR NAME]  
-[AFFILIATION]  
+Yuan Gao
+
+Zhejiang Conservatory of Music
+
 [SUPPORT EMAIL]

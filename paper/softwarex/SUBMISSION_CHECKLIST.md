@@ -25,16 +25,16 @@
 
 ## Must be completed by the author before upload
 
-- [ ] Replace every bracketed author/affiliation/ORCID/support/funding placeholder.
-- [ ] Confirm actual CRediT roles and competing-interest statement for all authors.
+- [ ] Supply the support email; author, affiliation, ORCID and funding metadata are filled.
+- [ ] Confirm the drafted sole-author CRediT roles and competing-interest statement.
 - [ ] Confirm every contributor/copyright owner authorizes the MIT release.
 - [ ] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
 - [ ] Review the release diff; exclude private/user-owned files; commit with authorization.
 - [ ] Create an immutable release tag (recommended `v1.0.0`) and release asset.
 - [ ] Connect GitHub to Zenodo (or approved capsule), archive the tag and insert DOI/URL.
 - [ ] Replace C2/C3/S2/S3 and repository citation with the immutable URLs/DOI.
-- [ ] Compile the LaTeX PDF with TeX Live/Overleaf or submit the checked DOCX after
-      confirming it against the current official downloadable template.
+- [x] Compile and visually inspect the LaTeX PDF; final template conformity must still
+      be confirmed against the current official downloadable template before upload.
 - [ ] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
 - [ ] Inspect both final ZIPs and their SHA-256 hashes.
 - [ ] Confirm all authors approve the exact manuscript and understand the current APC.

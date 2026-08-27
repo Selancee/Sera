@@ -414,3 +414,26 @@
   tag; mint the archive DOI; and perform the final Editorial Manager submission.
 - A paid live-model three-condition experiment remains optional and must not be started
   without an explicit model/cost decision.
+
+# 2026-08-27 - Phase SX23: author and affiliation metadata integration
+
+- Recorded the sole author as Yuan Gao with ORCID `0009-0005-0394-3623` in the
+  manuscript, `CITATION.cff`, CodeMeta and publication configuration.
+- Added the official English Zhejiang Conservatory of Music affiliation and postal
+  address consistently across the Markdown and LaTeX manuscript sources.
+- Recorded the author-supplied no-specific-funding status and prepared a sole-author
+  CRediT statement. Updated the MIT notice to identify Yuan Gao as copyright holder,
+  while retaining the explicit `license_owner_confirmed: false` publication gate.
+- Did not infer a personal support email, competing-interest declaration, final CRediT
+  confirmation, release authorization, repository visibility, tag or DOI. These remain
+  author-controlled submission requirements.
+- Recorded the supplied sole-author status separately from three still-unconfirmed
+  statements: CRediT roles, competing interests, and manuscript originality/exclusive
+  submission. Strict verification now fails explicitly on each missing confirmation.
+- Rebuilt the line-numbered DOCX and eight-page LaTeX PDF. Structural/text extraction
+  checks confirm the author, affiliation, ORCID and funding statement; selected rendered
+  pages were visually inspected without layout regressions.
+- Replaced an over-specific package check that required the old `Sera contributors`
+  copyright string with content-based MIT validation, and added ORCID checksum plus
+  CFF/CodeMeta/manuscript consistency checks. All 410 Python tests and the draft
+  SoftwareX verifier pass; eight author-controlled submission gates remain.

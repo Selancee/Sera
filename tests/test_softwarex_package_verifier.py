@@ -5,6 +5,8 @@ from scripts.verify_softwarex_package import (
     keyword_count,
     main_text_word_count,
     normalized_version,
+    valid_mit_license,
+    valid_orcid,
     versions_match,
 )
 
@@ -41,6 +43,21 @@ def test_required_softwarex_tree_is_workspace_relative():
     root = Path(__file__).resolve().parents[1]
     assert (root / "docs" / "softwarex" / "publication.yml").is_file()
     assert (root / "LICENSE").read_text(encoding="utf-8").startswith("MIT License")
+
+
+def test_mit_license_verification_accepts_real_owner_and_rejects_incomplete_text():
+    root = Path(__file__).resolve().parents[1]
+    license_text = (root / "LICENSE").read_text(encoding="utf-8")
+    assert "Copyright (c) 2026 Yuan Gao" in license_text
+    assert valid_mit_license(license_text)
+    assert not valid_mit_license("MIT License\n\nCopyright (c) 2026 Yuan Gao\n")
+
+
+def test_orcid_validation_uses_iso_7064_checksum():
+    assert valid_orcid("0009-0005-0394-3623")
+    assert valid_orcid("https://orcid.org/0009-0005-0394-3623")
+    assert not valid_orcid("0009-0005-0394-3624")
+    assert not valid_orcid("[ORCID]")
 
 
 def test_tested_windows_constraints_pin_direct_dependencies():
