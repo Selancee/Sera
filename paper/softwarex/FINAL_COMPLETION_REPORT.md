@@ -21,16 +21,16 @@ and deterministic release packaging/readiness tools.
 - musical/aesthetic quality: not established;
 - cross-host support: MuseScore bridge exercised, Sibelius not verified;
 - public release reproducibility: repository and `v1.0.0` release independently verified;
-  archival reproducibility remains blocked until a permanent DOI exists.
+  Zenodo DOI `10.5281/zenodo.22128976` is reserved, with public archive activation pending.
 
 ## Honest readiness verdict
 
 `draft_prepared = true`  
 `submission_ready = false`
 
-The remaining submission blocker is the author-owned permanent archive and DOI action.
-The strict verifier is designed to prevent accidental submission while that field is
-incomplete.
+The remaining submission blocker is publication of Zenodo draft record `22128976`.
+The strict verifier distinguishes a reserved DOI from a public archive and prevents
+accidental submission while `archive_published` remains false.
 
 The ordinary submitted application does not need to expose the benchmark-review screen.
 The Windows package hides that route by default; the source distribution retains it as an
@@ -52,8 +52,9 @@ explicit research/reproducibility tool enabled with
 
 ## Recommended final release sequence
 
-1. Connect the repository to Zenodo, archive `v1.0.0`, and mint the DOI.
-2. Insert the DOI in publication metadata, C3/S3, and the availability statement.
-3. Rebuild the manuscript and both deterministic ZIP archives.
+1. The corresponding author reviews and publishes Zenodo draft record `22128976`.
+2. Mark the archive published in `docs/softwarex/publication.yml` and replace the
+   temporary reserved-status wording with final public-archive wording.
+3. Rebuild and visually inspect the manuscript PDF/DOCX and manuscript archive.
 4. Run the strict submission verifier and confirm the current SoftwareX template.
 5. The corresponding author completes the SoftwareX upload and declarations.

@@ -2166,3 +2166,22 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Link the public GitHub repository to Zenodo, archive release `v1.0.0`, and provide the
   minted DOI. After that value is inserted, the package can be rebuilt and the strict
   SoftwareX submission profile should pass.
+
+## 2026-08-27 - Phase 54: reserved Zenodo DOI integrated safely
+
+### Completed
+
+- Reserved Zenodo DOI `10.5281/zenodo.22128976` for record `22128976` and propagated it
+  through CFF, CodeMeta, SoftwareX C3/S3, availability and publication metadata.
+- Added a verifier state boundary between DOI reservation and public publication, with
+  regression coverage preventing a reserved draft from being reported submission-ready.
+- Rebuilt the SoftwareX DOCX and eight-page PDF. All 414 Python tests and the 120-task
+  core benchmark validation pass; draft verification passes.
+- Strict SoftwareX verification now fails for exactly one truthful external condition:
+  the reserved Zenodo record has not been published. No research result changed.
+
+### Next author action
+
+- Review and publish Zenodo record `22128976`. Afterwards update the archive state and
+  reserved wording, rebuild final manuscript assets, run strict verification to exit 0,
+  and inspect the final journal upload package.

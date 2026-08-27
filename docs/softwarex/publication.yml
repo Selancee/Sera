@@ -3,9 +3,13 @@ article_type: "Original Software Publication"
 repository_url: "https://github.com/Selancee/Sera"
 repository_public: true
 release_tag: "v1.0.0"
-archive_url: null
-archive_doi: null
-reproducible_capsule_url: null
+archive_url: "https://doi.org/10.5281/zenodo.22128976"
+archive_doi: "10.5281/zenodo.22128976"
+archive_record_id: "22128976"
+archive_status: "reserved"
+archive_published: false
+archive_reserved_date: "2026-08-27"
+reproducible_capsule_url: "https://doi.org/10.5281/zenodo.22128976"
 author_name: "Yuan Gao"
 affiliation: "Zhejiang Conservatory of Music, No. 1 Zheyin Road, Zhuantang Street, Xihu District, Hangzhou, Zhejiang Province, China 310024"
 orcid: "0009-0005-0394-3623"

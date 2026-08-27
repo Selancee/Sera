@@ -89,7 +89,8 @@ evidence of remote-model accuracy.
 
 ## External reproducibility boundary
 
-A permanent archive DOI, public release tag and public repository snapshot must be
-added before submission. API-based experiments additionally require the reader's own
-provider key and may change with provider model versions. The mock verification path
-is offline and costs no tokens.
+The public repository and immutable release tag are available. Zenodo DOI
+`10.5281/zenodo.22128976` is reserved for the archive but does not resolve publicly
+until the corresponding author publishes the deposit. API-based experiments
+additionally require the reader's own provider key and may change with provider model
+versions. The mock verification path is offline and costs no tokens.

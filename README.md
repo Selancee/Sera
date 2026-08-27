@@ -21,8 +21,9 @@ revision or a rejection.
 
 The source is prepared under the MIT License; the synthetic benchmark is CC0-1.0.
 Mock-fixture experiments verify software plumbing only and must not be reported as
-language-model performance. Before journal submission, supply the real author metadata,
-make the tagged GitHub release publicly accessible, and mint a permanent archive DOI.
+language-model performance. Author metadata and the public tagged release are complete;
+Zenodo DOI `10.5281/zenodo.22128976` is reserved and becomes public only when the
+corresponding author publishes the deposit.
 
 > Sera 是建立在专业记谱环境之上的智能音乐编辑与协作层。
 

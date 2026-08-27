@@ -4,6 +4,8 @@
   "name": "SeraEdit",
   "description": "A local-first structured-patch pipeline for reliable language-guided MusicXML editing.",
   "version": "1.0.0",
+  "identifier": "https://doi.org/10.5281/zenodo.22128976",
+  "sameAs": "https://doi.org/10.5281/zenodo.22128976",
   "dateModified": "2026-08-27",
   "codeRepository": "https://github.com/Selancee/Sera",
   "license": "https://spdx.org/licenses/MIT.html",

@@ -1,11 +1,13 @@
 from pathlib import Path
 
 from scripts.verify_softwarex_package import (
+    archive_submission_blockers,
     abstract_word_count,
     keyword_count,
     main_text_word_count,
     normalized_version,
     valid_email,
+    valid_archive_doi,
     valid_mit_license,
     valid_orcid,
     versions_match,
@@ -65,6 +67,38 @@ def test_support_email_validation_rejects_placeholders_and_malformed_values():
     assert valid_email("selanceg@gmail.com")
     assert not valid_email("[SUPPORT EMAIL]")
     assert not valid_email("selanceg@gmail")
+
+
+def test_archive_doi_reservation_does_not_unlock_submission():
+    publication = {
+        "archive_doi": "10.5281/zenodo.22128976",
+        "archive_url": "https://doi.org/10.5281/zenodo.22128976",
+        "archive_status": "reserved",
+        "archive_published": False,
+    }
+    assert valid_archive_doi(publication["archive_doi"])
+    assert archive_submission_blockers(publication) == [
+        "permanent archive DOI is reserved but archive is not yet published"
+    ]
+
+
+def test_published_archive_doi_unlocks_archive_gate():
+    publication = {
+        "archive_doi": "10.5281/zenodo.22128976",
+        "archive_url": "https://doi.org/10.5281/zenodo.22128976",
+        "archive_status": "published",
+        "archive_published": True,
+    }
+    assert archive_submission_blockers(publication) == []
+
+
+def test_archive_doi_requires_canonical_url_and_value():
+    assert not valid_archive_doi("https://doi.org/10.5281/zenodo.22128976")
+    assert archive_submission_blockers({"archive_doi": "not-a-doi"}) == [
+        "permanent archive DOI is invalid",
+        "permanent archive URL does not match archive DOI",
+        "permanent archive DOI is reserved but archive is not yet published",
+    ]
 
 
 def test_tested_windows_constraints_pin_direct_dependencies():

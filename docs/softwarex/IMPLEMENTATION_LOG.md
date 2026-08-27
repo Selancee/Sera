@@ -498,3 +498,26 @@
   assets report `uploaded`, and every GitHub SHA-256 digest matches its local artifact.
 - The immutable public software release is complete. Zenodo connection, DOI minting and
   final journal-system submission remain under the corresponding author's control.
+
+# 2026-08-27 - Phase SX28: reserved Zenodo DOI integration and publication gate
+
+- Recorded reserved DOI `10.5281/zenodo.22128976` and Zenodo record `22128976` in
+  `publication.yml`, CFF, CodeMeta, manuscript C3/S3 tables, availability statement,
+  cover letter, reproducibility notes, readiness matrix and submission checklist.
+- Added explicit `archive_status: reserved` and `archive_published: false` metadata.
+  The strict verifier now rejects a reserved DOI until the deposit is actually public,
+  while separately validating DOI syntax, canonical URL and cross-file consistency.
+- Added three archive-gate regression tests. The focused verifier suite passes 11/11;
+  the complete Python suite passes 414/414; the core benchmark validates 120/120 with
+  frozen human-review evidence present.
+- Rebuilt the line-numbered DOCX and eight-page LaTeX PDF. The DOCX contains the DOI,
+  the PDF compiles successfully with the existing minor box-spacing warnings, and both
+  readiness JSON reports were regenerated.
+- Preserved the already published and Zenodo-uploaded exact `v1.0.0` source ZIP instead
+  of silently replacing it with a post-release metadata snapshot. Its SHA-256 remains
+  `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6` and CRC passes.
+- Unresolved: the corresponding author must review and publish Zenodo record `22128976`.
+  After publication, change the archive state to `published`, replace reserved-status
+  wording, rebuild final manuscript assets, and require strict verification exit 0.
+- Paper impact: C3/S3 and citation metadata now carry the real reserved DOI without
+  overstating public availability; no experimental metrics or scientific claims changed.

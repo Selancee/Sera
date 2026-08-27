@@ -235,7 +235,7 @@ evaluation rather than weakening transaction safeguards.
 | --- | --- | --- |
 | C1 | Current code version | `1.0.0` |
 | C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera/releases/tag/v1.0.0` |
-| C3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
+| C3 | Permanent link to reproducible capsule | `https://doi.org/10.5281/zenodo.22128976` |
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
 | C5 | Code versioning system used | Git |
 | C6 | Software code languages, tools and services used | Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML |
@@ -249,7 +249,7 @@ evaluation rather than weakening transaction safeguards.
 | --- | --- | --- |
 | S1 | Current executable software version | `1.0.0` |
 | S2 | Permanent link to executable | `https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe` |
-| S3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
+| S3 | Permanent link to reproducible capsule | `https://doi.org/10.5281/zenodo.22128976` |
 | S4 | Legal software license | MIT |
 | S5 | Computing platforms/operating systems | Windows 10/11 x64; source-level core also uses Python >=3.10 |
 | S6 | Installation requirements and dependencies | See `docs/softwarex/INSTALLATION.md` |
@@ -275,8 +275,9 @@ relationships that could have appeared to influence the work reported in this pa
 
 Source code, synthetic benchmark data, test fixtures, evaluation configuration, and
 the non-formal verification run are available from the tagged public repository in
-C2. The permanent archive in C3 will be inserted after DOI registration. No API key
-is distributed.
+C2. Zenodo has reserved `10.5281/zenodo.22128976` for the versioned deposit in C3;
+public DOI resolution begins when the corresponding author publishes that deposit.
+No API key is distributed.
 
 ## References
 

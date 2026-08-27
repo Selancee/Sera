@@ -26,7 +26,7 @@ Regenerate in this order:
 .\.venv\Scripts\python.exe scripts\export_softwarex_package.py
 ```
 
-`--profile submission` must return exit code 0 before any journal upload. It currently
-fails deliberately only until the permanent archive DOI is minted and inserted.
-Identity, rights confirmation, public repository visibility, and the `v1.0.0` release
-metadata are complete.
+`--profile submission` must return exit code 0 before any journal upload. DOI
+`10.5281/zenodo.22128976` is inserted but remains reserved, so strict verification
+continues to fail until the Zenodo record is publicly published. Identity, rights
+confirmation, public repository visibility, and the `v1.0.0` release metadata are complete.

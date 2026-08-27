@@ -30,8 +30,9 @@ together with auditable rejection reasons and protected-scope validation, makes 
 software useful for controlled research on reliable notation-editing agents.
 
 The immutable tagged release is available at
-https://github.com/Selancee/Sera/releases/tag/v1.0.0. The permanent archive DOI will
-be inserted after Zenodo registration. The code is released under the MIT License and
+https://github.com/Selancee/Sera/releases/tag/v1.0.0. Zenodo has reserved DOI
+10.5281/zenodo.22128976 for the versioned deposit; public DOI resolution begins when
+the corresponding author publishes it. The code is released under the MIT License and
 the synthetic benchmark under CC0-1.0.
 
 The sole author confirms that this manuscript is original and is not under

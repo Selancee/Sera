@@ -1,6 +1,6 @@
 {
-  "profile": "submission",
-  "passed": false,
+  "profile": "draft",
+  "passed": true,
   "checks": {
     "required_files": {
       "missing": [],
@@ -100,17 +100,24 @@
     "submission_metadata": {
       "passed": false,
       "blockers": [
-        "permanent archive DOI is missing"
+        "permanent archive DOI is reserved but archive is not yet published"
       ]
+    },
+    "archive_metadata": {
+      "passed": true,
+      "doi": "10.5281/zenodo.22128976",
+      "url": "https://doi.org/10.5281/zenodo.22128976",
+      "status": "reserved",
+      "published": false,
+      "errors": []
     }
   },
   "warnings": [
-    "The 30-task secondary check was repeated by the same pseudonymous reviewer; do not report inter-rater reliability"
+    "The 30-task secondary check was repeated by the same pseudonymous reviewer; do not report inter-rater reliability",
+    "Draft is technically complete but not submission-ready"
   ],
-  "errors": [
-    "Author-owned publication metadata is incomplete"
-  ],
+  "errors": [],
   "submission_blockers": [
-    "permanent archive DOI is missing"
+    "permanent archive DOI is reserved but archive is not yet published"
   ]
 }

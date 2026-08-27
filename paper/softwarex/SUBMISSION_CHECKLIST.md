@@ -32,8 +32,12 @@
 - [x] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
 - [x] Review the release diff; exclude private/user-owned files; commit with authorization.
 - [x] Create immutable release tag `v1.0.0` and publish checksummed release assets.
-- [ ] Connect GitHub to Zenodo (or approved capsule), archive the tag and insert DOI/URL.
-- [ ] Replace C2/C3/S2/S3 and repository citation with the immutable URLs/DOI.
+- [x] Create a Zenodo software deposit for the exact `v1.0.0` source archive, upload it,
+      reserve DOI `10.5281/zenodo.22128976`, and insert the DOI/URL.
+- [x] Replace C2/C3/S2/S3 and repository citation with immutable release URLs and the
+      reserved Zenodo DOI.
+- [ ] Publish Zenodo record `22128976`, then mark `archive_status: published` and
+      `archive_published: true` in `docs/softwarex/publication.yml`.
 - [x] Compile and visually inspect the LaTeX PDF; final template conformity must still
       be confirmed against the current official downloadable template before upload.
 - [ ] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.

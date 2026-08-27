@@ -155,6 +155,28 @@ def valid_email(value: str) -> bool:
     return bool(re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", value.strip()))
 
 
+def valid_archive_doi(value: str) -> bool:
+    """Accept a canonical Zenodo DOI without confusing reservation with publication."""
+    return bool(re.fullmatch(r"10\.5281/zenodo\.\d+", value.strip(), flags=re.IGNORECASE))
+
+
+def archive_submission_blockers(publication: dict[str, Any]) -> list[str]:
+    """Return truthful archive blockers for both reserved and published deposits."""
+    doi = str(publication.get("archive_doi") or "").strip()
+    url = str(publication.get("archive_url") or "").strip()
+    blockers: list[str] = []
+    if not doi:
+        return ["permanent archive DOI is missing"]
+    if not valid_archive_doi(doi):
+        blockers.append("permanent archive DOI is invalid")
+    expected_url = f"https://doi.org/{doi}"
+    if url != expected_url:
+        blockers.append("permanent archive URL does not match archive DOI")
+    if publication.get("archive_status") != "published" or publication.get("archive_published") is not True:
+        blockers.append("permanent archive DOI is reserved but archive is not yet published")
+    return blockers
+
+
 def _manifest_hashes_match(directory: Path, manifest: dict[str, Any]) -> bool:
     files = manifest.get("files") or []
     if not files or manifest.get("file_count") != len(files):
@@ -430,8 +452,7 @@ def verify(root: Path, profile: str) -> VerificationResult:
         blockers.append("GitHub repository is not confirmed public")
     if not publication.get("release_tag"):
         blockers.append("immutable release tag is missing")
-    if not publication.get("archive_doi"):
-        blockers.append("permanent archive DOI is missing")
+    blockers.extend(archive_submission_blockers(publication))
     if not publication.get("license_owner_confirmed"):
         blockers.append("copyright owner has not confirmed the MIT release")
     if not publication.get("benchmark_cc0_owner_confirmed"):
@@ -450,6 +471,36 @@ def verify(root: Path, profile: str) -> VerificationResult:
             blockers.append(f"publication field {key} is not supplied")
     result.submission_blockers = blockers
     result.checks["submission_metadata"] = {"passed": not blockers, "blockers": blockers}
+
+    archive_doi = str(publication.get("archive_doi") or "").strip()
+    archive_url = str(publication.get("archive_url") or "").strip()
+    archive_errors: list[str] = []
+    if archive_doi:
+        expected_url = f"https://doi.org/{archive_doi}"
+        if not valid_archive_doi(archive_doi):
+            archive_errors.append("publication archive DOI is invalid")
+        if archive_url != expected_url:
+            archive_errors.append("publication archive URL does not match the DOI")
+        linked_texts = {
+            "manuscript": manuscript,
+            "availability statement": (root / "paper" / "softwarex" / "submission" / "DATA_AND_CODE_AVAILABILITY.md").read_text(encoding="utf-8"),
+            "cover letter": (root / "paper" / "softwarex" / "submission" / "COVER_LETTER.md").read_text(encoding="utf-8"),
+            "CITATION.cff": (root / "CITATION.cff").read_text(encoding="utf-8"),
+            "codemeta.json": (root / "codemeta.json").read_text(encoding="utf-8"),
+        }
+        for label, text in linked_texts.items():
+            if archive_doi not in text:
+                archive_errors.append(f"{label} does not contain the archive DOI")
+    result.checks["archive_metadata"] = {
+        "passed": not archive_errors,
+        "doi": archive_doi or None,
+        "url": archive_url or None,
+        "status": publication.get("archive_status"),
+        "published": publication.get("archive_published"),
+        "errors": archive_errors,
+    }
+    if archive_errors:
+        result.fail("Archive DOI metadata is incomplete or inconsistent")
     if profile == "submission" and blockers:
         result.fail("Author-owned publication metadata is incomplete")
     elif blockers:

@@ -98,7 +98,8 @@ prerelease, and that all five uploaded asset digests match the local SHA-256 val
 
 ## Submission blockers
 
-- permanent archive DOI has not yet been minted or inserted in C3/S3.
+- DOI `10.5281/zenodo.22128976` is reserved and inserted in C3/S3, but Zenodo draft
+  record `22128976` is not yet publicly published.
 
-This is deliberately detected by the strict verifier. It is not a software-test failure
-and cannot be completed truthfully without the author's Zenodo account action.
+This is deliberately detected by the strict verifier. It is not a software-test failure:
+the archive gate clears only after the corresponding author publishes the Zenodo record.
