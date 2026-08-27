@@ -16,5 +16,6 @@ credit_roles_confirmed: false
 competing_interest_confirmed: false
 originality_statement_confirmed: false
 license_owner_confirmed: false
+benchmark_cc0_owner_confirmed: false
 benchmark_human_review_complete: true
 submission_date: null

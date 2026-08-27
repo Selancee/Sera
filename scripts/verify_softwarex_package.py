@@ -420,6 +420,8 @@ def verify(root: Path, profile: str) -> VerificationResult:
         blockers.append("permanent archive DOI is missing")
     if not publication.get("license_owner_confirmed"):
         blockers.append("copyright owner has not confirmed the MIT release")
+    if not publication.get("benchmark_cc0_owner_confirmed"):
+        blockers.append("benchmark owner has not confirmed the CC0 dedication")
     if not publication.get("credit_roles_confirmed"):
         blockers.append("sole-author CRediT roles have not been confirmed")
     if not publication.get("competing_interest_confirmed"):

@@ -436,4 +436,5 @@
 - Replaced an over-specific package check that required the old `Sera contributors`
   copyright string with content-based MIT validation, and added ORCID checksum plus
   CFF/CodeMeta/manuscript consistency checks. All 410 Python tests and the draft
-  SoftwareX verifier pass; eight author-controlled submission gates remain.
+  SoftwareX verifier pass; nine author-controlled submission gates remain, including
+  separate MIT-code and CC0-benchmark rights confirmations.

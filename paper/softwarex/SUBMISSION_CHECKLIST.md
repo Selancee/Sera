@@ -27,7 +27,8 @@
 
 - [ ] Supply the support email; author, affiliation, ORCID and funding metadata are filled.
 - [ ] Confirm the drafted sole-author CRediT roles and competing-interest statement.
-- [ ] Confirm every contributor/copyright owner authorizes the MIT release.
+- [ ] Confirm every contributor/copyright owner authorizes the MIT code release and
+      the benchmark owner authorizes the CC0 dedication.
 - [ ] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
 - [ ] Review the release diff; exclude private/user-owned files; commit with authorization.
 - [ ] Create an immutable release tag (recommended `v1.0.0`) and release asset.
