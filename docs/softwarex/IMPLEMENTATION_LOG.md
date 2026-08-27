@@ -486,3 +486,15 @@
 - The verified public-release payload comprises the portable Windows executable plus
   deterministic source and manuscript/reviewer archives. Git tagging and GitHub Release
   upload are the next authorized external actions.
+
+# 2026-08-27 - Phase SX27: public v1.0.0 release publication and independent verification
+
+- Created and pushed annotated tag `v1.0.0` at commit
+  `b23afcf08c26c46625fc3f24d82882495de9348f`.
+- Published `https://github.com/Selancee/Sera/releases/tag/v1.0.0` as a non-draft,
+  non-prerelease GitHub Release with the Windows portable executable, deterministic source
+  ZIP, SoftwareX manuscript/reviewer ZIP, `SHA256SUMS.txt`, and the full release manifest.
+- Queried the repository and release through unauthenticated GitHub API requests. All five
+  assets report `uploaded`, and every GitHub SHA-256 digest matches its local artifact.
+- The immutable public software release is complete. Zenodo connection, DOI minting and
+  final journal-system submission remain under the corresponding author's control.

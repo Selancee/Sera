@@ -20,7 +20,7 @@ and deterministic release packaging/readiness tools.
 - language-model comparative effectiveness: not established by this package;
 - musical/aesthetic quality: not established;
 - cross-host support: MuseScore bridge exercised, Sibelius not verified;
-- public release reproducibility: repository and `v1.0.0` release metadata prepared;
+- public release reproducibility: repository and `v1.0.0` release independently verified;
   archival reproducibility remains blocked until a permanent DOI exists.
 
 ## Honest readiness verdict
@@ -52,9 +52,8 @@ explicit research/reproducibility tool enabled with
 
 ## Recommended final release sequence
 
-1. Create and independently verify the public `v1.0.0` GitHub release and assets.
-2. Connect the repository to Zenodo, archive `v1.0.0`, and mint the DOI.
-3. Insert the DOI in publication metadata, C3/S3, and the availability statement.
-4. Rebuild the manuscript and both deterministic ZIP archives.
-5. Run the strict submission verifier and confirm the current SoftwareX template.
-6. The corresponding author completes the SoftwareX upload and declarations.
+1. Connect the repository to Zenodo, archive `v1.0.0`, and mint the DOI.
+2. Insert the DOI in publication metadata, C3/S3, and the availability statement.
+3. Rebuild the manuscript and both deterministic ZIP archives.
+4. Run the strict submission verifier and confirm the current SoftwareX template.
+5. The corresponding author completes the SoftwareX upload and declarations.

@@ -31,7 +31,7 @@
       the benchmark owner authorizes the CC0 dedication.
 - [x] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
 - [x] Review the release diff; exclude private/user-owned files; commit with authorization.
-- [ ] Create an immutable release tag (recommended `v1.0.0`) and release asset.
+- [x] Create immutable release tag `v1.0.0` and publish checksummed release assets.
 - [ ] Connect GitHub to Zenodo (or approved capsule), archive the tag and insert DOI/URL.
 - [ ] Replace C2/C3/S2/S3 and repository citation with the immutable URLs/DOI.
 - [x] Compile and visually inspect the LaTeX PDF; final template conformity must still

@@ -2149,3 +2149,20 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Commit these final release references, create and push annotated tag `v1.0.0`, publish
   the GitHub Release with checksummed artifacts, and verify it without authentication.
   The author's Zenodo connection and DOI registration remain separate and unperformed.
+
+## 2026-08-27 - Phase 53: immutable public release completed
+
+### Completed
+
+- Tagged the verified release commit as `v1.0.0` and published the public GitHub Release
+  with the portable Windows build, source package, manuscript/reviewer package, checksum
+  list, and full manifest.
+- Independently queried the release without authentication and matched all five GitHub
+  asset digests to local SHA-256 values. The annotated tag resolves to the exact commit
+  embedded in the deterministic source archive.
+
+### Remaining author action
+
+- Link the public GitHub repository to Zenodo, archive release `v1.0.0`, and provide the
+  minted DOI. After that value is inserted, the package can be rebuilt and the strict
+  SoftwareX submission profile should pass.

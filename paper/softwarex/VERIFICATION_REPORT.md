@@ -87,17 +87,18 @@ alternative review format.
 
 ## Release hashes
 
-- unpacked desktop: `fd09c1e98dbeafa5362d3534dee2ecbcd45ac2da7193804ec3c75f8de9ec087a`;
-- packaged backend: `d682393db5a8fa7bb5bbcf92f93f0780adf6dbe1bc6703bbbcbd86efb71304e9`;
-- source and manuscript/reviewer ZIP: see the external deterministic release manifest.
+- Windows x64 portable: `66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756`;
+- source ZIP: `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`;
+- manuscript/reviewer ZIP: `f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444`;
+- immutable tag commit: `b23afcf08c26c46625fc3f24d82882495de9348f`.
+
+The public release is `https://github.com/Selancee/Sera/releases/tag/v1.0.0`.
+Anonymous GitHub API verification confirmed that it is published, not a draft or
+prerelease, and that all five uploaded asset digests match the local SHA-256 values.
 
 ## Submission blockers
 
-- configured GitHub repository is not publicly readable without authentication;
-- no immutable release tag or permanent archive DOI;
-- copyright owner has not confirmed the MIT public release;
-- author name, affiliation and support email remain placeholders;
-- funding, competing-interest and CRediT text require author confirmation.
+- permanent archive DOI has not yet been minted or inserted in C3/S3.
 
-These are deliberately detected by the strict verifier. They are not software-test
-failures and cannot be completed truthfully without the author's information/authority.
+This is deliberately detected by the strict verifier. It is not a software-test failure
+and cannot be completed truthfully without the author's Zenodo account action.
