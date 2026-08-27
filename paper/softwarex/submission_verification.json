@@ -22,7 +22,7 @@
       "spdx": "MIT"
     },
     "manuscript_limits": {
-      "main_text_words": 1747,
+      "main_text_words": 1746,
       "main_text_limit": 3000,
       "abstract_words": 105,
       "abstract_target": "approximately 100",
@@ -100,8 +100,6 @@
     "submission_metadata": {
       "passed": false,
       "blockers": [
-        "GitHub repository is not confirmed public",
-        "immutable release tag is missing",
         "permanent archive DOI is missing"
       ]
     }
@@ -113,8 +111,6 @@
     "Author-owned publication metadata is incomplete"
   ],
   "submission_blockers": [
-    "GitHub repository is not confirmed public",
-    "immutable release tag is missing",
     "permanent archive DOI is missing"
   ]
 }
