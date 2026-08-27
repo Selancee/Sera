@@ -364,3 +364,15 @@
 - Expanded ignore rules for local caches, runtime sessions, user projects, build archives
   and old distribution bundles. Frozen SoftwareX evidence is explicitly allowlisted.
 - Staged-content scans found no API/private key material and no file at or above 100 MB.
+
+# 2026-08-27 - Phase SX21: private GitHub preservation upload
+
+- Committed the tested release candidate as `7ee92238f603df0d560f555cad7517a233b0bae3`
+  (`Prepare SeraEdit SoftwareX research baseline`) and pushed it to the existing
+  `origin/main` branch.
+- The push completed from `b4eb139` to `7ee9223`. Anonymous HTTPS still returns 404 while
+  authenticated Git resolves the new branch head, confirming that the repository remains
+  private as requested.
+- No public release, immutable release tag, archive DOI or visibility change was made.
+  Consequently, private preservation is complete while the SoftwareX public-release gate
+  intentionally remains unsatisfied.

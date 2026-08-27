@@ -45,3 +45,12 @@ MusicXML export/re-import smoke, which passed.
 This is a software/regression baseline and a private preservation upload. It is not a
 formal remote-LLM comparison, does not establish independent inter-rater reliability, and
 does not make the repository public or satisfy the eventual SoftwareX public-archive gate.
+
+## Upload outcome
+
+- Baseline commit: `7ee92238f603df0d560f555cad7517a233b0bae3`
+- Remote branch: `origin/main`
+- Push range: `b4eb139..7ee9223`
+- Repository visibility after push: authenticated Git read succeeds; anonymous HTTPS
+  remains HTTP 404, so the uploaded repository is still non-public.
+- No release tag, GitHub Release or public archive was created.
