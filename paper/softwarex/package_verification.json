@@ -9,12 +9,12 @@
     "version_consistency": {
       "passed": true,
       "versions": {
-        "python": "1.0.0.dev14",
-        "backend": "1.0.0-dev.14",
-        "frontend": "1.0.0-dev.14",
-        "electron": "1.0.0-dev.14",
-        "citation": "1.0.0-dev.14",
-        "codemeta": "1.0.0-dev.14"
+        "python": "1.0.0",
+        "backend": "1.0.0",
+        "frontend": "1.0.0",
+        "electron": "1.0.0",
+        "citation": "1.0.0",
+        "codemeta": "1.0.0"
       }
     },
     "software_license": {

@@ -454,3 +454,21 @@
 - Rebuilt and visually checked the eight-page PDF plus line-numbered DOCX. All 411 Python
   tests pass; draft package verification passes; strict verification now reports exactly
   three external blockers: public repository visibility, immutable tag and archive DOI.
+
+# 2026-08-27 - Phase SX25: version 1.0.0 release-candidate verification
+
+- Promoted all active Python, backend, frontend, Electron, CFF, CodeMeta, manuscript and
+  archive-version fields from `1.0.0-dev.14` to coordinated release version `1.0.0`.
+- Added the final changelog entry and Electron package description, author and MIT metadata.
+  Historical dev.14 implementation logs and the dated baseline report remain unchanged.
+- Passed 411 Python tests, 120 frontend tests, the 216-module production build, 120/120
+  core benchmark validation and the 6/6 offline reviewer demonstration.
+- Rebuilt the backend, compatibility launcher and Electron app from source. Packaged
+  backend, frontend, launcher and Electron health/startup/shutdown smoke passed, including
+  compound, meter and staff-local voice MusicXML regressions.
+- Built `Sera-1.0.0-x64.exe` (234,325,156 bytes; SHA-256
+  `66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756`) as the portable
+  release asset. It uses Electron's default icon because no project-owned icon asset is
+  present; this is a visual limitation, not a runtime failure.
+- Rebuilt and structurally checked the DOCX plus eight-page PDF at release version 1.0.0.
+  Public visibility, tagging and GitHub Release creation remain pending the external step.

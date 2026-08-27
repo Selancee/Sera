@@ -1,6 +1,6 @@
 {
   "name": "sera-frontend",
-  "version": "1.0.0-dev.14",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {

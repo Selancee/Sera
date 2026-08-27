@@ -1,7 +1,7 @@
 # SoftwareX submission workspace
 
 This directory contains the prepared Original Software Publication package for
-SeraEdit 1.0.0-dev.14.
+SeraEdit 1.0.0.
 
 - `manuscript/`: Markdown authority, SoftwareX v4 `elsarticle` source, bibliography,
   line-numbered DOCX and compiled, visually checked PDF.

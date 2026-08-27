@@ -233,7 +233,7 @@ evaluation rather than weakening transaction safeguards.
 
 | Nr. | Code metadata description | Metadata |
 | --- | --- | --- |
-| C1 | Current code version | `1.0.0-dev.14` |
+| C1 | Current code version | `1.0.0` |
 | C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera` (must be made public and tagged before submission) |
 | C3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
@@ -247,7 +247,7 @@ evaluation rather than weakening transaction safeguards.
 
 | Nr. | Software metadata description | Metadata |
 | --- | --- | --- |
-| S1 | Current executable software version | `1.0.0-dev.14` |
+| S1 | Current executable software version | `1.0.0` |
 | S2 | Permanent link to executable | `[RELEASE ASSET URL]` |
 | S3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
 | S4 | Legal software license | MIT |

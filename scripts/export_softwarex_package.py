@@ -17,7 +17,7 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.0.0-dev.14"
+VERSION = "1.0.0"
 FIXED_ZIP_TIME = (2026, 8, 23, 0, 0, 0)
 MAX_FILE_BYTES = 20 * 1024 * 1024
 

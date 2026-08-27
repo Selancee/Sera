@@ -1,9 +1,9 @@
 # SoftwareX verification report
 
-Verification date: 2026-08-27  
-Software version: `1.0.0-dev.14`  
-Baseline Git commit recorded by experiments: `b4eb13921bcbc48a95136cc744cabc094112a541`  
-Worktree: dirty; release archives therefore use an explicit file/hash manifest.
+- Verification date: 2026-08-27
+- Software version: `1.0.0`
+- Baseline Git commit recorded by experiments: `b4eb13921bcbc48a95136cc744cabc094112a541`
+- Release commit and clean-worktree state: recorded by `release/release_manifest.json`
 
 ## Environment
 
@@ -11,7 +11,7 @@ Worktree: dirty; release archives therefore use an explicit file/hash manifest.
 - Python `3.12.5` in `D:\Sera\.venv`;
 - Node.js `24.16.0`;
 - npm `11.13.0`;
-- Electron package version `1.0.0-dev.14`.
+- Electron package version `1.0.0`.
 
 ## Executed checks
 

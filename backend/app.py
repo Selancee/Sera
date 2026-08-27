@@ -47,7 +47,7 @@ from sera_edit.providers.runtime import load_llm_environment
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BACKEND_API_CONTRACT = "v1_notation_editing_layer"
-BACKEND_VERSION = "1.0.0-dev.14"
+BACKEND_VERSION = "1.0.0"
 REQUIRED_GENERATE_FIELDS = [
     "raw_prompt",
     "ui_controls",

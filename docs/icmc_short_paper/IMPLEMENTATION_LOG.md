@@ -2111,3 +2111,23 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - The private repository must remain private until the author separately authorizes public
   visibility. An immutable release tag and permanent archive DOI can only be completed
   after that authorization.
+
+## 2026-08-27 - Phase 51: coordinated 1.0.0 release candidate
+
+### Completed
+
+- Promoted every active software/citation/manuscript/archive version field to `1.0.0`,
+  preserving historical dev.14 evidence as history rather than rewriting it.
+- Passed 411 Python tests, 120 frontend tests, 120/120 benchmark validation, the 6/6
+  reviewer demo, production build and packaged Windows application smoke.
+- Rebuilt the backend, launcher, Electron directory package, and 234 MB portable
+  `Sera-1.0.0-x64.exe`; recorded the portable SHA-256 in the SoftwareX release log.
+- Rebuilt the version-aligned DOCX/PDF manuscript outputs. The missing project-owned app
+  icon remains a non-blocking presentation limitation for a later release.
+
+### Next external step
+
+- The author has now separately authorized public GitHub visibility and a `v1.0.0`
+  release. Make the repository public only after committing this verified release candidate,
+  then add final public URLs, tag the resulting commit, upload verified assets and recheck
+  anonymous access. DOI minting follows the immutable public tag.

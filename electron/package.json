@@ -1,6 +1,12 @@
 {
   "name": "sera-desktop-shell",
-  "version": "1.0.0-dev.14",
+  "version": "1.0.0",
+  "description": "Local-first desktop shell for reliable language-guided MusicXML editing through structured ScorePatch transactions.",
+  "author": {
+    "name": "Yuan Gao",
+    "email": "selanceg@gmail.com"
+  },
+  "license": "MIT",
   "private": true,
   "main": "main.js",
   "scripts": {

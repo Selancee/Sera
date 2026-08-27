@@ -1,6 +1,6 @@
 [project]
 name = "sera"
-version = "1.0.0.dev14"
+version = "1.0.0"
 description = "Intelligent score editing and collaboration layer for professional notation environments."
 license = {text = "MIT"}
 readme = "README.md"

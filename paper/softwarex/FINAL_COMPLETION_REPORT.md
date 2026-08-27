@@ -3,7 +3,7 @@
 ## Delivered
 
 The repository now contains an independent SoftwareX release track for SeraEdit
-`1.0.0-dev.14`: open-source/citation metadata, rights inventory, research-software
+`1.0.0`: open-source/citation metadata, rights inventory, research-software
 documentation, a v4-structured OSP manuscript in Markdown/LaTeX/DOCX, architecture
 figure sources and exports, disclosure/support files, a real offline verification run,
 and deterministic release packaging/readiness tools.
