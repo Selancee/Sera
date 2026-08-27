@@ -1,0 +1,38 @@
+{
+  "task_id": "conflict_005",
+  "score_id": "score_005",
+  "category": "conflicting_or_unsupported",
+  "difficulty": "hard",
+  "instruction_en": "Change measure 1 to 5/8 while preserving every note duration and leaving no rests.",
+  "instruction_zh": "把第1小节改成5/8拍，同时保持所有音符时值且不允许休止符。",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": null,
+  "expected_output_path": null,
+  "expected_constraints": [
+    {
+      "type": "refuse",
+      "reason": "meter_duration_conflict"
+    }
+  ],
+  "expected_status": "refuse",
+  "unsupported_reason": "meter_duration_conflict",
+  "tags": [
+    "batch1",
+    "synthetic",
+    "deterministic"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_meter_001",
+  "source_score_id": "score_007",
+  "source_fingerprint": "sha256:7fb0cd656a3d187e7fef2c3ac4310514b8c78124d5ab86baebde33c22cdb2976",
+  "instruction": "Rebar the three-measure excerpt from 4/4 to 3/4 by removing the final quarter-note event from each staff in every measure; preserve every remaining pitch and duration.",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "meter_001_op1",
+      "type": "change_time_signature",
+      "selector": {},
+      "arguments": {
+        "meter": "3/4"
+      },
+      "preconditions": [],
+      "expected_change_count": null
+    },
+    {
+      "operation_id": "meter_001_op2",
+      "type": "delete_event",
+      "selector": {
+        "event_ids": [
+          "s007_m1_rh_4",
+          "s007_m1_lh_4",
+          "s007_m2_rh_4",
+          "s007_m2_lh_4",
+          "s007_m3_rh_4",
+          "s007_m3_lh_4"
+        ]
+      },
+      "arguments": {},
+      "preconditions": [],
+      "expected_change_count": 6
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "meter_equals",
+      "value": "3/4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m1_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m1_lh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m2_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m2_lh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m3_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m3_lh_4"
+    },
+    {
+      "type": "preserve_duration"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

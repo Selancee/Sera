@@ -1,0 +1,4 @@
+id,measure_count,measures_per_system,system_count,wrapped_layout_success,max_measures_per_system_compliant,first_system_readability_score,score_visibility_success
+eight_measures,8,4,2,True,True,1.0,True
+sixteen_measures,16,4,4,True,True,1.0,True
+thirty_two_measures,32,4,8,True,True,1.0,True

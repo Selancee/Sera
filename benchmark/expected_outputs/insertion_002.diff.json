@@ -1,0 +1,61 @@
+{
+  "added": [
+    {
+      "measure": 2,
+      "measure_id": "m2",
+      "part_id": "piano",
+      "staff": "right_hand",
+      "voice": 1,
+      "event_id": "insertion_002_replacement",
+      "offset": "3",
+      "after": {
+        "event_id": "insertion_002_replacement",
+        "type": "note",
+        "pitch": "F#4",
+        "duration": "quarter",
+        "offset": 3.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null
+      }
+    }
+  ],
+  "deleted": [
+    {
+      "measure": 2,
+      "measure_id": "m2",
+      "part_id": "piano",
+      "staff": "right_hand",
+      "voice": 1,
+      "event_id": "m2_rh_4",
+      "offset": "3",
+      "before": {
+        "event_id": "m2_rh_4",
+        "type": "note",
+        "pitch": "D5",
+        "duration": "quarter",
+        "offset": 3.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null
+      }
+    }
+  ],
+  "changed": [],
+  "global_changes": {},
+  "changed_element_count": 2
+}

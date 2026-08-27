@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_meter_009",
+  "source_score_id": "score_019",
+  "source_fingerprint": "sha256:422d0135f2a24239a475ad2468c8e740d189c140d6ee8669fd1c736980b96229",
+  "instruction": "Replace only the displayed global time signature from 4/4 to 2/2; do not rebar, regroup, or change any event.",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "meter_009_op1",
+      "type": "change_time_signature",
+      "selector": {},
+      "arguments": {
+        "meter": "2/2"
+      },
+      "preconditions": [],
+      "expected_change_count": null
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "meter_equals",
+      "value": "2/2"
+    },
+    {
+      "type": "preserve_duration"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "score_consistency": {
+    "score_document_present_rate": 1.0,
+    "musicxml_present_rate": 1.0,
+    "midi_present_rate": 1.0,
+    "musicxml_score_event_match_rate": 1.0,
+    "score_midi_event_match_rate": 1.0,
+    "mismatch_count_mean": 0.0,
+    "authoritative_score_usage_rate": 1.0
+  },
+  "custom_style": {
+    "custom_style_preservation_rate": 1.0,
+    "cyberpunk_profile_success_rate": 1.0,
+    "anime_profile_success_rate": 1.0,
+    "cinematic_profile_success_rate": 1.0,
+    "new_age_profile_success_rate": 0.0,
+    "game_profile_success_rate": 0.0,
+    "style_profile_application_rate": 1.0
+  },
+  "layout": {
+    "wrapped_layout_success_rate": 1.0,
+    "measures_per_system_compliance_rate": 1.0,
+    "first_system_visibility_rate": 1.0,
+    "staff_overlap_failure_rate": 0.0,
+    "readability_proxy_score": 1.0
+  },
+  "rows": {
+    "score_consistency": 3,
+    "custom_style": 3,
+    "layout": 3
+  }
+}

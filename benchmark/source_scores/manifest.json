@@ -1,0 +1,256 @@
+{
+  "source_count": 20,
+  "sources": [
+    {
+      "score_id": "score_001",
+      "title": "SeraEdit Synthetic Fixture 1",
+      "meter": "4/4",
+      "key": "C major",
+      "measure_count": 2,
+      "features": [
+        "two_staff_quarter_note_fixture"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_002",
+      "title": "SeraEdit Synthetic Fixture 2",
+      "meter": "4/4",
+      "key": "A minor",
+      "measure_count": 2,
+      "features": [
+        "two_staff_quarter_note_fixture"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_003",
+      "title": "SeraEdit Synthetic Fixture 3",
+      "meter": "4/4",
+      "key": "G major",
+      "measure_count": 2,
+      "features": [
+        "two_staff_quarter_note_fixture"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_004",
+      "title": "SeraEdit Synthetic Fixture 4",
+      "meter": "4/4",
+      "key": "D minor",
+      "measure_count": 2,
+      "features": [
+        "two_staff_quarter_note_fixture"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_005",
+      "title": "SeraEdit Synthetic Fixture 5",
+      "meter": "4/4",
+      "key": "F major",
+      "measure_count": 2,
+      "features": [
+        "two_staff_quarter_note_fixture"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_006",
+      "title": "SeraEdit Synthetic Core Fixture 6",
+      "meter": "6/8",
+      "key": "E minor",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "grace_note"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_007",
+      "title": "SeraEdit Synthetic Core Fixture 7",
+      "meter": "4/4",
+      "key": "B-flat major",
+      "measure_count": 3,
+      "features": [
+        "chord"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_008",
+      "title": "SeraEdit Synthetic Core Fixture 8",
+      "meter": "4/4",
+      "key": "C major",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "slur"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_009",
+      "title": "SeraEdit Synthetic Core Fixture 9",
+      "meter": "6/8",
+      "key": "A minor",
+      "measure_count": 3,
+      "features": [
+        "grace_note"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_010",
+      "title": "SeraEdit Synthetic Core Fixture 10",
+      "meter": "4/4",
+      "key": "G major",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "chord",
+        "cross_measure_tie"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_011",
+      "title": "SeraEdit Synthetic Core Fixture 11",
+      "meter": "4/4",
+      "key": "D minor",
+      "measure_count": 3,
+      "features": [
+        "slur"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_012",
+      "title": "SeraEdit Synthetic Core Fixture 12",
+      "meter": "6/8",
+      "key": "F major",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "grace_note"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_013",
+      "title": "SeraEdit Synthetic Core Fixture 13",
+      "meter": "4/4",
+      "key": "E minor",
+      "measure_count": 3,
+      "features": [
+        "chord"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_014",
+      "title": "SeraEdit Synthetic Core Fixture 14",
+      "meter": "4/4",
+      "key": "B-flat major",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "slur"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_015",
+      "title": "SeraEdit Synthetic Core Fixture 15",
+      "meter": "6/8",
+      "key": "C major",
+      "measure_count": 3,
+      "features": [
+        "grace_note",
+        "cross_measure_tie"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_016",
+      "title": "SeraEdit Synthetic Core Fixture 16",
+      "meter": "4/4",
+      "key": "A minor",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "chord"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_017",
+      "title": "SeraEdit Synthetic Core Fixture 17",
+      "meter": "4/4",
+      "key": "G major",
+      "measure_count": 3,
+      "features": [
+        "slur"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_018",
+      "title": "SeraEdit Synthetic Core Fixture 18",
+      "meter": "6/8",
+      "key": "D minor",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "grace_note"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_019",
+      "title": "SeraEdit Synthetic Core Fixture 19",
+      "meter": "4/4",
+      "key": "F major",
+      "measure_count": 3,
+      "features": [
+        "chord"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    },
+    {
+      "score_id": "score_020",
+      "title": "SeraEdit Synthetic Core Fixture 20",
+      "meter": "4/4",
+      "key": "E minor",
+      "measure_count": 3,
+      "features": [
+        "independent_second_voice",
+        "slur",
+        "cross_measure_tie"
+      ],
+      "source": "seraedit_synthetic_public_domain",
+      "license": "CC0-1.0"
+    }
+  ]
+}

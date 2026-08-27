@@ -1,0 +1,17 @@
+[
+  {
+    "id": "empty_measure_click",
+    "prompt": "Click empty space in measure 2 and enter an eighth-note C.",
+    "expected": ["beat_grid_snap", "location_bar", "note_input"]
+  },
+  {
+    "id": "staff_voice_switch",
+    "prompt": "Move the cursor to left hand voice 2, then insert a rest.",
+    "expected": ["staff_lane", "voice_switch", "rest_input"]
+  },
+  {
+    "id": "missed_note_hit",
+    "prompt": "Click near but not exactly on a notehead and verify fallback targeting.",
+    "expected": ["expanded_hit_area", "beat_grid_fallback", "hover_status"]
+  }
+]

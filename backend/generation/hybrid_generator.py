@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from backend.generation.model_generator import ModelGenerator
+from backend.generation.musicality.generation_profile import GenerationProfile
+from backend.generation.musicality.musicality_postprocessor import MusicalityPostprocessor
 from backend.generation.postprocess import postprocess_structured_events
 from backend.generation.rule_based_generator import GeneratedScore, RuleBasedGenerator
 from backend.models.schemas import CompositionPlan
@@ -81,6 +83,13 @@ class HybridV05Generator:
         return generated
 
     def _postprocess_generated(self, generated: GeneratedScore, plan: CompositionPlan) -> tuple[GeneratedScore, dict[str, Any]]:
+        if generated.metadata.get("generation_profile"):
+            profile = GenerationProfile.from_plan(plan)
+            report = MusicalityPostprocessor().report_for_generated_metadata(profile, generated.metadata)
+            report["enabled"] = True
+            report["used_processed_musicxml"] = False
+            report["actions"] = ["kept V0.9 musicality MusicXML; legacy structured rewrite skipped"]
+            return generated, report
         try:
             structured = musicxml_to_structured_events(generated.musicxml)
             processed_events, report = postprocess_structured_events(structured.events)

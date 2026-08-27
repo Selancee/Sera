@@ -12,12 +12,16 @@ export class OSMDRenderer extends BaseScoreRenderer {
     const osmd = new OpenSheetMusicDisplay(container, {
       autoResize: true,
       drawTitle: true,
-      drawingParameters: "compact"
+      drawingParameters: "default",
+      renderSingleHorizontalStaffline: false
     });
     await osmd.load(context.musicxml);
     osmd.zoom = context.zoom;
     osmd.render();
-    const hitMap = buildOverlayHitMap(context.scoreDocument, "osmd");
+    if (!container.querySelector("svg") && !container.textContent?.trim()) {
+      throw new Error("OSMD rendered a blank score; fallback renderer is recommended.");
+    }
+    const hitMap = buildOverlayHitMap(context.scoreDocument, "osmd", context.layoutMode || "fit_width");
     return {
       requestedMode: "osmd",
       activeMode: "osmd",

@@ -1,0 +1,48 @@
+{
+  "task_id": "pitch_007",
+  "score_id": "score_007",
+  "category": "pitch_transposition",
+  "difficulty": "easy",
+  "instruction_en": "Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.",
+  "instruction_zh": "将第1小节第一谱表移调+2个半音，并保持节奏不变。",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/pitch_007.json",
+  "expected_output_path": "expected_outputs/pitch_007.score.json",
+  "expected_constraints": [
+    {
+      "type": "pitch_delta",
+      "event_ids": [
+        "s007_m1_rh_1",
+        "s007_m1_rh_2",
+        "s007_m1_rh_3",
+        "s007_m1_rh_4"
+      ],
+      "value": 2
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "pitch_transposition"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

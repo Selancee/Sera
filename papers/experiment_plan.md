@@ -158,6 +158,25 @@ Include:
 
 1. Aggregate automatic metrics.
 2. Per-category metric table.
+
+## V0.93 Real Score And Notation Benchmark
+
+Run:
+
+```powershell
+python -m evaluation.v093_real_score_and_notation.run_v093_eval --max-prompts 3
+```
+
+The benchmark adds hard regression metrics for real score source usage, fake score blocking, real playback source usage, notation grammar validity, musicality repair, and wrapped layout readability. It explicitly counts `plan.measures` dependency in final preview/playback components and reports backend preview-render success separately from ScoreDocument or MusicXML fallback success.
+
+Primary outputs:
+
+- `evaluation/results/v093_real_score_results.csv`
+- `evaluation/results/v093_notation_results.csv`
+- `evaluation/results/v093_musicality_results.csv`
+- `evaluation/results/v093_layout_results.csv`
+- `evaluation/results/v093_summary.json`
+- `evaluation/results/v093_failure_cases.json`
 3. Example generated score.
 4. Validation failure cases.
 5. Revision before/after examples.
@@ -178,3 +197,87 @@ The V0.8 prompt set contains 60 app-facing editing tasks covering note input, ke
 Primary metrics include note input success rate, keyboard shortcut success rate, drag edit success rate, selection mapping success rate, undo/redo success rate, autosave recovery success rate, project migration success rate, Agent preserve manual edit score, accompaniment generation success rate, MusicXML valid after edit rate, and overall workbench edit score.
 
 Outputs are written to `evaluation/results/workbench_editing_v08_results.csv`, `workbench_editing_v08_summary.json`, `workbench_editing_v08_table.tex`, and `workbench_editing_v08_failure_cases.json`.
+## V0.9 Precision And Musicality Benchmark
+
+The V0.9 benchmark adds two groups of metrics. Precision metrics measure note hit success, measure hit success, beat-grid snap success, cursor navigation, note input, keyboard shortcuts, drag pitch, staff/voice switching, location visibility, and operation reversibility. Musicality metrics measure rhythmic diversity, dotted/eighth/sixteenth presence, rest variety, quarter-note dominance penalty, melodic range, motif recurrence, cadence presence, accompaniment presence, left-hand activity, texture variety, dynamic contrast, and an overall proxy score.
+
+Run:
+
+```powershell
+python -m evaluation.v09_precision_and_musicality.run_v09_eval --max-prompts 3
+```
+
+The benchmark writes CSV, JSON, TeX, and failure-case artifacts under `evaluation/results/`.
+# V0.91 Evaluation Addendum
+
+The V0.91 usability benchmark measures click-to-notate success, pitch mapping proxy accuracy, duration mapping accuracy, dotted note input, rest input, overflow prevention, LocationBar feedback completeness, initial score readability, render fallback success, translation coverage, Simplified Chinese coverage, and desktop packaging readiness.
+
+Run:
+
+```powershell
+python -m evaluation.v091_usability.run_v091_usability_eval --max-prompts 3
+```
+
+The benchmark is a proxy evaluation for engineering readiness. Human studies are still needed for perceived notation speed, musical intent preservation, and translation quality.
+## V0.92 Evaluation Addendum
+
+V0.92 adds `evaluation/v092_unified_score_and_style/` to measure whether the generated score source, custom style profile, and readable layout contracts hold.
+
+Score consistency metrics include `score_document_present_rate`, `musicxml_present_rate`, `midi_present_rate`, `musicxml_score_event_match_rate`, `score_midi_event_match_rate`, `mismatch_count_mean`, and `authoritative_score_usage_rate`.
+
+Custom style metrics include preservation rates for cyberpunk, anime, cinematic, new age, and game soundtrack prompts, plus `style_profile_application_rate`.
+
+Layout metrics include `wrapped_layout_success_rate`, `measures_per_system_compliance_rate`, `first_system_visibility_rate`, `staff_overlap_failure_rate`, and a readable-layout proxy score.
+
+## V0.95 Metadata And Melody-Line Benchmark
+
+V0.95 adds `evaluation/v095_metadata_melody_line/` to measure metadata synchronization and melody-line diagnostics.
+
+Run:
+
+```powershell
+python -m evaluation.v095_metadata_melody_line.run_v095_eval --max-prompts 3
+```
+
+Metadata metrics include `title_key_consistency_rate`, `work_title_key_consistency_rate`, `metadata_sync_success_rate`, `composer_export_success_rate`, and `composer_edit_success_rate`.
+
+Melody-line metrics include `melody_line_extraction_success_rate`, `left_hand_exclusion_success_rate`, `cross_measure_tritone_rate`, `melody_line_large_leap_rate`, `unresolved_cross_measure_leap_rate`, and `melody_repair_success_rate`.
+
+The case set covers prompt C major vs UI A minor, prompt A minor vs default UI C major, no prompt key with UI A minor, title edits, composer edits, right-hand melody with left-hand accompaniment, cross-measure tritone, cross-measure octave-plus leap, and mixed playback event streams that must not be treated as melody.
+## V0.96 Expectation, Harmony, And Track Preparation Benchmark
+
+The V0.96 benchmark evaluates three dimensions:
+
+- Melody expectation: leap reversal, mean regression, unresolved large-leap rate, unresolved tritone rate, and phrase closure.
+- Style harmony: jazz extensions, Chinese pentatonic/open sonorities, classical voice-leading penalties, pop progression match, and cyberpunk/electronic modal-pedal mapping.
+- Multi-track preparation: whether the selected ScoreDocument exposes lead melody, harmony, and bass roles through optional tracks and role coverage metadata.
+
+Run:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.v096_expectation_harmony_orchestration.run_v096_eval --max-prompts 3
+```
+
+## V0.96.1 Final Score Style Integration Benchmark
+
+V0.96.1 adds `evaluation/v0961_final_score_style_integration/`. Unlike the V0.96 benchmark, it generates final scores and inspects the resulting ScoreDocument notes.
+
+Run:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.v0961_final_score_style_integration.run_v0961_eval --max-prompts 3
+```
+
+Metrics include final melody style match, final harmony style match, actual voicing style match, jazz extension presence, jazz plain-triad failure, Chinese pentatonic actual note rate, cyberpunk ostinato realization, candidate melody diversity, candidate harmony diversity, and metadata-score consistency.
+
+## V0.96.2 Phrase-Level Melody Benchmark
+
+V0.96.2 adds `evaluation/v0962_phrase_level_melody/`. It generates final ScoreDocuments for jazz, pop, classical, romantic, Chinese, and cyberpunk phrase prompts, then computes metrics from the actual right-hand events.
+
+Run:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.v0962_phrase_level_melody.run_v0962_eval --max-prompts 3
+```
+
+Metrics include phrase contour score, motif development score, mechanical repetition penalty, target-tone hit rate, tension/release curve match, cadence preparation score, accompaniment interaction score, style phrase match score, melody expectation score, and final score musicality proxy. The A/B table compares the V0.96.2 phrase melody with a simulated V0.96.1-style repeated template baseline over the same final score rhythm.

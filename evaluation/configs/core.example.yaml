@@ -1,0 +1,30 @@
+# Copy to a local file, choose one configured provider, and fill current prices.
+# Never place an API key in YAML; set only the named environment variable.
+experiment_id: core_live_v1
+benchmark_root: benchmark
+split: core
+conditions:
+  - full_rewrite
+  - patch_only
+  - sera_full
+provider:
+  provider: qwen
+  model: model-name
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key_env: DASHSCOPE_API_KEY
+  timeout_seconds: 90
+  requests_per_minute: 30
+  supports_structured_outputs: false
+  input_cost_per_million: null
+  output_cost_per_million: null
+repetitions: 1
+temperature: 0
+seed: 42
+max_tokens: 4096
+max_concurrency: 2
+max_retries: 2
+max_repair_attempts: 2
+retry_backoff_seconds: 1
+budget_limit_usd: 20
+cache: true
+formal_results_allowed: true

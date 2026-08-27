@@ -1,0 +1,3 @@
+actual_voicing_style_match_rate,case_id,final_harmony_style_match_rate,final_melody_style_match_rate,melody_expectation_score,melody_generation_source,metadata_score_consistency_rate,pass
+1.0,jazz_melody_expectation,1.0,1.0,0.7371,phrase_melody_engine,1.0,1.0
+0.9,pop_hook_melody,0.9,1.0,0.9753,phrase_melody_engine,1.0,1.0

@@ -1,0 +1,4 @@
+id,run_id,musicality_valid,non_monophonic,left_hand_activity,rhythmic_variety,dotted_rhythm_present,eighth_note_present,quarter_note_dominance,cadence_present,phrase_structure_score
+cyberpunk,20260827_050420_057415_96801ddb,True,True,1.0,1.0,True,True,0.1753,True,1.0
+romantic,20260827_050420_433830_b3271abb,True,True,1.0,0.8,True,True,0.19,True,1.0
+cinematic,20260827_050420_784427_bfda6341,False,True,1.0,1.0,True,True,0.8537,True,1.0

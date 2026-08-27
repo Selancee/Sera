@@ -1,0 +1,17 @@
+[
+  {
+    "case_id": "jazz_phrase_guide_tones",
+    "style": "jazz",
+    "prompt": "Jazz piano phrase, ii-V-I, guide tones, 8 measures"
+  },
+  {
+    "case_id": "pop_hook_variation",
+    "style": "pop",
+    "prompt": "Pop piano hook, bright, repeated hook with variation, 8 measures"
+  },
+  {
+    "case_id": "classical_period",
+    "style": "classical",
+    "prompt": "Classical piano period, antecedent and consequent, 8 measures"
+  }
+]

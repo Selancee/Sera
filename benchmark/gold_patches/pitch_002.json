@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_pitch_002",
+  "source_score_id": "score_002",
+  "source_fingerprint": "sha256:9a133c98170e68aea4e7ccc2a9d4e53afaddc1206fe0a11c2756b4427fa96760",
+  "instruction": "Transpose measure 1 of staff 1 up by a major second while preserving rhythm.",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "pitch_002_op1",
+      "type": "transpose",
+      "selector": {
+        "event_ids": [
+          "m1_rh_1",
+          "m1_rh_2",
+          "m1_rh_3",
+          "m1_rh_4"
+        ]
+      },
+      "arguments": {
+        "semitones": 2
+      },
+      "preconditions": [],
+      "expected_change_count": 4
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

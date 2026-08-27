@@ -1,0 +1,39 @@
+{
+  "real_score_source": {
+    "real_score_preview_rate": 1.0,
+    "fake_score_blocked_rate": 1.0,
+    "real_playback_source_rate": 1.0,
+    "plan_measure_dependency_count": 0.0,
+    "backend_preview_render_success_rate": 0.0
+  },
+  "notation_grammar": {
+    "measure_duration_valid_rate": 1.0,
+    "beat_grouping_valid_rate": 1.0,
+    "rest_grouping_valid_rate": 1.0,
+    "dotted_duration_valid_rate": 1.0,
+    "tie_split_valid_rate": 1.0,
+    "musicxml_export_valid_rate": 1.0
+  },
+  "musicality": {
+    "non_monophonic_rate": 1.0,
+    "left_hand_activity_score": 1.0,
+    "rhythmic_variety_score": 0.9333,
+    "dotted_rhythm_presence_rate": 1.0,
+    "eighth_note_presence_rate": 1.0,
+    "quarter_note_dominance": 0.4063,
+    "cadence_presence_rate": 1.0,
+    "phrase_structure_score": 1.0
+  },
+  "layout": {
+    "wrapped_layout_success_rate": 1.0,
+    "max_measures_per_system_compliance_rate": 1.0,
+    "first_system_readability_score": 1.0,
+    "score_visibility_success_rate": 1.0
+  },
+  "rows": {
+    "real_score": 2,
+    "notation": 3,
+    "musicality": 3,
+    "layout": 3
+  }
+}

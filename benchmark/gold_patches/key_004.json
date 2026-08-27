@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_key_004",
+  "source_score_id": "score_004",
+  "source_fingerprint": "sha256:4a2c31a4f5a343f6425d723a9baf18580d01e48ec4d20b0b6e1e9e0c0b90bb02",
+  "instruction": "Change the score key signature to A minor without transposing notes.",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "key_004_op1",
+      "type": "change_key_signature",
+      "selector": {},
+      "arguments": {
+        "key": "A minor"
+      },
+      "preconditions": [],
+      "expected_change_count": null
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "key_equals",
+      "value": "A minor"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

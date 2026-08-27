@@ -1,0 +1,20 @@
+[
+  {
+    "id": "prompt_c_major_ui_a_minor",
+    "prompt": "Compose an 8 measure piano phrase in C major.",
+    "ui_controls": { "key": "A minor", "length_measures": 8, "instrument": "piano" },
+    "ui_control_sources": { "key": "explicit", "length_measures": "explicit", "instrument": "default" }
+  },
+  {
+    "id": "prompt_a_minor_ui_default_c_major",
+    "prompt": "Compose an 8 measure piano phrase in A minor.",
+    "ui_controls": { "key": "C major", "length_measures": 8, "instrument": "piano" },
+    "ui_control_sources": { "key": "default", "length_measures": "explicit", "instrument": "default" }
+  },
+  {
+    "id": "no_prompt_key_ui_a_minor",
+    "prompt": "Compose an 8 measure lyrical piano phrase.",
+    "ui_controls": { "key": "A minor", "length_measures": 8, "instrument": "piano" },
+    "ui_control_sources": { "key": "explicit", "length_measures": "explicit", "instrument": "default" }
+  }
+]

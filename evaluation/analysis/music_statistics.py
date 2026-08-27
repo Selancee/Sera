@@ -173,7 +173,7 @@ def parse_musicxml_notes(musicxml: str) -> list[ParsedNote]:
                 alter = _int_text(pitch_node.find("alter"), 0)
                 octave = _int_text(pitch_node.find("octave"), 4)
                 midi = pitch_to_midi(step, alter, octave)
-                pitch = midi_to_pitch(midi)
+                pitch = _musicxml_pitch_name(step, alter, octave)
             dotted = note.find("dot") is not None
             triplet = note.find("time-modification") is not None
             notes.append(
@@ -401,6 +401,11 @@ def diagnose_directory(input_dir: str | Path, output_json: str | Path, max_files
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
+
+
+def _musicxml_pitch_name(step: str, alter: int, octave: int) -> str:
+    accidental = "#" * int(alter) if int(alter) > 0 else "b" * abs(int(alter)) if int(alter) < 0 else ""
+    return f"{step.upper()}{accidental}{int(octave)}"
 
 
 def _int_text(node: ET.Element | None, fallback: int) -> int:

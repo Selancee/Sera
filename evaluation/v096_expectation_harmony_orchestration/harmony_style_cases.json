@@ -1,0 +1,7 @@
+[
+  {"case_id": "jazz", "style": "jazz", "key": "F major", "mode": "major", "difficulty": "advanced"},
+  {"case_id": "chinese", "style": "chinese", "key": "D major", "mode": "major", "difficulty": "intermediate"},
+  {"case_id": "classical", "style": "classical", "key": "C major", "mode": "major", "difficulty": "intermediate"},
+  {"case_id": "pop", "style": "pop", "key": "C major", "mode": "major", "difficulty": "intermediate"},
+  {"case_id": "cyberpunk", "style": "electronic", "key": "A minor", "mode": "minor", "difficulty": "intermediate"}
+]

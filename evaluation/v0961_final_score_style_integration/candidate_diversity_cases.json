@@ -1,0 +1,5 @@
+[
+  {"case_id": "jazz_candidate_diversity", "prompt": "Jazz piano sketch, ii-V-I, seventh chords, 8 measures"},
+  {"case_id": "pop_candidate_diversity", "prompt": "Pop piano hook, bright, I-V-vi-IV, 8 measures"},
+  {"case_id": "cyberpunk_candidate_diversity", "prompt": "Cyberpunk piano, ostinato bass, minor modal, syncopation, 8 measures"}
+]

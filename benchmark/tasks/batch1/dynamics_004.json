@@ -1,0 +1,45 @@
+{
+  "task_id": "dynamics_004",
+  "score_id": "score_004",
+  "category": "dynamics_articulation",
+  "difficulty": "easy",
+  "instruction_en": "Change only the third note in measure 1 to forte, preserving pitch and duration.",
+  "instruction_zh": "只将第1小节第三个音改为强奏，并保持音高与时值。",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "m1_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/dynamics_004.json",
+  "expected_output_path": "expected_outputs/dynamics_004.score.json",
+  "expected_constraints": [
+    {
+      "type": "dynamic_equals",
+      "event_id": "m1_rh_3",
+      "value": "f"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch1",
+    "synthetic",
+    "deterministic"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

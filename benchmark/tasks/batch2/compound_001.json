@@ -1,0 +1,51 @@
+{
+  "task_id": "compound_001",
+  "score_id": "score_007",
+  "category": "compound_multi_step",
+  "difficulty": "hard",
+  "instruction_en": "Transpose the final two notes of measure 2 staff 1 up a semitone and mark the final note forte.",
+  "instruction_zh": "将第2小节第一谱表最后两个音升高半音，并把最后一个音标为强奏。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/compound_001.json",
+  "expected_output_path": "expected_outputs/compound_001.score.json",
+  "expected_constraints": [
+    {
+      "type": "pitch_delta",
+      "event_ids": [
+        "s007_m2_rh_3",
+        "s007_m2_rh_4"
+      ],
+      "value": 1
+    },
+    {
+      "type": "dynamic_equals",
+      "event_id": "s007_m2_rh_4",
+      "value": "f"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "compound_multi_step"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

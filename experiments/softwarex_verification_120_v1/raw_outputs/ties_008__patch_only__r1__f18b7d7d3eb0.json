@@ -1,0 +1,100 @@
+{
+  "run_id": "ties_008:patch_only:r1",
+  "request": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return only a ScorePatch 1.0.0 JSON object. Use the supplied stable event IDs and target scope. Do not return MusicXML, prose, or Markdown."
+      },
+      {
+        "role": "user",
+        "content": "{\"instruction\":\"Add one slur from the first to the last note of measure 3 staff 1.\",\"target_scope\":{\"measures\":[3],\"staffs\":[1]},\"score_context\":{\"score_id\":\"score_016\",\"source_fingerprint\":\"sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f\",\"global\":{\"key\":\"A minor\",\"meter\":\"4/4\",\"tempo\":78,\"pickup\":false},\"included_measures\":[2,3,4],\"events\":[{\"event_id\":\"s016_m2_lh_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"G3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_lh_v2_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":2,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"E3\",\"duration\":\"whole\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_rh_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"A4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_lh_2\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"C3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_rh_2\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"B4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_lh_3\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"G2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_rh_3\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"C5\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_lh_4\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"A2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m2_rh_4\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"C4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_lh_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"G2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_lh_v2_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":2,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"D3\",\"duration\":\"whole\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_rh_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"B4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_lh_2\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"A2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_rh_2\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"C5\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_lh_3\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"F2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_rh_3\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"C4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_lh_4\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"E3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s016_m3_rh_4\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"D4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false}]},\"score_patch_schema\":{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://sera.local/schemas/score_patch.schema.json\",\"title\":\"SeraEdit ScorePatch\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_version\",\"patch_id\",\"source_score_id\",\"source_fingerprint\",\"instruction\",\"target_scope\",\"protected_scope\",\"preconditions\",\"operations\",\"expected_effects\",\"provenance\"],\"properties\":{\"schema_version\":{\"const\":\"1.0.0\"},\"patch_id\":{\"type\":\"string\",\"minLength\":1},\"source_score_id\":{\"type\":\"string\",\"minLength\":1},\"source_fingerprint\":{\"type\":\"string\",\"pattern\":\"^sha256:[0-9a-f]{64}$\"},\"instruction\":{\"type\":\"string\",\"minLength\":1},\"target_scope\":{\"$ref\":\"#/$defs/scope\"},\"protected_scope\":{\"$ref\":\"#/$defs/scope\"},\"preconditions\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"operations\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/operation\"}},\"expected_effects\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"provenance\":{\"type\":\"object\"}},\"$defs\":{\"scope\":{\"type\":\"object\",\"additionalProperties\":false,\"properties\":{\"measures\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"parts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"staffs\":{\"type\":\"array\",\"items\":{\"oneOf\":[{\"type\":\"integer\",\"minimum\":1},{\"type\":\"string\"}]},\"uniqueItems\":true},\"voices\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"event_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"exclude_measures\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"exclude_event_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"time_range\":{\"oneOf\":[{\"type\":\"null\"},{\"type\":\"array\",\"prefixItems\":[{\"type\":[\"string\",\"number\"]},{\"type\":[\"string\",\"number\"]}],\"minItems\":2,\"maxItems\":2},{\"type\":\"object\",\"required\":[\"start\",\"end\"],\"properties\":{\"start\":{\"type\":[\"string\",\"number\"]},\"end\":{\"type\":[\"string\",\"number\"]}},\"additionalProperties\":false}]},\"whole_score\":{\"type\":\"boolean\"}}},\"operation\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"operation_id\",\"type\",\"selector\",\"arguments\",\"preconditions\"],\"properties\":{\"operation_id\":{\"type\":\"string\",\"minLength\":1},\"type\":{\"enum\":[\"transpose\",\"set_pitch\",\"set_duration\",\"insert_note\",\"insert_rest\",\"delete_event\",\"set_dynamic\",\"set_articulation\",\"set_tie\",\"set_slur\",\"change_key_signature\",\"change_time_signature\",\"move_to_voice\",\"duplicate_motif\",\"replace_chord\",\"batch\"]},\"selector\":{\"type\":\"object\"},\"arguments\":{\"type\":\"object\"},\"preconditions\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"expected_change_count\":{\"type\":[\"integer\",\"null\"],\"minimum\":0}}}}}}"
+      }
+    ],
+    "response_schema_hash": "8807616650c6942c56c9df1c9e39012c2daf99ad0bffcb9361a163ae38c9b6b6",
+    "temperature": 0,
+    "seed": 42,
+    "max_tokens": 4096
+  },
+  "response": {
+    "raw_text": "{\"schema_version\": \"1.0.0\", \"patch_id\": \"gold_ties_008\", \"source_score_id\": \"score_016\", \"source_fingerprint\": \"sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f\", \"instruction\": \"Add one slur from the first to the last note of measure 3 staff 1.\", \"target_scope\": {\"measures\": [3], \"staffs\": [1]}, \"protected_scope\": {\"staffs\": [2]}, \"preconditions\": [], \"operations\": [{\"operation_id\": \"ties_008_op1\", \"type\": \"set_slur\", \"selector\": {\"event_ids\": [\"s016_m3_rh_1\"]}, \"arguments\": {\"slur\": \"start\"}, \"preconditions\": [], \"expected_change_count\": 1}, {\"operation_id\": \"ties_008_op2\", \"type\": \"set_slur\", \"selector\": {\"event_ids\": [\"s016_m3_rh_4\"]}, \"arguments\": {\"slur\": \"stop\"}, \"preconditions\": [], \"expected_change_count\": 1}], \"expected_effects\": [{\"type\": \"preserve_pitch\"}, {\"type\": \"preserve_duration\"}], \"provenance\": {\"provider\": \"rule_template\", \"model\": \"deterministic_core_v1\", \"temperature\": 0, \"seed\": 42}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "gold_ties_008",
+      "source_score_id": "score_016",
+      "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+      "instruction": "Add one slur from the first to the last note of measure 3 staff 1.",
+      "target_scope": {
+        "measures": [
+          3
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "ties_008_op1",
+          "type": "set_slur",
+          "selector": {
+            "event_ids": [
+              "s016_m3_rh_1"
+            ]
+          },
+          "arguments": {
+            "slur": "start"
+          },
+          "preconditions": [],
+          "expected_change_count": 1
+        },
+        {
+          "operation_id": "ties_008_op2",
+          "type": "set_slur",
+          "selector": {
+            "event_ids": [
+              "s016_m3_rh_4"
+            ]
+          },
+          "arguments": {
+            "slur": "stop"
+          },
+          "preconditions": [],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_pitch"
+        },
+        {
+          "type": "preserve_duration"
+        }
+      ],
+      "provenance": {
+        "provider": "rule_template",
+        "model": "deterministic_core_v1",
+        "temperature": 0,
+        "seed": 42
+      }
+    },
+    "provider": "mock",
+    "model": "benchmark-fixture-v2-roundtrip",
+    "latency_ms": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "estimated_cost": 0.0,
+    "request_id": "mock:ties_008:patch_only",
+    "finish_reason": "fixture",
+    "error": null,
+    "cached": true,
+    "retry_count": 0,
+    "request_hash": "f3bd27a7bcba41101395499e38959a47d8f08cadb8aff5d4cf7cd3859e8fa112",
+    "repair_responses": []
+  }
+}

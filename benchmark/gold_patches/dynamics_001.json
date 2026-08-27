@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_dynamics_001",
+  "source_score_id": "score_001",
+  "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+  "instruction": "Change only the third note in measure 1 to forte, preserving pitch and duration.",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "m1_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "dynamics_001_op1",
+      "type": "set_dynamic",
+      "selector": {
+        "event_ids": [
+          "m1_rh_3"
+        ]
+      },
+      "arguments": {
+        "dynamic": "f"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": ["source_prompt_terms", "unparsed_prompt_terms", "plan_grounding", "prompt_plan_alignment_score"],
+  "properties": {
+    "source_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "unparsed_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "plan_grounding": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "source", "source_prompt_terms", "confidence"],
+        "properties": {
+          "decision": { "type": "string" },
+          "source": { "type": "string" },
+          "source_prompt_terms": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number" }
+        }
+      }
+    },
+    "prompt_plan_alignment_score": { "type": "number" },
+    "resolved_generation_request": { "type": "object" },
+    "prompt_ui_conflicts": { "type": "array" }
+  }
+}

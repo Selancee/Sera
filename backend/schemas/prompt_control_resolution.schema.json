@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "required": ["raw_prompt", "ui_controls", "resolved_controls", "conflicts", "defaults_used", "prompt_priority_applied", "warnings"],
+  "properties": {
+    "raw_prompt": { "type": "string" },
+    "ui_controls": { "type": "object" },
+    "ui_control_sources": { "type": "object" },
+    "resolved_controls": { "type": "object" },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "prompt_value", "ui_value", "resolution", "reason"],
+        "properties": {
+          "field": { "type": "string" },
+          "prompt_value": {},
+          "ui_value": {},
+          "ui_source": { "type": "string" },
+          "resolution": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "defaults_used": { "type": "array", "items": { "type": "string" } },
+    "prompt_priority_applied": { "type": "boolean" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "prompt_terms": { "type": "array" },
+    "source_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "unparsed_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "language": { "type": "string" }
+  }
+}

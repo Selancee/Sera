@@ -1,0 +1,49 @@
+{
+  "task_id": "dynamics_007",
+  "score_id": "score_008",
+  "category": "dynamics_articulation",
+  "difficulty": "easy",
+  "instruction_en": "Set only the selected note to forte while preserving pitch and duration.",
+  "instruction_zh": "只将所选音符改为强奏，并保持音高和时值。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "s008_m2_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/dynamics_007.json",
+  "expected_output_path": "expected_outputs/dynamics_007.score.json",
+  "expected_constraints": [
+    {
+      "type": "dynamic_equals",
+      "event_id": "s008_m2_rh_3",
+      "value": "f"
+    },
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "dynamics_articulation"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

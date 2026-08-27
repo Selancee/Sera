@@ -1,0 +1,12 @@
+{
+  "style_cases": 2,
+  "candidate_diversity_cases": 2,
+  "melody_cases": 2,
+  "harmony_voicing_cases": 2,
+  "average_final_melody_style_match_rate": 1.0,
+  "average_final_harmony_style_match_rate": 0.875,
+  "average_actual_voicing_style_match_rate": 0.875,
+  "average_candidate_actual_melody_diversity_score": 1.0,
+  "average_candidate_actual_harmony_diversity_score": 0.5,
+  "failure_count": 0
+}

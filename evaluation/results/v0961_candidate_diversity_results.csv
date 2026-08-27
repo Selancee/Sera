@@ -1,0 +1,3 @@
+candidate_actual_harmony_diversity_score,candidate_actual_melody_diversity_score,candidate_actual_rhythm_diversity_score,case_id,pass
+0.5,1.0,1.0,jazz_candidate_diversity,1.0
+0.5,1.0,1.0,pop_candidate_diversity,1.0

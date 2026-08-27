@@ -27,6 +27,20 @@ function GlobalControls({ scoreDocument, onOperation }: { scoreDocument: ScoreDo
   return (
     <div className="inspector-grid">
       <label>
+        Title
+        <input
+          value={scoreDocument.title}
+          onChange={(event) => onOperation({ source: "user", type: "change_title", target: { field: "title" }, before: { title: scoreDocument.title }, after: { title: event.target.value }, description: "Change title" })}
+        />
+      </label>
+      <label>
+        Composer
+        <input
+          value={scoreDocument.composer}
+          onChange={(event) => onOperation({ source: "user", type: "change_composer", target: { field: "composer" }, before: { composer: scoreDocument.composer }, after: { composer: event.target.value }, description: "Change composer" })}
+        />
+      </label>
+      <label>
         Key
         <input
           value={scoreDocument.global.key}
@@ -111,4 +125,3 @@ function MeasureControls({ measure, onOperation }: { measure: ScoreMeasure; onOp
     </div>
   );
 }
-

@@ -1,35 +1,39 @@
 import type { ScoreDocument, ScoreEvent } from "../scoreTypes";
+import { buildSystemLayout } from "../systemLayout";
+import type { ScoreLayoutMode } from "../layoutConfig";
 import type { HitTarget, LayoutBox } from "./renderTypes";
 
-export const MEASURE_WIDTH = 128;
+export const MEASURE_WIDTH = 160;
 export const STAFF_TOP = 74;
-export const LEFT_STAFF_TOP = 146;
+export const LEFT_STAFF_TOP = 170;
 export const SCORE_LEFT = 36;
 
-export function pitchToStaffY(event: ScoreEvent) {
+export function pitchToStaffY(event: ScoreEvent, staffTop = STAFF_TOP) {
   const pitch = event.pitch || "C4";
   const step = pitch[0]?.toUpperCase() || "C";
   const octave = Number(pitch.match(/\d/)?.[0] || 4);
   const stepMap: Record<string, number> = { C: 112, D: 107, E: 102, F: 97, G: 92, A: 87, B: 82 };
-  return (stepMap[step] || 102) - (octave - 4) * 28;
+  return staffTop + ((stepMap[step] || 102) - STAFF_TOP) - (octave - 4) * 28;
 }
 
-export function buildFallbackLayout(scoreDocument: ScoreDocument): LayoutBox[] {
+export function buildFallbackLayout(scoreDocument: ScoreDocument, mode: ScoreLayoutMode = "fit_width"): LayoutBox[] {
   const boxes: LayoutBox[] = [];
+  const layout = buildSystemLayout(scoreDocument.measures.length, mode);
   scoreDocument.measures.forEach((measure, index) => {
-    const measureX = index * MEASURE_WIDTH + SCORE_LEFT;
+    const measureLayout = layout.measures[index];
+    const measureX = measureLayout.x;
     boxes.push({
       type: "measure",
       measureId: measure.measure_id,
       measureNumber: measure.number,
-      x: measureX - 4,
-      y: 42,
-      width: MEASURE_WIDTH - 10,
-      height: 152
+      x: measureX,
+      y: measureLayout.y + 42,
+      width: measureLayout.width,
+      height: 176
     });
     measure.events.forEach((event, eventIndex) => {
       const x = eventX(measureX, event, eventIndex);
-      const y = event.staff === "left_hand" ? LEFT_STAFF_TOP + 22 : pitchToStaffY(event);
+      const y = event.staff === "left_hand" ? measureLayout.leftStaffTop + 22 : pitchToStaffY(event, measureLayout.rightStaffTop);
       boxes.push({
         type: "event",
         measureId: measure.measure_id,
@@ -50,8 +54,8 @@ export function buildFallbackLayout(scoreDocument: ScoreDocument): LayoutBox[] {
   return boxes;
 }
 
-export function buildOverlayHitMap(scoreDocument: ScoreDocument, source: "osmd" | "fallback" = "fallback") {
-  const boxes = buildFallbackLayout(scoreDocument).map((box) => ({
+export function buildOverlayHitMap(scoreDocument: ScoreDocument, source: "osmd" | "fallback" = "fallback", mode: ScoreLayoutMode = "fit_width") {
+  const boxes = buildFallbackLayout(scoreDocument, mode).map((box) => ({
     ...box,
     hitMode: source === "osmd" ? ("overlay" as const) : ("fallback" as const),
     confidence: box.type === "event" ? (source === "osmd" ? 0.74 : 0.86) : 0.92,
@@ -91,5 +95,5 @@ export function hitTargetFromEvent(scoreDocument: ScoreDocument, eventId: string
 }
 
 export function eventX(measureX: number, event: ScoreEvent, index: number) {
-  return measureX + 22 + Math.max(0, Number(event.offset || index)) * 22;
+  return measureX + 30 + Math.max(0, Number(event.offset || index)) * 28;
 }

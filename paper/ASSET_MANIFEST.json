@@ -1,0 +1,8 @@
+{
+  "experiment_id": "core_mock_120_v5",
+  "result_class": "mock_non_formal",
+  "formal_results_allowed": false,
+  "warning": "Generated assets are non-formal placeholders and must not be used as model-performance evidence.",
+  "tables": 2,
+  "figures": 5
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_compound_005",
+  "source_score_id": "score_014",
+  "source_fingerprint": "sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a",
+  "instruction": "Transpose the final two notes of measure 2 staff 1 up a semitone and mark the final note forte.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "compound_005_op1",
+      "type": "transpose",
+      "selector": {
+        "event_ids": [
+          "s014_m2_rh_3",
+          "s014_m2_rh_4"
+        ]
+      },
+      "arguments": {
+        "semitones": 1
+      },
+      "preconditions": [],
+      "expected_change_count": 2
+    },
+    {
+      "operation_id": "compound_005_op2",
+      "type": "set_dynamic",
+      "selector": {
+        "event_ids": [
+          "s014_m2_rh_4"
+        ]
+      },
+      "arguments": {
+        "dynamic": "f"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "experiment_id": "softwarex_verification_120_v1",
+  "source": "experiments/softwarex_verification_120_v1/runs.jsonl",
+  "output": "experiments/softwarex_verification_120_v1/metrics_recomputed.csv",
+  "rows": 360,
+  "provider_calls": 0,
+  "note": "Metrics were deterministically recomputed from saved normalized outputs."
+}

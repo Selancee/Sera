@@ -1,0 +1,5 @@
+[
+  { "id": "four_four", "prompt": "Compose an 8 measure classical piano piece in 4/4.", "meter": "4/4" },
+  { "id": "three_four", "prompt": "Compose an 8 measure waltz piano piece in 3/4.", "meter": "3/4" },
+  { "id": "six_eight", "prompt": "Compose an 8 measure flowing piano piece in 6/8.", "meter": "6/8" }
+]

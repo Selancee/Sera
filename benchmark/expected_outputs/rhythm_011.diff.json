@@ -1,0 +1,93 @@
+{
+  "added": [],
+  "deleted": [
+    {
+      "measure": 2,
+      "measure_id": "m2",
+      "part_id": "piano",
+      "staff": "right_hand",
+      "voice": 1,
+      "event_id": "s014_m2_rh_2",
+      "offset": "1",
+      "before": {
+        "event_id": "s014_m2_rh_2",
+        "type": "note",
+        "pitch": "G4",
+        "duration": "quarter",
+        "offset": 1.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null
+      }
+    }
+  ],
+  "changed": [
+    {
+      "event_id": "s014_m2_rh_1",
+      "before_location": {
+        "measure": 2,
+        "measure_id": "m2",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s014_m2_rh_1",
+        "offset": "0"
+      },
+      "after_location": {
+        "measure": 2,
+        "measure_id": "m2",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s014_m2_rh_1",
+        "offset": "0"
+      },
+      "changed_fields": [
+        "duration"
+      ],
+      "before": {
+        "event_id": "s014_m2_rh_1",
+        "type": "note",
+        "pitch": "E4",
+        "duration": "quarter",
+        "offset": 0.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null
+      },
+      "after": {
+        "event_id": "s014_m2_rh_1",
+        "type": "note",
+        "pitch": "E4",
+        "duration": "half",
+        "offset": 0.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null
+      }
+    }
+  ],
+  "global_changes": {},
+  "changed_element_count": 2
+}

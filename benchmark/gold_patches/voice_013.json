@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_voice_013",
+  "source_score_id": "score_020",
+  "source_fingerprint": "sha256:96dba7cecea3d6762c00169ed1814ef86f13c29ce4e0080680aee90ad80af94d",
+  "instruction": "Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.",
+  "target_scope": {
+    "measures": [
+      3
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "voice_013_op1",
+      "type": "move_to_voice",
+      "selector": {
+        "event_ids": [
+          "s020_m3_rh_1",
+          "s020_m3_rh_2",
+          "s020_m3_rh_3",
+          "s020_m3_rh_4"
+        ]
+      },
+      "arguments": {
+        "voice": 2
+      },
+      "preconditions": [],
+      "expected_change_count": 4
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

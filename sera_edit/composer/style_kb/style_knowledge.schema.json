@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sera.local/schemas/style-knowledge-v0.2.json",
+  "title": "Sera Composer Style Knowledge Base",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "knowledge_base_id", "provenance", "styles"],
+  "properties": {
+    "schema_version": {"const": "0.2.0"},
+    "knowledge_base_id": {"type": "string", "minLength": 1},
+    "provenance": {
+      "type": "object",
+      "required": ["content_policy", "copyright_status", "intended_use"],
+      "properties": {
+        "content_policy": {"type": "string"},
+        "copyright_status": {"type": "string"},
+        "intended_use": {"type": "string"}
+      }
+    },
+    "styles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["style_id", "display_name_zh", "display_name_en", "aliases", "planning", "melody", "voice_leading", "critic_weights", "rules"],
+        "properties": {
+          "style_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "display_name_zh": {"type": "string"},
+          "display_name_en": {"type": "string"},
+          "aliases": {"type": "array", "items": {"type": "string"}},
+          "planning": {"type": "object"},
+          "melody": {"type": "object"},
+          "voice_leading": {"type": "object"},
+          "critic_weights": {"type": "object"},
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["rule_id", "title_zh", "summary_zh", "tags", "modes"],
+              "properties": {
+                "rule_id": {"type": "string"},
+                "title_zh": {"type": "string"},
+                "summary_zh": {"type": "string"},
+                "tags": {"type": "array", "items": {"type": "string"}},
+                "modes": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

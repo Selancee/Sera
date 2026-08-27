@@ -1,0 +1,4 @@
+id,measure_count,measures_per_system,system_count,wrapped_layout_success,measures_per_system_compliant,first_system_visible,staff_spacing_ok,readability_proxy_score
+eight_measure_score,8,4,2,True,True,True,True,1.0
+sixteen_measure_score,16,4,4,True,True,True,True,1.0
+thirty_two_measure_score,32,4,8,True,True,True,True,1.0

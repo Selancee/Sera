@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_dynamics_009",
+  "source_score_id": "score_013",
+  "source_fingerprint": "sha256:9864ef2f688482eae2f17cce48bd795f7623014c6144397a76117f3f02df3caf",
+  "instruction": "Set only the selected note to forte while preserving pitch and duration.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "s013_m2_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "dynamics_009_op1",
+      "type": "set_dynamic",
+      "selector": {
+        "event_ids": [
+          "s013_m2_rh_3"
+        ]
+      },
+      "arguments": {
+        "dynamic": "f"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

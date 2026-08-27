@@ -12,7 +12,9 @@ import re
 from typing import Any
 
 from backend.agents.llm_provider import LLMProvider
+from backend.generation.musicality.style_profile_mapper import map_style_profile
 from backend.models.schemas import StructuredMusicIntent, validate_agent_plan_json
+from backend.services.prompt_term_extractor import extract_prompt_terms
 
 
 STYLE_KEYWORDS: list[tuple[str, str]] = [
@@ -126,6 +128,29 @@ TIME_PATTERN = re.compile(r"\b(3/4|4/4|6/8)\b")
 FORM_PATTERN = re.compile(r"\b(AABA|ABA|AB|Theme and Variation)\b", re.I)
 
 
+def _term_values(terms: list[dict[str, Any]]) -> dict[str, Any]:
+    values: dict[str, Any] = {}
+    styles = [str(term.get("normalized")) for term in terms if term.get("category") == "style"]
+    if "cyberpunk" in styles or "dark_electronic" in styles:
+        values["style"] = "custom"
+        values["base_style"] = "electronic"
+    textures = [str(term.get("normalized")) for term in terms if term.get("category") == "texture"]
+    if "ostinato" in textures:
+        values["texture"] = "ostinato"
+    elif textures:
+        values["texture"] = textures[0]
+    moods = [str(term.get("normalized")) for term in terms if term.get("category") == "mood"]
+    if moods:
+        values["mood"] = "dark" if any(mood in {"cold", "mechanical", "tense"} for mood in moods) else moods[0]
+    lengths = [str(term.get("normalized")) for term in terms if term.get("category") == "length"]
+    if lengths:
+        try:
+            values["length_measures"] = int(lengths[0])
+        except ValueError:
+            pass
+    return values
+
+
 class PromptUnderstandingAgent:
     """Convert natural-language prompts into stable structured music intent."""
 
@@ -137,22 +162,33 @@ class PromptUnderstandingAgent:
 
         normalized = prompt.strip()
         lower = normalized.lower()
+        term_payload = extract_prompt_terms(normalized)
+        term_values = _term_values(term_payload.get("prompt_terms", []))
 
         style = self._first_keyword(lower, STYLE_KEYWORDS, "classical")
-        mood = self._first_keyword(lower, MOOD_KEYWORDS, "focused")
+        style_mapping = map_style_profile(lower, style)
+        base_style = str(style_mapping.get("base_style") or style)
+        effective_style = str(style_mapping.get("style") or style)
+        mood = str(term_values.get("mood") or self._first_keyword(lower, MOOD_KEYWORDS, "focused"))
+        if style_mapping.get("style_profile") and mood == "focused" and any(tag in style_mapping.get("custom_style_tags", []) for tag in ["cold", "dark", "mechanical"]):
+            mood = "dark"
         instruments = self._extract_instruments(lower)
-        key = self._extract_key(normalized, lower, style, mood)
+        key = self._extract_key(normalized, lower, base_style, mood)
         meter = self._extract_time_signature(lower)
-        tempo = self._extract_tempo(lower, style, mood)
-        length = self._extract_bars(lower)
+        tempo = self._extract_tempo(lower, base_style, mood)
+        length = int(term_values.get("length_measures") or self._extract_bars(lower))
         difficulty = self._first_keyword(lower, DIFFICULTY_KEYWORDS, "intermediate")
-        texture = self._extract_texture(lower, instruments, difficulty)
+        mapped_profile = dict(style_mapping.get("style_profile") or {})
+        texture = str(mapped_profile.get("texture") or term_values.get("texture") or self._extract_texture(lower, instruments, difficulty))
         form = self._extract_form(normalized, length)
 
         intent = StructuredMusicIntent(
             prompt=normalized,
-            title=self._title_for_prompt(normalized, style, key, meter),
-            style=style,
+            title=self._title_for_prompt(normalized, base_style, key, meter),
+            style=effective_style,
+            base_style=base_style,
+            custom_style_tags=list(style_mapping.get("custom_style_tags") or []),
+            style_profile=dict(style_mapping.get("style_profile") or {}),
             mood=mood,
             key=key,
             time_signature=meter,
@@ -160,11 +196,15 @@ class PromptUnderstandingAgent:
             bars=length,
             instruments=instruments,
             texture=texture,
-            harmony=self._extract_harmony(lower, style),
+            harmony=self._extract_harmony(lower, base_style),
             form=form,
             difficulty=difficulty,
-            harmony_plan=self._default_harmony_plan(key, style),
+            harmony_plan=self._default_harmony_plan(key, base_style),
             constraints=self._extract_constraints(lower),
+            raw_prompt=normalized,
+            prompt_terms=list(term_payload.get("prompt_terms") or []),
+            source_prompt_terms=list(term_payload.get("source_prompt_terms") or []),
+            unparsed_prompt_terms=list(term_payload.get("unparsed_prompt_terms") or []),
         )
 
         provider_result = self.llm_provider.complete_json(
@@ -341,6 +381,7 @@ class PromptUnderstandingAgent:
         field_map = {
             "title": "title",
             "style": "style",
+            "base_style": "base_style",
             "mood": "mood",
             "key": "key",
             "meter": "time_signature",
@@ -354,6 +395,13 @@ class PromptUnderstandingAgent:
             value = data.get(source)
             if isinstance(value, str) and 1 <= len(value) <= 120:
                 setattr(intent, target, value)
+
+        tags = data.get("custom_style_tags")
+        if isinstance(tags, list):
+            intent.custom_style_tags = [str(item)[:40] for item in tags[:12] if str(item).strip()]
+        style_profile = data.get("style_profile")
+        if isinstance(style_profile, dict):
+            intent.style_profile = {str(key): value for key, value in style_profile.items()}
 
         tempo = data.get("tempo", data.get("tempo_bpm"))
         if isinstance(tempo, int):

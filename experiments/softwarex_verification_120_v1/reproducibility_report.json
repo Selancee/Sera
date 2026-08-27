@@ -1,0 +1,32 @@
+{
+  "experiment_id": "softwarex_verification_120_v1",
+  "passed": true,
+  "checks": {
+    "config_hash": true,
+    "benchmark_hash": true,
+    "prompt_hashes": true,
+    "dependency_lock_hash": true,
+    "all_evidence_files_exist": true,
+    "metric_rows_equal": true,
+    "expected_run_count": true
+  },
+  "commands": {
+    "benchmark": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "{",
+        "  \"split_id\": \"core\",",
+        "  \"task_count\": 120,",
+        "  \"valid_count\": 120,",
+        "  \"invalid_count\": 0,",
+        "  \"automatic_validation_passed\": true,",
+        "  \"human_review_pending\": 120",
+        "}"
+      ]
+    }
+  },
+  "result_class": "mock_non_formal",
+  "formal_results_allowed": false,
+  "warning": "Reproducible mock evidence is still not formal model evidence."
+}

@@ -1,5 +1,6 @@
 $projectRoot = "D:\Sera"
 $target = Join-Path $projectRoot "run_app.bat"
+$packagedIcon = Join-Path $projectRoot "dist_desktop\release\win-unpacked\Sera.exe"
 $desktop = [Environment]::GetFolderPath("Desktop")
 $shortcutPath = Join-Path $desktop "Sera.lnk"
 
@@ -11,8 +12,8 @@ $shell = New-Object -ComObject WScript.Shell
 $shortcut = $shell.CreateShortcut($shortcutPath)
 $shortcut.TargetPath = $target
 $shortcut.WorkingDirectory = $projectRoot
-$shortcut.IconLocation = "$env:SystemRoot\System32\SHELL32.dll,138"
-$shortcut.Description = "Launch the Sera music generation app"
+$shortcut.IconLocation = if (Test-Path -LiteralPath $packagedIcon) { $packagedIcon } else { "$env:SystemRoot\System32\SHELL32.dll,138" }
+$shortcut.Description = "Launch the Sera score editing agent"
 $shortcut.Save()
 
 Write-Host "Created shortcut: $shortcutPath"

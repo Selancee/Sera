@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_rhythm_004",
+  "source_score_id": "score_004",
+  "source_fingerprint": "sha256:4a2c31a4f5a343f6425d723a9baf18580d01e48ec4d20b0b6e1e9e0c0b90bb02",
+  "instruction": "Merge the first two quarter-note positions in measure 2 of staff 1 into one half note, preserving remaining pitches.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "rhythm_004_op1",
+      "type": "set_duration",
+      "selector": {
+        "event_ids": [
+          "m2_rh_1"
+        ]
+      },
+      "arguments": {
+        "duration": "half"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    },
+    {
+      "operation_id": "rhythm_004_op2",
+      "type": "delete_event",
+      "selector": {
+        "event_ids": [
+          "m2_rh_2"
+        ]
+      },
+      "arguments": {},
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "changed_element_count",
+      "value": 2
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

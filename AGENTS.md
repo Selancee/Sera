@@ -1,708 +1,2169 @@
-你现在继续开发我的音乐生成项目 Sera，进入 V0.8。
-
-当前 Sera 已经完成 V0.7：
-
-1. 前端已有 Workbench tab。
-2. 已支持 ScoreDocument、ScoreOperation、undo/redo。
-3. 已支持 MusicXML 导入/导出、MIDI/PDF 导出。
-4. 已支持 rendererMode：auto / osmd / vexflow / fallback。
-5. 已支持 ScorePatch preview / apply / reject / partial apply。
-6. 已支持 mock/openai/deepseek/qwen LLM score editing provider。
-7. 已支持 Agent explain selected passage。
-8. 已支持 score editing evaluation。
-9. 后端 pytest、前端 build、前端测试和 smoke evaluation 均通过。
-
-V0.8 的目标是：把 Sera Workbench 从“研究型可编辑工作台”升级为“接近 MuseScore 操作体验的可落地 App 核心版”。
-
-本轮不是继续堆 Agent 功能，而是重点实现真正可用的乐谱编辑体验，包括：
-
-1. 精确 note-level hit mapping。
-2. 鼠标点击、拖拽、键盘快捷键输入。
-3. MuseScore-like 音符输入模式。
-4. 拖拽改音高。
-5. 时值、休止符、升降号、连音、力度、 articulation 基础编辑。
-6. 多声部和钢琴双手基础编辑。
-7. 播放 scrubber 与乐谱定位联动。
-8. 局部重排版、自动补齐小节、错误提示。
-9. Agent 与手动编辑深度融合：用户选中任何音符/小节/声部后，Agent 可局部修改并生成可回滚 patch。
-10. 将这些能力真正落地到 App UI，而不只是后端 API 或实验脚本。
-
-请严格遵守：不要推翻 V0.7 架构，不要删除已有功能，所有新增功能必须 fallback-safe。没有 OSMD、没有 MuseScore CLI、没有 API key 时，App 仍能启动和完成基本编辑。
-
-一、V0.8 开发前检查
-
-请先执行：
-
-1. 阅读 AGENTS.md。
-2. 阅读 README.md。
-3. 阅读 frontend/src/workbench/*。
-4. 阅读 frontend/src/score/*。
-5. 阅读 frontend/src/score/renderers/*。
-6. 阅读 backend/services/score_document_service.py。
-7. 阅读 backend/services/score_patch_service.py。
-8. 阅读 backend/services/score_patch_validation_service.py。
-9. 阅读 backend/agents/score_editing_agent.py。
-10. 运行：
-
-* python -m pytest -q
-* npm run build
-* npm test
-* python -m evaluation.score_editing.run_score_edit_eval --max-prompts 3
-* python -m evaluation.score_editing.summarize_edit_results
-
-如果 V0.7 基线失败，请先修复，不要继续开发新功能。
-
-二、核心目标：实现 MuseScore-like 编辑闭环
-
-请将 Workbench 升级为以下核心编辑闭环：
-
-Import / Generate Score
-↓
-Render with OSMD/VexFlow/Fallback
-↓
-Click Note / Measure / Staff / Voice
-↓
-Edit by Mouse / Keyboard / Inspector / Palette
-↓
-Update ScoreDocument
-↓
-Regenerate MusicXML Preview
-↓
-Lightweight Validation
-↓
-Playback Preview
-↓
-Export MusicXML / MIDI / PDF
-↓
-Optional Agent Patch
-↓
-Accept / Reject / Undo / Redo
-
-要求：
-
-1. 所有编辑都必须走 ScoreOperation。
-2. 不允许 UI 组件直接随意修改 ScoreDocument。
-3. 所有编辑后必须保证 ScoreDocument 可序列化。
-4. 所有导出前必须经过 validation。
-5. 所有 Agent 修改必须生成 ScorePatch。
-6. 所有手动修改和 Agent 修改都要进入 OperationHistory。
-7. 用户能通过 undo/redo 回退手动和 Agent 修改。
-
-三、OSMD note-event 精确映射
-
-当前 V0.7 仍未实现精确 OSMD note-level hit mapping。V0.8 必须重点解决。
-
-请完善：
-
-frontend/src/score/renderers/OSMDRenderer.ts
-frontend/src/score/renderers/hitTesting.ts
-frontend/src/score/renderers/layoutMapping.ts
-frontend/src/score/selection.ts
-
-目标：
-
-1. 渲染 ScoreDocument 时，为每个 note event 建立 event_id。
-2. ScoreDocument → MusicXML 时，将 event_id 写入可追踪 metadata。
-3. OSMD 渲染后，建立 visual element → event_id 映射。
-4. 鼠标点击 SVG notehead / stem / rest / measure 区域时，尽量映射回 event_id。
-5. 如果 note-level 映射失败，fallback 到 measure-level。
-6. 支持点击音符选中。
-7. 支持点击休止符选中。
-8. 支持点击小节空白区域选中 measure。
-9. 支持 shift-click 多选。
-10. 支持 drag selection 框选区域内音符。
-11. 支持选中结果在 Inspector 中显示。
-12. 支持选中结果被 AgentEditPanel 使用。
-
-如果 OSMD 内部结构难以稳定映射，请实现 overlay hit map：
-
-1. 渲染后读取每个 note 的 bounding box。
-2. 将 bounding box 与 ScoreDocument event_id 建立索引。
-3. 鼠标点击时根据坐标查找最近 note/rest。
-4. 保存 mapping debug 信息。
-5. 在开发模式下可以显示 hit boxes overlay。
-
-新增调试面板：
-
-1. 当前 renderer。
-2. 当前选中 event_id。
-3. 当前选中 measure_id。
-4. hit-test mode。
-5. mapping confidence。
-6. fallback reason。
-
-四、MuseScore-like Note Input Mode
-
-请实现真正的音符输入模式。
-
-新增或完善：
-
-frontend/src/workbench/NoteInputMode.tsx
-frontend/src/score/noteInput.ts
-frontend/src/score/keyboardShortcuts.ts
-frontend/src/workbench/KeyboardShortcutsHelp.tsx
-
-支持两种模式：
-
-1. Select Mode
-   用户点击选择和编辑已有元素。
-
-2. Note Input Mode
-   用户选择时值后，在光标位置输入音符或休止符。
-
-Note Input Mode 要求：
-
-1. 有明显光标。
-2. 光标绑定 measure、staff、voice、offset。
-3. 用户选择 duration 后点击谱表位置可插入音符。
-4. 用户按键盘 A-G 输入音名。
-5. 用户按 R 输入休止符。
-6. 用户按数字键选择时值：
-
-   * 1 whole
-   * 2 half
-   * 4 quarter
-   * 8 eighth
-   * 6 sixteenth
-7. 用户按 . 增加附点。
-8. 用户按 ↑ / ↓ 半音移动选中音。
-9. 用户按 Shift + ↑ / ↓ 八度移动选中音。
-10. 用户按 Delete 删除选中元素。
-11. 用户按 Ctrl/Cmd + Z 撤销。
-12. 用户按 Ctrl/Cmd + Y 重做。
-13. 用户按 Space 播放/停止。
-14. 用户按 Esc 退出 note input mode。
-15. 输入后光标自动前进。
-16. 小节时值溢出时阻止输入或提示。
-17. 小节不足时可自动补休止符。
-18. 支持插入 chord tone：按住 Shift 点击或键盘输入叠加音。
-19. 支持选择 right hand / left hand staff。
-20. 支持选择 voice 1 / voice 2。
-
-五、拖拽改音高与基础图形编辑
-
-请实现基础拖拽编辑。
-
-新增或完善：
-
-frontend/src/score/dragEditing.ts
-frontend/src/workbench/DragEditOverlay.tsx
-
-要求：
-
-1. 用户拖拽选中音符上下移动。
-2. 垂直拖拽映射为半音或音阶级进移动。
-3. 拖拽时实时显示 preview pitch。
-4. 松开鼠标后生成 update_pitch operation。
-5. 支持拖拽多个选中音符整体移高/移低。
-6. 支持 Alt + drag 复制音符到新位置。
-7. 支持横向拖拽调整 offset 的基础版本。
-8. 横向拖拽必须量化到当前 meter 的网格。
-9. 如果拖拽造成小节时值错误，显示 warning 并可自动 quantize。
-10. 拖拽后自动刷新 MusicXML preview。
-11. 拖拽后 OperationHistory 可 undo/redo。
-
-如果精确拖拽难度过高，请优先实现稳定的上下拖拽改音高。
-
-六、时值、休止符、连线、升降号编辑
-
-请完善 Palette 与 Inspector。
-
-DurationPalette 支持：
-
-1. whole
-2. half
-3. quarter
-4. eighth
-5. sixteenth
-6. dotted half
-7. dotted quarter
-8. dotted eighth
-9. triplet eighth 简化版
-
-AccidentalPalette 支持：
-
-1. sharp
-2. flat
-3. natural
-4. double sharp 后续 TODO
-5. double flat 后续 TODO
-
-Tie/Slur 基础支持：
-
-1. tie selected notes
-2. untie selected notes
-3. slur selected passage 简化显示
-4. remove slur
-
-Rest editing：
-
-1. 将选中 note 转换为 rest。
-2. 将选中 rest 转换为 note。
-3. 自动补齐空拍为 rest。
-4. 删除 note 后可选择保留 rest 或压缩时值。
-
-要求：
-
-1. 所有操作有 ScoreOperation。
-2. 所有操作可 undo/redo。
-3. 所有操作后 lightweight validation。
-4. 如果 MusicXML 导出不支持某些高级记号，显示 TODO warning。
-
-七、多声部与钢琴双手编辑
-
-请增强 piano score editing。
-
-目标：
-
-1. 支持 right_hand / left_hand staff 清晰切换。
-2. 支持 voice 1 / voice 2 切换。
-3. 支持将选中音符移动到另一 staff。
-4. 支持将旋律复制到右手。
-5. 支持从和声自动生成左手伴奏。
-6. 支持简单 block chord accompaniment。
-7. 支持简单 arpeggiated accompaniment。
-8. 支持 bass + chord texture。
-9. 支持选中小节后“一键生成左手伴奏”。
-10. 支持 Agent 生成左手伴奏 patch。
-
-新增 Agent tool：
-
-1. Generate left-hand accompaniment for selected measures。
-2. Simplify left hand。
-3. Make left hand more flowing。
-4. Preserve melody, rewrite accompaniment。
-5. Move selected notes to left hand。
-6. Split melody and accompaniment。
-
-八、真实播放 scrubber 与乐谱联动
-
-请升级 MIDI playback。
-
-新增或完善：
-
-frontend/src/workbench/PlaybackScrubber.tsx
-frontend/src/score/playbackMap.ts
-frontend/src/score/midiPlayback.ts
-
-要求：
-
-1. 播放当前 ScoreDocument。
-2. 播放时高亮当前音符。
-3. 播放时高亮当前小节。
-4. 用户可以拖动 scrubber 跳到指定小节。
-5. 用户可以点击小节后从该处播放。
-6. 用户可以只播放选区。
-7. 支持循环播放选区。
-8. 支持 tempo 修改后即时更新。
-9. 编辑后自动刷新 playback map。
-10. MIDI 渲染失败时 fallback 到 measure-level fake playback。
-11. 播放状态显示在 StatusBar。
-12. 播放和编辑不能互相阻塞。
-13. 播放中编辑时自动停止或提示用户。
-
-九、局部重排版与增量渲染
-
-当前每次编辑可能触发全量重渲染。V0.8 需要改善性能体验。
-
-请实现：
-
-1. ScoreDocument dirty range 标记。
-2. 编辑后标记受影响 measure。
-3. 轻量 validation 只检查受影响小节。
-4. MusicXML export debounce。
-5. OSMD render debounce。
-6. 大谱子显示 loading。
-7. 只改 Inspector 字段时不要全量刷新。
-8. 支持 manual refresh。
-9. StatusBar 显示 render time。
-10. Workbench health 显示 renderer 状态。
-
-如果 OSMD 不能可靠局部渲染，可以仍全量渲染，但必须有 debounce、loading 和性能 warning。
-
-十、Notation Editing Toolbar 升级
-
-请将 Toolbar 升级为更像 MuseScore 的编辑工具栏。
-
-顶部工具栏包含：
-
-1. Select Mode。
-2. Note Input Mode。
-3. Duration buttons。
-4. Rest button。
-5. Dot button。
-6. Accidental buttons。
-7. Tie。
-8. Slur。
-9. Dynamics。
-10. Articulation。
-11. Voice selector。
-12. Staff selector。
-13. Undo。
-14. Redo。
-15. Play。
-16. Stop。
-17. Loop selection。
-18. Zoom in。
-19. Zoom out。
-20. Fit width。
-21. Renderer selector。
-22. Export buttons。
-
-左侧 Palette 包含：
-
-1. Notes。
-2. Durations。
-3. Rests。
-4. Dynamics。
-5. Articulations。
-6. Lines。
-7. Measures。
-8. Agent Tools。
-
-右侧 Inspector 包含：
-
-1. Selection details。
-2. Note properties。
-3. Measure properties。
-4. Staff / voice properties。
-5. Agent suggestions。
-6. Validation warnings。
-
-十一、Agent 与手动编辑深度融合
-
-请升级 Agent editing，使其能理解用户的手动编辑上下文。
-
-AgentEditRequest 增加：
-
-1. current_selection。
-2. recent_operations。
-3. dirty_measures。
-4. validation_warnings。
-5. playback_position。
-6. selected_notes_summary。
-7. user_edit_intent_inferred。
-8. preserve_user_edits_since_timestamp。
-
-Agent 行为要求：
-
-1. 不得覆盖用户最近手动编辑，除非用户明确要求。
-2. 应优先修改选区。
-3. 应解释是否保留了用户编辑。
-4. 应支持“基于我刚才的修改继续发展”。
-5. 应支持“撤销 AI 上次改动但保留我的手动改动”。
-6. 应支持“只修复错误，不改变音乐风格”。
-7. Patch preview 要标明哪些内容来自 Agent，哪些内容保留用户编辑。
-
-新增 Agent commands：
-
-1. Continue from my last edit。
-2. Fix only validation issues。
-3. Preserve my manual edits。
-4. Revert last AI edit。
-5. Make selected notes more expressive。
-6. Add variation based on selected motif。
-7. Harmonize selected melody。
-8. Generate accompaniment under selected melody。
-
-十二、App 落地体验：项目文件、自动保存、崩溃恢复
-
-请增强 .sera.json 项目文件和 autosave。
-
-要求：
-
-1. 每隔 30 秒自动保存到 localStorage 或工作区缓存。
-2. 用户刷新页面后提示恢复未保存项目。
-3. Save Project 下载 .sera.json。
-4. Open Project 载入 .sera.json。
-5. Export MusicXML / MIDI / PDF。
-6. Export Edit History。
-7. Export Agent Patch History。
-8. Export Screenshot-ready project summary。
-9. 如果项目文件版本低于 0.8，自动迁移。
-10. 如果迁移失败，提示用户并保留原文件。
-
-十三、后端 API 升级
-
-新增或完善：
-
-POST /score/operation
-POST /score/batch_operations
-POST /score/light_validate
-POST /score/full_validate
-POST /score/render_preview_musicxml
-POST /score/generate_accompaniment
-POST /score/export_project_package
-POST /score/migrate_project
-POST /score/revert_last_agent_patch
-POST /score/continue_from_last_edit
-
-要求：
-
-1. 所有接口 Pydantic schema 完整。
-2. Swagger 可读。
-3. 错误信息对前端友好。
-4. 所有写操作有 operation log。
-5. 所有 Agent 写操作有 patch history。
-6. 所有导出操作有 validation report。
-7. mock 模式可用。
-8. 没有 MuseScore CLI 时 PDF export graceful fallback。
-
-十四、前端测试升级
-
-V0.8 必须加强前端测试，防止 Workbench 变复杂后崩溃。
-
-新增或完善：
-
-frontend/src/score/**tests**/
-noteInput.test.ts
-keyboardShortcuts.test.ts
-dragEditing.test.ts
-playbackMap.test.ts
-autosave.test.ts
-projectMigration.test.ts
-multiVoice.test.ts
-accompanimentGeneration.test.ts
-
-frontend/src/workbench/**tests**/
-NoteInputMode.test.tsx
-ScoreCanvasHitTesting.test.tsx
-DragEditOverlay.test.tsx
-PlaybackScrubber.test.tsx
-NotationToolbar.test.tsx
-AgentManualEditIntegration.test.tsx
-
-测试要求：
-
-1. npm test 通过。
-2. npm run build 通过。
-3. 不依赖真实 OSMD DOM。
-4. OSMD hit-test 用 mock mapping 测试。
-5. note input cursor 可测试。
-6. keyboard shortcuts 可测试。
-7. drag pitch update 可测试。
-8. undo/redo 可测试。
-9. autosave/recovery 可测试。
-10. Agent 不覆盖 recent manual edits 可测试。
-
-十五、后端测试升级
-
-新增或完善：
-
-tests/test_score_batch_operations.py
-tests/test_light_validate.py
-tests/test_full_validate.py
-tests/test_project_migration.py
-tests/test_generate_accompaniment.py
-tests/test_revert_last_agent_patch.py
-tests/test_continue_from_last_edit.py
-tests/test_agent_preserve_manual_edits.py
-tests/test_export_project_package.py
-
-要求：
-
-1. python -m pytest -q 通过。
-2. 不依赖真实 API key。
-3. 不依赖 GPU。
-4. 不依赖 MuseScore CLI。
-5. mock fallback 可运行。
-6. MusicXML import/export roundtrip 不破坏基本结构。
-
-十六、V0.8 Evaluation：MuseScore-like Editing Benchmark
-
-新增：
-
-evaluation/workbench_editing/
-workbench_edit_prompt_sets_v08.json
-run_workbench_edit_eval.py
-workbench_edit_metrics.py
-summarize_workbench_edit_results.py
-
-设计 60 条测试，覆盖：
-
-1. 手动插入音符。
-2. 手动删除音符。
-3. 手动改音高。
-4. 手动改时值。
-5. 插入休止符。
-6. 多选转调。
-7. 拖拽改音高。
-8. 左右手 staff 切换。
-9. 生成左手伴奏。
-10. Agent 保留旋律改伴奏。
-11. Agent 保留和声改旋律。
-12. Agent 修复 validation warning。
-13. Agent 不覆盖用户最近编辑。
-14. undo/redo。
-15. partial apply。
-16. 保存/打开 .sera.json。
-17. MusicXML 导出。
-18. MIDI 导出。
-19. PDF 导出 fallback。
-20. playback scrubber。
-
-指标：
-
-1. note_input_success_rate。
-2. hit_test_success_rate。
-3. drag_edit_success_rate。
-4. operation_reversibility_rate。
-5. undo_redo_success_rate。
-6. musicxml_valid_after_manual_edit_rate。
-7. musicxml_valid_after_agent_edit_rate。
-8. playback_sync_success_rate。
-9. autosave_recovery_success_rate。
-10. project_roundtrip_success_rate。
-11. agent_preserve_manual_edits_score。
-12. average_edit_latency_ms。
-13. render_fallback_rate。
-14. overall_workbench_usability_proxy_score。
+# SeraEdit — ICMC Short Paper 全流程研发总指令
+
+你现在是本项目的首席研究工程师、符号音乐系统开发者、实验设计者和学术论文工程助手。
+
+你的任务不是只提供建议、方案或伪代码，而是直接检查现有仓库、修改代码、创建数据、运行测试、执行实验，并生成一套可以支撑 ICMC Short Paper 投稿的完整研究资产。
+
+项目名称暂定为：
+
+> **SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches**
+
+核心研究问题是：
+
+> 与让大语言模型重新生成整份 MusicXML 相比，使用范围受限、可验证、可预览、可撤销的结构化 ScorePatch，能否提高自然语言乐谱编辑的结构有效性、任务完成率、非目标内容保护率和编辑最小性？
+
+---
+
+# 0. 最重要的执行规则
+
+必须遵守以下规则：
+
+1. 不要只生成计划，必须真正修改仓库并实现功能。
+2. 首先检查现有代码，优先复用已有的：
+
+   * ScoreDocument；
+   * ScoreOperation；
+   * ScorePatch；
+   * MusicXML import/export；
+   * patch preview/apply/reject；
+   * undo/redo；
+   * light/full validation；
+   * batch operations；
+   * LLM provider adapter；
+   * renderer adapter；
+   * evaluation framework。
+3. 不得为了方便而重写整个 Sera 项目。
+4. 不得破坏已有生成、编辑、播放、导出和前端功能。
+5. 新研究功能应尽量独立放在 `sera_edit`、`benchmark`、`evaluation` 或相似命名空间中。
+6. 所有实验结果必须来自真实运行，严禁编造准确率、成功率、延迟、显著性或图表数据。
+7. 如果没有 API Key：
+
+   * 仍然完成全部代码；
+   * 使用 mock provider 和缓存响应跑通流程；
+   * 生成待执行命令；
+   * 标明哪些结果是 mock，不能写入正式论文；
+   * 不得伪造正式实验结果。
+8. API Key 只能从环境变量读取，不能写入代码、日志、测试数据或 Git。
+9. 所有新增核心模块必须有测试。
+10. 所有实验必须保存原始输出，支持重新计算指标。
+11. 所有自动指标必须有明确、可检查的定义。
+12. 可以确定性计算的指标，不得交给 LLM 主观判断。
+13. 不要擅自声称 Sera 可以代替 MuseScore、理解音乐审美或适用于所有音乐风格。
+14. 本论文只聚焦“可靠的 MusicXML 局部编辑”，不扩张为通用音乐生成论文。
+15. 每完成一个阶段，更新：
+
+```text
+docs/icmc_short_paper/IMPLEMENTATION_LOG.md
+```
+
+记录：
+
+* 已完成内容；
+* 修改文件；
+* 测试结果；
+* 未解决问题；
+* 下一阶段；
+* 是否影响论文实验。
+
+16. 如果仓库使用 Git，进行小而清晰的本地提交，但不要自动 push。
+17. 不要反复询问用户已经提供过的信息。遇到非关键歧义时，采用合理默认值并在日志中说明。
+18. 遇到阻塞时，不要停止整个任务。先完成所有不依赖该阻塞项的部分。
+
+---
+
+# 1. 最终必须交付的成果
+
+完成后，仓库中必须存在以下成果。
+
+## 1.1 可运行的 SeraEdit 核心系统
+
+实现完整闭环：
+
+```text
+MusicXML
+   ↓
+Canonical ScoreDocument
+   ↓
+Selected Scope + Natural-Language Instruction
+   ↓
+LLM / Rule-Based Patch Generator
+   ↓
+Structured ScorePatch
+   ↓
+Schema Validation
+   ↓
+Musical Constraint Validation
+   ↓
+Protected-Scope Validation
+   ↓
+Repair / Reject / Apply
+   ↓
+Updated ScoreDocument
+   ↓
+MusicXML Export + Diff + Undo
+```
+
+## 1.2 MusicXML 编辑基准集
+
+完成正式核心集：
+
+* 约20份基础乐谱；
+* 120条编辑任务；
+* 每条任务有确定的目标范围；
+* 每条任务有保护范围；
+* 每条任务有 gold patch 或确定性目标约束；
+* 每条任务有难度、类别和可执行性标签。
+
+## 1.3 三组实验条件
+
+必须实现：
+
+* Condition A：Full-Score Rewrite；
+* Condition B：ScorePatch Only；
+* Condition C：Sera Full Pipeline。
+
+## 1.4 自动评测系统
+
+至少计算：
+
+* MusicXML Validity；
+* Task Success；
+* Non-target Preservation；
+* Edit Minimality；
+* Repair Success；
+* Refusal Accuracy；
+* Patch Parse Rate；
+* Constraint Satisfaction；
+* Latency；
+* Token Usage；
+* Estimated API Cost。
+
+## 1.5 真实实验运行框架
+
+必须支持：
+
+* smoke 实验；
+* core 实验；
+* full 实验；
+* 中断恢复；
+* 缓存；
+* 重试；
+* 固定随机种子；
+* 并发限制；
+* 成本限制；
+* 原始响应保存；
+* 实验配置快照。
+
+## 1.6 论文素材
+
+自动生成：
+
+* 主结果表；
+* 消融实验表；
+* 类别细分结果；
+* 失败类型统计；
+* 置信区间；
+* 显著性分析；
+* 论文架构图；
+* benchmark 构成图；
+* 主要结果图；
+* 失败案例图；
+* 4页 Short Paper 初稿骨架；
+* 匿名补充材料说明；
+* reproducibility checklist。
+
+## 1.7 演示系统
+
+提供轻量可运行 Demo：
+
+* 导入或选择 MusicXML；
+* 选择小节、谱表和声部；
+* 输入编辑指令；
+* 显示生成的 ScorePatch；
+* 显示修改前后差异；
+* 显示验证报告；
+* 支持 apply、repair、reject、undo；
+* 支持离线预缓存演示。
+
+---
+
+# 2. 第一阶段：仓库审计
+
+开始修改代码前，全面检查仓库。
+
+必须检查：
+
+* 前后端技术栈；
+* Python/Node版本；
+* 当前包管理方式；
+* ScoreDocument 定义；
+* MusicXML 解析与导出路径；
+* 当前 ScorePatch 或 ScoreOperation schema；
+* 唯一权威乐谱状态来源；
+* 当前验证器；
+* LLM provider；
+* 当前 API endpoint；
+* 当前测试框架；
+* 当前实验目录；
+* 当前渲染器；
+* 当前 undo/redo；
+* 当前数据库或项目保存格式。
+
+优先寻找并复用类似接口：
+
+```text
+/score/validate_patch
+/score/partial_apply_patch
+/score/light_validate
+/score/full_validate
+/score/batch_operations
+/score/revert_last_agent_patch
+```
+
+如果实际名称不同，以仓库实现为准。
+
+生成：
+
+```text
+docs/icmc_short_paper/REPOSITORY_AUDIT.md
+```
+
+内容包括：
+
+1. 当前架构；
+2. 可直接复用模块；
+3. 缺失模块；
+4. 潜在技术债；
+5. 与 Short Paper 相关的风险；
+6. 计划新增文件；
+7. 现有功能兼容策略。
+
+审计完成后立即继续开发，不要停下来等待确认。
+
+---
+
+# 3. 推荐目录结构
+
+在不破坏原仓库结构的前提下，建立或映射到以下目录：
+
+```text
+sera_edit/
+├── domain/
+│   ├── score_document.py
+│   ├── score_scope.py
+│   ├── score_patch.py
+│   ├── operations.py
+│   └── fingerprints.py
+├── generation/
+│   ├── patch_generator.py
+│   ├── full_rewrite_generator.py
+│   ├── prompts.py
+│   ├── response_parser.py
+│   └── repair_prompt.py
+├── validation/
+│   ├── schema_validator.py
+│   ├── structural_validator.py
+│   ├── duration_validator.py
+│   ├── protected_scope_validator.py
+│   ├── notation_relation_validator.py
+│   ├── semantic_precondition_validator.py
+│   └── validation_report.py
+├── execution/
+│   ├── patch_applier.py
+│   ├── patch_repair.py
+│   ├── diff_engine.py
+│   ├── transaction.py
+│   └── undo_manager.py
+├── providers/
+│   ├── base.py
+│   ├── mock_provider.py
+│   ├── openai_provider.py
+│   ├── deepseek_provider.py
+│   └── qwen_provider.py
+└── api/
+    └── routes.py
+
+benchmark/
+├── schemas/
+├── source_scores/
+├── tasks/
+├── gold_patches/
+├── expected_outputs/
+├── fixtures/
+├── splits/
+├── generation/
+├── validation/
+└── README.md
+
+evaluation/
+├── conditions/
+├── metrics/
+├── runners/
+├── statistics/
+├── error_analysis/
+├── reporting/
+└── configs/
+
+experiments/
+├── smoke/
+├── core/
+├── full/
+├── raw_outputs/
+├── normalized_outputs/
+├── metrics/
+├── reports/
+└── manifests/
+
+paper/
+├── manuscript/
+├── figures/
+├── tables/
+├── supplementary/
+├── anonymous_release/
+└── submission_checklist/
+
+demo/
+├── presets/
+├── cached_responses/
+└── README.md
+
+scripts/
+├── validate_benchmark.py
+├── run_smoke_experiment.py
+├── run_core_experiment.py
+├── run_full_experiment.py
+├── recompute_metrics.py
+├── generate_paper_assets.py
+├── export_anonymous_package.py
+└── verify_reproducibility.py
+```
+
+如果项目已有类似目录，优先整合，而不是重复创建。
+
+---
+
+# 4. Canonical ScoreDocument
+
+确认并强化 ScoreDocument 作为唯一权威乐谱数据源。
+
+必须满足：
+
+1. 前端显示、MIDI播放、MusicXML导出和编辑操作均基于同一个 ScoreDocument。
+2. 禁止：
+
+   * 页面显示使用一份数据；
+   * 播放器使用另一份数据；
+   * 导出器再使用第三份数据。
+3. 每个可编辑事件必须有稳定 ID，例如：
+
+```text
+sera-event-id
+```
+
+4. 稳定 ID 应在 MusicXML 导入、内存编辑、导出和重新导入后尽可能保持。
+5. ScoreDocument 至少表达：
+
+   * score；
+   * part；
+   * measure；
+   * staff；
+   * voice；
+   * event；
+   * pitch；
+   * duration；
+   * rest；
+   * chord；
+   * tie；
+   * slur；
+   * articulation；
+   * dynamic；
+   * key signature；
+   * time signature；
+   * tempo；
+   * metadata。
+6. 时间位置应使用精确的有理数或 tick，不使用不可控的浮点时间比较。
+7. 所有操作前后都应可以计算 canonical fingerprint。
+
+建立：
+
+```text
+source_score_fingerprint
+pre_patch_fingerprint
+post_patch_fingerprint
+```
+
+用于检测输入漂移和意外修改。
+
+---
+
+# 5. ScoreScope 设计
+
+创建统一的范围表达。
+
+至少支持：
+
+```json
+{
+  "measures": [3, 4],
+  "parts": ["P1"],
+  "staffs": [1],
+  "voices": [1],
+  "event_ids": [],
+  "time_range": null
+}
+```
+
+必须支持：
+
+* target scope；
+* protected scope；
+* explicit exclusions；
+* whole score；
+* part；
+* measure range；
+* staff；
+* voice；
+* event IDs。
+
+范围匹配必须是确定性的，并有单元测试。
+
+若一条操作尝试修改 protected scope：
+
+* 默认拒绝；
+* 记录 violation；
+* 不静默应用；
+* 可由显式用户确认后放行，但正式实验中关闭此放行。
+
+---
+
+# 6. ScorePatch Schema
+
+建立严格版本化的 JSON Schema。
+
+推荐结构：
+
+```json
+{
+  "schema_version": "1.0.0",
+  "patch_id": "uuid",
+  "source_score_id": "score_001",
+  "source_fingerprint": "sha256...",
+  "instruction": "Transpose measures 3–4 of the upper staff up by a major second.",
+  "target_scope": {
+    "measures": [3, 4],
+    "parts": ["P1"],
+    "staffs": [1],
+    "voices": [1],
+    "event_ids": []
+  },
+  "protected_scope": {
+    "measures": [],
+    "parts": [],
+    "staffs": [2],
+    "voices": [],
+    "event_ids": []
+  },
+  "preconditions": [],
+  "operations": [],
+  "expected_effects": [],
+  "provenance": {
+    "provider": "mock",
+    "model": "mock",
+    "temperature": 0,
+    "seed": 42
+  }
+}
+```
+
+每个 operation 至少包括：
+
+```json
+{
+  "operation_id": "op_001",
+  "type": "transpose",
+  "selector": {},
+  "arguments": {},
+  "preconditions": [],
+  "expected_change_count": 8
+}
+```
+
+第一版必须支持以下操作：
+
+1. `transpose`
+2. `set_pitch`
+3. `set_duration`
+4. `insert_note`
+5. `insert_rest`
+6. `delete_event`
+7. `set_dynamic`
+8. `set_articulation`
+9. `set_tie`
+10. `set_slur`
+11. `change_key_signature`
+12. `change_time_signature`
+13. `move_to_voice`
+14. `duplicate_motif`
+15. `replace_chord`
+16. `batch`
+
+对无法可靠支持的复杂操作：
+
+* 不要伪装支持；
+* 明确标记 unsupported；
+* 让系统拒绝并给出解释。
+
+必须创建：
+
+```text
+benchmark/schemas/score_patch.schema.json
+```
+
+并为每类 operation 建立正例和反例测试。
+
+---
+
+# 7. Patch 事务与执行机制
+
+Patch 应以事务方式应用：
+
+```text
+validate source fingerprint
+→ validate patch schema
+→ validate selectors
+→ validate preconditions
+→ clone score state
+→ apply operations
+→ run post-validation
+→ compare protected scope
+→ commit or rollback
+```
+
+必须支持：
+
+* dry run；
+* preview；
+* partial apply；
+* repair；
+* reject；
+* rollback；
+* undo；
+* redo；
+* operation history；
+* human-readable explanation。
+
+任何一步失败时：
+
+* 不得留下部分损坏状态；
+* 默认回滚；
+* 保存失败原因；
+* 保存验证报告。
+
+---
+
+# 8. 验证系统
+
+建立分层验证器。
+
+## 8.1 Schema Validation
+
+检查：
+
+* JSON 是否可解析；
+* schema version；
+* 必填字段；
+* operation 类型；
+* 参数类型；
+* selector 合法性；
+* 未知字段策略。
+
+## 8.2 Structural Validation
+
+检查：
+
+* part/staff/voice 是否存在；
+* measure 是否存在；
+* event ID 是否存在；
+* 插入位置是否合法；
+* 删除后是否留下悬挂引用；
+* MusicXML 是否可重新导出并重新解析。
+
+## 8.3 Measure Duration Validation
+
+检查每个 measure、staff、voice 的：
+
+* expected duration；
+* actual duration；
+* pickup measure；
+* anacrusis；
+* tuplets；
+* grace notes；
+* multi-voice timing。
+
+不能简单用浮点相等判断。
+
+## 8.4 Protected Scope Validation
+
+比较操作前后：
+
+* 未指定小节；
+* 未指定声部；
+* 未指定谱表；
+* 未指定音符；
+* 未指定力度；
+* 未指定记谱关系。
 
 输出：
 
-evaluation/results/workbench_v08_results.csv
-evaluation/results/workbench_v08_summary.json
-evaluation/results/workbench_v08_table.tex
-evaluation/results/workbench_v08_failure_cases.json
+```text
+unexpected_changed_elements
+protected_element_count
+preservation_rate
+violation_details
+```
 
-十七、论文材料更新
+## 8.5 Notation Relation Validation
 
-请更新 papers/：
+检查：
 
-1. system_description.md
-   增加 V0.8 MuseScore-like Workbench 架构。
+* tie start/stop；
+* slur start/stop；
+* beams；
+* tuplets；
+* chord membership；
+* grace-note relations；
+* voice continuity。
 
-2. interface_design.md
-   增加 Note Input Mode、拖拽编辑、播放 scrubber、autosave。
+## 8.6 Semantic Preconditions
 
-3. human_ai_collaboration.md
-   增加“手动编辑上下文感知 Agent”的描述。
+例如：
 
-4. experiment_plan.md
-   增加 Workbench editing benchmark。
+* “升高大二度”应存在可移调音符；
+* “保留节奏”意味着 duration 不得变化；
+* “只修改右手”意味着左手必须受保护；
+* “保持全部时值，同时改为5/8拍”可能存在冲突。
 
-5. results_template.md
-   增加 V0.8 app usability metrics。
+## 8.7 Validation Report
 
-6. limitations_and_ethics.md
-   增加：
+统一输出：
 
-   * App 编辑能力仍不是完整 MuseScore 替代品。
-   * Agent 应尊重用户手动编辑。
-   * 自动改谱需要用户确认。
-   * 编辑历史可用于追踪人机共同创作过程。
-   * 真实 LLM 输出仍可能破坏音乐结构，因此必须 patch preview 与 validation。
+```json
+{
+  "status": "valid|warning|invalid|unsupported",
+  "errors": [],
+  "warnings": [],
+  "checks": {},
+  "repairable": true,
+  "suggested_repairs": []
+}
+```
 
-新增：
+---
 
-papers/v08_workbench_app_design.md
-papers/v08_workbench_evaluation.md
+# 9. 自动 Repair
 
-十八、README 更新
+建立有限、透明、可追踪的 repair 机制。
 
-请更新 README.md：
+Repair 分两类：
 
-1. V0.8 新功能。
-2. 如何进入 Workbench。
-3. 如何切换 Select Mode / Note Input Mode。
-4. 如何用键盘输入音符。
-5. 如何拖拽改音高。
-6. 如何修改时值、升降号、休止符、力度。
-7. 如何编辑左右手与声部。
-8. 如何使用 playback scrubber。
-9. 如何让 Agent 基于选区改谱。
-10. 如何保护用户手动编辑。
-11. 如何保存/恢复 .sera.json。
-12. 如何导出 MusicXML/MIDI/PDF。
-13. 如何运行 V0.8 workbench evaluation。
-14. 当前仍未实现的 MuseScore 级高级能力。
-15. V0.9 建议。
+## 9.1 Deterministic Repair
 
-十九、开发优先级
+例如：
 
-如果时间有限，请按以下顺序完成。
+* JSON 包裹错误；
+* 枚举大小写；
+* 缺少默认 schema version；
+* 字符串数值转整数；
+* 明确可推断的 selector 格式。
 
-Priority A：必须完成
+## 9.2 LLM Repair
 
-1. OSMD note/measure hit mapping 或稳定 overlay hit map。
-2. Note Input Mode。
-3. 键盘快捷键输入。
-4. 拖拽上下改音高。
-5. 时值修改。
-6. 休止符插入。
-7. Staff / voice 基础切换。
-8. 播放 scrubber 小节级联动。
-9. Agent preserve manual edits。
-10. autosave / recovery。
-11. Workbench V0.8 tests。
-12. README 更新。
+仅在 deterministic repair 失败后启用。
 
-Priority B：强烈建议完成
+输入必须包括：
 
-1. 多选拖拽。
-2. chord tone 输入。
-3. tie/slur 基础支持。
-4. 左手伴奏生成。
-5. partial apply 更细粒度。
-6. playback note-level highlight。
-7. project migration。
-8. workbench editing benchmark。
+* 原始指令；
+* 原始 patch；
+* schema error；
+* structural error；
+* 允许修改的范围；
+* protected scope；
+* 严格输出 schema。
 
-Priority C：后续扩展
+最多修复次数配置化，默认：
 
-1. 完整 MuseScore 级排版。
-2. 复杂多声部冲突解决。
-3. 踏板、歌词、指法。
-4. 装饰音。
-5. 高级连音线。
-6. 实时协同编辑。
-7. MIDI 键盘实时输入。
-8. 音频渲染与虚拟乐器。
+```text
+max_repair_attempts = 2
+```
 
-二十、完成标准
+保存：
 
-V0.8 完成后应达到：
+* 原始输出；
+* 每次修复输出；
+* 错误变化；
+* 最终状态。
 
-1. Workbench 已不只是预览器，而是可实际编辑乐谱。
-2. 用户能进入 Note Input Mode 输入音符和休止符。
-3. 用户能通过键盘快捷键改时值、音高、删除、撤销、播放。
-4. 用户能点击或框选小节/音符。
-5. 用户能拖拽音符上下改音高。
-6. 用户能修改 duration、dynamic、accidental、staff、voice。
-7. 用户能保存并恢复 .sera.json 项目。
-8. 用户能导出 MusicXML、MIDI、PDF。
-9. 播放 scrubber 能与小节或音符联动。
-10. Agent 能读取用户最近手动编辑上下文。
-11. Agent patch 不应默认覆盖用户最近手动编辑。
-12. 所有编辑可 undo/redo。
-13. 所有编辑后能通过 lightweight validation。
-14. 导出前能通过 full validation 或给出明确 warning。
-15. npm run build 通过。
-16. npm test 通过。
-17. python -m pytest -q 通过。
-18. V0.8 workbench evaluation 可运行。
-19. README 和 papers 已更新。
+不得无限修复。
 
-二十一、完成后总结
+---
 
-完成后请输出：
+# 10. 三个实验条件
 
-1. 新增和修改文件列表。
-2. 如何启动前端和后端。
-3. 如何进入 Workbench。
-4. 如何使用 Note Input Mode。
-5. 如何使用键盘快捷键。
-6. 如何拖拽改音高。
-7. 如何编辑左右手和声部。
-8. 如何使用 playback scrubber。
-9. 如何让 Agent 基于选区改谱。
-10. 如何确认 Agent 没有覆盖用户手动编辑。
-11. 如何保存和恢复 .sera.json。
-12. 如何导出 MusicXML/MIDI/PDF。
-13. 如何运行前端测试。
-14. 如何运行后端测试。
-15. 如何运行 V0.8 workbench evaluation。
-16. 当前仍未实现的 MuseScore 级高级功能。
-17. V0.9 建议。
+## Condition A：Full-Score Rewrite
 
-请现在开始执行 Sera V0.8。先检查现有代码状态，再制定实施计划，然后逐步修改代码。
+输入：
+
+* 原始完整 MusicXML；
+* 自然语言指令；
+* 简单系统提示。
+
+输出：
+
+* 修改后的完整 MusicXML。
+
+不得在该条件中偷偷使用 Sera 的 patch 验证优势。
+
+允许进行：
+
+* 基本 XML 提取；
+* 输出编码清理。
+
+不允许：
+
+* 根据 gold patch 修复；
+* 使用 protected scope 回滚；
+* 将失败输出替换为正确答案。
+
+## Condition B：ScorePatch Only
+
+输入：
+
+* ScoreDocument 的必要上下文；
+* target scope；
+* 指令；
+* patch schema。
+
+输出结构化 patch。
+
+允许：
+
+* schema parse；
+* 基础 patch apply。
+
+不允许：
+
+* protected-scope validation；
+* post-apply musical validation；
+* LLM repair；
+* deterministic semantic repair；
+* 自动拒绝冲突操作。
+
+## Condition C：Sera Full Pipeline
+
+启用：
+
+* structured patch；
+* schema validation；
+* target scope；
+* protected scope；
+* source fingerprint；
+* structural validation；
+* musical constraint validation；
+* repair；
+* reject；
+* transaction；
+* undo；
+* final MusicXML round-trip validation。
+
+三组条件必须使用：
+
+* 同一原始乐谱；
+* 同一编辑指令；
+* 同一模型；
+* 尽可能相同的温度和 seed；
+* 相同运行次数；
+* 相同超时和重试规则。
+
+---
+
+# 11. LLM Provider 抽象
+
+统一接口：
+
+```python
+class LLMProvider:
+    def generate(
+        self,
+        messages,
+        response_schema=None,
+        temperature=0.0,
+        seed=None,
+        max_tokens=None,
+        metadata=None
+    ) -> ProviderResponse:
+        ...
+```
+
+ProviderResponse 至少包含：
+
+```text
+raw_text
+parsed_output
+provider
+model
+latency_ms
+input_tokens
+output_tokens
+estimated_cost
+request_id
+finish_reason
+error
+```
+
+优先兼容：
+
+* mock；
+* OpenAI；
+* DeepSeek；
+* Qwen。
+
+模型名称、价格和上下文限制不得硬编码到核心逻辑中，应通过配置文件管理。
+
+创建：
+
+```text
+evaluation/configs/providers.example.yaml
+```
+
+实验中记录实际模型版本和运行日期。
+
+---
+
+# 12. Benchmark 设计
+
+建立120条正式核心任务。
+
+建议分布：
+
+| 类别                         |  数量 |
+| -------------------------- | --: |
+| pitch_transposition        |  15 |
+| rhythm_duration            |  15 |
+| key_harmony                |  15 |
+| voice_texture              |  15 |
+| dynamics_articulation      |  10 |
+| insertion_deletion         |  10 |
+| ties_slurs_ornaments       |  10 |
+| meter_measure_structure    |  10 |
+| compound_multi_step        |  10 |
+| conflicting_or_unsupported |  10 |
+| 总计                         | 120 |
+
+基础乐谱约20份，每份约6条任务。
+
+乐谱类型至少覆盖：
+
+* 单旋律；
+* 钢琴双谱表；
+* 双声部；
+* 三至四声部；
+* 大调；
+* 小调；
+* 2/4；
+* 3/4；
+* 4/4；
+* 6/8；
+* 弱起；
+* 延音线；
+* 连音线；
+* 力度；
+* 演奏法；
+* 和弦；
+* 休止符；
+* 装饰音或不规则节奏样例。
+
+优先使用：
+
+* 自建短片段；
+* 明确属于公共领域的素材；
+* Sera 生成并由规则验证的合成片段。
+
+不得直接把版权状态不明的完整现代作品加入公开数据集。
+
+---
+
+# 13. Benchmark Task Schema
+
+每条任务保存为独立 JSON/YAML。
+
+推荐结构：
+
+```json
+{
+  "task_id": "pitch_001",
+  "score_id": "score_001",
+  "category": "pitch_transposition",
+  "difficulty": "easy",
+  "instruction_en": "Transpose measures 3–4 of staff 1 up by a major second while preserving rhythm.",
+  "instruction_zh": "将第3至4小节第一谱表升高大二度，并保持节奏不变。",
+  "target_scope": {},
+  "protected_scope": {},
+  "gold_patch_path": "gold_patches/pitch_001.json",
+  "expected_constraints": [
+    {
+      "type": "pitch_delta",
+      "value": 2
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [],
+  "created_by": "rule_template",
+  "review_status": "verified"
+}
+```
+
+冲突任务示例：
+
+```json
+{
+  "expected_status": "refuse",
+  "conflict_type": "meter_duration_conflict"
+}
+```
+
+每条任务必须通过：
+
+* schema validation；
+* source score existence；
+* gold patch apply；
+* expected output generation；
+* deterministic metric verification；
+* round-trip MusicXML validation。
+
+---
+
+# 14. Benchmark 生成策略
+
+不要一次盲目写120条。
+
+按以下顺序：
+
+## Batch 1：30条
+
+覆盖主要操作类型，先验证全链路。
+
+## Batch 2：60条
+
+补充中等难度、多声部和保护范围。
+
+## Batch 3：120条
+
+加入复杂操作、复合指令、冲突指令和失败案例。
+
+为减少人工错误，建立模板化任务生成器，但每条正式任务都必须经过：
+
+* 自动验证；
+* 人工可读摘要；
+* 可视化或事件级 diff；
+* review_status 标记。
+
+生成：
+
+```text
+benchmark/BENCHMARK_CARD.md
+```
+
+内容包括：
+
+* 任务目的；
+* 数据来源；
+* 数据结构；
+* 类别；
+* 限制；
+* 许可证；
+* 潜在偏差；
+* 不适用场景。
+
+---
+
+# 15. 自动指标
+
+## 15.1 MusicXML Validity
+
+定义：
+
+```text
+validity = valid_roundtrip_outputs / all_outputs
+```
+
+判定要求：
+
+1. XML well-formed；
+2. MusicXML parser 可读取；
+3. 转换到 ScoreDocument 成功；
+4. 重新导出成功；
+5. 重新解析成功。
+
+## 15.2 Patch Parse Rate
+
+```text
+parsed_patches / patch_outputs
+```
+
+## 15.3 Task Success
+
+优先使用确定性 constraint evaluator。
+
+例如：
+
+* pitch delta；
+* duration equality；
+* dynamic value；
+* event existence；
+* event deletion；
+* meter change；
+* key signature；
+* voice assignment；
+* relation integrity。
+
+对不能完全自动判定的和声或音乐语义任务：
+
+* 建立明确的规则代理指标；
+* 或标记为 `human_review_required`；
+* 不得直接让同一个生成模型自我评分。
+
+## 15.4 Non-target Preservation
+
+定义：
+
+```text
+preservation_rate
+=
+1 - unexpected_changed_protected_elements
+    / max(1, protected_element_count)
+```
+
+同时报告：
+
+* 任务级完全保护成功率；
+* 元素级平均保护率；
+* 意外变化总数；
+* 意外变化类型。
+
+## 15.5 Edit Minimality
+
+至少提供两种指标：
+
+### Operation Minimality
+
+```text
+gold_required_operations / max(actual_operations, gold_required_operations)
+```
+
+需要合理处理等价 patch。
+
+### Element Change Precision
+
+```text
+necessary_changed_elements
+/
+all_changed_elements
+```
+
+如果 gold 不是唯一答案，使用 expected constraints 与允许变化集合，而不是逐字比较 JSON。
+
+## 15.6 Repair Success
+
+```text
+successful_repairs / repair_attempts
+```
+
+同时报告 repair 是否引入新错误。
+
+## 15.7 Refusal Accuracy
+
+对 expected_status = refuse 的任务：
+
+* 正确拒绝；
+* 错误执行；
+* 错误拒绝；
+* 模糊警告。
+
+计算：
+
+* refusal precision；
+* refusal recall；
+* refusal F1；
+* unsafe execution rate。
+
+## 15.8 Constraint Satisfaction
+
+```text
+satisfied_constraints / all_expected_constraints
+```
+
+## 15.9 Latency
+
+报告：
+
+* median；
+* mean；
+* p90；
+* p95。
+
+拆分：
+
+* provider latency；
+* parse；
+* validation；
+* repair；
+* apply；
+* round-trip。
+
+## 15.10 Cost
+
+保存：
+
+* input tokens；
+* output tokens；
+* estimated cost；
+* cost per successful edit；
+* repair added cost。
+
+模型价格来自配置，不得假装永久准确。
+
+---
+
+# 16. 实验矩阵
+
+建立三档配置。
+
+## Smoke
+
+用于开发验证：
+
+```text
+30 tasks
+× 3 conditions
+× 1 provider/model
+× 1 run
+```
+
+## Core
+
+用于 Short Paper 最低正式实验：
+
+```text
+120 tasks
+× 3 conditions
+× 1 provider/model
+× 1 run
+```
+
+## Full
+
+用于增强版：
+
+```text
+120 tasks
+× 3 conditions
+× 2 provider/models
+× 3 repeated runs
+```
+
+重复运行仅在模型存在随机性时使用。温度为0且 provider 支持确定性 seed 时，也应保留至少一次复现检查。
+
+实验配置应为 YAML，例如：
+
+```yaml
+experiment_id: core_v1
+tasks: benchmark/splits/core.json
+conditions:
+  - full_rewrite
+  - patch_only
+  - sera_full
+providers:
+  - provider: qwen
+    model: model-name
+repetitions: 1
+temperature: 0
+seed: 42
+max_concurrency: 2
+max_retries: 2
+budget_limit_usd: 20
+cache: true
+```
+
+---
+
+# 17. 实验运行器
+
+实现稳健的实验 runner。
+
+必须支持：
+
+* task-level resume；
+* 请求缓存；
+* 唯一 run ID；
+* timeout；
+* retry with backoff；
+* provider rate limit；
+* max concurrency；
+* cost budget；
+* Ctrl+C 安全停止；
+* 原始响应保存；
+* error serialization；
+* manifest；
+* config snapshot；
+* environment metadata；
+* Git commit hash；
+* Python/Node版本；
+* dependency lock hash。
+
+每次运行生成：
+
+```text
+experiments/<experiment_id>/manifest.json
+experiments/<experiment_id>/runs.jsonl
+experiments/<experiment_id>/raw_outputs/
+experiments/<experiment_id>/normalized_outputs/
+experiments/<experiment_id>/metrics.csv
+experiments/<experiment_id>/summary.json
+experiments/<experiment_id>/errors.csv
+```
+
+不得覆盖旧实验。
+
+---
+
+# 18. 统计分析
+
+对三种条件进行配对分析，因为它们作用于同一任务。
+
+至少生成：
+
+* raw counts；
+* percentage；
+* bootstrap 95% CI；
+* task-level paired differences；
+* category breakdown。
+
+对二元成功指标，优先使用：
+
+* McNemar test；
+* paired bootstrap。
+
+对连续或比例型任务指标，优先使用：
+
+* Wilcoxon signed-rank；
+* bootstrap CI；
+* Cliff’s delta 或适当的效应量。
+
+必须：
+
+* 报告效应量；
+* 报告置信区间；
+* 不只报告 p-value；
+* 对多重比较进行 Holm 校正；
+* 不进行选择性汇报；
+* 明确样本量；
+* 明确缺失输出处理方式。
+
+生成：
+
+```text
+experiments/<id>/statistics.md
+experiments/<id>/statistics.json
+```
+
+---
+
+# 19. 错误分类体系
+
+建立明确 taxonomy。
+
+至少包括：
+
+```text
+E01 malformed_xml
+E02 musicxml_parse_failure
+E03 malformed_patch_json
+E04 patch_schema_failure
+E05 invalid_selector
+E06 missing_event
+E07 duration_mismatch
+E08 voice_collision
+E09 broken_tie
+E10 broken_slur
+E11 protected_scope_violation
+E12 unintended_pitch_change
+E13 unintended_duration_change
+E14 unintended_notation_change
+E15 incomplete_instruction_execution
+E16 over_editing
+E17 hallucinated_measure_or_voice
+E18 conflicting_instruction_not_refused
+E19 unsupported_operation
+E20 timeout_or_provider_error
+```
+
+每个失败输出：
+
+* 可以有多个 error code；
+* 有 primary error；
+* 有详细 message；
+* 有发生阶段；
+* 有是否可修复；
+* 有 repair outcome。
+
+生成：
+
+```text
+paper/tables/error_taxonomy.csv
+paper/figures/error_distribution.*
+```
+
+---
+
+# 20. Prompt 设计
+
+为三种条件分别创建版本化 prompt。
+
+## Full Rewrite Prompt
+
+要求：
+
+* 修改给定 MusicXML；
+* 只输出 MusicXML；
+* 不加入解释；
+* 尽量保持未指定内容。
+
+但不要加入 Sera 专属 patch 验证机制。
+
+## Patch Only Prompt
+
+要求：
+
+* 输出符合 schema 的 ScorePatch；
+* 使用 event ID 和 scope；
+* 不输出完整乐谱；
+* 不输出 Markdown code fence。
+
+## Sera Full Prompt
+
+包含：
+
+* instruction；
+* selected context；
+* allowed operation schema；
+* target scope；
+* protected scope；
+* source fingerprint；
+* relevant score summary；
+* explicit constraints；
+* unsupported/refusal rules。
+
+Prompt 必须版本化，例如：
+
+```text
+prompt_version: sera_patch_v1.0
+```
+
+实验记录每次使用的 prompt hash。
+
+不要把完整、过大的 MusicXML 全部塞给 patch 模型。建立 compact score context，包含目标区域和必要邻域。
+
+---
+
+# 21. 前端与 Demo
+
+在现有 Workbench 中增加或强化研究演示模式。
+
+页面至少包括：
+
+## 左侧
+
+* score selector；
+* task selector；
+* target scope；
+* instruction。
+
+## 中央
+
+* authoritative score rendering；
+* before/after overlay；
+* changed event highlight；
+* protected region highlight。
+
+## 右侧
+
+* generated patch；
+* human-readable operations；
+* validation report；
+* errors/warnings；
+* repair suggestion；
+* apply；
+* reject；
+* undo。
+
+## 底部
+
+* condition selector；
+* latency；
+* token usage；
+* run ID；
+* source/post fingerprint。
+
+提供 Demo presets：
+
+1. 升高大二度并保持节奏；
+2. 修改力度但保护音符；
+3. 左手保持不变；
+4. 拍号与总时值冲突；
+5. 连音线破坏检测；
+6. 复合编辑；
+7. 无法支持的模糊指令。
+
+建立离线模式：
+
+* 使用缓存 patch；
+* 使用本地 fixture；
+* 不依赖 API；
+* 一键重置；
+* 可连续运行。
+
+---
+
+# 22. 测试要求
+
+使用仓库现有测试框架。
+
+至少覆盖：
+
+## Unit Tests
+
+* ScoreScope matching；
+* protected scope；
+* patch schema；
+* operation parsing；
+* transpose；
+* duration；
+* insert/delete；
+* dynamics；
+* ties/slurs；
+* fingerprint；
+* diff；
+* rollback；
+* repair；
+* metrics。
+
+## Integration Tests
+
+* MusicXML → ScoreDocument → Patch → MusicXML；
+* invalid patch rollback；
+* protected violation rollback；
+* undo/redo；
+* full rewrite evaluation；
+* patch-only evaluation；
+* full pipeline evaluation；
+* benchmark task validation。
+
+## Regression Tests
+
+为已经发现的重要问题建立回归测试，例如：
+
+* A minor / C major 显示不一致；
+* preview 与播放使用不同数据源；
+* fallback renderer 与 authoritative score 不一致；
+* 无关声部被修改；
+* repeated import/export event ID 丢失；
+* measure duration 浮点误差。
+
+新增核心模块目标：
+
+* 关键验证器和 patch applier 分支覆盖率至少85%；
+* 整体项目覆盖率不得因为新增代码明显下降。
+
+---
+
+# 23. CLI 与一键命令
+
+提供统一命令。
+
+示例：
+
+```bash
+python scripts/validate_benchmark.py
+python scripts/run_smoke_experiment.py
+python scripts/run_core_experiment.py --config evaluation/configs/core.yaml
+python scripts/recompute_metrics.py --experiment core_v1
+python scripts/generate_paper_assets.py --experiment core_v1
+python scripts/verify_reproducibility.py --experiment core_v1
+python scripts/export_anonymous_package.py --experiment core_v1
+```
+
+如果项目使用 Makefile、Taskfile 或 npm scripts，增加：
+
+```bash
+make benchmark-validate
+make experiment-smoke
+make experiment-core
+make metrics
+make paper-assets
+make anonymous-package
+make reproducibility-check
+```
+
+每条命令必须：
+
+* 有 `--help`；
+* 错误码正确；
+* 报错可读；
+* 不吞掉异常；
+* 支持 Windows 环境。
+
+---
+
+# 24. 自动生成论文表格
+
+从真实实验结果自动生成：
+
+## 主表
+
+```text
+Method
+XML Validity
+Patch Parse Rate
+Task Success
+Preservation
+Minimality
+Constraint Satisfaction
+Latency
+Cost
+```
+
+## 消融表
+
+比较：
+
+```text
+Full Rewrite
+Patch Only
+Patch + Schema Validation
+Patch + Structural Validation
+Patch + Protected Scope
+Sera Full
+```
+
+如果时间有限，正式论文至少保留：
+
+* Full Rewrite；
+* Patch Only；
+* Sera Full。
+
+## 分类表
+
+按任务类别报告：
+
+* pitch；
+* rhythm；
+* harmony；
+* voice；
+* notation；
+* structure；
+* compound；
+* conflict。
+
+输出格式：
+
+* CSV；
+* Markdown；
+* LaTeX。
+
+不得手工复制数字到论文而不保留来源。
+
+---
+
+# 25. 自动生成论文图
+
+禁止使用装饰性、无信息价值的图。
+
+至少生成：
+
+1. 系统架构图；
+2. benchmark 类别分布图；
+3. 三条件主要指标图；
+4. preservation 对比图；
+5. error taxonomy 图；
+6. repair flow 图；
+7. 一个真实乐谱编辑前后案例图。
+
+所有图必须：
+
+* 有高分辨率版本；
+* 有矢量版本，优先 PDF/SVG；
+* 字体可读；
+* 黑白打印仍可区分；
+* 不依赖固定颜色表达唯一信息；
+* caption 草稿；
+* 记录生成脚本。
+
+统计图不能伪造结果，必须从实验文件读取。
+
+---
+
+# 26. Short Paper 初稿
+
+创建：
+
+```text
+paper/manuscript/seraedit_icmc_short_paper.md
+paper/manuscript/seraedit_icmc_short_paper.tex
+```
+
+由于下一届 ICMC 模板和页数可能尚未确定：
+
+* 先创建 conference-neutral 紧凑双栏稿；
+* 页数目标按4页正文含参考文献准备；
+* 将模板适配封装，避免正文与格式强耦合；
+* 在 `SUBMISSION_NOTES.md` 中标记待根据新 CFP 更新的字段。
+
+推荐标题：
+
+> **SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches**
+
+备选：
+
+> **Structured Patches for Reliable Language-Guided MusicXML Score Editing**
+
+论文结构：
+
+## Abstract
+
+约120–170词，包括：
+
+* 问题；
+* 方法；
+* benchmark；
+* 三条件；
+* 主要真实结果；
+* 限制。
+
+在实验完成前，用明确占位符：
+
+```text
+[RESULT TO BE INSERTED FROM EXPERIMENT]
+```
+
+不得编造数字。
+
+## 1. Introduction
+
+包括：
+
+* 自然语言乐谱编辑的价值；
+* 全谱重写风险；
+* 局部、受保护、可验证编辑的缺口；
+* 三项贡献。
+
+贡献限制为：
+
+1. structured ScorePatch；
+2. validation and protected-scope pipeline；
+3. benchmark evaluation。
+
+## 2. Method
+
+介绍：
+
+* ScoreDocument；
+* Scope；
+* ScorePatch；
+* validation；
+* repair/reject/apply；
+* transaction。
+
+## 3. Evaluation
+
+介绍：
+
+* 120 tasks；
+* 20 source scores；
+* three conditions；
+* provider/model；
+* metrics；
+* statistics。
+
+## 4. Results and Analysis
+
+从自动生成表格引用真实结果。
+
+重点分析：
+
+* validity；
+* preservation；
+* task success；
+* refusal；
+* repair；
+* failures。
+
+## 5. Limitations and Conclusion
+
+明确限制：
+
+* benchmark 规模有限；
+* 主要是短符号乐谱片段；
+* 语义复杂任务仍有限；
+* 不能代表完整作曲质量；
+* 不能代表所有 MusicXML 软件兼容性；
+* LLM 模型结果可能随版本变化。
+
+---
+
+# 27. 文献与 Related Work
+
+建立：
+
+```text
+paper/manuscript/references.bib
+paper/manuscript/RELATED_WORK_NOTES.md
+```
+
+文献类别至少覆盖：
+
+* symbolic music representation；
+* MusicXML；
+* computer-assisted composition；
+* music notation systems；
+* LLM agents；
+* structured generation；
+* constrained decoding；
+* program repair；
+* human-in-the-loop editing；
+* MIR evaluation；
+* music editing interfaces。
+
+不得伪造文献、DOI、页码或作者。
+
+对于未核实的引用：
+
+```text
+verification_status: pending
+```
+
+正式稿中只使用已核实文献。
+
+---
+
+# 28. 匿名评审包
+
+创建：
+
+```text
+paper/anonymous_release/
+```
+
+必须移除：
+
+* 作者姓名；
+* 学校；
+* 本地路径；
+* 用户名；
+* API request ID 中的敏感信息；
+* GitHub 私有地址；
+* commit author 信息；
+* 元数据中的个人信息。
+
+包含：
+
+* benchmark 子集或完整匿名集；
+* 核心代码；
+* 安装说明；
+* 一键复现实验；
+* 缓存示例；
+* figure/table generation；
+* system requirements；
+* limitations。
+
+生成：
+
+```text
+paper/submission_checklist/ANONYMITY_CHECK.md
+```
+
+自动扫描：
+
+* 用户名；
+* Windows 用户目录；
+* 邮箱；
+* 学校名；
+* 作者名；
+* access token；
+* API key；
+* repository remote。
+
+---
+
+# 29. Reproducibility
+
+创建：
+
+```text
+paper/supplementary/REPRODUCIBILITY.md
+```
+
+至少说明：
+
+* OS；
+* Python/Node版本；
+* dependency install；
+* provider config；
+* benchmark validation；
+* smoke run；
+* full run；
+* metric recomputation；
+* figure generation；
+* expected runtime；
+* expected API cost；
+* deterministic components；
+* nondeterministic components；
+* cache policy。
+
+创建环境锁定文件：
+
+* Python lock；
+* Node lock；
+* Dockerfile 或可替代环境定义；
+* `.env.example`。
+
+不得把真实 key 放入 `.env.example`。
+
+---
+
+# 30. 数据与软件许可证
+
+分别评估：
+
+* 项目代码许可证；
+* benchmark 数据许可证；
+* 公共领域乐谱来源；
+* 合成数据；
+* 模型输出使用限制。
+
+生成：
+
+```text
+benchmark/LICENSE
+benchmark/SOURCE_ATTRIBUTION.md
+docs/icmc_short_paper/LICENSING_NOTES.md
+```
+
+不要擅自给来源不明的音乐文件添加开放许可证。
+
+---
+
+# 31. 人工核验工具
+
+建立一个轻量审核界面或 CLI，用于音乐专业人员检查任务。
+
+每条任务显示：
+
+* 原始乐谱；
+* 指令；
+* 目标范围；
+* 修改后乐谱；
+* before/after diff；
+* 自动指标；
+* reviewer 选择。
+
+Reviewer 标签：
+
+```text
+task_success: yes/no/uncertain
+unintended_change: yes/no
+notation_valid: yes/no/uncertain
+severity: none/minor/major
+comment: text
+```
+
+即使第一篇不进行正式用户研究，也应支持2–3名音乐专业人员做输出核验。
+
+不要把少量核验描述成大规模用户实验。
+
+---
+
+# 32. 研究边界
+
+本项目当前不处理或暂缓：
+
+* 高质量音频生成；
+* 大规模音乐模型训练；
+* 脑机接口；
+* 完整作曲审美评价；
+* 取代 MuseScore；
+* 所有 MusicXML 记谱语义；
+* 完整管弦乐大总谱；
+* 实时多人协作；
+* 移动端；
+* 云端商业账户系统。
+
+如果现有项目已有这些功能，不删除，但不要让它们干扰论文核心。
+
+---
+
+# 33. 推荐实施顺序
+
+严格按以下阶段执行。
+
+## Phase 1：审计与冻结范围
+
+输出：
+
+* REPOSITORY_AUDIT；
+* implementation plan；
+* regression baseline；
+* 当前测试结果。
+
+## Phase 2：ScorePatch 与验证器
+
+完成：
+
+* schema；
+* scope；
+* protected scope；
+* transaction；
+* diff；
+* validation；
+* rollback；
+* tests。
+
+## Phase 3：30条 Benchmark
+
+完成端到端：
+
+```text
+task → generation → apply → evaluate → report
+```
+
+先确认流程，再扩展。
+
+## Phase 4：三实验条件
+
+完成：
+
+* Full Rewrite；
+* Patch Only；
+* Sera Full；
+* unified runner。
+
+## Phase 5：扩展到120条
+
+确保：
+
+* 类别平衡；
+* gold 可执行；
+* 冲突任务正确；
+* benchmark validation 全通过。
+
+## Phase 6：Smoke 与 Core 实验
+
+先跑 smoke。
+
+确认无系统性错误后再跑 core。
+
+## Phase 7：统计与错误分析
+
+生成：
+
+* tables；
+* figures；
+* taxonomy；
+* confidence intervals；
+* paired comparisons。
+
+## Phase 8：Demo 与论文素材
+
+完成：
+
+* research demo；
+* paper draft；
+* anonymous package；
+* reproducibility。
+
+## Phase 9：最终验收
+
+运行全部测试和命令，生成最终报告。
+
+---
+
+# 34. 最终验收标准
+
+只有满足以下条件，才能标记项目完成。
+
+## 代码
+
+* [ ] ScoreDocument 是权威数据源；
+* [ ] ScorePatch 有版本化 schema；
+* [ ] target/protected scope 可确定性执行；
+* [ ] patch 事务支持 rollback；
+* [ ] apply/reject/undo 可用；
+* [ ] validators 可用；
+* [ ] full rewrite baseline 可用；
+* [ ] patch-only baseline 可用；
+* [ ] full pipeline 可用。
+
+## Benchmark
+
+* [ ] 约20份 source scores；
+* [ ] 120条正式任务；
+* [ ] 每条任务通过 schema；
+* [ ] 每条 gold patch 可应用；
+* [ ] 每条 expected constraint 可计算或明确要求人工检查；
+* [ ] 10条冲突/拒绝任务；
+* [ ] benchmark card；
+* [ ] license/source attribution。
+
+## 实验
+
+* [ ] smoke 可完整运行；
+* [ ] core 可完整运行；
+* [ ] 可恢复中断；
+* [ ] 原始响应保存；
+* [ ] 配置保存；
+* [ ] 指标可重算；
+* [ ] 无手工伪造结果；
+* [ ] cost 与 latency 有记录。
+
+## 分析
+
+* [ ] 主结果表；
+* [ ] 消融表；
+* [ ] 分类结果；
+* [ ] error taxonomy；
+* [ ] 95% CI；
+* [ ] 配对统计；
+* [ ] 效应量；
+* [ ] failure cases。
+
+## 论文
+
+* [ ] 标题与摘要；
+* [ ] 4页短论文骨架；
+* [ ] 架构图；
+* [ ] 结果图；
+* [ ] 参考文献库；
+* [ ] limitation；
+* [ ] anonymous package；
+* [ ] reproducibility checklist。
+
+## 演示
+
+* [ ] 可导入乐谱；
+* [ ] 可选择范围；
+* [ ] 可输入指令；
+* [ ] 可预览 patch；
+* [ ] 可显示验证；
+* [ ] 可 apply/reject/undo；
+* [ ] 有离线预设；
+* [ ] 不依赖实时网络也能展示核心闭环。
+
+---
+
+# 35. 最终报告
+
+完成全部工作后，创建：
+
+```text
+docs/icmc_short_paper/FINAL_COMPLETION_REPORT.md
+```
+
+必须包括：
+
+1. 项目概述；
+2. 实际完成的功能；
+3. 新增和修改文件；
+4. Benchmark 统计；
+5. 实验运行情况；
+6. 真实结果摘要；
+7. 测试结果；
+8. 当前论文完成度；
+9. 仍然存在的限制；
+10. 投稿前必须人工处理的事项；
+11. 一键运行命令；
+12. 是否达到 ICMC Short Paper 最低投稿标准；
+13. 是否达到增强投稿标准；
+14. 不能完成的内容及准确原因。
+
+最后在终端输出简洁摘要：
+
+```text
+SeraEdit ICMC Short Paper package completed.
+
+Benchmark:
+- Source scores:
+- Tasks:
+- Valid tasks:
+- Conflict tasks:
+
+Experiments:
+- Smoke:
+- Core:
+- Full:
+
+Tests:
+- Passed:
+- Failed:
+- Coverage:
+
+Paper assets:
+- Tables:
+- Figures:
+- Draft:
+- Anonymous package:
+
+Remaining blockers:
+```
+
+---
+
+# 36. 质量优先级
+
+当时间或资源不足时，按以下顺序保证质量：
+
+1. 数据正确性；
+2. ScorePatch 与 protected scope；
+3. 验证与 rollback；
+4. 三条件公平实验；
+5. 自动指标；
+6. 120条 benchmark；
+7. 可复现性；
+8. 论文表格和图；
+9. Demo UI；
+10. 额外模型和更多任务。
+
+不要为了做漂亮界面而牺牲实验正确性。
+
+不要为了增加任务数量而加入未经验证的数据。
+
+不要为了得到显著结果而修改指标、删除失败样本或更换实验条件。
+
+---
+
+# 37. 立即开始
+
+现在立即执行以下步骤：
+
+1. 扫描并理解整个仓库；
+2. 运行当前测试；
+3. 创建 `REPOSITORY_AUDIT.md`；
+4. 确认现有 ScoreDocument、ScorePatch、验证器和 provider；
+5. 建立本任务的实现日志；
+6. 从 Phase 1 开始连续执行；
+7. 不要只输出方案；
+8. 不要在完成审计后停止；
+9. 尽可能完成全部代码、数据、测试、实验框架和论文资产；
+10. 最终用 `FINAL_COMPLETION_REPORT.md` 汇报真实完成情况。

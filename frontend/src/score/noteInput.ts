@@ -122,6 +122,7 @@ export function pitchFromStep(step: string, cursor: NoteInputCursor): string {
 export function createInsertNoteOperation(score: ScoreDocument, cursor: NoteInputCursor, step: string, chordTone = false): ScoreOperation {
   const check = canInsertAtCursor(score, cursor);
   const offset = chordTone || cursor.chordMode ? cursor.offset : Math.min(cursor.offset, check.capacity);
+  const duration = cursor.dotted && !cursor.duration.startsWith("dotted_") ? (`dotted_${cursor.duration}` as NoteDuration) : cursor.duration;
   return {
     source: "user",
     type: "insert_note",
@@ -129,7 +130,8 @@ export function createInsertNoteOperation(score: ScoreDocument, cursor: NoteInpu
     after: {
       event_id: `${cursor.measureId}_e${Date.now().toString(36)}`,
       pitch: pitchFromStep(step, cursor),
-      duration: cursor.duration,
+      duration,
+      dotted: duration.startsWith("dotted_"),
       offset,
       staff: cursor.staff,
       voice: cursor.voice,
@@ -142,13 +144,15 @@ export function createInsertNoteOperation(score: ScoreDocument, cursor: NoteInpu
 
 export function createInsertRestOperation(score: ScoreDocument, cursor: NoteInputCursor): ScoreOperation {
   const check = canInsertAtCursor(score, cursor);
+  const duration = cursor.dotted && !cursor.duration.startsWith("dotted_") ? (`dotted_${cursor.duration}` as NoteDuration) : cursor.duration;
   return {
     source: "user",
     type: "insert_rest",
     target: { measure_id: cursor.measureId, measure: cursor.measureNumber, staff: cursor.staff, voice: cursor.voice },
     after: {
       event_id: `${cursor.measureId}_r${Date.now().toString(36)}`,
-      duration: cursor.duration,
+      duration,
+      dotted: duration.startsWith("dotted_"),
       offset: Math.min(cursor.offset, check.capacity),
       staff: cursor.staff,
       voice: cursor.voice

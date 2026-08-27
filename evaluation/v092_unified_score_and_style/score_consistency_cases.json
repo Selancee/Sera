@@ -1,0 +1,14 @@
+[
+  {
+    "id": "romantic_piano",
+    "prompt": "Compose an 8 measure romantic piano nocturne with flowing left hand."
+  },
+  {
+    "id": "cyberpunk_piano",
+    "prompt": "Compose an 8 measure cyberpunk piano passage."
+  },
+  {
+    "id": "beginner_piano",
+    "prompt": "Compose an 8 measure beginner piano piece with simple accompaniment."
+  }
+]

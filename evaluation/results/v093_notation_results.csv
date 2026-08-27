@@ -1,0 +1,4 @@
+id,run_id,meter,notation_valid,measure_duration_valid,beat_grouping_valid,rest_grouping_valid,dotted_duration_valid,tie_valid,musicxml_export_valid
+four_four,20260827_050418_960478_13afab31,4/4,True,True,True,True,True,True,True
+three_four,20260827_050419_291584_c03e19b2,3/4,True,True,True,True,True,True,True
+six_eight,20260827_050419_681267_944314de,6/8,True,True,True,True,True,True,True

@@ -1,0 +1,140 @@
+{
+  "added": [],
+  "deleted": [],
+  "changed": [
+    {
+      "event_id": "s015_m3_rh_1",
+      "before_location": {
+        "measure": 3,
+        "measure_id": "m3",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s015_m3_rh_1",
+        "offset": "0"
+      },
+      "after_location": {
+        "measure": 3,
+        "measure_id": "m3",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s015_m3_rh_1",
+        "offset": "0"
+      },
+      "changed_fields": [
+        "slur"
+      ],
+      "before": {
+        "event_id": "s015_m3_rh_1",
+        "type": "note",
+        "pitch": "A4",
+        "duration": "eighth",
+        "offset": 0.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null,
+        "beam": {
+          "number": 1,
+          "value": "begin"
+        }
+      },
+      "after": {
+        "event_id": "s015_m3_rh_1",
+        "type": "note",
+        "pitch": "A4",
+        "duration": "eighth",
+        "offset": 0.0,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": "start",
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null,
+        "beam": {
+          "number": 1,
+          "value": "begin"
+        }
+      }
+    },
+    {
+      "event_id": "s015_m3_rh_6",
+      "before_location": {
+        "measure": 3,
+        "measure_id": "m3",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s015_m3_rh_6",
+        "offset": "5/2"
+      },
+      "after_location": {
+        "measure": 3,
+        "measure_id": "m3",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1,
+        "event_id": "s015_m3_rh_6",
+        "offset": "5/2"
+      },
+      "changed_fields": [
+        "slur"
+      ],
+      "before": {
+        "event_id": "s015_m3_rh_6",
+        "type": "note",
+        "pitch": "E4",
+        "duration": "eighth",
+        "offset": 2.5,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": null,
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null,
+        "beam": {
+          "number": 1,
+          "value": "end"
+        }
+      },
+      "after": {
+        "event_id": "s015_m3_rh_6",
+        "type": "note",
+        "pitch": "E4",
+        "duration": "eighth",
+        "offset": 2.5,
+        "voice": 1,
+        "staff": "right_hand",
+        "tie": null,
+        "slur": "stop",
+        "accidental": "",
+        "dynamic": "mf",
+        "articulations": [],
+        "grace": false,
+        "is_chord_tone": false,
+        "chord_group_id": null,
+        "beam": {
+          "number": 1,
+          "value": "end"
+        }
+      }
+    }
+  ],
+  "global_changes": {},
+  "changed_element_count": 2
+}

@@ -9,7 +9,7 @@ describe("NoteInputMode", () => {
     const onDuration = vi.fn();
     render(<NoteInputMode cursor={DEFAULT_NOTE_INPUT_CURSOR} editMode="select" onCursor={vi.fn()} onDuration={onDuration} onEditMode={onEditMode} onFillRests={vi.fn()} />);
     fireEvent.click(screen.getAllByText("Note Input")[1]);
-    fireEvent.click(screen.getByText("eighth"));
+    fireEvent.click(screen.getByLabelText("Eighth note"));
     expect(onEditMode).toHaveBeenCalledWith("note_input");
     expect(onDuration).toHaveBeenCalledWith("eighth");
   });

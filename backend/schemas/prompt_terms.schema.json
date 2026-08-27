@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": ["prompt_terms", "source_prompt_terms", "unparsed_prompt_terms", "language"],
+  "properties": {
+    "prompt_terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term", "normalized", "category", "confidence"],
+        "properties": {
+          "term": { "type": "string" },
+          "normalized": { "type": "string" },
+          "category": { "type": "string" },
+          "confidence": { "type": "number" }
+        }
+      }
+    },
+    "source_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "unparsed_prompt_terms": { "type": "array", "items": { "type": "string" } },
+    "language": { "type": "string" }
+  }
+}

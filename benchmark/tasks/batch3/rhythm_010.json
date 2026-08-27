@@ -1,0 +1,44 @@
+{
+  "task_id": "rhythm_010",
+  "score_id": "score_012",
+  "category": "rhythm_duration",
+  "difficulty": "medium",
+  "instruction_en": "Merge the first two rhythmic units of measure 2 staff 1 while preserving the remaining events.",
+  "instruction_zh": "合并第2小节第一谱表开头的两个节奏单位，并保留其余事件。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/rhythm_010.json",
+  "expected_output_path": "expected_outputs/rhythm_010.score.json",
+  "expected_constraints": [
+    {
+      "type": "duration_equals",
+      "event_id": "s012_m2_rh_1",
+      "value": "quarter"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s012_m2_rh_2"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch3",
+    "synthetic",
+    "deterministic",
+    "rhythm_duration"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

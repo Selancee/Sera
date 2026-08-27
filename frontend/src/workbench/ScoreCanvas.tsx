@@ -1,58 +1,104 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { buildClickToNotatePreview, type ClickToNotatePreview } from "../score/clickToNotate";
 import { createDragPreview, type DragPreview } from "../score/dragEditing";
+import { hitTestWithAreas } from "../score/hitAreas";
+import { type ScoreLayoutMode } from "../score/layoutConfig";
 import { scoreDocumentToSimpleMusicXml } from "../score/musicxmlAdapter";
+import type { NoteInputCursor } from "../score/noteInput";
 import { createRenderer, primaryRendererForMode } from "../score/renderers/rendererFactory";
-import { hitTestMarquee, hitTestPoint } from "../score/renderers/hitTesting";
-import { buildOverlayHitMap, eventX, LEFT_STAFF_TOP, MEASURE_WIDTH, pitchToStaffY, SCORE_LEFT, STAFF_TOP } from "../score/renderers/layoutMapping";
+import { hitTestMarquee } from "../score/renderers/hitTesting";
+import { buildOverlayHitMap, eventX, LEFT_STAFF_TOP, pitchToStaffY, STAFF_TOP } from "../score/renderers/layoutMapping";
 import type { HitTarget, LayoutBox, RendererMode, RendererStatus } from "../score/renderers/renderTypes";
+import type { ScoreCursor, ScoreCursorSnap } from "../score/scoreCursor";
 import type { ScoreDocument, ScoreEvent } from "../score/scoreTypes";
+import { buildSystemLayout, measureLayoutAt } from "../score/systemLayout";
+import BeatGridOverlay from "./BeatGridOverlay";
+import ClickPreviewOverlay from "./ClickPreviewOverlay";
+import HitAreaOverlay from "./HitAreaOverlay";
+import ScoreCursorOverlay from "./ScoreCursorOverlay";
+import StaffLaneOverlay from "./StaffLaneOverlay";
 
 type Props = {
   scoreDocument: ScoreDocument;
   selectedEventIds: string[];
   selectedMeasureIds: string[];
   hoverEventId: string;
+  hoverTarget: HitTarget | null;
   playbackMeasure: number;
   patchRange?: { start_measure: number; end_measure: number };
-  validationWarnings: string[];
+  validationWarnings: Array<string | { message?: unknown; details?: Record<string, unknown> }>;
   zoom: number;
+  layoutMode: ScoreLayoutMode;
+  renderNonce: number;
   rendererMode: RendererMode;
   editMode: "select" | "note_input";
   showHitBoxes?: boolean;
+  showBeatGrid?: boolean;
+  scoreCursor: ScoreCursor;
+  cursorSnap: ScoreCursorSnap;
+  noteInputCursor: NoteInputCursor;
+  inputTool: string;
+  clickPreview: ClickToNotatePreview | null;
   onSelectEvent: (eventId: string, measureId: string, additive?: boolean) => void;
   onSelectMeasure: (measureId: string, additive?: boolean, rangeSelect?: boolean) => void;
   onSelectTargets: (targets: HitTarget[]) => void;
   onHoverEvent: (eventId: string) => void;
+  onHoverTarget: (target: HitTarget | null) => void;
+  onClickPreview: (preview: ClickToNotatePreview | null) => void;
+  onCursorMove: (target: HitTarget | null, point: { x: number; y: number }) => void;
   onClearSelection: () => void;
   onSelectAll: () => void;
   onRenderStatus: (status: RendererStatus) => void;
   onHitDebug: (debug: Record<string, unknown>) => void;
-  onNoteInput: (target: HitTarget | null, point: { x: number; y: number }, chordTone: boolean) => void;
+  onNoteInput: (preview: ClickToNotatePreview | null, chordTone: boolean) => void;
   onDragEdit: (eventIds: string[], deltaY: number, deltaX: number, duplicate: boolean) => void;
 };
 
 export default function ScoreCanvas(props: Props) {
-  const width = Math.max(920, props.scoreDocument.measures.length * MEASURE_WIDTH + 80);
-  const height = 230;
+  const systemLayout = useMemo(() => buildSystemLayout(props.scoreDocument.measures.length, props.layoutMode), [props.scoreDocument.measures.length, props.layoutMode]);
+  const width = systemLayout.width;
+  const height = systemLayout.height;
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const osmdRef = useRef<HTMLDivElement | null>(null);
   const [activeRenderer, setActiveRenderer] = useState<RendererMode>("fallback");
+  const [containerWidth, setContainerWidth] = useState(0);
   const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
   const [dragHit, setDragHit] = useState<HitTarget | null>(null);
   const [dragRect, setDragRect] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [dragPreview, setDragPreview] = useState<DragPreview | null>(null);
-  const hitMap = useMemo(() => buildOverlayHitMap(props.scoreDocument, activeRenderer === "osmd" ? "osmd" : "fallback"), [props.scoreDocument, activeRenderer]);
+  const hitMap = useMemo(() => buildOverlayHitMap(props.scoreDocument, activeRenderer === "osmd" ? "osmd" : "fallback", props.layoutMode), [props.scoreDocument, activeRenderer, props.layoutMode]);
   const layoutBoxes = hitMap.boxes;
+  const effectiveZoom = useMemo(() => {
+    if (props.layoutMode !== "fit_width" || !containerWidth) return props.zoom;
+    const fitZoom = (containerWidth - 44) / Math.max(1, width);
+    return clamp(fitZoom * props.zoom, 0.2, 1.2);
+  }, [containerWidth, props.layoutMode, props.zoom, width]);
   const warningMeasures = useMemo(
     () =>
       new Set(
         props.validationWarnings.flatMap((warning) => {
-          const match = warning.match(/Measure\s+(\d+)/i);
+          const text = validationWarningText(warning);
+          const match = text.match(/(?:Measure|小节)\s*(\d+)/i);
           return match ? [Number(match[1])] : [];
         })
       ),
     [props.validationWarnings]
   );
+
+  useEffect(() => {
+    const target = wrapRef.current;
+    if (!target) return;
+    const update = () => setContainerWidth(Math.round(target.clientWidth));
+    update();
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", update);
+      return () => window.removeEventListener("resize", update);
+    }
+    const observer = new ResizeObserver(update);
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -71,7 +117,8 @@ export default function ScoreCanvas(props: Props) {
         const result = await renderer.render(osmdRef.current, {
           scoreDocument: props.scoreDocument,
           musicxml: scoreDocumentToSimpleMusicXml(props.scoreDocument),
-          zoom: props.zoom
+          zoom: effectiveZoom,
+          layoutMode: props.layoutMode
         });
         if (cancelled) return;
         const active = result.activeMode === "osmd" ? "osmd" : "fallback";
@@ -98,7 +145,7 @@ export default function ScoreCanvas(props: Props) {
     return () => {
       cancelled = true;
     };
-  }, [props.scoreDocument, props.rendererMode, props.zoom]);
+  }, [props.scoreDocument, props.rendererMode, effectiveZoom, props.layoutMode, props.renderNonce]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -125,7 +172,7 @@ export default function ScoreCanvas(props: Props) {
   function handleMouseDown(event: React.MouseEvent<SVGSVGElement>) {
     if (event.button !== 0) return;
     const point = pointer(event);
-    const hit = hitTestPoint(layoutBoxes, point.x, point.y);
+    const hit = hitTestWithAreas(props.scoreDocument, layoutBoxes, point, props.cursorSnap, props.scoreCursor.voice);
     setDragHit(hit);
     setDragStart(point);
     setDragRect(null);
@@ -134,8 +181,14 @@ export default function ScoreCanvas(props: Props) {
   }
 
   function handleMouseMove(event: React.MouseEvent<SVGSVGElement>) {
-    if (!dragStart) return;
     const point = pointer(event);
+    if (!dragStart) {
+      const hit = hitTestWithAreas(props.scoreDocument, layoutBoxes, point, props.cursorSnap, props.scoreCursor.voice);
+      props.onHoverTarget(hit);
+      props.onHoverEvent(hit?.type === "event" && hit.eventId ? hit.eventId : "");
+      props.onClickPreview(previewFor(hit, point));
+      return;
+    }
     const dx = point.x - dragStart.x;
     const dy = point.y - dragStart.y;
     if (dragHit?.type === "event" && Math.hypot(dx, dy) > 6) {
@@ -168,10 +221,11 @@ export default function ScoreCanvas(props: Props) {
       const hits = hitTestMarquee(layoutBoxes, dragRect);
       props.onSelectTargets(hits);
     } else {
-      const hit = hitTestPoint(layoutBoxes, point.x, point.y);
+      const hit = hitTestWithAreas(props.scoreDocument, layoutBoxes, point, props.cursorSnap, props.scoreCursor.voice);
       props.onHitDebug({ ...(hitMap.debug || {}), last_hit: hit });
+      props.onCursorMove(hit, point);
       if (props.editMode === "note_input") {
-        props.onNoteInput(hit, point, event.shiftKey);
+        props.onNoteInput(previewFor(hit, point, event.shiftKey), event.shiftKey);
       } else if (hit?.type === "event" && hit.eventId) {
         props.onSelectEvent(hit.eventId, hit.measureId, event.ctrlKey || event.metaKey || event.shiftKey);
       } else if (hit?.type === "measure") {
@@ -183,12 +237,36 @@ export default function ScoreCanvas(props: Props) {
     setDragRect(null);
   }
 
+  function handleMouseLeave() {
+    if (dragStart) return;
+    props.onHoverTarget(null);
+    props.onHoverEvent("");
+    props.onClickPreview(null);
+  }
+
+  function previewFor(hit: HitTarget | null, point: { x: number; y: number }, chordTone = false) {
+    return buildClickToNotatePreview({
+      score: props.scoreDocument,
+      cursor: props.scoreCursor,
+      hitTarget: hit,
+      point,
+      boxes: layoutBoxes,
+      snap: props.cursorSnap,
+      inputMode: props.editMode === "note_input" ? (props.inputTool === "rest" ? "rest_input" : "note_input") : "select",
+      duration: props.noteInputCursor.duration,
+      dotted: props.noteInputCursor.dotted,
+      accidentalMode: props.noteInputCursor.accidental,
+      chordTone
+    });
+  }
+
   return (
-    <div className="score-canvas-wrap" style={{ ["--zoom" as string]: props.zoom }}>
+    <div className={`score-canvas-wrap layout-${props.layoutMode}`} ref={wrapRef} style={{ ["--zoom" as string]: effectiveZoom, ["--score-width" as string]: `${width}px` }}>
       <div className={activeRenderer === "osmd" ? "osmd-score-layer active" : "osmd-score-layer"} ref={osmdRef} />
       <svg
         className={`workbench-score-svg ${activeRenderer === "osmd" ? "overlay" : ""}`}
         onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         ref={svgRef}
@@ -207,6 +285,7 @@ export default function ScoreCanvas(props: Props) {
             selectedEventIds={props.selectedEventIds}
             selectedMeasureIds={props.selectedMeasureIds}
             hoverEventId={props.hoverEventId}
+            layoutMode={props.layoutMode}
             warningMeasures={warningMeasures}
             width={width}
           />
@@ -222,12 +301,26 @@ export default function ScoreCanvas(props: Props) {
             warningMeasures={warningMeasures}
           />
         )}
+        <StaffLaneOverlay activeStaff={props.scoreCursor.staff} boxes={layoutBoxes} />
+        <BeatGridOverlay boxes={layoutBoxes} scoreDocument={props.scoreDocument} snap={props.cursorSnap} visible={props.showBeatGrid} />
+        <ScoreCursorOverlay boxes={layoutBoxes} cursor={props.scoreCursor} scoreDocument={props.scoreDocument} />
+        <ClickPreviewOverlay boxes={layoutBoxes} preview={props.clickPreview} scoreDocument={props.scoreDocument} visible={props.editMode === "note_input"} />
+        <HitAreaOverlay boxes={layoutBoxes} hoverTarget={props.hoverTarget || dragHit} scoreDocument={props.scoreDocument} visible={props.showHitBoxes} />
         {props.showHitBoxes && <HitBoxOverlay boxes={layoutBoxes} />}
         {dragRect && <rect className="selection-marquee" height={dragRect.height} width={dragRect.width} x={dragRect.x} y={dragRect.y} />}
         {dragPreview && <DragPreviewSvg preview={dragPreview} />}
       </svg>
     </div>
   );
+}
+
+export function validationWarningText(warning: string | { message?: unknown }) {
+  if (typeof warning === "string") return warning;
+  return typeof warning?.message === "string" ? warning.message : "";
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
 }
 
 function FallbackScoreSvg({
@@ -237,6 +330,7 @@ function FallbackScoreSvg({
   hoverEventId,
   playbackMeasure,
   patchRange,
+  layoutMode,
   warningMeasures,
   width,
   height,
@@ -250,6 +344,7 @@ function FallbackScoreSvg({
   hoverEventId: string;
   playbackMeasure: number;
   patchRange?: { start_measure: number; end_measure: number };
+  layoutMode: ScoreLayoutMode;
   warningMeasures: Set<number>;
   width: number;
   height: number;
@@ -257,33 +352,40 @@ function FallbackScoreSvg({
   onSelectMeasure: (measureId: string, additive?: boolean, rangeSelect?: boolean) => void;
   onHoverEvent: (eventId: string) => void;
 }) {
+  const layout = buildSystemLayout(scoreDocument.measures.length, layoutMode);
   return (
     <>
       <rect className="paper-bg" height={height} width={width} x="0" y="0" />
-      {[0, 1, 2, 3, 4].map((line) => (
-        <line key={`r${line}`} x1="32" x2={width - 32} y1={STAFF_TOP + line * 9} y2={STAFF_TOP + line * 9} />
-      ))}
-      {[0, 1, 2, 3, 4].map((line) => (
-        <line key={`l${line}`} x1="32" x2={width - 32} y1={LEFT_STAFF_TOP + line * 9} y2={LEFT_STAFF_TOP + line * 9} />
+      {layout.systems.map((system) => (
+        <g key={`system-${system.index}`}>
+          {[0, 1, 2, 3, 4].map((line) => (
+            <line key={`r${system.index}-${line}`} x1="32" x2={width - 32} y1={system.y + STAFF_TOP + line * 9} y2={system.y + STAFF_TOP + line * 9} />
+          ))}
+          {[0, 1, 2, 3, 4].map((line) => (
+            <line key={`l${system.index}-${line}`} x1="32" x2={width - 32} y1={system.y + LEFT_STAFF_TOP + line * 9} y2={system.y + LEFT_STAFF_TOP + line * 9} />
+          ))}
+        </g>
       ))}
       {scoreDocument.measures.map((measure, index) => {
-        const x = index * MEASURE_WIDTH + SCORE_LEFT;
+        const measureLayout = measureLayoutAt(layout, index);
+        const x = measureLayout.x;
+        const top = measureLayout.y;
         const selected = selectedMeasureIds.includes(measure.measure_id);
         const inPatch = patchRange && measure.number >= patchRange.start_measure && measure.number <= patchRange.end_measure;
         return (
           <g key={measure.measure_id} onClick={(event) => onSelectMeasure(measure.measure_id, event.ctrlKey || event.metaKey, event.shiftKey)} onContextMenu={(event) => { event.preventDefault(); onSelectMeasure(measure.measure_id); }} onDoubleClick={() => onSelectMeasure(measure.measure_id)}>
             <rect
               className={`measure-hit ${selected ? "selected" : ""} ${inPatch ? "patch-range" : ""} ${warningMeasures.has(measure.number) ? "warning" : ""} ${playbackMeasure === measure.number ? "playing" : ""}`}
-              height="152"
-              width={MEASURE_WIDTH - 10}
-              x={x - 4}
-              y="42"
+              height="176"
+              width={measureLayout.width}
+              x={x}
+              y={top + 42}
             />
-            <line className="barline" x1={x} x2={x} y1={STAFF_TOP} y2={LEFT_STAFF_TOP + 36} />
-            <text className="measure-number" x={x + 8} y="35">{measure.number}</text>
-            <text className="section-label" x={x + 34} y="35">{measure.section}</text>
-            <text className="harmony-label" x={x + 8} y="208">{measure.harmony}</text>
-            {inPatch && <text className="ai-badge" x={x + 78} y="35">AI</text>}
+            <line className="barline" x1={x} x2={x} y1={top + STAFF_TOP} y2={top + LEFT_STAFF_TOP + 36} />
+            <text className="measure-number" x={x + 8} y={top + 35}>{measure.number}</text>
+            <text className="section-label" x={x + 34} y={top + 35}>{measure.section}</text>
+            <text className="harmony-label" x={x + 8} y={top + LEFT_STAFF_TOP + 62}>{measure.harmony}</text>
+            {inPatch && <text className="ai-badge" x={x + 78} y={top + 35}>AI</text>}
             {measure.events.map((event, eventIndex) => (
               <WorkbenchNote
                 event={event}
@@ -292,6 +394,7 @@ function FallbackScoreSvg({
                 key={event.event_id}
                 measureId={measure.measure_id}
                 measureX={x}
+                systemY={top}
                 onHover={onHoverEvent}
                 onSelect={onSelectEvent}
                 selected={selectedEventIds.includes(event.event_id)}
@@ -300,7 +403,11 @@ function FallbackScoreSvg({
           </g>
         );
       })}
-      <line className="barline" x1={scoreDocument.measures.length * MEASURE_WIDTH + SCORE_LEFT} x2={scoreDocument.measures.length * MEASURE_WIDTH + SCORE_LEFT} y1={STAFF_TOP} y2={LEFT_STAFF_TOP + 36} />
+      {layout.systems.map((system) => {
+        const lastIndex = system.measureIndexes[system.measureIndexes.length - 1];
+        const last = measureLayoutAt(layout, lastIndex);
+        return <line className="barline" key={`end-${system.index}`} x1={last.x + last.width} x2={last.x + last.width} y1={system.y + STAFF_TOP} y2={system.y + LEFT_STAFF_TOP + 36} />;
+      })}
     </>
   );
 }
@@ -362,9 +469,9 @@ function OverlayHitRegions({
   );
 }
 
-function WorkbenchNote({ event, index, measureX, measureId, selected, hovered, onSelect, onHover }: { event: ScoreEvent; index: number; measureX: number; measureId: string; selected: boolean; hovered: boolean; onSelect: (eventId: string, measureId: string, additive?: boolean) => void; onHover: (eventId: string) => void }) {
+function WorkbenchNote({ event, index, measureX, measureId, systemY, selected, hovered, onSelect, onHover }: { event: ScoreEvent; index: number; measureX: number; measureId: string; systemY: number; selected: boolean; hovered: boolean; onSelect: (eventId: string, measureId: string, additive?: boolean) => void; onHover: (eventId: string) => void }) {
   const x = eventX(measureX, event, index);
-  const y = event.staff === "left_hand" ? LEFT_STAFF_TOP + 22 : pitchToStaffY(event);
+  const y = event.staff === "left_hand" ? systemY + LEFT_STAFF_TOP + 22 : pitchToStaffY(event, systemY + STAFF_TOP);
   const className = `workbench-note ${selected ? "selected" : ""} ${hovered ? "hovered" : ""} ${event.type === "rest" ? "rest" : ""}`;
   return (
     <g className={className} onClick={(eventClick) => { eventClick.stopPropagation(); onSelect(event.event_id, measureId, eventClick.ctrlKey || eventClick.metaKey); }} onContextMenu={(eventClick) => { eventClick.preventDefault(); onSelect(event.event_id, measureId); }} onMouseEnter={() => onHover(event.event_id)} onMouseLeave={() => onHover("")}>

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_ties_008",
+  "source_score_id": "score_016",
+  "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+  "instruction": "Add one slur from the first to the last note of measure 3 staff 1.",
+  "target_scope": {
+    "measures": [
+      3
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "ties_008_op1",
+      "type": "set_slur",
+      "selector": {
+        "event_ids": [
+          "s016_m3_rh_1"
+        ]
+      },
+      "arguments": {
+        "slur": "start"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    },
+    {
+      "operation_id": "ties_008_op2",
+      "type": "set_slur",
+      "selector": {
+        "event_ids": [
+          "s016_m3_rh_4"
+        ]
+      },
+      "arguments": {
+        "slur": "stop"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

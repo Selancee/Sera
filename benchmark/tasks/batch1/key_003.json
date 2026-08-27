@@ -1,0 +1,32 @@
+{
+  "task_id": "key_003",
+  "score_id": "score_003",
+  "category": "key_harmony",
+  "difficulty": "easy",
+  "instruction_en": "Change the score key signature to D major without transposing notes.",
+  "instruction_zh": "将调号改为D major，但不要移调音符。",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "gold_patch_path": "gold_patches/key_003.json",
+  "expected_output_path": "expected_outputs/key_003.score.json",
+  "expected_constraints": [
+    {
+      "type": "key_equals",
+      "value": "D major"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch1",
+    "synthetic",
+    "deterministic"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

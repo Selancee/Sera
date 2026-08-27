@@ -1,0 +1,7 @@
+[
+  {"case_id": "jazz_actual_voicing", "prompt": "Jazz piano sketch, ii-V-I, seventh chords, 8 measures", "style": "jazz"},
+  {"case_id": "pop_actual_loop", "prompt": "Pop piano hook, bright, I-V-vi-IV, 8 measures", "style": "pop"},
+  {"case_id": "classical_actual_cadence", "prompt": "Classical piano period, clear cadence, 8 measures", "style": "classical"},
+  {"case_id": "chinese_actual_open_fifth", "prompt": "Chinese pentatonic piano in D major, open fifths, 8 measures", "style": "chinese"},
+  {"case_id": "cyberpunk_actual_ostinato", "prompt": "Cyberpunk piano, ostinato bass, minor modal, syncopation, 8 measures", "style": "electronic"}
+]

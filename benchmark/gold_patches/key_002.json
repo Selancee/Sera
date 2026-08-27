@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_key_002",
+  "source_score_id": "score_002",
+  "source_fingerprint": "sha256:9a133c98170e68aea4e7ccc2a9d4e53afaddc1206fe0a11c2756b4427fa96760",
+  "instruction": "Change the score key signature to C major without transposing notes.",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "key_002_op1",
+      "type": "change_key_signature",
+      "selector": {},
+      "arguments": {
+        "key": "C major"
+      },
+      "preconditions": [],
+      "expected_change_count": null
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "key_equals",
+      "value": "C major"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "evidence_class": "human_benchmark_task_review",
+  "review_complete": true,
+  "split_id": "core",
+  "total_tasks": 120,
+  "primary_reviewed": 120,
+  "secondary_reviewed": 30,
+  "secondary_target": 30,
+  "stale_records": 0,
+  "remaining": 0,
+  "decisions": {
+    "compliant": 120
+  },
+  "noncompliance_rate": 0.0,
+  "issue_counts": {},
+  "categories": {
+    "compound_multi_step": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "conflicting_or_unsupported": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "dynamics_articulation": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "insertion_deletion": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "key_harmony": {
+      "total": 15,
+      "reviewed": 15,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "meter_measure_structure": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "pitch_transposition": {
+      "total": 15,
+      "reviewed": 15,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "rhythm_duration": {
+      "total": 15,
+      "reviewed": 15,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "ties_slurs_ornaments": {
+      "total": 10,
+      "reviewed": 10,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    },
+    "voice_texture": {
+      "total": 15,
+      "reviewed": 15,
+      "noncompliant": 0,
+      "noncompliance_rate": 0.0
+    }
+  },
+  "record_count": 194,
+  "csv_record_count": 194,
+  "reviewer_ids_by_role": {
+    "primary": [
+      "reviewer-01"
+    ],
+    "secondary": [
+      "reviewer-01"
+    ]
+  },
+  "independent_secondary_reviewer": false,
+  "claim_boundary": "The records establish human review of task instructions, scopes, Gold results, and host-visible outputs. The repeated secondary check used the same pseudonymous reviewer and therefore does not establish inter-rater reliability or general musical/aesthetic quality.",
+  "source_exported_at": "2026-08-27T04:38:01.078601+00:00"
+}

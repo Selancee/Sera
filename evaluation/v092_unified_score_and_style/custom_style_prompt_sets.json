@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cyberpunk_piano",
+    "prompt": "Compose an 8 measure cyberpunk piano passage with dark futuristic energy.",
+    "expected_tag": "cyberpunk",
+    "expected_base_style": "electronic"
+  },
+  {
+    "id": "anime_theme",
+    "prompt": "Compose an 8 measure anime-style piano theme with a bright lyrical melody.",
+    "expected_tag": "anime",
+    "expected_base_style": "pop"
+  },
+  {
+    "id": "cinematic_trailer",
+    "prompt": "Compose an 8 measure cinematic trailer piano cue with dramatic harmony.",
+    "expected_tag": "cinematic",
+    "expected_base_style": "cinematic"
+  },
+  {
+    "id": "new_age_ambient",
+    "prompt": "Compose an 8 measure new age ambient piano sketch with gentle arpeggios.",
+    "expected_tag": "new_age",
+    "expected_base_style": "new_age"
+  },
+  {
+    "id": "game_soundtrack",
+    "prompt": "Compose an 8 measure game soundtrack piano loop with a clear theme.",
+    "expected_tag": "game",
+    "expected_base_style": "game"
+  }
+]

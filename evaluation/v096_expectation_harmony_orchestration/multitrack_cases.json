@@ -1,0 +1,12 @@
+[
+  {
+    "case_id": "control_only_cyberpunk",
+    "prompt": "",
+    "ui_controls": {"style": "cyberpunk", "key": "A minor", "meter": "4/4", "texture": "ostinato", "length_measures": 8}
+  },
+  {
+    "case_id": "candidate_count_four",
+    "prompt": "Compose an 8 measure pop piano theme.",
+    "ui_controls": {"style": "pop", "key": "C major", "meter": "4/4", "texture": "melody_accompaniment", "length_measures": 8}
+  }
+]

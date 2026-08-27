@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_dynamics_008",
+  "source_score_id": "score_011",
+  "source_fingerprint": "sha256:9d602283a3d9f17845f0c1f98f11f115ecaa8dd9a8cab8e9109984dfb9f54099",
+  "instruction": "Add staccato to only the selected note while preserving pitch and duration.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "s011_m2_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "dynamics_008_op1",
+      "type": "set_articulation",
+      "selector": {
+        "event_ids": [
+          "s011_m2_rh_3"
+        ]
+      },
+      "arguments": {
+        "articulations": [
+          "staccato"
+        ]
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

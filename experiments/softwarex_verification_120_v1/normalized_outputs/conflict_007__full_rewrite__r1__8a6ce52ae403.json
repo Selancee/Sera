@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\": true, \"reason\": \"meter_duration_conflict\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "meter_duration_conflict"
+    },
+    "provider": "mock",
+    "model": "benchmark-fixture-v2-roundtrip",
+    "latency_ms": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "estimated_cost": 0.0,
+    "request_id": "mock:conflict_007:full_rewrite",
+    "finish_reason": "fixture",
+    "error": null,
+    "cached": true,
+    "retry_count": 0,
+    "request_hash": "5805e4345e25396f0e7f21ee64fc5d337acf1996cf72cfdf328f844273880d7f"
+  },
+  "processing_latency_ms": 0.0012999953469261527,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

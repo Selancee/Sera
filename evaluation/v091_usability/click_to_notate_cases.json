@@ -1,0 +1,5 @@
+[
+  {"mode": "note_input", "staff": "right_hand", "duration": "dotted_quarter", "expected": "note"},
+  {"mode": "note_input", "staff": "left_hand", "duration": "eighth", "expected": "note"},
+  {"mode": "rest_input", "staff": "right_hand", "duration": "quarter", "expected": "rest"}
+]

@@ -52,6 +52,7 @@ class MusicXMLValidator:
             "pitch_range_valid": True,
             "pitch_count": 0,
             "empty_measure_count": 0,
+            "rest_only_measure_count": 0,
             "midi_export_success": self._path_success(midi_path) if midi_path else True,
             "pdf_export_success": self._path_success(pdf_path) if pdf_path else True,
         }
@@ -112,9 +113,15 @@ class MusicXMLValidator:
                         issues.append(
                             f"Measure {measure.get('number', '?')}: pitch {midi_number} outside {low}-{high}"
                         )
-            if note_count == 0 or pitched_in_measure == 0:
+            if note_count == 0:
                 metrics["empty_measure_count"] += 1
                 issues.append(f"Measure {measure.get('number', '?')}: empty measure")
+            elif pitched_in_measure == 0:
+                # A notated full-measure rest is structurally complete MusicXML,
+                # not an empty measure.  Keep it visible as a content warning
+                # without invalidating legitimate tacet passages.
+                metrics["rest_only_measure_count"] += 1
+                warnings.append(f"Measure {measure.get('number', '?')}: rest-only measure")
 
             if voice_totals and all(total == expected for total in voice_totals.values()):
                 complete += 1
@@ -129,7 +136,7 @@ class MusicXMLValidator:
         if not measures:
             issues.append("No measures found")
         if metrics["pitch_count"] == 0:
-            issues.append("No pitched notes found")
+            warnings.append("No pitched notes found")
         if midi_path and not metrics["midi_export_success"]:
             issues.append(f"MIDI export missing or empty: {midi_path}")
         if pdf_path and not metrics["pdf_export_success"]:

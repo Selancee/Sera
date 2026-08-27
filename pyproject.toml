@@ -1,10 +1,15 @@
 [project]
 name = "sera"
-version = "0.1.0"
-description = "Agent-assisted symbolic music generation MVP."
+version = "1.0.0.dev14"
+description = "Intelligent score editing and collaboration layer for professional notation environments."
+license = {text = "MIT"}
+readme = "README.md"
 requires-python = ">=3.10"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "-q"
+
+[tool.setuptools.package-data]
+"sera_edit.composer" = ["style_kb/*.json", "style_kb/packs/*.jsonl"]

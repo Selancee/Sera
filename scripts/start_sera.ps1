@@ -20,6 +20,7 @@ $FrontendPidFile = Join-Path $MetadataDir "sera_frontend.pid"
 $BackendStamp = Join-Path $MetadataDir ".backend_deps.stamp"
 $FrontendStamp = Join-Path $MetadataDir ".frontend_deps.stamp"
 $DefaultModelDir = Join-Path $ProjectRoot "models\sera_symbolic_small"
+$ExpectedBackendApiContract = "v1_notation_editing_layer"
 
 New-Item -ItemType Directory -Force -Path $MetadataDir | Out-Null
 
@@ -103,10 +104,39 @@ function Test-SeraBackend {
         if ($health.app -ne "Sera") {
             return $false
         }
+        if ([string]$health.api_contract -ne $ExpectedBackendApiContract) {
+            return $false
+        }
         $openApi = Invoke-RestMethod -Uri "http://$HostName`:$Port/openapi.json" -TimeoutSec 3
         $paths = @($openApi.paths.PSObject.Properties.Name)
-        # TODO: Replace this capability probe with a dedicated API version endpoint if Sera exposes one.
-        return ($paths -contains "/rate")
+        if (-not ($paths -contains "/rate") -or -not ($paths -contains "/capabilities")) {
+            return $false
+        }
+        $schema = $openApi.components.schemas.GenerateRequest
+        if (-not $schema -or -not $schema.properties) {
+            return $false
+        }
+        $generateFields = @($schema.properties.PSObject.Properties.Name)
+        foreach ($requiredField in @("raw_prompt", "ui_controls", "ui_control_sources", "control_policy", "run_seed", "seed_source", "variant_id", "generation_nonce")) {
+            if (-not ($generateFields -contains $requiredField)) {
+                return $false
+            }
+        }
+        $capabilities = Invoke-RestMethod -Uri "http://$HostName`:$Port/capabilities" -TimeoutSec 2
+        if ([string]$capabilities.api_contract -ne $ExpectedBackendApiContract) {
+            return $false
+        }
+        if (-not [bool]$capabilities.features.ui_controls -or
+            -not [bool]$capabilities.features.explicit_ui_control_priority -or
+            -not [bool]$capabilities.features.backend_auto_seed -or
+            -not [bool]$capabilities.features.candidate_generation -or
+            -not [bool]$capabilities.features.melody_expectation_validation -or
+            -not [bool]$capabilities.features.style_harmony_profile -or
+            -not [bool]$capabilities.features.score_document_tracks -or
+            -not [bool]$capabilities.features.phrase_level_melody) {
+            return $false
+        }
+        return $true
     }
     catch {
         return $false

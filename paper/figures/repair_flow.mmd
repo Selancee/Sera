@@ -1,0 +1,15 @@
+flowchart TD
+  RAW["Raw provider output"] --> PARSE{"JSON object?"}
+  PARSE -->|"no"| DETERMINISTIC["Deterministic formatting repair"]
+  PARSE -->|"yes"| SCHEMA["Schema validation"]
+  DETERMINISTIC --> SCHEMA
+  SCHEMA --> VALID{"Valid?"}
+  VALID -->|"yes"| STRUCTURE["Structural and musical validation"]
+  VALID -->|"no, repairable"| LLM["Optional LLM repair attempt"]
+  LLM --> LIMIT{"Attempts < max?"}
+  LIMIT -->|"yes"| SCHEMA
+  LIMIT -->|"no"| REJECT["Reject and preserve score"]
+  VALID -->|"no, unsupported"| REJECT
+  STRUCTURE --> SAFE{"Protected scope and round-trip safe?"}
+  SAFE -->|"yes"| COMMIT["Commit transaction"]
+  SAFE -->|"no"| REJECT

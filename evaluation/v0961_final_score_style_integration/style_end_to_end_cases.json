@@ -1,0 +1,38 @@
+[
+  {
+    "case_id": "jazz_actual_extensions",
+    "style": "jazz",
+    "prompt": "Jazz piano sketch, ii-V-I, seventh chords, 8 measures",
+    "expected_family": "jazz"
+  },
+  {
+    "case_id": "pop_hook_loop",
+    "style": "pop",
+    "prompt": "Pop piano hook, bright, I-V-vi-IV, 8 measures",
+    "expected_family": "pop"
+  },
+  {
+    "case_id": "classical_period_cadence",
+    "style": "classical",
+    "prompt": "Classical piano period, clear cadence, 8 measures",
+    "expected_family": "classical"
+  },
+  {
+    "case_id": "chinese_pentatonic_open_fifth",
+    "style": "chinese",
+    "prompt": "Chinese pentatonic piano in D major, open fifths, 8 measures",
+    "expected_family": "chinese"
+  },
+  {
+    "case_id": "cyberpunk_modal_ostinato",
+    "style": "electronic",
+    "prompt": "Cyberpunk piano, ostinato bass, minor modal, syncopation, 8 measures",
+    "expected_family": "cyberpunk"
+  },
+  {
+    "case_id": "romantic_long_arpeggiated",
+    "style": "romantic",
+    "prompt": "Romantic piano, long lyrical line, arpeggiated harmony, 8 measures",
+    "expected_family": "romantic"
+  }
+]

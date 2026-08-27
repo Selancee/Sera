@@ -1,0 +1,19 @@
+experiment_id: smoke_mock_batch1_v5
+benchmark_root: benchmark
+split: batch1
+conditions:
+  - full_rewrite
+  - patch_only
+  - sera_full
+provider:
+  provider: mock
+  model: benchmark-fixture-v2-roundtrip
+repetitions: 1
+temperature: 0
+seed: 42
+max_concurrency: 1
+max_retries: 0
+max_repair_attempts: 2
+budget_limit_usd: 0
+cache: true
+formal_results_allowed: false

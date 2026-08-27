@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.4.0",
+  "knowledge_base_id": "sera_composer_atomic_kb_v04",
+  "default_token_budget": 1800,
+  "default_max_cards": 12,
+  "packs": [
+    {"pack_id": "core_theory", "path": "packs/core_theory.jsonl"},
+    {"pack_id": "style_grammar", "path": "packs/style_grammar.jsonl"},
+    {"pack_id": "instrument_playability", "path": "packs/instrument_playability.jsonl"},
+    {"pack_id": "form_orchestration", "path": "packs/form_orchestration.jsonl"},
+    {"pack_id": "melodic_expectation", "path": "packs/melodic_expectation.jsonl"},
+    {"pack_id": "texture_structure", "path": "packs/texture_structure.jsonl"},
+    {"pack_id": "composition_craft", "path": "packs/composition_craft.jsonl"}
+  ],
+  "sources": {
+    "melodic_expectation": [
+      "Huron 2006, Sweet Anticipation, MIT Press, ISBN 9780262083454",
+      "von Hippel and Huron 2000, Music Perception 18(1), DOI 10.2307/40285901"
+    ],
+    "texture_structure": [
+      "Giraud et al. 2014, Towards Modeling Texture in Symbolic Data, ISMIR",
+      "Open Music Theory 2023, Texture, CC BY-SA 4.0"
+    ],
+    "composition_craft": [
+      "Open Music Theory 2023, undergraduate theory OER, CC BY-SA 4.0"
+    ]
+  },
+  "provenance": {
+    "content_policy": "Project-authored engineering summaries only; no copied book passages or copyrighted score excerpts.",
+    "storage": "local",
+    "retrieval_policy": "hybrid metadata and lexical ranking with deterministic texture facts and a fixed token budget",
+    "research_boundary": "Huron-inspired features are auditable engineering proxies, not a reproduction of ITPRA or a universal aesthetic model."
+  }
+}

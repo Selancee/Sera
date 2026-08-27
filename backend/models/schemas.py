@@ -18,6 +18,10 @@ SUPPORTED_STYLES = {
     "pop",
     "electronic",
     "chinese",
+    "cinematic",
+    "new_age",
+    "game",
+    "custom",
     "experimental",
     "ambient",
     "minimalist",
@@ -29,6 +33,13 @@ SUPPORTED_TEXTURES = {
     "arpeggiated",
     "simple_counterpoint",
     "single_line",
+    "waltz",
+    "alberti",
+    "bass_chord",
+    "ostinato",
+    "ostinato_melody",
+    "chordal_arpeggiated",
+    "pentatonic_open_texture",
 }
 SUPPORTED_DIFFICULTIES = {"beginner", "intermediate", "advanced"}
 SUPPORTED_RHYTHMIC_DENSITIES = {"low", "medium", "high"}
@@ -79,6 +90,25 @@ AGENT_PLAN_JSON_SCHEMA: dict[str, Any] = {
     "properties": {
         "title": {"type": "string", "minLength": 1},
         "style": {"type": "string"},
+        "base_style": {"type": "string"},
+        "custom_style_tags": {"type": "array", "items": {"type": "string"}},
+        "style_profile": {"type": "object"},
+        "run_seed": {"type": "integer"},
+        "seed_source": {"type": "string"},
+        "variant_id": {"type": "string"},
+        "generation_nonce": {"type": "string"},
+        "raw_prompt": {"type": "string"},
+        "ui_controls": {"type": "object"},
+        "prompt_terms": {"type": "array", "items": {"type": "object"}},
+        "source_prompt_terms": {"type": "array", "items": {"type": "string"}},
+        "unparsed_prompt_terms": {"type": "array", "items": {"type": "string"}},
+        "prompt_ui_conflicts": {"type": "array", "items": {"type": "object"}},
+        "resolved_generation_request": {"type": "object"},
+        "intent_source": {"type": "string"},
+        "source_control_terms": {"type": "array", "items": {"type": "object"}},
+        "control_only_intent": {"type": "boolean"},
+        "plan_grounding": {"type": "array", "items": {"type": "object"}},
+        "prompt_plan_alignment_score": {"type": "number"},
         "mood": {"type": "string"},
         "instrumentation": {"type": "array", "items": {"type": "string"}, "minItems": 1},
         "key": {"type": "string"},
@@ -201,6 +231,9 @@ class StructuredMusicIntent:
     prompt: str
     title: str = ""
     style: str = "classical"
+    base_style: str = ""
+    custom_style_tags: list[str] = field(default_factory=list)
+    style_profile: dict[str, Any] = field(default_factory=dict)
     mood: str = "focused"
     key: str = "C major"
     time_signature: str = "4/4"
@@ -226,6 +259,22 @@ class StructuredMusicIntent:
     llm_provider: str = "mock"
     llm_model: str = "mock-rule-system"
     agent_mode: str = "mock"
+    raw_prompt: str = ""
+    ui_controls: dict[str, Any] = field(default_factory=dict)
+    prompt_terms: list[dict[str, Any]] = field(default_factory=list)
+    source_prompt_terms: list[str] = field(default_factory=list)
+    unparsed_prompt_terms: list[str] = field(default_factory=list)
+    prompt_ui_conflicts: list[dict[str, Any]] = field(default_factory=list)
+    resolved_generation_request: dict[str, Any] = field(default_factory=dict)
+    intent_source: str = "raw_prompt"
+    source_control_terms: list[dict[str, Any]] = field(default_factory=list)
+    control_only_intent: bool = False
+    plan_grounding: list[dict[str, Any]] = field(default_factory=list)
+    prompt_plan_alignment_score: float = 0.0
+    run_seed: int = 0
+    seed_source: str = ""
+    variant_id: str = ""
+    generation_nonce: str = ""
 
     def __post_init__(self) -> None:
         """Normalize aliases and defaults used by the schema JSON."""
@@ -243,6 +292,12 @@ class StructuredMusicIntent:
         self.tension = _safe_choice(self.tension, SUPPORTED_TENSIONS, "medium")
         self.motif_strategy = _safe_choice(self.motif_strategy, SUPPORTED_MOTIF_STRATEGIES, "repeat")
         self.motif_id = str(self.motif_id or "A")[:32]
+        self.base_style = str(self.base_style or (self.style_profile or {}).get("base_style") or self.style or "classical")
+        self.custom_style_tags = [str(item)[:40] for item in (self.custom_style_tags or []) if str(item).strip()][:12]
+        self.style_profile = dict(self.style_profile or {})
+        if self.custom_style_tags:
+            self.style_profile.setdefault("custom_style_tags", list(self.custom_style_tags))
+            self.style_profile.setdefault("base_style", self.base_style)
         self.instruments = self.instruments or ["piano"]
         if not self.title:
             self.title = f"{self.style.title()} Sketch in {self.key}"
@@ -271,6 +326,25 @@ class StructuredMusicIntent:
         return normalize_agent_plan_json({
             "title": self.title,
             "style": self.style,
+            "base_style": self.base_style,
+            "custom_style_tags": list(self.custom_style_tags),
+            "style_profile": dict(self.style_profile),
+            "run_seed": int(self.run_seed or 0),
+            "seed_source": self.seed_source,
+            "variant_id": self.variant_id,
+            "generation_nonce": self.generation_nonce,
+            "raw_prompt": self.raw_prompt or self.prompt,
+            "ui_controls": dict(self.ui_controls),
+            "prompt_terms": list(self.prompt_terms),
+            "source_prompt_terms": list(self.source_prompt_terms),
+            "unparsed_prompt_terms": list(self.unparsed_prompt_terms),
+            "prompt_ui_conflicts": list(self.prompt_ui_conflicts),
+            "resolved_generation_request": dict(self.resolved_generation_request),
+            "intent_source": self.intent_source,
+            "source_control_terms": list(self.source_control_terms),
+            "control_only_intent": bool(self.control_only_intent),
+            "plan_grounding": list(self.plan_grounding),
+            "prompt_plan_alignment_score": float(self.prompt_plan_alignment_score),
             "mood": self.mood,
             "instrumentation": list(self.instruments),
             "key": self.key,
@@ -303,6 +377,9 @@ class StructuredMusicIntent:
             prompt=str(data.get("prompt", "")),
             title=str(data.get("title", "")),
             style=str(data.get("style", "classical")),
+            base_style=str(data.get("base_style", "")),
+            custom_style_tags=list(data.get("custom_style_tags") or []),
+            style_profile=dict(data.get("style_profile") or {}),
             mood=str(data.get("mood", "focused")),
             key=str(data.get("key", "C major")),
             time_signature=str(data.get("time_signature") or data.get("meter") or "4/4"),
@@ -328,6 +405,22 @@ class StructuredMusicIntent:
             llm_provider=str(data.get("llm_provider", "mock")),
             llm_model=str(data.get("llm_model", "mock-rule-system")),
             agent_mode=str(data.get("agent_mode", "mock")),
+            raw_prompt=str(data.get("raw_prompt", data.get("prompt", ""))),
+            ui_controls=dict(data.get("ui_controls") or {}),
+            prompt_terms=list(data.get("prompt_terms") or []),
+            source_prompt_terms=list(data.get("source_prompt_terms") or []),
+            unparsed_prompt_terms=list(data.get("unparsed_prompt_terms") or []),
+            prompt_ui_conflicts=list(data.get("prompt_ui_conflicts") or []),
+            resolved_generation_request=dict(data.get("resolved_generation_request") or {}),
+            intent_source=str(data.get("intent_source", "raw_prompt")),
+            source_control_terms=list(data.get("source_control_terms") or []),
+            control_only_intent=bool(data.get("control_only_intent", False)),
+            plan_grounding=list(data.get("plan_grounding") or []),
+            prompt_plan_alignment_score=float(data.get("prompt_plan_alignment_score") or 0.0),
+            run_seed=int(data.get("run_seed") or 0),
+            seed_source=str(data.get("seed_source", "")),
+            variant_id=str(data.get("variant_id", "")),
+            generation_nonce=str(data.get("generation_nonce", "")),
         )
 
 

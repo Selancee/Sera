@@ -1,0 +1,35 @@
+{
+  "precision": {
+    "note_hit_success_rate": 1.0,
+    "measure_hit_success_rate": 1.0,
+    "beat_grid_snap_success_rate": 0.8667,
+    "cursor_navigation_success_rate": 1.0,
+    "note_input_success_rate": 1.0,
+    "keyboard_shortcut_success_rate": 1.0,
+    "drag_pitch_success_rate": 1.0,
+    "staff_voice_switch_success_rate": 0.9,
+    "user_location_visibility_score": 1.0,
+    "operation_reversibility_rate": 1.0,
+    "overall_precision_proxy_score": 0.9767
+  },
+  "musicality": {
+    "rhythmic_diversity_score": 0.8833,
+    "dotted_rhythm_presence_rate": 0.5833,
+    "eighth_note_presence_rate": 1.0,
+    "sixteenth_note_presence_rate": 0.0833,
+    "rest_variety_score": 0.3055,
+    "quarter_note_dominance_penalty": 0.5025,
+    "melodic_range_score": 1.0,
+    "motif_recurrence_score": 0.699,
+    "cadence_presence_score": 1.0,
+    "accompaniment_presence_rate": 1.0,
+    "left_hand_activity_score": 1.0,
+    "texture_variety_score": 0.4444,
+    "dynamic_contrast_score": 0.3333,
+    "overall_musicality_proxy_score": 0.6648
+  },
+  "rows": {
+    "precision": 3,
+    "musicality": 12
+  }
+}

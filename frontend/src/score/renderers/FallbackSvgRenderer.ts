@@ -8,12 +8,13 @@ export class FallbackSvgRenderer extends BaseScoreRenderer {
   async render(container: HTMLElement, context: RenderContext): Promise<RendererResult> {
     const started = performance.now();
     container.dataset.renderer = "fallback";
-    container.dataset.layoutBoxes = String(buildFallbackLayout(context.scoreDocument).length);
+    container.dataset.layoutBoxes = String(buildFallbackLayout(context.scoreDocument, context.layoutMode || "fit_width").length);
+    container.dataset.layoutMode = context.layoutMode || "fit_width";
     return {
       requestedMode: "fallback",
       activeMode: "fallback",
       state: "ready",
-      message: "SVG fallback renderer active",
+      message: "SVG fallback renderer active with wrapped systems",
       renderMs: Math.round(performance.now() - started)
     };
   }

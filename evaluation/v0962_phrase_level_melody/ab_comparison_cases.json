@@ -1,0 +1,32 @@
+[
+  {
+    "case_id": "jazz_ab",
+    "style": "jazz",
+    "prompt": "Jazz piano phrase, ii-V-I, guide tones, 8 measures"
+  },
+  {
+    "case_id": "pop_ab",
+    "style": "pop",
+    "prompt": "Pop piano hook, bright, repeated hook with variation, 8 measures"
+  },
+  {
+    "case_id": "classical_ab",
+    "style": "classical",
+    "prompt": "Classical piano period, antecedent and consequent, 8 measures"
+  },
+  {
+    "case_id": "romantic_ab",
+    "style": "romantic",
+    "prompt": "Romantic piano, long lyrical phrase, delayed resolution, 8 measures"
+  },
+  {
+    "case_id": "chinese_ab",
+    "style": "chinese",
+    "prompt": "Chinese pentatonic piano, open-space phrase, 8 measures"
+  },
+  {
+    "case_id": "cyberpunk_ab",
+    "style": "cyberpunk",
+    "prompt": "Cyberpunk piano, short cell, ostinato tension, 8 measures"
+  }
+]

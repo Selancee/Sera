@@ -1,0 +1,43 @@
+{
+  "task_id": "rhythm_005",
+  "score_id": "score_005",
+  "category": "rhythm_duration",
+  "difficulty": "medium",
+  "instruction_en": "Merge the first two quarter-note positions in measure 2 of staff 1 into one half note, preserving remaining pitches.",
+  "instruction_zh": "将第2小节第一谱表开头两个四分音符位置合并为一个二分音符，并保留其余音高。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/rhythm_005.json",
+  "expected_output_path": "expected_outputs/rhythm_005.score.json",
+  "expected_constraints": [
+    {
+      "type": "duration_equals",
+      "event_id": "m2_rh_1",
+      "value": "half"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "m2_rh_2"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch1",
+    "synthetic",
+    "deterministic"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

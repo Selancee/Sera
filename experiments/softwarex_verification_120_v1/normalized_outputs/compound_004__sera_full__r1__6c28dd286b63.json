@@ -1,0 +1,1353 @@
+{
+  "condition": "sera_full",
+  "refusal": false,
+  "score_document": {
+    "schema_version": "0.6",
+    "score_id": "score_012",
+    "title": "SeraEdit Synthetic Core Fixture 12",
+    "composer": "SeraEdit deterministic fixture generator",
+    "metadata": {
+      "created_at": "2026-08-05T07:16:51.913009+00:00",
+      "updated_at": "2026-08-23T06:22:28.187891+00:00",
+      "source": "seraedit_synthetic_public_domain",
+      "prompt": "",
+      "agent_plan_id": "",
+      "title": "SeraEdit Synthetic Core Fixture 12",
+      "composer": "SeraEdit deterministic fixture generator",
+      "license": "CC0-1.0",
+      "benchmark_batch": "batch3",
+      "feature_profile": [
+        "independent_second_voice",
+        "grace_note"
+      ],
+      "notation_normalized": true,
+      "notation_normalization_report": {
+        "measures_checked": 3,
+        "duration_fixes": 0,
+        "rest_grouping_fixes": 0,
+        "tie_splits": 0,
+        "beaming_fixes": 37,
+        "overflow_fixes": 0
+      },
+      "beaming_assigned": true
+    },
+    "global": {
+      "key": "F major",
+      "meter": "6/8",
+      "tempo": 84,
+      "pickup": false
+    },
+    "parts": [
+      {
+        "part_id": "piano",
+        "name": "Piano",
+        "instrument": "piano",
+        "staves": [
+          {
+            "staff_id": "right_hand",
+            "clef": "treble",
+            "measures": [
+              "m1",
+              "m2",
+              "m3"
+            ]
+          },
+          {
+            "staff_id": "left_hand",
+            "clef": "bass",
+            "measures": [
+              "m1",
+              "m2",
+              "m3"
+            ]
+          }
+        ]
+      }
+    ],
+    "tracks": [
+      {
+        "track_id": "piano_right_hand",
+        "role": "lead_melody",
+        "instrument": "piano",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1
+      },
+      {
+        "track_id": "piano_left_hand",
+        "role": "accompaniment",
+        "instrument": "piano",
+        "part_id": "piano",
+        "staff": "left_hand",
+        "voice": 1
+      }
+    ],
+    "measures": [
+      {
+        "measure_id": "m1",
+        "number": 1,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s012_m1_lh_1",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m1_lh_v2_1",
+            "type": "note",
+            "pitch": "G3",
+            "duration": "dotted_half",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s012_m1_lh_2",
+            "type": "note",
+            "pitch": "G2",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m1_lh_3",
+            "type": "note",
+            "pitch": "A2",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m1_lh_4",
+            "type": "note",
+            "pitch": "F2",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m1_lh_5",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m1_lh_6",
+            "type": "note",
+            "pitch": "D3",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_1",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_2",
+            "type": "note",
+            "pitch": "C4",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_grace_1",
+            "type": "note",
+            "pitch": "B3",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [
+              "accent"
+            ],
+            "grace": true,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_3",
+            "type": "note",
+            "pitch": "D4",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_4",
+            "type": "note",
+            "pitch": "E4",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_5",
+            "type": "note",
+            "pitch": "G4",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m1_rh_6",
+            "type": "note",
+            "pitch": "A4",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          }
+        ]
+      },
+      {
+        "measure_id": "m2",
+        "number": 2,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s012_m2_lh_1",
+            "type": "note",
+            "pitch": "A2",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m2_lh_v2_1",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "dotted_half",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s012_m2_lh_2",
+            "type": "note",
+            "pitch": "F2",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m2_lh_3",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m2_lh_4",
+            "type": "note",
+            "pitch": "D3",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m2_lh_5",
+            "type": "note",
+            "pitch": "G3",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m2_lh_6",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_1",
+            "type": "note",
+            "pitch": "C4",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_2",
+            "type": "note",
+            "pitch": "D4",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_3",
+            "type": "note",
+            "pitch": "E4",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_4",
+            "type": "note",
+            "pitch": "G4",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_5",
+            "type": "note",
+            "pitch": "Bb4",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m2_rh_6",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "f",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          }
+        ]
+      },
+      {
+        "measure_id": "m3",
+        "number": 3,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s012_m3_lh_1",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m3_lh_v2_1",
+            "type": "note",
+            "pitch": "G2",
+            "duration": "dotted_half",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s012_m3_lh_2",
+            "type": "note",
+            "pitch": "D3",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m3_lh_3",
+            "type": "note",
+            "pitch": "G3",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m3_lh_4",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m3_lh_5",
+            "type": "note",
+            "pitch": "G2",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m3_lh_6",
+            "type": "note",
+            "pitch": "A2",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "left_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_1",
+            "type": "note",
+            "pitch": "D4",
+            "duration": "eighth",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_2",
+            "type": "note",
+            "pitch": "E4",
+            "duration": "eighth",
+            "offset": 0.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_3",
+            "type": "note",
+            "pitch": "G4",
+            "duration": "eighth",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:0",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_4",
+            "type": "note",
+            "pitch": "A4",
+            "duration": "eighth",
+            "offset": 1.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "begin"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_5",
+            "type": "note",
+            "pitch": "B4",
+            "duration": "eighth",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "continue"
+            }
+          },
+          {
+            "event_id": "s012_m3_rh_6",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "eighth",
+            "offset": 2.5,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false,
+            "beam_group": "right_hand:1:1",
+            "beam": {
+              "number": 1,
+              "value": "end"
+            }
+          }
+        ]
+      }
+    ],
+    "annotations": []
+  },
+  "musicxml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 3.1 Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">\n<score-partwise version=\"3.1\">\n  <work>\n    <work-title>SeraEdit Synthetic Core Fixture 12</work-title>\n  </work>\n  <identification>\n    <creator type=\"composer\">SeraEdit deterministic fixture generator</creator>\n  </identification>\n  <part-list>\n    <score-part id=\"P1\"><part-name>Piano</part-name></score-part>\n  </part-list>\n  <part id=\"P1\">\n    <direction placement=\"above\"><direction-type><metronome><beat-unit>quarter</beat-unit><per-minute>84</per-minute></metronome></direction-type></direction>\n      <measure number=\"1\">\n        <attributes>\n          <divisions>4</divisions>\n          <key>\n            <fifths>-1</fifths>\n            <mode>major</mode>\n          </key>\n          <time>\n            <beats>6</beats>\n            <beat-type>8</beat-type>\n          </time>\n          <staves>2</staves>\n          <clef number=\"1\"><sign>G</sign><line>2</line></clef>\n          <clef number=\"2\"><sign>F</sign><line>4</line></clef>\n        </attributes>\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s012_m1_rh_1 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_grace_1 -->\n        <note>\n          <grace slash=\"yes\"/>\n          <pitch>\n            <step>B</step>\n            <octave>3</octave>\n          </pitch>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <articulations>\n              <accent/>\n            </articulations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_grace_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_2 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_3 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_4 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_5 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_rh_6 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_rh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m1_lh_1 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_lh_2 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_lh_3 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_lh_4 -->\n        <note>\n          <pitch>\n            <step>F</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_lh_5 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m1_lh_6 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m1_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>12</duration>\n          <voice>2</voice>\n          <type>half</type>\n          <dot/>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m1_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n      <measure number=\"2\">\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s012_m2_rh_1 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_rh_2 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_rh_3 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_rh_4 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_rh_5 -->\n        <note>\n          <pitch>\n            <step>B</step>\n            <alter>-1</alter>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_rh_6 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <f/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_rh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m2_lh_1 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_lh_2 -->\n        <note>\n          <pitch>\n            <step>F</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_lh_3 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_lh_4 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_lh_5 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m2_lh_6 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m2_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>12</duration>\n          <voice>2</voice>\n          <type>half</type>\n          <dot/>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m2_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n      <measure number=\"3\">\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s012_m3_rh_1 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_rh_2 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_rh_3 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_rh_4 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_rh_5 -->\n        <note>\n          <pitch>\n            <step>B</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_rh_6 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>1</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_rh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m3_lh_1 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_lh_2 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_lh_3 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_lh_4 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">begin</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_lh_5 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">continue</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_5</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s012_m3_lh_6 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>2</duration>\n          <voice>1</voice>\n          <type>eighth</type>\n          <staff>2</staff>\n          <beam number=\"1\">end</beam>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_6</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>12</duration>\n        </backup>\n        <!-- sera-event-id:s012_m3_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>12</duration>\n          <voice>2</voice>\n          <type>half</type>\n          <dot/>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s012_m3_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n  </part>\n</score-partwise>\n",
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "gold_compound_004",
+    "source_score_id": "score_012",
+    "source_fingerprint": "sha256:41f93a203b0f569cf8166270cce11a53112b1748a7176432f2c7e6ca1df643c6",
+    "instruction": "Transpose the final two notes of measure 2 staff 1 up a semitone and mark the final note forte.",
+    "target_scope": {
+      "measures": [
+        2
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "compound_004_op1",
+        "type": "transpose",
+        "selector": {
+          "event_ids": [
+            "s012_m2_rh_5",
+            "s012_m2_rh_6"
+          ]
+        },
+        "arguments": {
+          "semitones": 1
+        },
+        "preconditions": [],
+        "expected_change_count": 2
+      },
+      {
+        "operation_id": "compound_004_op2",
+        "type": "set_dynamic",
+        "selector": {
+          "event_ids": [
+            "s012_m2_rh_6"
+          ]
+        },
+        "arguments": {
+          "dynamic": "f"
+        },
+        "preconditions": [],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_duration"
+      }
+    ],
+    "provenance": {
+      "provider": "rule_template",
+      "model": "deterministic_core_v1",
+      "temperature": 0,
+      "seed": 42
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "valid",
+    "errors": [],
+    "warnings": [],
+    "checks": {
+      "schema_version": "1.0.0",
+      "operation_count": 2,
+      "structural": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "event_count": 40,
+          "measure_count": 3,
+          "operation_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "preconditions": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "precondition_count": 0
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "duration": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "expected_quarters": "3",
+          "voice_end_positions": {
+            "m1:left_hand:v1": "3",
+            "m1:left_hand:v2": "3",
+            "m1:right_hand:v1": "3",
+            "m2:left_hand:v1": "3",
+            "m2:left_hand:v2": "3",
+            "m2:right_hand:v1": "3",
+            "m3:left_hand:v1": "3",
+            "m3:left_hand:v2": "3",
+            "m3:right_hand:v1": "3"
+          },
+          "voice_coverage": {
+            "m1:left_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m1:left_hand:v2": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m1:right_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m2:left_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m2:left_hand:v2": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m2:right_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m3:left_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m3:left_hand:v2": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            },
+            "m3:right_hand:v1": {
+              "covered": "3",
+              "gaps": [],
+              "collisions": []
+            }
+          },
+          "pickup_first_measure_allowed": false
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "notation_relations": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "open_ties": 0,
+          "open_slurs": 0,
+          "chord_onsets_checked": 0,
+          "malformed_chords": [],
+          "event_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "protected_scope": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "unexpected_changed_elements": 0,
+          "protected_element_count": 34,
+          "preservation_rate": 1.0,
+          "violation_details": []
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "postconditions": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "expected_effect_count": 1
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "musicxml_roundtrip": {
+        "exported": true,
+        "reimported": true,
+        "validator_valid": true,
+        "issues": [],
+        "warnings": [],
+        "metrics": {
+          "valid_musicxml": true,
+          "musicxml_parseable": true,
+          "music21_parseable": true,
+          "musicxml_exportable": true,
+          "measure_count": 3,
+          "expected_measure_count": null,
+          "measure_count_match": true,
+          "bar_completeness": 1.0,
+          "bar_completeness_score": 1.0,
+          "pitch_range_valid": true,
+          "pitch_count": 40,
+          "empty_measure_count": 0,
+          "rest_only_measure_count": 0,
+          "midi_export_success": true,
+          "pdf_export_success": true
+        }
+      },
+      "roundtrip_fidelity": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "source_event_count": 40,
+          "imported_event_count": 40,
+          "missing_event_ids": [],
+          "added_event_ids": [],
+          "field_mismatches": [],
+          "global_mismatches": [],
+          "fidelity_rate": 1.0
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      }
+    },
+    "repairable": false,
+    "suggested_repairs": []
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\": \"1.0.0\", \"patch_id\": \"gold_compound_004\", \"source_score_id\": \"score_012\", \"source_fingerprint\": \"sha256:41f93a203b0f569cf8166270cce11a53112b1748a7176432f2c7e6ca1df643c6\", \"instruction\": \"Transpose the final two notes of measure 2 staff 1 up a semitone and mark the final note forte.\", \"target_scope\": {\"measures\": [2], \"staffs\": [1]}, \"protected_scope\": {\"staffs\": [2]}, \"preconditions\": [], \"operations\": [{\"operation_id\": \"compound_004_op1\", \"type\": \"transpose\", \"selector\": {\"event_ids\": [\"s012_m2_rh_5\", \"s012_m2_rh_6\"]}, \"arguments\": {\"semitones\": 1}, \"preconditions\": [], \"expected_change_count\": 2}, {\"operation_id\": \"compound_004_op2\", \"type\": \"set_dynamic\", \"selector\": {\"event_ids\": [\"s012_m2_rh_6\"]}, \"arguments\": {\"dynamic\": \"f\"}, \"preconditions\": [], \"expected_change_count\": 1}], \"expected_effects\": [{\"type\": \"preserve_duration\"}], \"provenance\": {\"provider\": \"rule_template\", \"model\": \"deterministic_core_v1\", \"temperature\": 0, \"seed\": 42}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "gold_compound_004",
+      "source_score_id": "score_012",
+      "source_fingerprint": "sha256:41f93a203b0f569cf8166270cce11a53112b1748a7176432f2c7e6ca1df643c6",
+      "instruction": "Transpose the final two notes of measure 2 staff 1 up a semitone and mark the final note forte.",
+      "target_scope": {
+        "measures": [
+          2
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "compound_004_op1",
+          "type": "transpose",
+          "selector": {
+            "event_ids": [
+              "s012_m2_rh_5",
+              "s012_m2_rh_6"
+            ]
+          },
+          "arguments": {
+            "semitones": 1
+          },
+          "preconditions": [],
+          "expected_change_count": 2
+        },
+        {
+          "operation_id": "compound_004_op2",
+          "type": "set_dynamic",
+          "selector": {
+            "event_ids": [
+              "s012_m2_rh_6"
+            ]
+          },
+          "arguments": {
+            "dynamic": "f"
+          },
+          "preconditions": [],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_duration"
+        }
+      ],
+      "provenance": {
+        "provider": "rule_template",
+        "model": "deterministic_core_v1",
+        "temperature": 0,
+        "seed": 42
+      }
+    },
+    "provider": "mock",
+    "model": "benchmark-fixture-v2-roundtrip",
+    "latency_ms": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "estimated_cost": 0.0,
+    "request_id": "mock:compound_004:sera_full",
+    "finish_reason": "fixture",
+    "error": null,
+    "cached": true,
+    "retry_count": 0,
+    "request_hash": "c71290d595152e07327eb84175874b5b5039a06b57a9a39cc0b5c737c227fb43"
+  },
+  "processing_latency_ms": 75.50110000011045,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

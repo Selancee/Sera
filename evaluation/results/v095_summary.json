@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "title_key_consistency_rate": 1.0,
+    "work_title_key_consistency_rate": 1.0,
+    "metadata_sync_success_rate": 1.0,
+    "composer_export_success_rate": 1.0,
+    "composer_edit_success_rate": 1.0
+  },
+  "melody_line": {
+    "melody_line_extraction_success_rate": 1.0,
+    "left_hand_exclusion_success_rate": 0.6,
+    "cross_measure_tritone_rate": 0.2,
+    "melody_line_large_leap_rate": 0.0,
+    "unresolved_cross_measure_leap_rate": 0.2,
+    "melody_repair_success_rate": 0.8
+  },
+  "rows": {
+    "metadata": 5,
+    "melody_line": 5
+  }
+}

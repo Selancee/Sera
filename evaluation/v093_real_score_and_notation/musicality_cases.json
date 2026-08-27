@@ -1,0 +1,5 @@
+[
+  { "id": "cyberpunk", "prompt": "Compose an 8 measure cyberpunk piano passage with ostinato left hand." },
+  { "id": "romantic", "prompt": "Compose an 8 measure romantic piano nocturne with dotted rhythm and flowing left hand." },
+  { "id": "cinematic", "prompt": "Compose an 8 measure cinematic trailer piano theme with a strong cadence." }
+]

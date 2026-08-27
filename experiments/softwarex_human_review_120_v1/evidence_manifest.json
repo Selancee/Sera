@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "evidence_class": "human_benchmark_task_review",
+  "source_exported_at": "2026-08-27T04:38:01.078601+00:00",
+  "file_count": 4,
+  "files": [
+    {
+      "path": "benchmark_reviews.csv",
+      "bytes": 31884,
+      "sha256": "44fd808484daf906406ac10b52e370cbd261e33bba1f58df650f7cc97c8440de"
+    },
+    {
+      "path": "benchmark_reviews.json",
+      "bytes": 123789,
+      "sha256": "56715d959f9aff9e823e495bbd44d0c985fc406e457436066ee18e54932f1abd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 475,
+      "sha256": "fff5749978f128164ec93c4d859abf5dd593a9a0f4224b3a2af5472080f1cfae"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 2351,
+      "sha256": "481099e6dbb2c162dfe3b6261121b6fa167c8ddfa92866c5c38468ad87f67d56"
+    }
+  ]
+}

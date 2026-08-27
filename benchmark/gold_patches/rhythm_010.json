@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_rhythm_010",
+  "source_score_id": "score_012",
+  "source_fingerprint": "sha256:41f93a203b0f569cf8166270cce11a53112b1748a7176432f2c7e6ca1df643c6",
+  "instruction": "Merge the first two rhythmic units of measure 2 staff 1 while preserving the remaining events.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "rhythm_010_op1",
+      "type": "set_duration",
+      "selector": {
+        "event_ids": [
+          "s012_m2_rh_1"
+        ]
+      },
+      "arguments": {
+        "duration": "quarter"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    },
+    {
+      "operation_id": "rhythm_010_op2",
+      "type": "delete_event",
+      "selector": {
+        "event_ids": [
+          "s012_m2_rh_2"
+        ]
+      },
+      "arguments": {},
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

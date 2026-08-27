@@ -1,0 +1,4 @@
+id,run_id,expected_tag,expected_base_style,custom_style_preserved,base_style_matched,style_profile_applied,texture,accompaniment_style
+cyberpunk_piano,20260702_125657_031652_54eb63ce,cyberpunk,electronic,True,True,True,ostinato,repeating_bass
+anime_theme,20260702_125657_138207_379a8764,anime,pop,True,True,True,melody_accompaniment,arpeggiated_chords
+cinematic_trailer,20260702_125657_263913_5a4b389a,cinematic,cinematic,True,True,True,chordal_arpeggiated,bass_chord

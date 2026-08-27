@@ -1,0 +1,4 @@
+id,run_id,score_document_present,musicxml_present,midi_present,musicxml_score_event_match,score_midi_event_match,mismatch_count,authoritative_score_used
+romantic_piano,20260702_125656_711096_1ca8c863,True,True,True,True,True,0,True
+cyberpunk_piano,20260702_125656_825636_5e0f1077,True,True,True,True,True,0,True
+beginner_piano,20260702_125656_931792_65032b12,True,True,True,True,True,0,True

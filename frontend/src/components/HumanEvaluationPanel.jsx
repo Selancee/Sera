@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { useI18n } from "../i18n/useI18n";
 
 const SCORE_FIELDS = [
-  ["prompt_adherence", "Prompt adherence"],
-  ["musical_coherence", "Musical coherence"],
-  ["notation_readability", "Notation readability"],
-  ["playability", "Playability"],
-  ["editability", "Editability"]
+  ["prompt_adherence", "evaluation.promptAdherence"],
+  ["musical_coherence", "evaluation.musicalCoherence"],
+  ["notation_readability", "evaluation.notationReadability"],
+  ["playability", "evaluation.playability"],
+  ["editability", "evaluation.editability"]
 ];
 
 const DEFAULT_RATING = {
@@ -19,6 +20,7 @@ const DEFAULT_RATING = {
 };
 
 export default function HumanEvaluationPanel({ disabled, onSubmit, result }) {
+  const { t } = useI18n();
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [state, setState] = useState("idle");
 
@@ -56,13 +58,13 @@ export default function HumanEvaluationPanel({ disabled, onSubmit, result }) {
   return (
     <section className="panel human-eval-panel">
       <div className="panel-heading">
-        <h2>Human Evaluation</h2>
-        <span>{state === "saved" ? "saved" : state === "saving" ? "saving" : result ? "ready" : "pending"}</span>
+        <h2>{t("evaluation.title")}</h2>
+        <span>{state === "saved" ? t("common.saved") : state === "saving" ? t("common.saving") : result ? t("common.ready") : t("common.pending")}</span>
       </div>
       <div className="rating-grid">
         {SCORE_FIELDS.map(([key, label]) => (
           <label key={key}>
-            <span>{label}</span>
+            <span>{t(label)}</span>
             <input
               disabled={!result?.run_id || disabled}
               max="5"
@@ -75,20 +77,20 @@ export default function HumanEvaluationPanel({ disabled, onSubmit, result }) {
         ))}
       </div>
       <label className="wide-field">
-        <span>Preference</span>
+        <span>{t("evaluation.preference")}</span>
         <select
           disabled={!result?.run_id || disabled}
           onChange={(event) => update("preference", event.target.value)}
           value={rating.preference}
         >
-          <option value="no_preference">No preference</option>
-          <option value="first_draft">First draft</option>
-          <option value="revised">Revised version</option>
-          <option value="needs_more_revision">Needs more revision</option>
+          <option value="no_preference">{t("evaluation.noPreference")}</option>
+          <option value="first_draft">{t("evaluation.firstDraft")}</option>
+          <option value="revised">{t("evaluation.revised")}</option>
+          <option value="needs_more_revision">{t("evaluation.needsMoreRevision")}</option>
         </select>
       </label>
       <label className="wide-field">
-        <span>Notes</span>
+        <span>{t("evaluation.notes")}</span>
         <textarea
           disabled={!result?.run_id || disabled}
           onChange={(event) => update("notes", event.target.value)}
@@ -97,9 +99,9 @@ export default function HumanEvaluationPanel({ disabled, onSubmit, result }) {
         />
       </label>
       <button className="secondary-action" disabled={!result?.run_id || disabled || state === "saving"} onClick={submit} type="button">
-        Save Rating
+        {t("evaluation.saveRating")}
       </button>
-      {state === "error" && <div className="inline-error">Rating could not be saved.</div>}
+      {state === "error" && <div className="inline-error">{t("evaluation.saveError")}</div>}
     </section>
   );
 }

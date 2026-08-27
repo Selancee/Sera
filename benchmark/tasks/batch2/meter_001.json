@@ -1,0 +1,60 @@
+{
+  "task_id": "meter_001",
+  "score_id": "score_007",
+  "category": "meter_measure_structure",
+  "difficulty": "hard",
+  "instruction_en": "Rebar the three-measure excerpt from 4/4 to 3/4 by removing the final quarter-note event from each staff in every measure; preserve every remaining pitch and duration.",
+  "instruction_zh": "将这段三小节乐谱从4/4改为3/4：删除每个小节每个谱表最后一个四分音符，并保留其余音符的音高和时值。",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "gold_patch_path": "gold_patches/meter_001.json",
+  "expected_output_path": "expected_outputs/meter_001.score.json",
+  "expected_constraints": [
+    {
+      "type": "meter_equals",
+      "value": "3/4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m1_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m1_lh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m2_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m2_lh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m3_rh_4"
+    },
+    {
+      "type": "event_deleted",
+      "event_id": "s007_m3_lh_4"
+    },
+    {
+      "type": "preserve_duration"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "meter_measure_structure"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

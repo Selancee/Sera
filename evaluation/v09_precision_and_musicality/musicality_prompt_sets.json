@@ -1,0 +1,17 @@
+[
+  {
+    "id": "romantic_dotted_left_hand",
+    "prompt": "Compose an 8 bar romantic piano phrase with dotted rhythm and flowing left hand.",
+    "controls": {"rhythmic_density": "high", "texture": "arpeggiated", "accompaniment_style": "arpeggiated_chords", "difficulty": "advanced"}
+  },
+  {
+    "id": "beginner_clear_cadence",
+    "prompt": "Compose an 8 bar beginner C major piano piece with a clear cadence.",
+    "controls": {"rhythmic_density": "medium", "texture": "melody_accompaniment", "difficulty": "beginner"}
+  },
+  {
+    "id": "waltz_bass",
+    "prompt": "Compose an 8 bar piano waltz with left hand waltz bass and phrase contrast.",
+    "controls": {"rhythmic_density": "medium", "texture": "waltz", "accompaniment_style": "waltz_bass"}
+  }
+]

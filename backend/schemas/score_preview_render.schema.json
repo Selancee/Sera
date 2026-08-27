@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera V0.93 Score Preview Render",
+  "type": "object",
+  "required": ["success", "renderer", "musicxml_text_available", "warnings", "errors"],
+  "properties": {
+    "success": { "type": "boolean" },
+    "renderer": { "type": "string", "enum": ["musescore_cli", "verovio", "unavailable"] },
+    "svg_url": { "type": "string" },
+    "png_url": { "type": "string" },
+    "pdf_url": { "type": "string" },
+    "musicxml_text_available": { "type": "boolean" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "errors": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

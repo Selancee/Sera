@@ -1,0 +1,31 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "SeraEdit",
+  "description": "A local-first structured-patch pipeline for reliable language-guided MusicXML editing.",
+  "version": "1.0.0-dev.14",
+  "dateModified": "2026-08-23",
+  "codeRepository": "https://github.com/Selancee/Sera",
+  "license": "https://spdx.org/licenses/MIT.html",
+  "programmingLanguage": ["Python", "TypeScript", "JavaScript", "QML", "PowerShell"],
+  "operatingSystem": ["Windows 10", "Windows 11"],
+  "applicationCategory": "Research software",
+  "keywords": ["MusicXML", "symbolic music", "score editing", "ScorePatch", "LLM"],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "[AUTHOR GIVEN NAME]",
+      "familyName": "[AUTHOR FAMILY NAME]"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "name": "[MAINTAINER NAME]",
+    "email": "[SUPPORT EMAIL]"
+  },
+  "softwareRequirements": [
+    "Python >= 3.10",
+    "Node.js >= 20 for frontend development",
+    "MuseScore Studio 4.x for the optional notation-host bridge"
+  ]
+}

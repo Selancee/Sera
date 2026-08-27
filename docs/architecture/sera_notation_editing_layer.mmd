@@ -1,0 +1,35 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "primaryColor": "#eef1ff", "primaryTextColor": "#1b1d2a", "lineColor": "#64748b", "fontFamily": "Arial"}}}%%
+flowchart TD
+  subgraph Hosts["Professional notation hosts"]
+    direction LR
+    MS["MuseScore Studio<br/>QML bridge: next milestone"]
+    SB["Sibelius Ultimate<br/>ManuScript bridge: later milestone"]
+  end
+
+  FX["Versioned MusicXML exchange<br/>available now"]
+  NB["Notation Bridge API<br/>host capabilities + sessions"]
+  SD["Canonical ScoreDocument"]
+  subgraph AgentLoop["Reviewable editing loop"]
+    direction LR
+    CTX["Selection + constraints<br/>recent manual edits"]
+    AG["Score Editing Agent"]
+    PP["Previewable ScorePatch"]
+    VL["Schema + notation + scope<br/>validation"]
+    RV{"User review"}
+  end
+  AU["Operation history<br/>revision manifest + hashes"]
+
+  MS <-->|"export / import"| FX
+  SB <-->|"export / import"| FX
+  FX --> NB
+  NB --> SD
+  SD --> CTX
+  CTX --> AG
+  AG --> PP
+  PP --> VL
+  VL --> RV
+  RV -->|"accept all / partial"| SD
+  RV -->|"reject / regenerate"| AG
+  SD --> AU
+  AU --> NB
+  NB --> FX

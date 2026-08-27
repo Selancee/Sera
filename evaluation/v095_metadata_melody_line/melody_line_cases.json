@@ -1,0 +1,10 @@
+[
+  {
+    "id": "piano_right_hand_melody_left_hand_accompaniment",
+    "prompt": "Compose an 8 measure romantic piano phrase with flowing left hand."
+  },
+  {
+    "id": "piano_cadence_primary_melody",
+    "prompt": "Compose an 8 measure classical piano phrase in C major with a clear cadence."
+  }
+]

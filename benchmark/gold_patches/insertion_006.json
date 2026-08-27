@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_insertion_006",
+  "source_score_id": "score_006",
+  "source_fingerprint": "sha256:32b61efb08725d79cd116bd9c36034c2608d26780282085a70cdfbfccdd6ca4a",
+  "instruction": "Replace the first note of measure 2 staff 1 with a C-major triad of the same duration.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "insertion_006_op1",
+      "type": "replace_chord",
+      "selector": {
+        "event_ids": [
+          "s006_m2_rh_1"
+        ]
+      },
+      "arguments": {
+        "pitches": [
+          "C4",
+          "E4",
+          "G4"
+        ]
+      },
+      "preconditions": [],
+      "expected_change_count": 4
+    }
+  ],
+  "expected_effects": [],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

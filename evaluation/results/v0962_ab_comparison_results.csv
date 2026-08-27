@@ -1,0 +1,4 @@
+baseline_final_score_musicality_proxy,baseline_mechanical_repetition_penalty,baseline_melody_fingerprint,case_id,improvement,phrase_final_score_musicality_proxy,phrase_mechanical_repetition_penalty,phrase_melody_fingerprint,style
+0.564,0.5,"2,2,1|2,2,1,-5,0,2|2,2,1|2,2|2,2,1,-5|2,2,1|2,2|2,2",jazz_ab,0.0774,0.6414,0.0,"-2,2,3|-4,4,2,0,-4,4|-4,4,0|1,0|-3,2,5,-2|-2,2,4|-6,6|2,4",jazz
+0.6884,0.625,"2,2,1|2,2,1,-5|2,2,1|2,2,1|2,2|2,2,1,-5|2,2,1,-5|2,2",pop_ab,0.0306,0.719,0.125,"2,-2,0|0,-1,1,-1|2,-2,0|0,0,0|0,0|-1,1,0,0|2,-3,1,0|0,5",pop
+0.7023,0.375,"2,2,1,-5|2,2,1,-5|2,2,1,-5,0|2,2|2,2|2,2,1|2,2,1,-5,0,2|2,2",classical_ab,0.0758,0.7781,0.125,"0,0,-3,3|0,-3,-2,5|0,4,1,-5,0|5,-5|-1,1|5,-1,1|-2,4,-2,0,-7,1|-1,1",classical

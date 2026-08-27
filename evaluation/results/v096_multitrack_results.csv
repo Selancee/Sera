@@ -1,0 +1,3 @@
+case_id,candidate_count,control_only_intent,multitrack_role_coverage_rate,pass
+control_only_cyberpunk,4,True,1.0,1.0
+candidate_count_four,4,False,1.0,1.0

@@ -1,0 +1,47 @@
+{
+  "task_id": "pitch_005",
+  "score_id": "score_005",
+  "category": "pitch_transposition",
+  "difficulty": "easy",
+  "instruction_en": "Transpose measure 1 of staff 1 up by a major second while preserving rhythm.",
+  "instruction_zh": "将第1小节第一谱表升高大二度，并保持节奏不变。",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/pitch_005.json",
+  "expected_output_path": "expected_outputs/pitch_005.score.json",
+  "expected_constraints": [
+    {
+      "type": "pitch_delta",
+      "event_ids": [
+        "m1_rh_1",
+        "m1_rh_2",
+        "m1_rh_3",
+        "m1_rh_4"
+      ],
+      "value": 2
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch1",
+    "synthetic",
+    "deterministic"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

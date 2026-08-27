@@ -1,0 +1,21 @@
+[
+  {
+    "case_id": "large_leap_reversal",
+    "key": "C major",
+    "events": [
+      {"type": "note", "pitch": "C4", "duration": "eighth", "offset": 0, "measure": 1},
+      {"type": "note", "pitch": "G4", "duration": "eighth", "offset": 0.5, "measure": 1},
+      {"type": "note", "pitch": "F4", "duration": "eighth", "offset": 1, "measure": 1},
+      {"type": "note", "pitch": "C4", "duration": "quarter", "offset": 3, "measure": 1}
+    ]
+  },
+  {
+    "case_id": "gap_fill_repair",
+    "key": "C major",
+    "events": [
+      {"type": "note", "midi": 60},
+      {"type": "note", "midi": 72},
+      {"type": "note", "midi": 79}
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sera ScoreConsistencyReport",
+  "type": "object",
+  "required": [
+    "musicxml_event_count",
+    "score_document_event_count",
+    "midi_event_count",
+    "note_event_count",
+    "measure_count_musicxml",
+    "measure_count_score_document",
+    "mismatch_count",
+    "mismatches",
+    "valid",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "musicxml_event_count": { "type": "integer", "minimum": 0 },
+    "score_document_event_count": { "type": "integer", "minimum": 0 },
+    "midi_event_count": { "type": "integer", "minimum": 0 },
+    "note_event_count": { "type": "integer", "minimum": 0 },
+    "measure_count_musicxml": { "type": "integer", "minimum": 0 },
+    "measure_count_score_document": { "type": "integer", "minimum": 0 },
+    "staff_count_score_document": { "type": "integer", "minimum": 0 },
+    "voice_count_score_document": { "type": "integer", "minimum": 0 },
+    "mismatch_count": { "type": "integer", "minimum": 0 },
+    "mismatches": { "type": "array", "items": { "type": "object" } },
+    "valid": { "type": "boolean" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "errors": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,3 @@
+case_id,leap_reversal_rate,mean_regression_score,unresolved_large_leap_rate,unresolved_tritone_rate,phrase_closure_score,pass
+large_leap_reversal,1.0,1.0,0.25,0.0,1.0,1.0
+gap_fill_repair,0.0,1.0,0.6666666666666666,0.0,0.8167,1.0

@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "runtime_acceptance_core_bilingual_r3_v4_20260826",
+  "evidence_class": "product_runtime_acceptance_non_formal",
+  "paper_model_result_eligible": false,
+  "gold_used_for_generation": false,
+  "mode": "local",
+  "host_scope_mode": "exact",
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "repetitions": 3,
+  "split": "core",
+  "benchmark_hash": "sha256:6cc407742ad03fefb908e539da62b8f5c6b492de06d2981b48b215452885d024",
+  "completed_at": "2026-08-26T14:00:54.532491+00:00",
+  "resumable": true,
+  "evidence": {
+    "generation_entrypoint": "generate_patch_with_runtime",
+    "preview": "PatchTransaction(dry_run=True)",
+    "commit": "PatchTransaction(dry_run=False)",
+    "host_export": "patch_musicxml_preserving_source",
+    "musicxml_roundtrip": "source MusicXML -> source-preserving patch -> host MusicXML -> ScoreDocument",
+    "deterministic_constraints": true,
+    "per_task_raw_outputs": true,
+    "host_openable_outputs": true
+  },
+  "results": {
+    "tasks": 720,
+    "passed": 720,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "constraint_satisfaction": 1.0,
+    "complete_preservation_rate": 1.0,
+    "musicxml_validity": 1.0,
+    "correct_refusals": 60,
+    "unsafe_executions": 0,
+    "source_preserving_host_export": {
+      "expected": 660,
+      "succeeded": 660,
+      "failed": 0,
+      "rate": 1.0
+    },
+    "median_latency_ms": 53.87414999995599,
+    "p95_latency_ms": 110.88625499983208,
+    "generation_statuses": {
+      "refused": 60,
+      "generated": 660
+    },
+    "reproducibility": {
+      "repeated_task_language_groups": 240,
+      "identical_patch_and_output_groups": 240,
+      "rate": 1.0
+    },
+    "cross_language_equivalence": {
+      "task_groups": 120,
+      "semantic_patch_equivalent_groups": 120,
+      "output_equivalent_groups": 120,
+      "semantic_patch_rate": 1.0,
+      "output_rate": 1.0
+    },
+    "categories": {
+      "compound_multi_step": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "conflicting_or_unsupported": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "dynamics_articulation": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "insertion_deletion": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "key_harmony": {
+        "tasks": 90,
+        "passed": 90,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "meter_measure_structure": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "pitch_transposition": {
+        "tasks": 90,
+        "passed": 90,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "rhythm_duration": {
+        "tasks": 90,
+        "passed": 90,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "ties_slurs_ornaments": {
+        "tasks": 60,
+        "passed": 60,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "voice_texture": {
+        "tasks": 90,
+        "passed": 90,
+        "failed": 0,
+        "pass_rate": 1.0
+      }
+    },
+    "unique_tasks": 120,
+    "scope_stress": {
+      "mode": "exact",
+      "runs_applied": 0,
+      "runs_passed": 0
+    }
+  }
+}

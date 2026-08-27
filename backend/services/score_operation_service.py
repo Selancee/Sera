@@ -74,6 +74,10 @@ def apply_score_operation(score: dict[str, Any], operation: dict[str, Any]) -> t
         next_score["global"]["meter"] = str(op.get("after", {}).get("meter", op.get("after", {}).get("value", "4/4")))
     elif op_type == "change_tempo":
         next_score["global"]["tempo"] = int(op.get("after", {}).get("tempo", op.get("after", {}).get("value", 90)))
+    elif op_type == "change_title":
+        next_score["title"] = str(op.get("after", {}).get("title", op.get("after", {}).get("value", "")))
+    elif op_type == "change_composer":
+        next_score["composer"] = str(op.get("after", {}).get("composer", op.get("after", {}).get("value", "")))
     elif op_type in {"add_harmony_label", "update_harmony"}:
         _update_measure_field(next_score, op, "harmony")
     elif op_type == "add_section_label":

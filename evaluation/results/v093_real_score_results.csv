@@ -1,0 +1,3 @@
+id,run_id,real_score_preview,fake_score_blocked,real_playback_source,plan_measure_dependency_count,backend_preview_render_success,preview_renderer
+fake_plan_only,20260827_050418_241904_5e0f1077,True,True,True,0,False,unavailable
+real_score_document,20260827_050418_606658_98673101,True,True,True,0,False,unavailable

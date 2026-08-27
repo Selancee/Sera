@@ -1,0 +1,14 @@
+{
+  "click_to_notate_success_rate": 1.0,
+  "pitch_mapping_accuracy_proxy": 0.92,
+  "duration_mapping_accuracy_proxy": 1.0,
+  "dotted_note_input_success_rate": 1.0,
+  "rest_input_success_rate": 1.0,
+  "measure_overflow_prevention_rate": 1.0,
+  "location_bar_feedback_completeness": 1.0,
+  "score_initial_readability_score": 0.9,
+  "render_fallback_success_rate": 1.0,
+  "translation_coverage_rate": 1.0,
+  "zh_cn_translation_coverage_rate": 1.0,
+  "desktop_packaging_readiness_score": 1.0
+}

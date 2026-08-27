@@ -1,0 +1,30 @@
+flowchart LR
+    H["MuseScore / Sibelius<br/>authoritative host score"] --> B["Sera Bridge<br/>MusicXML + selected scope"]
+    B --> C["Canonical ScoreDocument<br/>source fingerprint"]
+
+    subgraph P["Planning layer"]
+        U["Creative brief"] --> R["Theory retrieval<br/>stable claim IDs"]
+        R --> L["General LLM or local planner<br/>typed CompositionPlan"]
+        L --> G["Server canonicalization<br/>immutable key, meter, scope"]
+    end
+
+    C --> G
+    G --> D["Deterministic candidate search<br/>1–4 pitch realizations"]
+
+    subgraph V["Independent critics"]
+        S["ScorePatch transaction<br/>schema + fingerprint + scope"]
+        M["Musical review<br/>harmony + cadence + voice leading"]
+        A["Host baseline review<br/>rhythm + event count + layout"]
+    end
+
+    D --> S
+    D --> M
+    D --> A
+    S --> K["Ranked candidates<br/>theory trace + scores"]
+    M --> K
+    A --> K
+    K --> X{"Human selects candidate?"}
+    X -->|"No"| U
+    X -->|"Yes"| T["Existing proposal review<br/>apply or reject"]
+    T --> E["Source-preserving MusicXML revision"]
+    E --> H

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "fake_plan_only",
+    "prompt": "Compose an 8 measure cyberpunk piano passage.",
+    "expected_blocked": true
+  },
+  {
+    "id": "real_score_document",
+    "prompt": "Compose an 8 measure romantic piano piece with left hand accompaniment.",
+    "expected_blocked": false
+  }
+]

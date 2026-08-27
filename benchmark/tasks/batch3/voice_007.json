@@ -1,0 +1,61 @@
+{
+  "task_id": "voice_007",
+  "score_id": "score_013",
+  "category": "voice_texture",
+  "difficulty": "medium",
+  "instruction_en": "Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.",
+  "instruction_zh": "将第3小节第一谱表的全部音符从声部1移到声部2，并保持音高和节奏。",
+  "target_scope": {
+    "measures": [
+      3
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/voice_007.json",
+  "expected_output_path": "expected_outputs/voice_007.score.json",
+  "expected_constraints": [
+    {
+      "type": "voice_equals",
+      "event_id": "s013_m3_rh_1",
+      "value": 2
+    },
+    {
+      "type": "voice_equals",
+      "event_id": "s013_m3_rh_2",
+      "value": 2
+    },
+    {
+      "type": "voice_equals",
+      "event_id": "s013_m3_rh_3",
+      "value": 2
+    },
+    {
+      "type": "voice_equals",
+      "event_id": "s013_m3_rh_4",
+      "value": 2
+    },
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch3",
+    "synthetic",
+    "deterministic",
+    "voice_texture"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

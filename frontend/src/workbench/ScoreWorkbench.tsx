@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  applyStrictScorePatch,
   applyScorePatch,
   applyWorkbenchOperation,
+  createNotationBridgeSession,
   explainSelection,
+  exportNotationBridgeRevision,
   exportScoreMidi,
   exportScoreMusicXml,
   exportScorePdf,
+  generateStrictScorePatchPreview,
+  getNotationHosts,
+  getNotationBridgeWorkspace,
   partialApplyScorePatch,
   importMusicXmlToScoreDocument,
   redoWorkbenchOperation,
@@ -22,10 +28,14 @@ import KeyboardShortcutsHelp from "../components/KeyboardShortcutsHelp";
 import NotePalette from "../components/NotePalette";
 import { generateLeftHandAccompanimentOperations } from "../score/accompanimentGeneration";
 import { clearAutosave, loadAutosave, makeAutosavePayload, saveAutosave } from "../score/autosave";
+import { createClickToNotateOperation, type ClickToNotatePreview } from "../score/clickToNotate";
+import { readPendingDesktopSession, subscribeDesktopOpenSession } from "../desktop/desktopRuntime";
 import { buildDragOperations, transposePitch } from "../score/dragEditing";
+import { layoutConfigForMode, type ScoreLayoutMode } from "../score/layoutConfig";
+import { formatDuration, formatMusicTerm, type Translate } from "../i18n/musicTerms";
 import { mapWorkbenchShortcut } from "../score/keyboardShortcuts";
 import { EMPTY_PLAYBACK_STATE, advanceFakePlayback, seekPlayback, type PlaybackState } from "../score/midiPlayback";
-import { downloadTextFile } from "../score/musicxmlAdapter";
+import { downloadTextFile, scoreDocumentToSimpleMusicXml } from "../score/musicxmlAdapter";
 import {
   DEFAULT_NOTE_INPUT_CURSOR,
   advanceCursor,
@@ -33,14 +43,39 @@ import {
   createInsertNoteOperation,
   createInsertRestOperation,
   fillMeasureWithRests,
+  pitchFromStep,
   type NoteDuration,
   type NoteInputCursor
 } from "../score/noteInput";
 import { EMPTY_OPERATION_HISTORY } from "../score/operationHistory";
+import { bridgeSessionIdFromSearch, safeBridgeSessionId, selectionFromNotationHostContext } from "../score/notationBridge";
 import { buildPlaybackMap, quarterFromMeasure } from "../score/playbackMap";
 import { migrateWorkbenchProject } from "../score/projectMigration";
+import {
+  buildStrictScoreScopes,
+  EMPTY_STRICT_PATCH_HISTORY,
+  measureRangeForScope,
+  recordStrictPatch,
+  redoStrictPatch,
+  undoStrictPatch,
+  type StrictPatchHistory
+} from "../score/seraEditResearch";
 import type { HitTarget, RendererMode, RendererStatus } from "../score/renderers/renderTypes";
+import {
+  jumpScoreCursorBoundary,
+  jumpScoreCursorMeasure,
+  moveScoreCursor,
+  noteInputFromScoreCursor,
+  scoreCursorFromNoteInput,
+  switchCursorStaff,
+  switchCursorVoice,
+  transposeCursorPitch,
+  validateScoreCursor,
+  type ScoreCursor,
+  type ScoreCursorSnap
+} from "../score/scoreCursor";
 import { applyLocalOperation, recordLocalOperation, redoLocal, undoLocal } from "../score/scoreOperations";
+import { useI18n } from "../i18n/useI18n";
 import {
   clearSelection,
   EMPTY_SELECTION,
@@ -53,19 +88,30 @@ import {
   selectionToRange
 } from "../score/selection";
 import { createEmptyScoreDocument, scoreDocumentFromResult } from "../score/scoreTypes";
-import type { OperationHistory, ScoreDocument, ScoreOperation, ScorePatch } from "../score/scoreTypes";
+import type {
+  OperationHistory,
+  ScoreDocument,
+  ScoreOperation,
+  ScorePatch,
+  StrictGenerationPreview
+} from "../score/scoreTypes";
 import AgentEditPanel from "./AgentEditPanel";
+import LocationBar from "./LocationBar";
+import MusicalityControlPanel, { DEFAULT_MUSICALITY_CONTROLS, type MusicalityControls } from "./MusicalityControlPanel";
 import NoteInputMode from "./NoteInputMode";
 import OperationHistoryPanel from "./OperationHistoryPanel";
 import PatchPreviewPanel from "./PatchPreviewPanel";
 import PlaybackScrubber from "./PlaybackScrubber";
 import ScoreCanvas from "./ScoreCanvas";
 import ScoreInspector from "./ScoreInspector";
+import SeraEditResearchPanel from "./SeraEditResearchPanel";
+import StrictScoreComparison from "./StrictScoreComparison";
 import ScoreStatusBar from "./ScoreStatusBar";
 import ScoreTimeline from "./ScoreTimeline";
 import ScoreToolbar from "./ScoreToolbar";
 
 export default function ScoreWorkbench({ result }: { result: any }) {
+  const { t } = useI18n();
   const initialScore = useMemo(() => scoreDocumentFromResult(result), [result]);
   const [scoreDocument, setScoreDocument] = useState<ScoreDocument>(initialScore);
   const [history, setHistory] = useState<OperationHistory>(EMPTY_OPERATION_HISTORY);
@@ -74,15 +120,28 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   const [tool, setTool] = useState("select");
   const [editMode, setEditMode] = useState<"select" | "note_input">("select");
   const [noteCursor, setNoteCursor] = useState<NoteInputCursor>(DEFAULT_NOTE_INPUT_CURSOR);
+  const [cursorSnap, setCursorSnap] = useState<ScoreCursorSnap>("beat");
+  const [cursorPitch, setCursorPitch] = useState("C4");
   const [noteWarning, setNoteWarning] = useState("");
   const [zoom, setZoom] = useState(1);
-  const [rendererMode, setRendererMode] = useState<RendererMode>("auto");
-  const [rendererStatus, setRendererStatus] = useState<RendererStatus>({ requestedMode: "auto", activeMode: "fallback", state: "idle", message: "renderer idle", renderMs: 0 });
+  const [layoutMode, setLayoutMode] = useState<ScoreLayoutMode>("fit_width");
+  const [renderNonce, setRenderNonce] = useState(0);
+  const [musicXmlPreviewOpen, setMusicXmlPreviewOpen] = useState(false);
+  const [rendererMode, setRendererMode] = useState<RendererMode>(result ? "auto" : "fallback");
+  const [rendererStatus, setRendererStatus] = useState<RendererStatus>({ requestedMode: result ? "auto" : "fallback", activeMode: "fallback", state: "idle", message: "renderer idle", renderMs: 0 });
   const [hitDebug, setHitDebug] = useState<Record<string, unknown>>({});
   const [showHitBoxes, setShowHitBoxes] = useState(false);
-  const [instruction, setInstruction] = useState("Make selected measures more lyrical while preserving harmony.");
+  const [showBeatGrid, setShowBeatGrid] = useState(true);
+  const [hoverTarget, setHoverTarget] = useState<HitTarget | null>(null);
+  const [clickPreview, setClickPreview] = useState<ClickToNotatePreview | null>(null);
+  const [instruction, setInstruction] = useState("将选中音符升高大二度，并保持节奏不变。");
   const [agentConstraints, setAgentConstraints] = useState({ preserve_harmony: true, preserve_form: true, preserve_manual_edits: true, patch_size_limit: "small", target_staff: "both", target_voice: "all" });
+  const [musicalityControls, setMusicalityControls] = useState<MusicalityControls>(DEFAULT_MUSICALITY_CONTROLS);
   const [patchPreview, setPatchPreview] = useState<any>(null);
+  const [agentWorkflow, setAgentWorkflow] = useState<"strict" | "legacy">("strict");
+  const [strictGeneration, setStrictGeneration] = useState<StrictGenerationPreview | null>(null);
+  const [strictBusy, setStrictBusy] = useState(false);
+  const [strictHistory, setStrictHistory] = useState<StrictPatchHistory>(EMPTY_STRICT_PATCH_HISTORY);
   const [agentPatchHistory, setAgentPatchHistory] = useState<ScorePatch[]>([]);
   const [explanation, setExplanation] = useState<any>(null);
   const [validation, setValidation] = useState<any>({});
@@ -91,27 +150,101 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   const [recentOperations, setRecentOperations] = useState<ScoreOperation[]>([]);
   const [autosaveProject, setAutosaveProject] = useState<any>(null);
   const [playbackState, setPlaybackState] = useState<PlaybackState>(EMPTY_PLAYBACK_STATE);
+  const [notationHosts, setNotationHosts] = useState<any[]>([]);
+  const [bridgeHost, setBridgeHost] = useState("musescore");
+  const [bridgeSession, setBridgeSession] = useState<any>(null);
+  const [bridgeDeepLinkSessionId, setBridgeDeepLinkSessionId] = useState(() => {
+    if (typeof window === "undefined") return "";
+    const querySession = bridgeSessionIdFromSearch(window.location.search);
+    if (querySession) return querySession;
+    return safeBridgeSessionId(readPendingDesktopSession().session_id);
+  });
   const playbackTickRef = useRef<number>(0);
 
   const selectedRange = useMemo(() => selectionToRange(scoreDocument, selection), [scoreDocument, selection]);
   const selectedSummary = useMemo(() => selectionSummary(scoreDocument, selection), [scoreDocument, selection]);
+  const strictScopes = useMemo(
+    () => buildStrictScoreScopes(selectedRange, selection.eventIds, agentConstraints),
+    [agentConstraints, selectedRange, selection.eventIds]
+  );
+  const strictPatchRange = useMemo(
+    () => strictGeneration?.patch
+      ? measureRangeForScope(scoreDocument, strictGeneration.patch.target_scope, selectedRange)
+      : selectedRange,
+    [scoreDocument, selectedRange, strictGeneration]
+  );
   const playbackMap = useMemo(() => buildPlaybackMap(scoreDocument), [scoreDocument]);
   const selectedMeasureId = selection.measureIds[selection.measureIds.length - 1] || "m1";
   const selectedEventId = selection.eventIds[selection.eventIds.length - 1] || "";
   const selectedMeasure = scoreDocument.measures.find((measure) => measure.measure_id === selectedMeasureId) || scoreDocument.measures[0];
+  const scoreCursor = useMemo(
+    () => validateScoreCursor(scoreDocument, { ...scoreCursorFromNoteInput(noteCursor, editMode, scoreDocument, cursorSnap), pitch: cursorPitch }),
+    [cursorPitch, cursorSnap, editMode, noteCursor, scoreDocument]
+  );
+
+  useEffect(() => {
+    getNotationHosts()
+      .then((payload) => setNotationHosts(payload.hosts || []))
+      .catch(() => setNotationHosts([]));
+  }, []);
 
   useEffect(() => {
     setScoreDocument(initialScore);
     setHistory(EMPTY_OPERATION_HISTORY);
     setSelection({ ...EMPTY_SELECTION, measureIds: ["m1"], anchorMeasureId: "m1" });
     setPatchPreview(null);
+    setStrictGeneration(null);
+    setStrictHistory(EMPTY_STRICT_PATCH_HISTORY);
     setAgentPatchHistory([]);
     setDirtyMeasures([]);
     setRecentOperations([]);
   }, [initialScore]);
 
   useEffect(() => {
+    if (!bridgeDeepLinkSessionId) return;
+    let cancelled = false;
+    setStatus("loading MuseScore bridge session");
+    getNotationBridgeWorkspace(bridgeDeepLinkSessionId)
+      .then((payload) => {
+        if (cancelled) return;
+        const restoredScore = payload.score_document as ScoreDocument;
+        setScoreDocument(restoredScore);
+        setHistory(payload.operation_history || EMPTY_OPERATION_HISTORY);
+        setBridgeSession(payload.session);
+        setBridgeHost(payload.session?.host_id || "musescore");
+        setSelection(selectionFromNotationHostContext(restoredScore, payload.session?.host_context));
+        setPatchPreview(null);
+        setStrictGeneration(null);
+        setStrictHistory(EMPTY_STRICT_PATCH_HISTORY);
+        setAgentPatchHistory([]);
+        setDirtyMeasures([]);
+        setRecentOperations([]);
+        setStatus(`${payload.session?.host_id || "notation"} bridge session restored`);
+      })
+      .catch((error: any) => {
+        if (!cancelled) setStatus(`bridge session load failed: ${error.message}`);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [bridgeDeepLinkSessionId]);
+
+  useEffect(() => {
+    return subscribeDesktopOpenSession((payload) => {
+      const sessionId = safeBridgeSessionId(payload.session_id);
+      if (!sessionId) return;
+      const url = new URL(window.location.href);
+      url.searchParams.set("bridge_session", sessionId);
+      url.searchParams.set("desktop", "1");
+      window.history.replaceState({}, "", url);
+      setBridgeDeepLinkSessionId(sessionId);
+    });
+  }, []);
+
+  useEffect(() => {
     setNoteCursor((current) => ({ ...current, ...cursorMeasureFromSelection(scoreDocument, selection, current) }));
+    const selected = selectedEventFromSelection(scoreDocument, selection);
+    if (selected?.event?.pitch) setCursorPitch(selected.event.pitch);
   }, [scoreDocument, selection]);
 
   useEffect(() => {
@@ -145,9 +278,17 @@ export default function ScoreWorkbench({ result }: { result: any }) {
       event.preventDefault();
       if (action.type === "set_duration") setNoteCursor((current) => ({ ...current, duration: action.duration, dotted: action.duration.startsWith("dotted_") }));
       if (action.type === "toggle_dotted") setNoteCursor((current) => ({ ...current, dotted: !current.dotted }));
+      if (action.type === "toggle_note_input") setEditMode((current) => (current === "note_input" ? "select" : "note_input"));
       if (action.type === "input_pitch") handleInputPitch(action.step, action.chordTone);
       if (action.type === "input_rest") handleInputRest();
-      if (action.type === "transpose") transposeSelected(action.semitones);
+      if (action.type === "transpose") selection.eventIds.length ? transposeSelected(action.semitones) : applyScoreCursor(transposeCursorPitch(scoreCursor, action.semitones));
+      if (action.type === "cursor_step") applyScoreCursor(moveScoreCursor(scoreDocument, scoreCursor, action.steps));
+      if (action.type === "cursor_measure") applyScoreCursor(jumpScoreCursorMeasure(scoreDocument, scoreCursor, action.delta));
+      if (action.type === "cursor_boundary") applyScoreCursor(jumpScoreCursorBoundary(scoreDocument, scoreCursor, action.boundary));
+      if (action.type === "cursor_pitch") selection.eventIds.length ? transposeSelected(action.semitones) : applyScoreCursor(transposeCursorPitch(scoreCursor, action.semitones));
+      if (action.type === "switch_staff") applyScoreCursor(switchCursorStaff(scoreCursor, action.reverse));
+      if (action.type === "switch_voice") applyScoreCursor(switchCursorVoice(scoreCursor));
+      if (action.type === "set_accidental") setNoteCursor((current) => ({ ...current, accidental: action.accidental }));
       if (action.type === "delete_selection") deleteSelected();
       if (action.type === "undo") handleUndo();
       if (action.type === "redo") handleRedo();
@@ -160,7 +301,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [editMode, noteCursor, selection, scoreDocument, history, playbackState]);
+  }, [editMode, noteCursor, selection, scoreDocument, history, playbackState, scoreCursor]);
 
   useEffect(() => {
     if (!playbackState.playing) return;
@@ -217,6 +358,11 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   }
 
   async function handleUndo() {
+    const strictEntry = strictHistory.done[strictHistory.done.length - 1];
+    if (strictEntry?.afterScore === scoreDocument) {
+      handleStrictUndo();
+      return;
+    }
     try {
       const payload = await undoWorkbenchOperation(scoreDocument, history);
       setScoreDocument(payload.score_document);
@@ -230,6 +376,11 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   }
 
   async function handleRedo() {
+    const strictEntry = strictHistory.undone[strictHistory.undone.length - 1];
+    if (strictEntry?.beforeScore === scoreDocument) {
+      handleStrictRedo();
+      return;
+    }
     try {
       const payload = await redoWorkbenchOperation(scoreDocument, history);
       setScoreDocument(payload.score_document);
@@ -242,11 +393,99 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     }
   }
 
+  async function handleStrictGenerate() {
+    setStrictBusy(true);
+    setStatus("generating strict ScorePatch preview");
+    try {
+      const payload = await generateStrictScorePatchPreview(
+        scoreDocument,
+        instruction,
+        strictScopes.targetScope,
+        strictScopes.protectedScope
+      ) as StrictGenerationPreview;
+      setStrictGeneration(payload);
+      if (payload.preview?.validation_report) setValidation(payload.preview.validation_report);
+      if (payload.status === "generated") setStatus(`strict preview ${payload.preview?.validation_report.status || "ready"}`);
+      else setStatus(`${payload.status}: ${payload.reason || "instruction not supported"}`);
+    } catch (error: any) {
+      setStrictGeneration(null);
+      setStatus(`strict preview failed: ${error.message}`);
+    } finally {
+      setStrictBusy(false);
+    }
+  }
+
+  async function handleStrictApply() {
+    const patch = strictGeneration?.patch;
+    if (!patch) return;
+    setStrictBusy(true);
+    setStatus("applying strict ScorePatch transaction");
+    try {
+      const beforeScore = scoreDocument;
+      const payload = await applyStrictScorePatch(scoreDocument, patch);
+      setValidation(payload.validation_report || {});
+      if (!payload.committed) {
+        setStrictGeneration((current) => current ? { ...current, preview: payload } : current);
+        setStatus(payload.rollback_reason || "strict patch rolled back");
+        return;
+      }
+      const afterScore = payload.score_document as ScoreDocument;
+      setScoreDocument(afterScore);
+      setStrictHistory((current) => recordStrictPatch(
+        current,
+        { patch, beforeScore, afterScore, validationReport: payload.validation_report }
+      ));
+      setDirtyMeasures(Array.from(
+        { length: strictPatchRange.end_measure - strictPatchRange.start_measure + 1 },
+        (_, index) => strictPatchRange.start_measure + index
+      ));
+      setStrictGeneration(null);
+      setStatus("strict patch committed");
+    } catch (error: any) {
+      setStatus(`strict apply failed: ${error.message}`);
+    } finally {
+      setStrictBusy(false);
+    }
+  }
+
+  function handleStrictReject() {
+    setStrictGeneration(null);
+    setStatus("strict patch rejected; canonical score unchanged");
+  }
+
+  function handleStrictUndo() {
+    const result = undoStrictPatch(strictHistory, scoreDocument);
+    if (!result) {
+      setStatus("strict undo unavailable after intervening edits");
+      return;
+    }
+    setScoreDocument(result.scoreDocument);
+    setValidation(result.validationReport);
+    setStrictGeneration(null);
+    setStrictHistory(result.history);
+    setStatus("strict patch undone");
+  }
+
+  function handleStrictRedo() {
+    const result = redoStrictPatch(strictHistory, scoreDocument);
+    if (!result) {
+      setStatus("strict redo unavailable after intervening edits");
+      return;
+    }
+    setScoreDocument(result.scoreDocument);
+    setValidation(result.validationReport);
+    setStrictGeneration(null);
+    setStrictHistory(result.history);
+    setStatus("strict patch redone");
+  }
+
   async function handleAgentEdit(value = instruction, constraintsOverride = agentConstraints) {
     setStatus("previewing agent patch");
     try {
       const preview = await requestAgentScoreEdit(scoreDocument, value, selectedRange, constraintsOverride, {
         current_selection: selectedSummary,
+        current_score_cursor: scoreCursor,
+        musicality_controls: musicalityControls,
         recent_operations: recentOperations,
         dirty_measures: dirtyMeasures,
         validation_warnings: validation?.warnings || [],
@@ -331,13 +570,49 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   async function handleImport(file: File) {
     const musicxml = await file.text();
     try {
-      const payload = await importMusicXmlToScoreDocument(musicxml, "Imported through Score Workbench");
+      let payload;
+      try {
+        payload = await createNotationBridgeSession(
+          bridgeHost,
+          musicxml,
+          file.name,
+          "Imported through Sera professional notation bridge"
+        );
+        setBridgeSession(payload.session);
+      } catch {
+        payload = await importMusicXmlToScoreDocument(musicxml, "Imported through Score Workbench");
+        setBridgeSession(null);
+      }
       setScoreDocument(payload.score_document);
       setHistory(payload.operation_history || EMPTY_OPERATION_HISTORY);
+      setStrictGeneration(null);
+      setStrictHistory(EMPTY_STRICT_PATCH_HISTORY);
       setSelection({ ...EMPTY_SELECTION, measureIds: ["m1"], anchorMeasureId: "m1" });
-      setStatus("MusicXML imported");
+      setStatus(payload.session ? `${payload.session.host_id} bridge session created` : "MusicXML imported without bridge session");
     } catch (error: any) {
       setStatus(`import failed: ${error.message}`);
+    }
+  }
+
+  async function handleExportHostRevision() {
+    if (!bridgeSession?.session_id) {
+      setStatus("Import host-exported MusicXML before exporting a synchronized revision");
+      return;
+    }
+    setStatus("exporting notation host revision");
+    try {
+      const payload = await exportNotationBridgeRevision(
+        bridgeSession.session_id,
+        scoreDocument,
+        Number(bridgeSession.revision || 0)
+      );
+      setBridgeSession(payload.session);
+      const fileName = String(payload.output_path || `${bridgeSession.session_id}.musicxml`).split(/[\\/]/).pop() || "sera_revision.musicxml";
+      downloadTextFile(fileName, payload.musicxml);
+      setValidation(payload.validation_report || {});
+      setStatus(`${payload.session.host_id} revision ${payload.revision} exported`);
+    } catch (error: any) {
+      setStatus(`host revision export failed: ${error.message}`);
     }
   }
 
@@ -346,6 +621,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     setScoreDocument(project.score_document);
     setHistory(project.operation_history);
     setAgentPatchHistory(project.agent_patch_history);
+    setBridgeSession(null);
     setSelection({ ...EMPTY_SELECTION, measureIds: ["m1"], anchorMeasureId: "m1" });
     setStatus("project opened and migrated to V0.8");
   }
@@ -408,6 +684,26 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     }
   }
 
+  function handleResetView() {
+    setLayoutMode("fit_width");
+    setZoom(layoutConfigForMode("fit_width").defaultZoom);
+    setRenderNonce((current) => current + 1);
+    requestAnimationFrame(() => {
+      document.querySelector(".score-canvas-wrap")?.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+    });
+    setStatus("score view reset");
+  }
+
+  function handleRerenderScore() {
+    setRenderNonce((current) => current + 1);
+    setStatus("score re-render requested");
+  }
+
+  function handleOpenMusicXmlTextPreview() {
+    setMusicXmlPreviewOpen(true);
+    setStatus("MusicXML text preview opened");
+  }
+
   function handleInputPitch(step: string, chordTone = false) {
     const check = canInsertAtCursor(scoreDocument, noteCursor);
     if (!check.ok) {
@@ -415,6 +711,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
       return;
     }
     runOperation(createInsertNoteOperation(scoreDocument, noteCursor, step, chordTone));
+    setCursorPitch(pitchFromStep(step, noteCursor));
     setNoteCursor((current) => advanceCursor(scoreDocument, current));
     setNoteWarning("");
   }
@@ -430,21 +727,33 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     setNoteWarning("");
   }
 
-  function handleCanvasNoteInput(target: HitTarget | null, point: { x: number; y: number }, chordTone: boolean) {
-    const measure = scoreDocument.measures.find((item) => item.measure_id === target?.measureId) || selectedMeasure;
-    if (!measure) return;
-    const staff = point.y > 126 ? "left_hand" : "right_hand";
-    const offset = Math.max(0, Math.round(((point.x - 58) % 128) / 22) * 0.5);
-    const cursor = { ...noteCursor, measureId: measure.measure_id, measureNumber: measure.number, staff: staff as "right_hand" | "left_hand", offset };
+  function handleCanvasNoteInput(preview: ClickToNotatePreview | null, chordTone: boolean) {
+    if (!preview) return;
+    const cursor = {
+      ...noteCursor,
+      measureId: preview.measureId,
+      measureNumber: preview.measureNumber,
+      staff: preview.staff,
+      voice: preview.voice,
+      offset: preview.offset,
+      duration: preview.duration.replace("dotted_", "") as NoteDuration,
+      dotted: preview.dotted,
+      accidental: preview.accidentalMode === "none" ? "" : preview.accidentalMode,
+      octave: Number(preview.pitch.match(/\d/)?.[0] || noteCursor.octave)
+    };
     setNoteCursor(cursor);
-    const pitch = pitchFromCanvasPoint(point.y, staff);
-    const check = canInsertAtCursor(scoreDocument, cursor);
-    if (!check.ok) {
-      setNoteWarning(check.warning);
+    setCursorPitch(preview.pitch);
+    if (!preview.valid) {
+      setNoteWarning(preview.warning || "Click insertion is not valid at this location.");
       return;
     }
-    const operation = createInsertNoteOperation(scoreDocument, cursor, pitch[0], chordTone);
-    runOperation({ ...operation, after: { ...operation.after, pitch } });
+    const operation = createClickToNotateOperation(preview, chordTone);
+    if (!operation) return;
+    runOperation(operation);
+    const eventId = String(operation.after.event_id || operation.target.event_id || "");
+    if (eventId) setSelection(selectEvent({ ...EMPTY_SELECTION, measureIds: [preview.measureId], anchorMeasureId: preview.measureId }, eventId, preview.measureId));
+    setNoteCursor((current) => advanceCursor(scoreDocument, current));
+    setNoteWarning("");
   }
 
   function insertPitch(pitch: string) {
@@ -456,6 +765,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     const cursor = { ...noteCursor, octave };
     const operation = createInsertNoteOperation(scoreDocument, cursor, pitch[0]);
     runOperation({ ...operation, after: { ...operation.after, pitch } });
+    setCursorPitch(pitch);
     setNoteCursor((current) => advanceCursor(scoreDocument, current));
   }
 
@@ -502,7 +812,24 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   }
 
   function generateAccompaniment() {
-    runOperations(generateLeftHandAccompanimentOperations(scoreDocument, selectedRange.start_measure, selectedRange.end_measure, "arpeggiated"), "left-hand accompaniment generated");
+    runOperations(generateLeftHandAccompanimentOperations(scoreDocument, selectedRange.start_measure, selectedRange.end_measure, musicalityControls.accompaniment_style === "block_chords" ? "block_chord" : "arpeggiated"), "left-hand accompaniment generated");
+  }
+
+  function applyScoreCursor(cursor: ScoreCursor) {
+    setCursorSnap(cursor.snap);
+    setCursorPitch(cursor.pitch);
+    setNoteCursor((current) => noteInputFromScoreCursor(cursor, current));
+    setStatus(`cursor M${cursor.measure_number} beat ${cursor.beat.toFixed(2)} ${cursor.staff} voice ${cursor.voice}`);
+  }
+
+  function handleCursorMove(target: HitTarget | null, point: { x: number; y: number }) {
+    const next = scoreCursorFromHit(scoreDocument, scoreCursor, target, point);
+    if (next) applyScoreCursor(next);
+  }
+
+  function applyMusicalityTool(toolInstruction: string) {
+    setInstruction(toolInstruction);
+    handleAgentEdit(toolInstruction, { ...agentConstraints, musicality_controls: musicalityControls, current_score_cursor: scoreCursor });
   }
 
   function handlePlay() {
@@ -538,12 +865,13 @@ export default function ScoreWorkbench({ result }: { result: any }) {
     <section className="workbench-shell">
       <ScoreToolbar
         accidental={noteCursor.accidental}
-        canRedo={history.undone.length > 0}
-        canUndo={history.done.length > 0}
+        canRedo={history.undone.length > 0 || Boolean(strictHistory.undone.length && strictHistory.undone[strictHistory.undone.length - 1].beforeScore === scoreDocument)}
+        canUndo={history.done.length > 0 || Boolean(strictHistory.done.length && strictHistory.done[strictHistory.done.length - 1].afterScore === scoreDocument)}
         dotted={noteCursor.dotted}
         duration={noteCursor.duration}
         editMode={editMode}
         loop={playbackState.loop}
+        layoutMode={layoutMode}
         onAccidental={(accidental) => setNoteCursor((current) => ({ ...current, accidental: accidental as NoteInputCursor["accidental"] }))}
         onDotted={() => setNoteCursor((current) => ({ ...current, dotted: !current.dotted }))}
         onDuration={(duration: NoteDuration) => setNoteCursor((current) => ({ ...current, duration, dotted: duration.startsWith("dotted_") }))}
@@ -553,15 +881,19 @@ export default function ScoreWorkbench({ result }: { result: any }) {
         onExportPdf={handleExportPdf}
         onFitWidth={() => setZoom(1)}
         onImport={handleImport}
+        onLayoutMode={setLayoutMode}
         onLoop={(loop) => setPlaybackState((current) => ({ ...current, loop }))}
-        onNew={() => { setScoreDocument(createEmptyScoreDocument(8)); setSelection({ ...EMPTY_SELECTION, measureIds: ["m1"], anchorMeasureId: "m1" }); }}
+        onNew={() => { setScoreDocument(createEmptyScoreDocument(8)); setBridgeSession(null); setSelection({ ...EMPTY_SELECTION, measureIds: ["m1"], anchorMeasureId: "m1" }); }}
+        onOpenMusicXmlTextPreview={handleOpenMusicXmlTextPreview}
         onOpen={handleOpenProject}
         onPlay={handlePlay}
         onRedo={handleRedo}
+        onRerender={handleRerenderScore}
         onRendererMode={(mode) => setRendererMode(mode as RendererMode)}
+        onResetView={handleResetView}
         onSave={handleSaveProject}
         onSlur={slurSelected}
-        onStaff={(staff) => setNoteCursor((current) => ({ ...current, staff }))}
+        onStaff={(staff) => { setNoteCursor((current) => ({ ...current, staff })); setCursorPitch(staff === "left_hand" ? "C3" : "C4"); }}
         onStop={handleStop}
         onTie={tieSelected}
         onTool={setTool}
@@ -574,11 +906,58 @@ export default function ScoreWorkbench({ result }: { result: any }) {
         voice={noteCursor.voice}
         zoom={zoom}
       />
+      <div className="workbench-metadata-strip">
+        <strong>{scoreDocument.title || "Untitled Sera Score"}</strong>
+        <span>{scoreDocument.composer || "Sera"}</span>
+        <span>{scoreDocument.global.key}</span>
+      </div>
+      <section className="workbench-panel notation-bridge-panel">
+        <div>
+          <strong>{t("notationBridge.title")}</strong>
+          <p>{t("notationBridge.importHint")}</p>
+        </div>
+        <label>
+          {t("notationBridge.host")}
+          <select disabled={Boolean(bridgeSession)} onChange={(event) => setBridgeHost(event.target.value)} value={bridgeHost}>
+            {(notationHosts.length ? notationHosts : [
+              { host_id: "musescore", display_name: "MuseScore Studio" },
+              { host_id: "sibelius", display_name: "Avid Sibelius Ultimate" },
+              { host_id: "musicxml", display_name: "Generic MusicXML" }
+            ]).map((host) => (
+              <option key={host.host_id} value={host.host_id}>{host.display_name}</option>
+            ))}
+          </select>
+        </label>
+        <div className="notation-bridge-status">
+          <span>{t("notationBridge.session")}: {bridgeSession?.session_id || t("notationBridge.notConnected")}</span>
+          <span>{t("notationBridge.revision")}: {bridgeSession?.revision ?? 0}</span>
+          <span>{bridgeSession ? t("notationBridge.fileReady") : t("notationBridge.directPending")}</span>
+        </div>
+        <button disabled={!bridgeSession} onClick={handleExportHostRevision} type="button">
+          {t("notationBridge.exportRevision")}
+        </button>
+      </section>
+      <LocationBar
+        cursor={scoreCursor}
+        clickPreview={clickPreview}
+        hoverText={hoverText(scoreDocument, hoverTarget, t)}
+        selectionText={selectionText(selectedSummary, t)}
+        validationState={validation?.errors?.length ? "error" : validation?.warnings?.length ? "warning" : "ok"}
+      />
       {autosaveProject && (
         <section className="autosave-banner">
-          <strong>Unsaved V0.8 project found</strong>
-          <button onClick={() => { const project = migrateWorkbenchProject(autosaveProject); setScoreDocument(project.score_document); setHistory(project.operation_history); setAgentPatchHistory(project.agent_patch_history); setAutosaveProject(null); }} type="button">Recover</button>
-          <button onClick={() => { clearAutosave(); setAutosaveProject(null); }} type="button">Discard</button>
+          <strong>{t("autosave.found")}</strong>
+          <button onClick={() => { const project = migrateWorkbenchProject(autosaveProject); setScoreDocument(project.score_document); setHistory(project.operation_history); setAgentPatchHistory(project.agent_patch_history); setAutosaveProject(null); }} type="button">{t("autosave.recover")}</button>
+          <button onClick={() => { clearAutosave(); setAutosaveProject(null); }} type="button">{t("autosave.discard")}</button>
+        </section>
+      )}
+      {musicXmlPreviewOpen && (
+        <section className="workbench-panel musicxml-preview-panel">
+          <div className="panel-title-row">
+            <h2>{t("workbench.musicxmlPreview")}</h2>
+            <button onClick={() => setMusicXmlPreviewOpen(false)} type="button">{t("workbench.close")}</button>
+          </div>
+          <pre>{scoreDocumentToSimpleMusicXml(scoreDocument)}</pre>
         </section>
       )}
       <div className="workbench-grid">
@@ -597,41 +976,55 @@ export default function ScoreWorkbench({ result }: { result: any }) {
           <DynamicsPalette onSelect={updateSelectedDynamic} />
           <ArticulationPalette onSelect={(item) => selectedEventId && runOperation(operationForSelectedEvent(selectedEventId, "update_articulation", { articulations: [item] }))} />
           <section className="workbench-tool-group">
-            <h3>Lines and Staff</h3>
+            <h3>{t("workbench.linesAndStaff")}</h3>
             <div className="palette-grid">
-              <button onClick={tieSelected} type="button">Tie</button>
-              <button onClick={slurSelected} type="button">Slur</button>
-              <button onClick={() => runOperations(selection.eventIds.map((eventId) => operationForSelectedEvent(eventId, "update_staff", { staff: "left_hand" })), "moved to left hand")} type="button">To LH</button>
-              <button onClick={() => runOperations(selection.eventIds.map((eventId) => operationForSelectedEvent(eventId, "update_staff", { staff: "right_hand" })), "moved to right hand")} type="button">To RH</button>
-              <button onClick={generateAccompaniment} type="button">Generate LH</button>
+              <button onClick={tieSelected} type="button">{t("workbench.tie")}</button>
+              <button onClick={slurSelected} type="button">{t("workbench.slur")}</button>
+              <button onClick={() => runOperations(selection.eventIds.map((eventId) => operationForSelectedEvent(eventId, "update_staff", { staff: "left_hand" })), "moved to left hand")} type="button">{t("workbench.toLeftHand")}</button>
+              <button onClick={() => runOperations(selection.eventIds.map((eventId) => operationForSelectedEvent(eventId, "update_staff", { staff: "right_hand" })), "moved to right hand")} type="button">{t("workbench.toRightHand")}</button>
+              <button onClick={generateAccompaniment} type="button">{t("workbench.generateLeftHand")}</button>
             </div>
           </section>
           <KeyboardShortcutsHelp />
+          <MusicalityControlPanel controls={musicalityControls} onApplyTool={applyMusicalityTool} onChange={setMusicalityControls} />
         </aside>
         <main className="workbench-center">
           <ScoreCanvas
+            clickPreview={clickPreview}
+            cursorSnap={cursorSnap}
             editMode={editMode}
             hoverEventId={hoverEventId}
+            hoverTarget={hoverTarget}
+            inputTool={tool}
+            layoutMode={layoutMode}
+            noteInputCursor={noteCursor}
             onClearSelection={() => setSelection(clearSelection())}
+            onClickPreview={setClickPreview}
+            onCursorMove={handleCursorMove}
             onDragEdit={(eventIds, deltaY, deltaX, duplicate) => runOperations(buildDragOperations(scoreDocument, eventIds, deltaY, deltaX, duplicate), "drag edit applied")}
             onHitDebug={setHitDebug}
             onHoverEvent={setHoverEventId}
+            onHoverTarget={setHoverTarget}
             onNoteInput={handleCanvasNoteInput}
             onRenderStatus={setRendererStatus}
             onSelectAll={() => setSelection(selectAllMeasures(scoreDocument))}
             onSelectEvent={(eventId, measureId, additive) => setSelection((current) => selectEvent(current, eventId, measureId, additive))}
             onSelectMeasure={(measureId, additive, rangeSelect) => setSelection((current) => rangeSelect ? selectMeasureRange(scoreDocument, current.anchorMeasureId || current.measureIds[0] || measureId, measureId) : selectMeasure(current, measureId, additive))}
             onSelectTargets={(targets) => setSelection(selectTargets(targets))}
-            patchRange={patchPreview?.patch?.target_range}
+            patchRange={agentWorkflow === "strict" && strictGeneration?.patch ? strictPatchRange : patchPreview?.patch?.target_range}
             playbackMeasure={playbackState.currentMeasure}
             rendererMode={rendererMode}
+            renderNonce={renderNonce}
             scoreDocument={scoreDocument}
+            scoreCursor={scoreCursor}
             selectedEventIds={selection.eventIds}
             selectedMeasureIds={selection.measureIds}
+            showBeatGrid={showBeatGrid}
             showHitBoxes={showHitBoxes}
             validationWarnings={validation?.warnings || []}
             zoom={zoom}
           />
+          {agentWorkflow === "strict" && <StrictScoreComparison generation={strictGeneration} />}
           <PlaybackScrubber
             onLoop={(loop) => setPlaybackState((current) => ({ ...current, loop }))}
             onPlay={handlePlay}
@@ -653,27 +1046,79 @@ export default function ScoreWorkbench({ result }: { result: any }) {
         <aside className="workbench-right">
           <ScoreInspector onOperation={runOperation} scoreDocument={scoreDocument} selectedEventId={selectedEventId} selectedMeasureId={selectedMeasureId} />
           <section className="workbench-panel hit-debug-panel">
-            <h2>Hit Mapping</h2>
+            <h2>{t("workbench.hitMapping")}</h2>
             <label className="inline-check">
               <input checked={showHitBoxes} onChange={(event) => setShowHitBoxes(event.target.checked)} type="checkbox" />
-              show hit boxes
+              {t("workbench.showHitBoxes")}
+            </label>
+            <label className="inline-check">
+              <input checked={showBeatGrid} onChange={(event) => setShowBeatGrid(event.target.checked)} type="checkbox" />
+              {t("workbench.showBeatGrid")}
+            </label>
+            <label>
+              {t("workbench.location.snap")}
+              <select value={cursorSnap} onChange={(event) => setCursorSnap(event.target.value as ScoreCursorSnap)}>
+                <option value="beat">{formatMusicTerm("beat", t)}</option>
+                <option value="eighth">{formatMusicTerm("eighth", t)}</option>
+                <option value="sixteenth">{formatMusicTerm("sixteenth", t)}</option>
+                <option value="triplet">{formatMusicTerm("triplet", t)}</option>
+              </select>
             </label>
             <pre>{JSON.stringify({ selected: selectedSummary, hitDebug, dirtyMeasures }, null, 2)}</pre>
           </section>
-          <AgentEditPanel
-            constraints={agentConstraints}
-            disabled={status.includes("previewing")}
-            instruction={instruction}
-            onAgentEdit={handleAgentEdit}
-            onConstraintsChange={setAgentConstraints}
-            onExplain={handleExplainSelection}
-            selectedRange={selectedRange}
-            setInstruction={setInstruction}
-          />
-          <PatchPreviewPanel onAccept={handleAcceptPatch} onPartialApply={handlePartialPatch} onRegenerate={() => handleAgentEdit()} onReject={handleRejectPatch} preview={patchPreview} />
+          <section className="workbench-panel workflow-switcher">
+            <div className="panel-heading tight">
+              <h2>Agent workflow</h2>
+              <span>本地 Electron</span>
+            </div>
+            <div className="toolbar-row">
+              <button className={agentWorkflow === "strict" ? "active" : ""} onClick={() => setAgentWorkflow("strict")} type="button">
+                Strict ScorePatch
+              </button>
+              <button className={agentWorkflow === "legacy" ? "active" : ""} onClick={() => setAgentWorkflow("legacy")} type="button">
+                Legacy compatible
+              </button>
+            </div>
+          </section>
+          {agentWorkflow === "strict" ? (
+            <SeraEditResearchPanel
+              busy={strictBusy}
+              canRedo={Boolean(strictHistory.undone.length && strictHistory.undone[strictHistory.undone.length - 1].beforeScore === scoreDocument)}
+              canUndo={Boolean(strictHistory.done.length && strictHistory.done[strictHistory.done.length - 1].afterScore === scoreDocument)}
+              generation={strictGeneration}
+              instruction={instruction}
+              onApply={handleStrictApply}
+              onGenerate={handleStrictGenerate}
+              onRedo={handleStrictRedo}
+              onReject={handleStrictReject}
+              onTargetStaffChange={(value) => setAgentConstraints((current) => ({ ...current, target_staff: value }))}
+              onTargetVoiceChange={(value) => setAgentConstraints((current) => ({ ...current, target_voice: value }))}
+              onUndo={handleStrictUndo}
+              protectedScope={strictScopes.protectedScope}
+              setInstruction={setInstruction}
+              targetScope={strictScopes.targetScope}
+              targetStaff={agentConstraints.target_staff}
+              targetVoice={agentConstraints.target_voice}
+            />
+          ) : (
+            <>
+              <AgentEditPanel
+                constraints={agentConstraints}
+                currentLocation={scoreCursor}
+                disabled={status.includes("previewing")}
+                instruction={instruction}
+                onAgentEdit={handleAgentEdit}
+                onConstraintsChange={setAgentConstraints}
+                onExplain={handleExplainSelection}
+                selectedRange={selectedRange}
+                setInstruction={setInstruction}
+              />
+              <PatchPreviewPanel onAccept={handleAcceptPatch} onPartialApply={handlePartialPatch} onRegenerate={() => handleAgentEdit()} onReject={handleRejectPatch} preview={patchPreview} />
+            </>
+          )}
           {explanation && (
             <section className="workbench-panel">
-              <h2>Selection Explanation</h2>
+              <h2>{t("workbench.selectionExplanation")}</h2>
               <p>{explanation.summary}</p>
               <p>{explanation.harmony_analysis}</p>
               <p>{explanation.melodic_analysis}</p>
@@ -681,13 +1126,13 @@ export default function ScoreWorkbench({ result }: { result: any }) {
             </section>
           )}
           <section className="workbench-panel">
-            <h2>Validation</h2>
-            <button onClick={refreshValidation} type="button">Run validator</button>
+            <h2>{t("mode.validation")}</h2>
+            <button onClick={refreshValidation} type="button">{t("workbench.runValidator")}</button>
             <pre>{JSON.stringify(validation || {}, null, 2)}</pre>
           </section>
         </aside>
       </div>
-      <ScoreStatusBar history={history} rendererStatus={`${rendererStatus.activeMode} ${rendererStatus.state} ${rendererStatus.renderMs}ms`} scoreDocument={scoreDocument} status={`${status}; playback M${playbackState.currentMeasure || "-"}; recent ops ${recentOperations.length}`} />
+      <ScoreStatusBar cursor={scoreCursor} history={history} hoverTarget={hoverTarget} layoutMode={layoutMode} rendererStatus={rendererStatus} scoreDocument={scoreDocument} status={`${status}; playback M${playbackState.currentMeasure || "-"}; recent ops ${recentOperations.length}`} zoom={zoom} />
     </section>
   );
 }
@@ -703,6 +1148,63 @@ function cursorMeasureFromSelection(score: ScoreDocument, selection: { measureId
     staff: (event?.staff as NoteInputCursor["staff"]) || current.staff,
     voice: (event?.voice === 2 ? 2 : 1) as 1 | 2
   };
+}
+
+function selectedEventFromSelection(score: ScoreDocument, selection: { measureIds: string[]; eventIds: string[] }) {
+  for (const measure of score.measures) {
+    const event = measure.events.find((item) => selection.eventIds.includes(item.event_id));
+    if (event) return { measure, event };
+  }
+  return null;
+}
+
+function scoreCursorFromHit(score: ScoreDocument, current: ScoreCursor, target: HitTarget | null, point: { x: number; y: number }): ScoreCursor | null {
+  if (!target?.measureId) return null;
+  const measure = score.measures.find((item) => item.measure_id === target.measureId) || score.measures.find((item) => item.number === target.measureNumber);
+  if (!measure) return null;
+  if (target.type === "event" && target.eventId) {
+    const event = measure.events.find((item) => item.event_id === target.eventId);
+    if (event) {
+      return validateScoreCursor(score, {
+        ...current,
+        measure_id: measure.measure_id,
+        measure_number: measure.number,
+        staff: event.staff === "left_hand" ? "left_hand" : "right_hand",
+        voice: event.voice === 2 ? 2 : 1,
+        offset: Number(event.offset || 0),
+        duration: event.duration as ScoreCursor["duration"],
+        pitch: event.pitch || (event.staff === "left_hand" ? "C3" : "C4")
+      });
+    }
+  }
+  return validateScoreCursor(score, {
+    ...current,
+    measure_id: measure.measure_id,
+    measure_number: measure.number,
+    staff: target.staff === "left_hand" ? "left_hand" : "right_hand",
+    voice: target.voice === 2 ? 2 : 1,
+    offset: typeof target.offset === "number" ? target.offset : current.offset,
+    pitch: target.pitch || pitchFromCanvasPoint(point.y, target.staff === "left_hand" ? "left_hand" : "right_hand")
+  });
+}
+
+function hoverText(score: ScoreDocument, target: HitTarget | null, t?: Translate) {
+  if (!target) return "";
+  if (target.type === "event" && target.eventId) {
+    const found = findEvent(score, target.eventId);
+    if (!found) return target.fallbackReason || "";
+    const eventType = t ? formatMusicTerm(found.event.type, t) : found.event.type;
+    const duration = t ? formatDuration(found.event.duration, t) : found.event.duration;
+    const staff = t ? formatMusicTerm(found.event.staff, t) : found.event.staff;
+    return `${eventType} ${found.event.pitch || (t ? formatMusicTerm("rest", t) : "rest")} ${duration} M${found.measure.number} ${t ? formatMusicTerm("beat", t) : "beat"} ${(Number(found.event.offset || 0) + 1).toFixed(2)} ${staff} V${found.event.voice}`;
+  }
+  return `${t ? formatMusicTerm("measure", t) : "measure"} ${target.measureNumber} ${t ? formatMusicTerm("beat", t) : "beat"} ${Number(target.beat || 1).toFixed(2)} ${target.staff && t ? formatMusicTerm(target.staff, t) : target.staff || ""} V${target.voice || 1}`;
+}
+
+function selectionText(summary: Record<string, any>, t?: Translate) {
+  if (summary.event_count) return `${summary.event_count} ${t ? formatMusicTerm("event", t) : "events"} / ${summary.note_count} ${t ? formatMusicTerm("note", t) : "notes"}`;
+  if (summary.measure_count) return `${summary.measure_count} ${t ? formatMusicTerm("measure", t) : "measures"}`;
+  return t ? t("workbench.none") : "none";
 }
 
 function findEvent(score: ScoreDocument, eventId: string) {

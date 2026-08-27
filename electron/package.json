@@ -1,0 +1,61 @@
+{
+  "name": "sera-desktop-shell",
+  "version": "1.0.0-dev.14",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "dist": "electron-builder --win dir --x64",
+    "dist:portable": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "local.sera.desktop",
+    "productName": "Sera",
+    "asar": true,
+    "directories": {
+      "output": "../dist_desktop/release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist_desktop/backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "../dist_desktop/frontend",
+        "to": "frontend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Sera-${version}-${arch}.${ext}"
+    }
+  }
+}

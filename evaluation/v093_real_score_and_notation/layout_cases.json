@@ -1,0 +1,5 @@
+[
+  { "id": "eight_measures", "measure_count": 8, "max_measures_per_system": 4 },
+  { "id": "sixteen_measures", "measure_count": 16, "max_measures_per_system": 4 },
+  { "id": "thirty_two_measures", "measure_count": 32, "max_measures_per_system": 4 }
+]

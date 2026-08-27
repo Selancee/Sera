@@ -1,0 +1,4 @@
+case_id,prompt,note_hit_success_rate,measure_hit_success_rate,beat_grid_snap_success_rate,cursor_navigation_success_rate,note_input_success_rate,keyboard_shortcut_success_rate,drag_pitch_success_rate,staff_voice_switch_success_rate,user_location_visibility_score,operation_reversibility_rate,overall_precision_proxy_score
+empty_measure_click,Click empty space in measure 2 and enter an eighth-note C.,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.85,1.0,1.0,0.985
+staff_voice_switch,"Move the cursor to left hand voice 2, then insert a rest.",1.0,1.0,0.8,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.98
+missed_note_hit,Click near but not exactly on a notehead and verify fallback targeting.,1.0,1.0,0.8,1.0,1.0,1.0,1.0,0.85,1.0,1.0,0.965

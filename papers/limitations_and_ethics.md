@@ -37,3 +37,65 @@ Closer-to-notation editing creates a stronger impression that the system is a co
 Manual-edit preservation reduces accidental overwrites, but it is not a legal or artistic authorship solution. Operation history helps show which edits came from the user and which came from the Agent, yet co-authorship, copyright, and style-boundary decisions still require human policy and disclosure.
 
 Autosave and project packages store detailed creative process data. Future user studies should disclose what is logged, where it is saved, and how it will be used. Researchers should avoid collecting unnecessary prompt, operation, or authorship metadata.
+## V0.9 Limitations
+
+Sera V0.9 is still not a complete MuseScore replacement. It improves cursor localization, beat snapping, staff/voice targeting, and hit fallback, but it does not yet provide full professional engraving, tuplets, pedal, lyrics, fingering, MIDI keyboard input, or real audio-synchronized playback.
+
+The musicality benchmark uses proxy metrics. Rhythmic diversity, cadence presence, accompaniment activity, and texture contrast are useful for detecting collapse modes, but they are not equivalent to human aesthetic judgment.
+
+Agent edits and automatic accompaniment must respect the user's original composition. Local regeneration should remain previewable, preserve recent manual edits by default, and make style-changing accompaniment or cadence changes explicit before the user accepts them.
+# V0.91 Limitations Addendum
+
+Sera remains a research prototype, not a full MuseScore replacement. Click-to-notate improves direct input, but professional engraving, wrapped multi-system layout, complex tuplets, ornaments, pedal, lyrics, fingering, MIDI keyboard input, and real audio playback remain limited.
+
+The new pitch mapping is a deterministic approximation from staff geometry and should not be treated as a complete semantic interpretation of engraved notation. The i18n layer improves accessibility, but translation quality still needs user review. Desktop packaging improves deployment readiness, but installer signing and auto-update are not yet implemented.
+
+Agent local edits and automatically generated accompaniment must continue to respect user authorship. Any generated accompaniment can change musical style and should remain previewable and reversible.
+## V0.92 Limitations
+
+Sera is still not a complete MuseScore replacement. The V0.92 wrapped fallback layout improves readability, but it is not professional engraving and still lacks full tuplets, ornaments, pedal, lyrics, fingering, MIDI keyboard input, and real audio-rendered playback.
+
+The consistency report is a structural diagnostic. Matching event counts does not prove that engraving semantics, performance timing, or musical interpretation are perfect.
+
+Custom style profiles are transparent rule-based mappings. They preserve user intent better than forcing all unknown prompts into classical, but they are not equivalent to a trained style-conditioned symbolic model.
+
+Automatic accompaniment and style mapping may change a user's original creative direction. Local regeneration and Agent edits should remain previewable, reversible, and respectful of user-created material.
+
+## V0.93 Limitations
+
+V0.93 removes fake final rendering and playback paths, but fallback ScoreDocument SVG is still not professional engraving. A backend SVG/PNG/PDF preview requires optional MuseScore CLI or Verovio; when those tools are missing, Sera reports structured failure and falls back to real MusicXML text or ScoreDocument rendering.
+
+Notation grammar normalization is intentionally basic. It checks measure capacity, dotted durations, simple rests, staff/voice consistency, and barline tie splits, but it does not implement complete engraving rules for tuplets, beams across complex syncopation, pedal, fingering, lyrics, or high-level editorial notation choices.
+
+Musicality validation remains a proxy. Left-hand activity, rhythmic variety, cadence presence, and quarter-note dominance are useful collapse detectors, not aesthetic judgments. Larger model training is still postponed until real score rendering, notation grammar, and style-profile conditioning are stable enough to evaluate.
+
+## V0.95 Limitations
+
+Metadata synchronization prevents stale generated key titles when the title contains recognizable key text, but it cannot infer every possible human-authored title convention. User-supplied titles are preserved unless they contain stale generated key text, so unusual title/key references may still need manual review.
+
+Melody-line extraction uses staff and voice labels as a pragmatic proxy for musical role. This avoids treating left-hand accompaniment as melody, but it is not a complete voice-leading or polyphonic melody analysis. Cross-measure repair is intentionally conservative and may report unresolved problems rather than rewriting phrase structure.
+
+Playback events remain a mixed performance stream and should not be used for melodic grammar claims. Any paper using V0.95 diagnostics should cite `melody_line_report` and `cross_measure_melodic_grammar_report`, not raw playback event intervals.
+## V0.96 Limitations
+
+The V0.96 melody expectation and harmony scores are structural proxy metrics. They can detect common failures such as unresolved tritones, weak closure, missing style vocabulary, or poor role coverage, but they do not equal aesthetic quality or human musical judgment.
+
+Candidate ranking may choose a technically cleaner result that is less interesting than another candidate. Future UI work should expose candidate comparison and let users override the selected candidate. Automatic harmony, voicing, and accompaniment can change stylistic intent, so local regeneration should remain previewable and reversible.
+
+The optional `tracks` model prepares multi-instrument generation but does not yet implement full orchestration, instrument-specific notation, or a professional multi-part editing interface.
+
+## V0.96.1 Limitations
+
+V0.96.1 improves final-score realization, but the musicality checks are still proxy rules. A jazz score containing 7ths and rootless voicing is not automatically aesthetically convincing, and a pop hook contour score does not replace human judgment.
+
+The actual-score validator is intentionally conservative and transparent. It catches metadata/final-note mismatches such as a jazz profile producing only plain triads, but it does not model every valid stylistic exception. Automatic voicing can still change the user's intended texture, so regeneration must remain inspectable and reversible.
+
+Candidate audition UI, human-in-the-loop candidate choice, and larger style-conditioned symbolic model training remain deferred.
+
+## V0.96.2 Limitations
+
+V0.96.2 improves the rule-layer phrase baseline, but it is still a proxy for musical taste. Motif memory, target-tone hits, and tension/release curves can reduce mechanical templates, yet they do not prove that a melody is aesthetically strong.
+
+The style phrase strategies are transparent heuristics rather than learned idioms. Jazz guide tones, Chinese pentatonic material, romantic long lines, and cyberpunk modal cells are simplified symbolic approximations.
+
+Automatic accompaniment interaction is currently reported and lightly scored; it is not a full contrapuntal or performance-aware accompaniment planner. Larger symbolic-model training, candidate audition UI, and human-rated musicality studies remain future work.

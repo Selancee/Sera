@@ -1,0 +1,51 @@
+{
+  "task_id": "dynamics_006",
+  "score_id": "score_006",
+  "category": "dynamics_articulation",
+  "difficulty": "easy",
+  "instruction_en": "Add staccato to only the selected note while preserving pitch and duration.",
+  "instruction_zh": "只给所选音符添加断奏，并保持音高和时值。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ],
+    "event_ids": [
+      "s006_m2_rh_3"
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/dynamics_006.json",
+  "expected_output_path": "expected_outputs/dynamics_006.score.json",
+  "expected_constraints": [
+    {
+      "type": "articulation_equals",
+      "event_id": "s006_m2_rh_3",
+      "value": [
+        "staccato"
+      ]
+    },
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "dynamics_articulation"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

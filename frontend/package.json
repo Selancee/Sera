@@ -1,13 +1,14 @@
 {
   "name": "sera-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0-dev.14",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "vitest run"
+    "test": "vitest run",
+    "i18n:check": "vitest run src/i18n/__tests__/translationCoverage.test.ts"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.3",

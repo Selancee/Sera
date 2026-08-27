@@ -1,4 +1,5 @@
 import type { ScoreDocument } from "../scoreTypes";
+import type { ScoreLayoutMode } from "../layoutConfig";
 
 export type RendererMode = "auto" | "osmd" | "vexflow" | "fallback";
 export type RendererState = "idle" | "loading" | "ready" | "fallback" | "error";
@@ -18,9 +19,12 @@ export type HitTarget = {
   eventId?: string;
   staff?: string;
   voice?: number;
-  hitMode?: "osmd" | "overlay" | "fallback" | "nearest";
+  hitMode?: "osmd" | "overlay" | "fallback" | "nearest" | "expanded" | "beat_grid";
   confidence?: number;
   fallbackReason?: string;
+  beat?: number;
+  offset?: number;
+  pitch?: string;
 };
 
 export type LayoutBox = HitTarget & {
@@ -35,6 +39,7 @@ export type RenderContext = {
   scoreDocument: ScoreDocument;
   musicxml: string;
   zoom: number;
+  layoutMode?: ScoreLayoutMode;
 };
 
 export type RendererResult = RendererStatus & {

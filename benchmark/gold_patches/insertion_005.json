@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_insertion_005",
+  "source_score_id": "score_005",
+  "source_fingerprint": "sha256:539e84ff5317ece73e7c6e531445ad439a0d12bdbfe36ffdc1bcb8fa5d7bde67",
+  "instruction": "Replace the final note of measure 2 staff 1 with F-sharp 4 without changing the measure duration.",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "insertion_005_op1",
+      "type": "delete_event",
+      "selector": {
+        "event_ids": [
+          "m2_rh_4"
+        ]
+      },
+      "arguments": {},
+      "preconditions": [],
+      "expected_change_count": 1
+    },
+    {
+      "operation_id": "insertion_005_op2",
+      "type": "insert_note",
+      "selector": {
+        "measure": 2
+      },
+      "arguments": {
+        "event_id": "insertion_005_replacement",
+        "pitch": "F#4",
+        "duration": "quarter",
+        "offset": 3,
+        "voice": 1,
+        "staff": "right_hand"
+      },
+      "preconditions": [],
+      "expected_change_count": 1
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "changed_element_count",
+      "value": 2
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_batch1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

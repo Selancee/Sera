@@ -1,0 +1,121 @@
+{
+  "profile": "draft",
+  "passed": true,
+  "checks": {
+    "required_files": {
+      "missing": [],
+      "count": 27
+    },
+    "version_consistency": {
+      "passed": true,
+      "versions": {
+        "python": "1.0.0.dev14",
+        "backend": "1.0.0-dev.14",
+        "frontend": "1.0.0-dev.14",
+        "electron": "1.0.0-dev.14",
+        "citation": "1.0.0-dev.14",
+        "codemeta": "1.0.0-dev.14"
+      }
+    },
+    "software_license": {
+      "passed": true,
+      "spdx": "MIT"
+    },
+    "manuscript_limits": {
+      "main_text_words": 1675,
+      "main_text_limit": 3000,
+      "abstract_words": 105,
+      "abstract_target": "approximately 100",
+      "keywords": 6,
+      "keyword_limit": 6
+    },
+    "figures": {
+      "count": 1,
+      "files": [
+        "figure1_architecture.svg"
+      ],
+      "limit": 6
+    },
+    "software_verification_experiment": {
+      "passed": true,
+      "completed_runs": 360,
+      "expected_runs": 360,
+      "error_count": 0,
+      "result_class": "mock_non_formal",
+      "formal_results_allowed": false
+    },
+    "product_runtime_acceptance": {
+      "passed": true,
+      "runs": 720,
+      "tasks": 120,
+      "failed": 0,
+      "reproducibility_rate": 1.0,
+      "cross_language_output_rate": 1.0,
+      "source_preserving_host_export": {
+        "expected": 660,
+        "succeeded": 660,
+        "failed": 0,
+        "rate": 1.0
+      },
+      "complete_preservation_rate": 1.0,
+      "paper_model_result_eligible": false,
+      "hashed_evidence_files": 1380,
+      "review_host_outputs": 220
+    },
+    "host_scope_robustness": {
+      "passed": true,
+      "runs": 240,
+      "failed": 0,
+      "expanded_runs": 174,
+      "expanded_runs_passed": 174,
+      "cross_language_output_rate": 1.0,
+      "source_preserving_host_export": {
+        "expected": 220,
+        "succeeded": 220,
+        "failed": 0,
+        "rate": 1.0
+      },
+      "complete_preservation_rate": 1.0,
+      "hashed_evidence_files": 460
+    },
+    "human_benchmark_review": {
+      "passed": true,
+      "primary_reviewed": 120,
+      "secondary_reviewed": 30,
+      "stale_records": 0,
+      "decisions": {
+        "compliant": 120
+      },
+      "record_count": 194,
+      "independent_secondary_reviewer": false,
+      "hashes_match": true,
+      "claim_boundary": "The records establish human review of task instructions, scopes, Gold results, and host-visible outputs. The repeated secondary check used the same pseudonymous reviewer and therefore does not establish inter-rater reliability or general musical/aesthetic quality."
+    },
+    "submission_metadata": {
+      "passed": false,
+      "blockers": [
+        "GitHub repository is not confirmed public",
+        "immutable release tag is missing",
+        "permanent archive DOI is missing",
+        "copyright owner has not confirmed the MIT release",
+        "publication field author_name is not supplied",
+        "publication field affiliation is not supplied",
+        "publication field support_email is not supplied"
+      ]
+    }
+  },
+  "warnings": [
+    "The 30-task secondary check was repeated by the same pseudonymous reviewer; do not report inter-rater reliability",
+    "Draft is technically complete but not submission-ready"
+  ],
+  "errors": [],
+  "submission_blockers": [
+    "GitHub repository is not confirmed public",
+    "immutable release tag is missing",
+    "permanent archive DOI is missing",
+    "copyright owner has not confirmed the MIT release",
+    "publication field author_name is not supplied",
+    "publication field affiliation is not supplied",
+    "publication field support_email is not supplied"
+  ]
+}

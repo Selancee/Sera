@@ -23,6 +23,7 @@ export default function AgentEditPanel({
   disabled,
   constraints,
   onConstraintsChange,
+  currentLocation,
   selectedRange
 }: {
   instruction: string;
@@ -32,6 +33,7 @@ export default function AgentEditPanel({
   disabled: boolean;
   constraints: Constraints;
   onConstraintsChange: (value: Constraints) => void;
+  currentLocation?: Record<string, any>;
   selectedRange: Record<string, any>;
 }) {
   function updateConstraint(key: string, value: any) {
@@ -53,6 +55,11 @@ export default function AgentEditPanel({
         <h2>Agent Tools</h2>
         <span>M{selectedRange.start_measure}-{selectedRange.end_measure}</span>
       </div>
+      {currentLocation && (
+        <div className="agent-location">
+          Target M{currentLocation.measure_number} beat {Number(currentLocation.beat || 1).toFixed(2)} {currentLocation.staff === "left_hand" ? "left hand" : "right hand"} voice {currentLocation.voice}
+        </div>
+      )}
       <textarea rows={4} value={instruction} onChange={(event) => setInstruction(event.target.value)} />
       <div className="constraint-grid">
         {[

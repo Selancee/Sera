@@ -1,0 +1,51 @@
+{
+  "experiment_id": "softwarex_verification_120_v1",
+  "created_at": "2026-08-23T06:22:20.321100+00:00",
+  "result_class": "mock_non_formal",
+  "formal_results_allowed": false,
+  "split": "core",
+  "task_count": 120,
+  "conditions": [
+    "full_rewrite",
+    "patch_only",
+    "sera_full"
+  ],
+  "repetitions": 1,
+  "providers": [
+    {
+      "provider": "mock",
+      "model": "benchmark-fixture-v2-roundtrip"
+    }
+  ],
+  "prompt_metadata": {
+    "full_rewrite": {
+      "prompt_version": "full_rewrite_v1.1",
+      "prompt": "Edit the supplied MusicXML according to the instruction. Return only the complete modified MusicXML. Preserve unspecified content.",
+      "prompt_hash": "b01fbc0ae516a4c6123dfcd4571f31c5e0eedda1c7bc4daad395cab32c9680b7"
+    },
+    "patch_only": {
+      "prompt_version": "patch_only_v1.1",
+      "prompt": "Return only a ScorePatch 1.0.0 JSON object. Use the supplied stable event IDs and target scope. Do not return MusicXML, prose, or Markdown.",
+      "prompt_hash": "eb511a90d206fd44cd7247799c48301fb9e12ca200ffe060c74ed1f4f7adc3d9"
+    },
+    "sera_full": {
+      "prompt_version": "sera_patch_v1.1",
+      "prompt": "Return only a source-bound ScorePatch 1.0.0 JSON object. Stay inside target scope, do not alter protected scope, satisfy explicit constraints, and return a refusal object for conflicts or unsupported requests. Do not return Markdown.",
+      "prompt_hash": "b819c35bfa6c0ce79a6ddfc492801c05fb9b066c17bc535e5644e376ca7ef19c"
+    },
+    "sera_repair": {
+      "prompt_version": "sera_repair_v1.0",
+      "prompt": "Repair the candidate into one valid source-bound ScorePatch 1.0.0 JSON object. Change only what the listed validation errors require. Preserve target and protected scopes. Return a refusal object if the instruction is conflicting or unsupported. Return JSON only.",
+      "prompt_hash": "50c6123a6660741e0c2c65d381b308e401c238059d9b2f395a66bc47b93be4eb"
+    }
+  },
+  "config_hash": "1f9743c1ac85b3447399304938b127a2765e795f0b9f38468a8fbca5484d2157",
+  "benchmark_hash": "a0e53d760f83a4e8e1f2e80f78fdc535d959e8748bed208546ebeeead90df403",
+  "git": {
+    "commit": "b4eb13921bcbc48a95136cc744cabc094112a541",
+    "dirty": true
+  },
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependency_lock_hash": "426843c27b646340a3a0e032e0faee33623530329fb0ffcffb4f2426aec0bbbf"
+}

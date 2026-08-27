@@ -1,0 +1,17 @@
+[
+  {
+    "case_id": "romantic_long_line",
+    "style": "romantic",
+    "prompt": "Romantic piano, long lyrical phrase, delayed resolution, 8 measures"
+  },
+  {
+    "case_id": "chinese_open_space",
+    "style": "chinese",
+    "prompt": "Chinese pentatonic piano, open-space phrase, 8 measures"
+  },
+  {
+    "case_id": "cyberpunk_cell",
+    "style": "cyberpunk",
+    "prompt": "Cyberpunk piano, short cell, ostinato tension, 8 measures"
+  }
+]

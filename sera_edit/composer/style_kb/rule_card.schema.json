@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sera.local/schemas/composer-rule-card-v0.4.json",
+  "title": "Sera Composer V0.4 Atomic Rule Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rule_id", "domain", "title_zh", "action_zh", "avoid_zh", "styles", "modes", "instruments", "goals", "meters", "tags", "priority", "hard_constraint", "provenance"],
+  "properties": {
+    "rule_id": {"type": "string", "pattern": "^[A-Z0-9_-]+$"},
+    "domain": {"type": "string"},
+    "title_zh": {"type": "string", "minLength": 2, "maxLength": 80},
+    "action_zh": {"type": "string", "minLength": 8, "maxLength": 280},
+    "avoid_zh": {"type": "string", "minLength": 8, "maxLength": 280},
+    "styles": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "modes": {"type": "array", "minItems": 1, "items": {"enum": ["theory_variation", "reharmonize", "orchestration_advice"]}},
+    "instruments": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "goals": {"type": "array", "items": {"type": "string"}},
+    "meters": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "tags": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "priority": {"type": "number", "minimum": 0, "maximum": 1},
+    "hard_constraint": {"type": "boolean"},
+    "provenance": {
+      "enum": [
+        "sera_original_engineering_summary_v03",
+        "sera_original_research_summary_v04"
+      ]
+    }
+  }
+}

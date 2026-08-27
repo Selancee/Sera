@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_key_010",
+  "source_score_id": "score_013",
+  "source_fingerprint": "sha256:9864ef2f688482eae2f17cce48bd795f7623014c6144397a76117f3f02df3caf",
+  "instruction": "Change the key signature to B minor without transposing any note.",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "key_010_op1",
+      "type": "change_key_signature",
+      "selector": {},
+      "arguments": {
+        "key": "B minor"
+      },
+      "preconditions": [],
+      "expected_change_count": null
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "key_equals",
+      "value": "B minor"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

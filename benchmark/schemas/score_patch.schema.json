@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sera.local/schemas/score_patch.schema.json",
+  "title": "SeraEdit ScorePatch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "patch_id",
+    "source_score_id",
+    "source_fingerprint",
+    "instruction",
+    "target_scope",
+    "protected_scope",
+    "preconditions",
+    "operations",
+    "expected_effects",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "patch_id": {"type": "string", "minLength": 1},
+    "source_score_id": {"type": "string", "minLength": 1},
+    "source_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "instruction": {"type": "string", "minLength": 1},
+    "target_scope": {"$ref": "#/$defs/scope"},
+    "protected_scope": {"$ref": "#/$defs/scope"},
+    "preconditions": {"type": "array", "items": {"type": "object"}},
+    "operations": {"type": "array", "items": {"$ref": "#/$defs/operation"}},
+    "expected_effects": {"type": "array", "items": {"type": "object"}},
+    "provenance": {"type": "object"}
+  },
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "measures": {"type": "array", "items": {"type": "integer", "minimum": 1}, "uniqueItems": true},
+        "parts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "staffs": {"type": "array", "items": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string"}]}, "uniqueItems": true},
+        "voices": {"type": "array", "items": {"type": "integer", "minimum": 1}, "uniqueItems": true},
+        "event_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "exclude_measures": {"type": "array", "items": {"type": "integer", "minimum": 1}, "uniqueItems": true},
+        "exclude_event_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "time_range": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "array", "prefixItems": [{"type": ["string", "number"]}, {"type": ["string", "number"]}], "minItems": 2, "maxItems": 2},
+            {"type": "object", "required": ["start", "end"], "properties": {"start": {"type": ["string", "number"]}, "end": {"type": ["string", "number"]}}, "additionalProperties": false}
+          ]
+        },
+        "whole_score": {"type": "boolean"}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "type", "selector", "arguments", "preconditions"],
+      "properties": {
+        "operation_id": {"type": "string", "minLength": 1},
+        "type": {
+          "enum": [
+            "transpose", "set_pitch", "set_duration", "insert_note", "insert_rest",
+            "delete_event", "set_dynamic", "set_articulation", "set_tie", "set_slur",
+            "change_key_signature", "change_time_signature", "move_to_voice",
+            "duplicate_motif", "replace_chord", "batch"
+          ]
+        },
+        "selector": {"type": "object"},
+        "arguments": {"type": "object"},
+        "preconditions": {"type": "array", "items": {"type": "object"}},
+        "expected_change_count": {"type": ["integer", "null"], "minimum": 0}
+      }
+    }
+  }
+}

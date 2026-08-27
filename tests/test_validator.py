@@ -20,3 +20,14 @@ def test_musicxml_validator_rejects_bad_xml() -> None:
 
     assert result.valid is False
     assert result.issues
+
+
+def test_musicxml_validator_accepts_complete_rest_only_measure() -> None:
+    musicxml = """<?xml version="1.0"?><score-partwise version="3.1"><part-list><score-part id="P1"><part-name>Piano</part-name></score-part></part-list><part id="P1"><measure number="1"><attributes><divisions>1</divisions><time><beats>4</beats><beat-type>4</beat-type></time></attributes><note><rest/><duration>4</duration><voice>1</voice><type>whole</type><staff>1</staff></note></measure></part></score-partwise>"""
+
+    result = MusicXMLValidator().validate_text(musicxml)
+
+    assert result.valid is True
+    assert result.metrics["empty_measure_count"] == 0
+    assert result.metrics["rest_only_measure_count"] == 1
+    assert "No pitched notes found" in result.warnings

@@ -1,0 +1,4 @@
+case_id,style,harmony_style_match_score,jazz_extension_presence_rate,pentatonic_verticalization_score,classical_voice_leading_score,pop_progression_match_rate,pass
+jazz,jazz,1.0,1.0,0.0,1.0,0.0,1.0
+chinese,chinese,1.0,0.0,1.0,1.0,0.0,1.0
+classical,classical,1.0,0.0,0.0,1.0,0.0,1.0

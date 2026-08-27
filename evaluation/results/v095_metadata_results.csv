@@ -1,0 +1,6 @@
+case_id,composer_edit_success_rate,composer_export_success_rate,metadata_sync_success_rate,run_id,title_key_consistency_rate,work_title_key_consistency_rate
+prompt_c_major_ui_a_minor,1.0,1.0,1.0,20260702_145336_374517_4c9a4a5d,1.0,1.0
+prompt_a_minor_ui_default_c_major,1.0,1.0,1.0,20260702_145336_498469_d315f37f,1.0,1.0
+no_prompt_key_ui_a_minor,1.0,1.0,1.0,20260702_145336_620871_139de05f,1.0,1.0
+edit_title_and_composer,1.0,1.0,1.0,,1.0,1.0
+empty_composer_safe_default_then_edit,1.0,1.0,1.0,,1.0,1.0

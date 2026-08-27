@@ -1,110 +1,107 @@
-const NOTE_X = 38;
-const MEASURE_WIDTH = 104;
-const STAFF_TOP = 68;
-const STAFF_GAP = 10;
-const PITCH_Y = {
-  C: 110,
-  D: 105,
-  E: 100,
-  F: 95,
-  G: 90,
-  A: 85,
-  B: 80
-};
+import { resolveBackendBaseUrl } from "../desktop/desktopRuntime";
+import { resolveScoreRenderSource } from "../score/fakeScoreGuard";
+import { downloadTextFile } from "../score/musicxmlAdapter";
+import { useI18n } from "../i18n/useI18n";
+import { formatMusicTerm } from "../i18n/musicTerms";
+import { asArray, displayValue } from "./componentDataGuards.js";
+import RealMusicXmlPreview from "./RealMusicXmlPreview.jsx";
+import ScoreSourceBadge from "./ScoreSourceBadge.jsx";
 
-function noteY(note) {
-  const step = String(note || "C").charAt(0).toUpperCase();
-  return PITCH_Y[step] || 94;
-}
-
-function collectNotes(measures) {
-  return measures.flatMap((measure, measureIndex) => {
-    const source = measure.notes?.length ? measure.notes : ["1", "2", "3", "5"];
-    return source.map((degree, noteIndex) => ({
-      id: `${measure.index}-${noteIndex}`,
-      x: measureIndex * MEASURE_WIDTH + NOTE_X + noteIndex * 18,
-      y: noteY(degreeToNote(degree)),
-      measure: measure.index
-    }));
-  });
-}
-
-function degreeToNote(degree) {
-  const map = { "1": "C", "2": "D", "3": "E", b3: "E", "4": "F", "5": "G", "6": "A", b6: "A", "7": "B" };
-  return map[degree] || "C";
-}
-
-export default function ScoreViewer({ measures, result }) {
-  const width = Math.max(880, measures.length * MEASURE_WIDTH + 40);
-  const notes = collectNotes(measures);
-  const musicxmlPreview = result?.musicxml ? result.musicxml.slice(0, 3000) : "";
-  const generation = result?.generation || {};
+export default function ScoreViewer({ onOpenWorkbench, onPlayMidi, rendererStatus, result }) {
+  const { t } = useI18n();
+  const sourceResolution = resolveScoreRenderSource(result);
+  const { scoreDocument, musicxml, source } = sourceResolution;
+  const musicxmlPreview = musicxml ? musicxml.slice(0, 3000) : "";
+  const generation = result?.generation || result?.generation_metadata || {};
   const symbolicModel = result?.metadata?.symbolic_model || {};
+  const instrumentation = asArray(result?.intent?.instrumentation ?? result?.intent?.instruments);
+  const downloadName = `${result?.run_id || "sera-generated"}.musicxml`;
+  const midiUrl = result?.midi_url || result?.exports?.midi || "";
 
   return (
     <section className="panel score-panel">
       <div className="panel-heading">
-        <h2>Score</h2>
-        <span>{result?.intent?.instrumentation?.join(", ") || result?.intent?.instruments?.join(", ") || "MusicXML"}</span>
+        <h2>{t("score.renderedScore")}</h2>
+        <span>{instrumentation.length ? instrumentation.map((item) => formatMusicTerm(displayValue(item), t)).join(", ") : "MusicXML"}</span>
       </div>
-      <div className="score-scroll">
-        <svg className="score-svg" viewBox={`0 0 ${width} 180`} role="img" aria-label="Generated score preview">
-          <rect x="0" y="0" width={width} height="180" rx="6" />
-          {[0, 1, 2, 3, 4].map((line) => (
-            <line
-              key={line}
-              x1="24"
-              x2={width - 24}
-              y1={STAFF_TOP + line * STAFF_GAP}
-              y2={STAFF_TOP + line * STAFF_GAP}
-            />
-          ))}
-          {measures.map((measure, index) => (
-            <g key={measure.index}>
-              <line
-                className="barline"
-                x1={index * MEASURE_WIDTH + 24}
-                x2={index * MEASURE_WIDTH + 24}
-                y1={STAFF_TOP}
-                y2={STAFF_TOP + STAFF_GAP * 4}
-              />
-              <text x={index * MEASURE_WIDTH + 32} y="42">{measure.section}</text>
-              <text className="chord" x={index * MEASURE_WIDTH + 32} y="150">{measure.chord}</text>
-            </g>
-          ))}
-          <line
-            className="barline"
-            x1={measures.length * MEASURE_WIDTH + 24}
-            x2={measures.length * MEASURE_WIDTH + 24}
-            y1={STAFF_TOP}
-            y2={STAFF_TOP + STAFF_GAP * 4}
-          />
-          {notes.map((note) => (
-            <g className="note" key={note.id}>
-              <ellipse cx={note.x} cy={note.y} rx="6.5" ry="4.5" transform={`rotate(-18 ${note.x} ${note.y})`} />
-              <line x1={note.x + 6} x2={note.x + 6} y1={note.y} y2={note.y - 28} />
-            </g>
-          ))}
-        </svg>
+      <div className="score-source-row">
+        <ScoreSourceBadge source={source} />
+        {sourceResolution.warning && <span className="source-warning">{sourceResolution.warning}</span>}
+      </div>
+      {source === "backend_svg" && <BackendPreview url={sourceResolution.backendUrl} title="SVG score preview" />}
+      {source === "backend_png" && <BackendPreview url={sourceResolution.backendUrl} title="PNG score preview" />}
+      {source === "musicxml_osmd" && musicxml && <RealMusicXmlPreview musicxml={musicxml} />}
+      {source === "musicxml_text" && musicxml && (
+        <pre className="musicxml-render-fallback" data-testid="musicxml-render-fallback">
+          {musicxmlPreview}
+        </pre>
+      )}
+      {source === "unavailable" && (
+        <div className="empty-state score-render-error" data-testid="score-empty-state">
+          <strong>{sourceResolution.error ? t("score.noAuthoritativeScoreSource") : t("score.noAuthoritativeScore")}</strong>
+        </div>
+      )}
+      <div className="score-action-row">
+        <button disabled={!scoreDocument} onClick={onOpenWorkbench} type="button">
+          {t("score.openWorkbench")}
+        </button>
+        <button disabled={!musicxml} onClick={() => downloadTextFile(downloadName, musicxml)} type="button">
+          {t("score.downloadMusicxml")}
+        </button>
+        <button disabled={!midiUrl} onClick={onPlayMidi} type="button">
+          {t("score.playGeneratedMidi")}
+        </button>
       </div>
       <div className="musicxml-strip">
         <span>MusicXML</span>
-        <code>{result?.artifacts?.musicxml_path || "pending"}</code>
+        <code>{result?.artifacts?.musicxml_path || result?.exports?.musicxml || "pending"}</code>
       </div>
       {result && (
         <div className="musicxml-strip generation-strip">
-          <span>{generation.generator_mode || result?.metadata?.generator_mode || "generator"}</span>
+          <span>{formatMusicTerm(generation.generator_mode || result?.metadata?.generator_mode || "generator", t)}</span>
           <code>
             {symbolicModel.loaded
               ? `${symbolicModel.name || "symbolic model"} checkpoint`
-              : "rule-based fallback"}
+              : formatMusicTerm("rule_based", t)}
           </code>
         </div>
       )}
       <details className="json-details musicxml-preview">
-        <summary>MusicXML text preview</summary>
-        <pre>{musicxmlPreview || "Generate a score to inspect MusicXML. TODO: add OpenSheetMusicDisplay or Verovio engraving."}</pre>
+        <summary>{t("score.musicxmlTextPreview")}</summary>
+        <pre>{musicxmlPreview || t("score.musicxmlEmpty")}</pre>
+      </details>
+      <details className="json-details render-source-debug">
+        <summary>{t("score.renderSourceDebug")}</summary>
+        <pre>
+          {JSON.stringify(
+            {
+              source,
+              score_id: scoreDocument?.score_id || "",
+              run_id: result?.run_id || "",
+              backend_url: sourceResolution.backendUrl,
+              preview_render: result?.preview_render || generation.preview_render || null,
+              renderer_status: rendererStatus || null
+            },
+            null,
+            2
+          )}
+        </pre>
       </details>
     </section>
   );
+}
+
+function BackendPreview({ title, url }) {
+  const absolute = absoluteUrl(url);
+  return (
+    <div className="score-scroll backend-preview" data-testid="backend-score-preview">
+      <img alt={title} className="backend-preview-image" src={absolute} />
+    </div>
+  );
+}
+
+function absoluteUrl(url) {
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${resolveBackendBaseUrl()}${url.startsWith("/") ? "" : "/"}${url}`;
 }

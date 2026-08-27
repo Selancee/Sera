@@ -1,0 +1,21 @@
+experiment_id: core_mock_120_v5
+benchmark_root: benchmark
+split: core
+conditions:
+  - full_rewrite
+  - patch_only
+  - sera_full
+provider:
+  provider: mock
+  model: benchmark-fixture-v2-roundtrip
+repetitions: 1
+temperature: 0
+seed: 42
+max_tokens: 4096
+max_concurrency: 4
+max_retries: 0
+max_repair_attempts: 2
+retry_backoff_seconds: 0
+budget_limit_usd: 0
+cache: true
+formal_results_allowed: false

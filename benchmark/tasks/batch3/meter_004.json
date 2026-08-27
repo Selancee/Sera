@@ -1,0 +1,36 @@
+{
+  "task_id": "meter_004",
+  "score_id": "score_012",
+  "category": "meter_measure_structure",
+  "difficulty": "medium",
+  "instruction_en": "Replace only the displayed global time signature from 6/8 to 3/4; do not rebar, regroup, or change any event.",
+  "instruction_zh": "仅将全谱显示拍号从6/8替换为3/4；不要重新划分小节、重组节拍或修改任何事件。",
+  "target_scope": {
+    "whole_score": true
+  },
+  "protected_scope": {},
+  "gold_patch_path": "gold_patches/meter_004.json",
+  "expected_output_path": "expected_outputs/meter_004.score.json",
+  "expected_constraints": [
+    {
+      "type": "meter_equals",
+      "value": "3/4"
+    },
+    {
+      "type": "preserve_duration"
+    },
+    {
+      "type": "preserve_pitch"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch3",
+    "synthetic",
+    "deterministic",
+    "meter_measure_structure"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

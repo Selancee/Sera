@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.1 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.1">
+  <work>
+    <work-title>SeraEdit Synthetic Core Fixture 9</work-title>
+  </work>
+  <identification>
+    <creator type="composer">SeraEdit deterministic fixture generator</creator>
+  </identification>
+  <part-list>
+    <score-part id="P1"><part-name>Piano</part-name></score-part>
+  </part-list>
+  <part id="P1">
+      <measure number="1">
+        <attributes>
+          <divisions>4</divisions>
+          <key>
+            <fifths>0</fifths>
+            <mode>minor</mode>
+          </key>
+          <time>
+            <beats>6</beats>
+            <beat-type>8</beat-type>
+          </time>
+          <staves>2</staves>
+          <clef number="1"><sign>G</sign><line>2</line></clef>
+          <clef number="2"><sign>F</sign><line>4</line></clef>
+        </attributes>
+        <direction placement="above"><direction-type><metronome><beat-unit>quarter</beat-unit><per-minute>96</per-minute></metronome></direction-type></direction>
+        <direction placement="above"><direction-type><words>A I</words></direction-type></direction>
+        <!-- sera-event-id:s009_m1_rh_1 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <dynamics>
+              <mf/>
+            </dynamics>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_grace_1 -->
+        <note>
+          <grace slash="yes"/>
+          <pitch>
+            <step>B</step>
+            <octave>3</octave>
+          </pitch>
+          <voice>1</voice>
+          <type>quarter</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <articulations>
+              <accent/>
+            </articulations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_grace_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_2 -->
+        <note>
+          <pitch>
+            <step>A</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_3 -->
+        <note>
+          <pitch>
+            <step>B</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_4 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>5</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_5 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_rh_6 -->
+        <note>
+          <pitch>
+            <step>D</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_rh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <backup>
+          <duration>12</duration>
+        </backup>
+        <!-- sera-event-id:s009_m1_lh_1 -->
+        <note>
+          <pitch>
+            <step>E</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <dynamics>
+              <mf/>
+            </dynamics>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_lh_2 -->
+        <note>
+          <pitch>
+            <step>D</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_lh_3 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_lh_4 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_lh_5 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m1_lh_6 -->
+        <note>
+          <pitch>
+            <step>A</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m1_lh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+      </measure>
+      <measure number="2">
+        <direction placement="above"><direction-type><words>A I</words></direction-type></direction>
+        <!-- sera-event-id:s009_m2_rh_1 -->
+        <note>
+          <pitch>
+            <step>A</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_rh_2 -->
+        <note>
+          <pitch>
+            <step>B</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_rh_3 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>5</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_rh_4 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_rh_5 -->
+        <note>
+          <pitch>
+            <step>E</step>
+            <alter>-1</alter>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_rh_6 -->
+        <note>
+          <pitch>
+            <step>F</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <dynamics>
+              <f/>
+            </dynamics>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_rh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <backup>
+          <duration>12</duration>
+        </backup>
+        <!-- sera-event-id:s009_m2_lh_1 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_lh_2 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_lh_3 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_lh_4 -->
+        <note>
+          <pitch>
+            <step>A</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_lh_5 -->
+        <note>
+          <pitch>
+            <step>F</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m2_lh_6 -->
+        <note>
+          <pitch>
+            <step>E</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m2_lh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+      </measure>
+      <measure number="3">
+        <direction placement="above"><direction-type><words>A I</words></direction-type></direction>
+        <!-- sera-event-id:s009_m3_rh_1 -->
+        <note>
+          <pitch>
+            <step>B</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <dynamics>
+              <mf/>
+            </dynamics>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_rh_2 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>5</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_rh_3 -->
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_rh_4 -->
+        <note>
+          <pitch>
+            <step>D</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_rh_5 -->
+        <note>
+          <pitch>
+            <step>E</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_rh_6 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>1</voice>
+          <type>eighth</type>
+          <staff>1</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_rh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <backup>
+          <duration>12</duration>
+        </backup>
+        <!-- sera-event-id:s009_m3_lh_1 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_1</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_lh_2 -->
+        <note>
+          <pitch>
+            <step>A</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_2</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_lh_3 -->
+        <note>
+          <pitch>
+            <step>F</step>
+            <octave>2</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_3</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_lh_4 -->
+        <note>
+          <pitch>
+            <step>E</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">begin</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_4</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_lh_5 -->
+        <note>
+          <pitch>
+            <step>D</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">continue</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_5</other-technical>
+            </technical>
+          </notations>
+        </note>
+        <!-- sera-event-id:s009_m3_lh_6 -->
+        <note>
+          <pitch>
+            <step>G</step>
+            <octave>3</octave>
+          </pitch>
+          <duration>2</duration>
+          <voice>5</voice>
+          <type>eighth</type>
+          <staff>2</staff>
+          <beam number="1">end</beam>
+          <notations>
+            <technical>
+              <other-technical>sera-event-id:s009_m3_lh_6</other-technical>
+            </technical>
+          </notations>
+        </note>
+      </measure>
+  </part>
+</score-partwise>

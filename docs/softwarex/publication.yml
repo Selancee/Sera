@@ -1,0 +1,16 @@
+software_version: "1.0.0-dev.14"
+article_type: "Original Software Publication"
+repository_url: "https://github.com/Selancee/Sera"
+repository_public: false
+release_tag: null
+archive_url: null
+archive_doi: null
+reproducible_capsule_url: null
+author_name: "[AUTHOR NAME]"
+affiliation: "[AFFILIATION]"
+orcid: "[ORCID]"
+support_email: "[SUPPORT EMAIL]"
+funding_statement: "[FUNDING STATEMENT OR NO-SPECIFIC-FUNDING STATEMENT]"
+license_owner_confirmed: false
+benchmark_human_review_complete: true
+submission_date: null

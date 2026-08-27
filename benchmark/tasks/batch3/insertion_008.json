@@ -1,0 +1,52 @@
+{
+  "task_id": "insertion_008",
+  "score_id": "score_011",
+  "category": "insertion_deletion",
+  "difficulty": "medium",
+  "instruction_en": "Replace the first note of measure 2 staff 1 with a C-major triad of the same duration.",
+  "instruction_zh": "将第2小节第一谱表的第一个音替换为同样时值的C大三和弦。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/insertion_008.json",
+  "expected_output_path": "expected_outputs/insertion_008.score.json",
+  "expected_constraints": [
+    {
+      "type": "event_deleted",
+      "event_id": "s011_m2_rh_1"
+    },
+    {
+      "type": "chord_pitches",
+      "event_ids": [
+        "insertion_008_op1_chord_1",
+        "insertion_008_op1_chord_2",
+        "insertion_008_op1_chord_3"
+      ],
+      "value": [
+        "C4",
+        "E4",
+        "G4"
+      ]
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch3",
+    "synthetic",
+    "deterministic",
+    "insertion_deletion"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

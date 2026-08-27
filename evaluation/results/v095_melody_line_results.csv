@@ -1,0 +1,6 @@
+case_id,cross_measure_tritone_rate,left_hand_exclusion_success_rate,melody_line_extraction_success_rate,melody_line_large_leap_rate,melody_repair_success_rate,playback_stream_not_melody,run_id,unresolved_cross_measure_leap_rate
+piano_right_hand_melody_left_hand_accompaniment,0.0,1.0,1.0,0.0,1.0,,20260702_145336_750770_c96a8393,0.0
+piano_cadence_primary_melody,0.0,1.0,1.0,0.0,1.0,,20260702_145336_883071_93df7c07,0.0
+cross_measure_tritone,1.0,0.0,1.0,0.0,0.0,,,1.0
+cross_measure_octave_plus_leap,0.0,0.0,1.0,0.0,1.0,,,0.0
+mixed_playback_not_melody,0.0,1.0,1.0,0.0,1.0,True,,0.0

@@ -1,0 +1,39 @@
+{
+  "task_id": "conflict_010",
+  "score_id": "score_015",
+  "category": "conflicting_or_unsupported",
+  "difficulty": "hard",
+  "instruction_en": "Make the selected phrase sound mysteriously more beautiful without changing any notation.",
+  "instruction_zh": "让所选乐句听起来更神秘、更优美，但不要改变任何记谱内容。",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": null,
+  "expected_output_path": null,
+  "expected_constraints": [
+    {
+      "type": "refuse",
+      "reason": "unsupported_ornament_semantics"
+    }
+  ],
+  "expected_status": "refuse",
+  "unsupported_reason": "unsupported_ornament_semantics",
+  "tags": [
+    "batch3",
+    "synthetic",
+    "deterministic",
+    "conflicting_or_unsupported"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

@@ -1,0 +1,5 @@
+- **benchmark_category_distribution:** Core benchmark category distribution (120 tasks).
+- **primary_metrics:** NON-FORMAL MOCK PLACEHOLDER. Primary metrics for the three experimental conditions.
+- **preservation_comparison:** NON-FORMAL MOCK PLACEHOLDER. Task-level non-target preservation by condition.
+- **error_distribution:** NON-FORMAL MOCK PLACEHOLDER. Observed failures mapped to the fixed error taxonomy.
+- **score_edit_case_pitch_001:** Event-level before/after view of a deterministic benchmark transposition; this is not an engraving-quality score rendering.

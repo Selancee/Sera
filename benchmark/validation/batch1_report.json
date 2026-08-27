@@ -1,0 +1,220 @@
+{
+  "split_id": "batch1",
+  "task_count": 30,
+  "valid_count": 30,
+  "invalid_count": 0,
+  "automatic_validation_passed": true,
+  "human_review_pending": 30,
+  "details": [
+    {
+      "task_id": "conflict_001",
+      "valid": true,
+      "expected_status": "refuse",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "conflict_002",
+      "valid": true,
+      "expected_status": "refuse",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "conflict_003",
+      "valid": true,
+      "expected_status": "refuse",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "conflict_004",
+      "valid": true,
+      "expected_status": "refuse",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "conflict_005",
+      "valid": true,
+      "expected_status": "refuse",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "dynamics_001",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "dynamics_002",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "dynamics_003",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "dynamics_004",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "dynamics_005",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "insertion_001",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "insertion_002",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "insertion_003",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "insertion_004",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "insertion_005",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "key_001",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "key_002",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "key_003",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "key_004",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "key_005",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "pitch_001",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "pitch_002",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "pitch_003",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "pitch_004",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "pitch_005",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "rhythm_001",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "rhythm_002",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "rhythm_003",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "rhythm_004",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    },
+    {
+      "task_id": "rhythm_005",
+      "valid": true,
+      "expected_status": "success",
+      "review_status": "pending_human_review",
+      "errors": []
+    }
+  ]
+}

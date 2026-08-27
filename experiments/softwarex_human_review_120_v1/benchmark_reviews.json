@@ -1,0 +1,3629 @@
+{
+  "schema_version": "1.0.0",
+  "exported_at": "2026-08-27T04:38:01.078601+00:00",
+  "summary": {
+    "split_id": "core",
+    "total": 120,
+    "primary_reviewed": 120,
+    "secondary_reviewed": 30,
+    "secondary_target": 30,
+    "stale_records": 0,
+    "remaining": 0,
+    "completion_rate": 1.0,
+    "decisions": {
+      "compliant": 120
+    },
+    "noncompliance_rate": 0.0,
+    "issue_counts": {},
+    "categories": {
+      "compound_multi_step": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "conflicting_or_unsupported": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "dynamics_articulation": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "insertion_deletion": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "key_harmony": {
+        "total": 15,
+        "reviewed": 15,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "meter_measure_structure": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "pitch_transposition": {
+        "total": 15,
+        "reviewed": 15,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "rhythm_duration": {
+        "total": 15,
+        "reviewed": 15,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "ties_slurs_ornaments": {
+        "total": 10,
+        "reviewed": 10,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      },
+      "voice_texture": {
+        "total": 15,
+        "reviewed": 15,
+        "noncompliant": 0,
+        "noncompliance_rate": 0.0
+      }
+    },
+    "runtime_acceptance": {
+      "available": true,
+      "experiment_id": "runtime_acceptance_core_bilingual_r3_v4_20260826",
+      "evidence_class": "product_runtime_acceptance_non_formal",
+      "paper_model_result_eligible": false,
+      "tasks_passed": 120,
+      "tasks_failed": 0,
+      "runs": 720,
+      "reproducibility": {
+        "repeated_task_language_groups": 240,
+        "identical_patch_and_output_groups": 240,
+        "rate": 1.0
+      }
+    },
+    "calibration_gate": {
+      "status": "monitoring",
+      "minimum_reviewed": 20,
+      "threshold": 0.2,
+      "benchmark_repair_required": false,
+      "aesthetic_calibration_required": false,
+      "musical_problem_count": 0,
+      "musical_problem_rate": 0.0,
+      "method": "blind_pairwise_preference_calibration",
+      "target_pairwise_reviews": 24,
+      "dimensions": [
+        "melodic_coherence",
+        "harmonic_motion",
+        "voice_leading",
+        "rhythmic_vitality",
+        "texture_balance",
+        "style_fidelity",
+        "playability",
+        "overall_preference"
+      ],
+      "boundary": "Human preferences may calibrate candidate ranking; they do not become proof of universal musical quality."
+    }
+  },
+  "records": [
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "ce1e49a1-4529-4ffe-b4b8-e76c141342de",
+      "reviewed_at": "2026-08-23T09:48:28.249060+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9e2b143fdb7276529cb0b534ecb7a197c35a627c21f2045ee39fbb5d7dbac09e",
+      "task_id": "conflict_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "08fcffd7-f3c0-49fd-9b04-55e61858919f",
+      "reviewed_at": "2026-08-23T09:48:37.348890+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0c534ea55c4d2302fea9ac342af67790ac2b21e57913f98dbda9f46c6adfdeac",
+      "task_id": "conflict_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "eb68dc5f-461d-4b17-a981-56a5b4a6486c",
+      "reviewed_at": "2026-08-23T09:48:39.956396+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f170caa1c1d2b9e3fc3942bf8ac57324f790bfb51e311bb78a35b766d6bd5b3f",
+      "task_id": "conflict_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "45bdfadd-5ff9-4890-bf45-35a95748e402",
+      "reviewed_at": "2026-08-23T09:48:41.709221+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:90d1647b825e9d9977d7e052736c275ddb2ce03fb506ed61c17e06c8da7ffabd",
+      "task_id": "conflict_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "6161457b-b86e-4249-b1f9-a837e452a4b4",
+      "reviewed_at": "2026-08-23T10:15:38.995446+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:6a364e4df2a7186f99562209c269fd2981d6aab19e49d43b2aaf5fed10d1cb11",
+      "task_id": "conflict_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "4b5991fb-241e-4d44-8287-ded19274559c",
+      "reviewed_at": "2026-08-23T10:58:16.652161+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9a3b0b9b28e646416a2c3992031e8413b243301d2d512a63cc2a9c4e533deced",
+      "task_id": "dynamics_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "fce94d95-8d78-4a26-b959-5926d2735109",
+      "reviewed_at": "2026-08-23T10:58:23.485269+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4c8715f8daafdcb7d0378b23146075a74a135fcfd7a472f06d3c238e0b595b4b",
+      "task_id": "dynamics_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "0cc99437-ae58-4760-925d-778c91e677b4",
+      "reviewed_at": "2026-08-23T10:58:27.153570+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c35c33067703ab14e6d32b7baf048930ee9686c8a39a45fc1c3555d79378057f",
+      "task_id": "dynamics_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "40bef2b4-158f-40b4-b37f-6ccb2d73255b",
+      "reviewed_at": "2026-08-23T10:58:33.847033+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8cf5ef68eb6c86ee5a9162101c19922353234a5cdcc0b340f346e9cffea6e2e8",
+      "task_id": "dynamics_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "355224ad-62fb-42b9-beae-ce9ab66863fd",
+      "reviewed_at": "2026-08-23T11:00:03.160022+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d09ce59378537cdb5e02590759c0bd9a56d36ac57ef9ae83de82d7bd8a53263a",
+      "task_id": "dynamics_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 5,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "782a6996-9f13-46a2-97b9-22f9d2161161",
+      "reviewed_at": "2026-08-23T11:02:25.710337+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1e39fc84e45ae6b04e9c066767fdbf9454dac5d7fba7216e52348238e812dc0f",
+      "task_id": "insertion_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "44b35075-c6b7-4775-9527-454dd8cdb568",
+      "reviewed_at": "2026-08-23T11:02:33.914252+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1e39fc84e45ae6b04e9c066767fdbf9454dac5d7fba7216e52348238e812dc0f",
+      "task_id": "insertion_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "95855d0f-2e9b-4a8f-83e6-29f072ea30f6",
+      "reviewed_at": "2026-08-23T11:02:36.378291+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:611912a8978608228e1edecdc75ace1839fafc45f87ea9368e09dab5e1e797fd",
+      "task_id": "insertion_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "1b8fabd3-0ce0-404c-84ba-f98c1dd9562a",
+      "reviewed_at": "2026-08-23T11:02:40.901813+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2a50ed064291cb5eb1db463802a944357f4032697bb014dcb3c0c7bd9e791422",
+      "task_id": "insertion_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "a84df3f3-7740-417d-b897-b633fce440de",
+      "reviewed_at": "2026-08-23T11:02:46.834154+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:611912a8978608228e1edecdc75ace1839fafc45f87ea9368e09dab5e1e797fd",
+      "task_id": "insertion_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "40055e58-6320-46ec-8202-bbb64cb6af52",
+      "reviewed_at": "2026-08-23T11:02:47.475552+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2a50ed064291cb5eb1db463802a944357f4032697bb014dcb3c0c7bd9e791422",
+      "task_id": "insertion_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "346b2676-c953-4ba3-bdd4-babc57b8f2c1",
+      "reviewed_at": "2026-08-23T11:02:53.361861+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:7f47651cad7c67b3dcfaa80e366bf4bd3c39c6c052cef6f6e544309299264b6e",
+      "task_id": "insertion_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "02c1d6d5-b171-415a-a698-13329220c77e",
+      "reviewed_at": "2026-08-23T11:03:00.572715+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4377ab76911607c84f605a7c3730de0384eeb4abbcf1fdc3fcfb39e8f2db85eb",
+      "task_id": "insertion_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "816caf4e-9eee-4ce8-bff7-85057acb9697",
+      "reviewed_at": "2026-08-23T11:03:11.631976+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c35c33067703ab14e6d32b7baf048930ee9686c8a39a45fc1c3555d79378057f",
+      "task_id": "dynamics_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ffb491dc-13dc-46f1-b153-ab5413e3f5b9",
+      "reviewed_at": "2026-08-23T11:03:12.856658+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8cf5ef68eb6c86ee5a9162101c19922353234a5cdcc0b340f346e9cffea6e2e8",
+      "task_id": "dynamics_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "5ecd0b3a-85a4-45cb-ae80-c2ee5396e0d5",
+      "reviewed_at": "2026-08-23T11:03:14.021374+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d09ce59378537cdb5e02590759c0bd9a56d36ac57ef9ae83de82d7bd8a53263a",
+      "task_id": "dynamics_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "27152c5b-069f-497f-8ce9-8eed68f8b15f",
+      "reviewed_at": "2026-08-23T11:03:21.140288+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4c8715f8daafdcb7d0378b23146075a74a135fcfd7a472f06d3c238e0b595b4b",
+      "task_id": "dynamics_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "9fd01dd5-ef23-40f1-8d5d-c7731f564cd4",
+      "reviewed_at": "2026-08-23T11:03:21.628912+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c35c33067703ab14e6d32b7baf048930ee9686c8a39a45fc1c3555d79378057f",
+      "task_id": "dynamics_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "742622ba-6912-4c1a-bc9a-bbb16d7266b2",
+      "reviewed_at": "2026-08-23T11:03:22.131166+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8cf5ef68eb6c86ee5a9162101c19922353234a5cdcc0b340f346e9cffea6e2e8",
+      "task_id": "dynamics_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ac08a5cc-d373-448f-badd-27acbb9e4c11",
+      "reviewed_at": "2026-08-23T11:03:22.619671+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d09ce59378537cdb5e02590759c0bd9a56d36ac57ef9ae83de82d7bd8a53263a",
+      "task_id": "dynamics_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3b52e781-1af3-4b14-8339-14e6b6507595",
+      "reviewed_at": "2026-08-23T11:03:23.078595+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1e39fc84e45ae6b04e9c066767fdbf9454dac5d7fba7216e52348238e812dc0f",
+      "task_id": "insertion_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "00c9ecf2-57d5-4c4d-bf16-14d83136df63",
+      "reviewed_at": "2026-08-25T08:57:07.512820+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fd2000c9ac44145274757cc9d37efc7405e0cdf9c5e5fa90cd9ba013fc799cd6",
+      "task_id": "compound_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "1477778e-a133-4c0d-b78a-6bc155c635ba",
+      "reviewed_at": "2026-08-25T08:57:10.744223+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fdea33025f080ccf7321b1d1fc74978d475bd741a26e5ebb8bda3da2c4423fbe",
+      "task_id": "compound_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "0de456db-e173-46e9-89cf-c5e0ca8818dc",
+      "reviewed_at": "2026-08-25T08:57:12.304684+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec7c5ed8d37a13900730126a29d4537518645d21b415938ccf84e2916d049060",
+      "task_id": "compound_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "b74b0fc5-ef80-4ee0-92e2-41a0aaedbebd",
+      "reviewed_at": "2026-08-25T08:57:14.078003+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c1d01beb34d8fa3d7909dd41bafb3bf3a321f900fff73c77d4331cb3c54a9fee",
+      "task_id": "compound_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "0b119b0c-99e8-4447-b589-422aa78cba30",
+      "reviewed_at": "2026-08-25T08:57:16.038001+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fbbc8d37176e9080c5f1ff9b6e374872376667104d724a19224de8adf7e9f08a",
+      "task_id": "compound_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "6e628af0-87b3-467a-b040-f3b5cd7447e0",
+      "reviewed_at": "2026-08-25T08:57:17.724128+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d42d5be5d81cd0ddc249e0573975b2a9df2fc527f666e90a3e6bda1c11941566",
+      "task_id": "compound_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "77011aa0-86ac-4f5f-9fe4-0f0459ceacae",
+      "reviewed_at": "2026-08-25T08:57:19.428422+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3f45ba712ae372800029aca051cb935828ed435988fa6dfa443662e8614f24f6",
+      "task_id": "compound_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "44161c5c-ae9f-4b6c-8b94-0f4d08c8a699",
+      "reviewed_at": "2026-08-25T08:57:20.677131+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:659f7e4837264f22bd10c114664c829ec65de48b2fa81d4b4e7b473add187639",
+      "task_id": "compound_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "4d893473-b95e-4ab9-9aa4-46d4580d993d",
+      "reviewed_at": "2026-08-25T08:57:22.065832+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:443904d9a9d2ca3e3e9fe7d9262bf4b1eaeed75ee06bf2041d290ea09fd38c63",
+      "task_id": "compound_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "64718b71-80be-4913-9114-52a92fdcf0d5",
+      "reviewed_at": "2026-08-25T08:57:23.866232+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:267b7743377f541f3bcc75b5089bf2c08718ee2504ce5b147afc36475dc12f4e",
+      "task_id": "compound_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "ce90aecc-4a8c-4d1c-8b97-6dac71bb343b",
+      "reviewed_at": "2026-08-25T08:58:17.057056+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c8e562e347372918bf0a795b82b3806b66e7995e677f2b33b286046dee0e3248",
+      "task_id": "conflict_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "1fd03527-d181-40fd-8b6a-1edf83eb3c83",
+      "reviewed_at": "2026-08-25T08:58:18.353275+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9fdccc53078c4cd996eadc0933c87eb2645175f0ef6ff9135ca3217fcc5768ef",
+      "task_id": "conflict_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "f263ec4d-8aad-44de-a49c-377a948db322",
+      "reviewed_at": "2026-08-25T08:58:20.373653+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3ccb848f43b4c932b2436db880ef0a88d34e0a2365c3ea12a2b0f626c558bbac",
+      "task_id": "conflict_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "cac98b56-91ed-4e56-bd1a-3d8c09102811",
+      "reviewed_at": "2026-08-25T08:58:22.270576+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1a3e0e146fd8ba8620614ff83d707cf3adb785c5555366183ceb4d446f64038e",
+      "task_id": "conflict_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "已拒绝",
+      "review_id": "4a31ffcb-d3b0-4ce3-ae03-35c9a54e4fd1",
+      "reviewed_at": "2026-08-25T08:58:23.942760+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3d28c09eadd4c288f0dc97cccb322a2fe44a0618189a471a4fb77cbcd0aeeecb",
+      "task_id": "conflict_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "0381e187-0755-4c87-aa0d-97adf10d66c3",
+      "reviewed_at": "2026-08-25T09:00:05.282845+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:99d8ccd2dc8ee627d1526505f016259b8644f9bc74318ab52b8d3d89d49d619b",
+      "task_id": "dynamics_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "46fef099-1448-44ab-ac56-9ceee537afe9",
+      "reviewed_at": "2026-08-25T09:00:06.749523+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b47dd0cac717a85f1bcd81f47fa901e1f8303d6b55de683173f6045525357a93",
+      "task_id": "dynamics_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "84cd5968-5ee4-4645-b6de-e81f156b5e0a",
+      "reviewed_at": "2026-08-25T09:00:11.037032+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:363f68c0a219558157254c9cf602088110f4a4c7632c64ee5657da96327d1d80",
+      "task_id": "dynamics_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 3,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 2
+      },
+      "issue_codes": [],
+      "notes": "正常",
+      "review_id": "289d3819-9953-4361-9ed0-6c8071478692",
+      "reviewed_at": "2026-08-26T04:36:13.816695+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1f4a74377a53c60dbfa9fcfbead5194e4443a685467893a0c9993722017aa9e4",
+      "task_id": "dynamics_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "05e57612-e69f-4f1a-9d09-36a162e5a396",
+      "reviewed_at": "2026-08-26T04:36:40.137099+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b174fb0b46314e273e544ea5ac03155f00de77413be120d63a207b5ee67d8772",
+      "task_id": "dynamics_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3d92fc42-88c1-4ea2-abc4-1549ddc89f7e",
+      "reviewed_at": "2026-08-26T05:30:48.752420+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:13694d74913f36ee36ffdb275b2510f3d17adeb594af055a2a1e75efd142e968",
+      "task_id": "insertion_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "af370188-9918-41ee-a821-62dcc7a9e950",
+      "reviewed_at": "2026-08-26T05:31:10.258676+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:e4f0d223d17ad2009890445cfd4ac09eea361ac109549239dec5bf458b8c78b9",
+      "task_id": "insertion_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "163e5326-f817-4237-8bce-cec07bc60f7b",
+      "reviewed_at": "2026-08-26T05:31:13.273880+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:cd852c3ae477f4ac776100ee8ff6f1991ca40ae7df330a18f9d91bb4d60d42bf",
+      "task_id": "insertion_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "fce4422b-4f96-4d3f-ae50-2b6cecf7fdc0",
+      "reviewed_at": "2026-08-26T05:31:15.246708+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d74d91dd114d64a5b6050e7f41ad326fe182eed1fcc12c4f421ae332b0579526",
+      "task_id": "insertion_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "780a993a-f923-4253-a94a-63c8eb787e1e",
+      "reviewed_at": "2026-08-26T05:32:20.715231+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4f884ce384a225c49d0f026acb3f7ff62538b7d6f61c13ed1c3f9fbe5e95dffd",
+      "task_id": "insertion_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "0b37a191-1888-49af-96f0-e7fb03d558a9",
+      "reviewed_at": "2026-08-26T07:42:16.947794+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:eb28c85a37b3fc3f46937a07bc1d2cd2d3b8ae5efaac8c648157f3c51466e99f",
+      "task_id": "key_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "9a1783e8-b509-4dd7-a9ad-a428b3f3b422",
+      "reviewed_at": "2026-08-26T07:42:19.622737+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f07410c6f8d208abb29eff07308ed4af2c15f3f139c8e47a2a8b6fb1f14a00a2",
+      "task_id": "key_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3e61bd28-cb38-400e-a7ac-fe5fc62c063a",
+      "reviewed_at": "2026-08-26T07:42:23.672800+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:262b8168f8336072130e0d63709fb9856cb506429a76b50ecffdd3cbc66d54ed",
+      "task_id": "key_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "dd6c1578-4b21-4074-b61e-cc889dc25cbf",
+      "reviewed_at": "2026-08-26T07:42:26.249842+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c2a6c0c822c2f7e0b35a823119f4612e4ebfca440953aaca632f69f5a269baaa",
+      "task_id": "key_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "d412c7da-642c-44db-bc19-c3190904d9ec",
+      "reviewed_at": "2026-08-26T07:42:27.523784+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:e473a6627db7694264bb0594ef2f444138a740499083b0dedbb1396aaa43c1da",
+      "task_id": "key_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "bb0ab12a-d44e-4d78-9e75-7bc3519712cc",
+      "reviewed_at": "2026-08-26T07:42:29.125310+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b56f7555f451a6ce4b23b4a23f6c2e4fd2b4a2ed444ebe5a791e67ff2e324a44",
+      "task_id": "key_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ad2ab2cb-3eda-4655-8f96-7b1d17bd5072",
+      "reviewed_at": "2026-08-26T07:42:30.325357+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3ed29bdc575abd253a7f12182d29b4fcc28e1dba52728f9169ff1a6ede630c50",
+      "task_id": "key_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "fe3f82e0-f512-44d9-9196-7734b1b78e97",
+      "reviewed_at": "2026-08-26T07:42:31.416753+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3b85b291b799df860c4fb122ccd35cafa2635c239a3a7368fabfbf6d3dfe93c3",
+      "task_id": "key_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2660b2ae-4f8a-40dd-800f-a557dc4bbfff",
+      "reviewed_at": "2026-08-26T07:42:32.544625+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:25b43b8f20bed4278964d4c201ea888cb21f0fa178300d342a68e787764a76ed",
+      "task_id": "key_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "6d372343-2190-4437-b9c7-e16b98114676",
+      "reviewed_at": "2026-08-26T07:42:33.539167+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4e8c8d245e3c970e9e8182cae6b1b208ec5ee5985989b5d30e24959fb72b9257",
+      "task_id": "key_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "349ef54f-3924-4af5-8565-ca99b4657435",
+      "reviewed_at": "2026-08-26T07:42:34.664353+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d8734e0e4ae7fca20ebf2aa1cf9eeee38d5590b33b0d1076d92a65dc91f1e3d2",
+      "task_id": "key_011"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ad30c4f8-22fe-4e84-9ad5-18bc89b0ad1e",
+      "reviewed_at": "2026-08-26T07:42:36.704519+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:08246bf00ee2d68836d1f50c7db5c08b755da2d4270bf04bb6446466226595ed",
+      "task_id": "key_012"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "9fff1dc8-334c-41e1-ab1f-cafbad82cee0",
+      "reviewed_at": "2026-08-26T07:42:38.054293+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9d701efa5d736fd359ac6d6f73859b1a4d139ef815964ff59385f8098d8f91cb",
+      "task_id": "key_013"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "bb68d2ed-18a9-43a3-9f72-b52aead8d2bc",
+      "reviewed_at": "2026-08-26T07:42:39.748902+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:34cbd5d35c34739f8e0f46575934621d382a8b85962a20091cafe9d98bce2305",
+      "task_id": "key_014"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "761bfd17-ba50-4422-9cfd-eee48a907585",
+      "reviewed_at": "2026-08-26T07:42:41.709212+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:97e1973ba0c8acbb3eba46b59359a41398173923e4854939c97d3d3df3d803ee",
+      "task_id": "key_015"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "a5df62d0-a9dd-4628-a4ec-0bc86a298778",
+      "reviewed_at": "2026-08-26T12:17:01.173988+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:879264230de49de009172e394b0e8ae1d9267980b76e7f496860488e21420e97",
+      "task_id": "meter_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "09594bf8-ffa7-4cf5-a2a6-0bc56acaaebc",
+      "reviewed_at": "2026-08-26T12:18:38.713075+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f42cb0dcfe0ddb8c9c25a36dcba0767799ae8f5a8655459159141cb4df32844a",
+      "task_id": "meter_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ba5f3456-f0e9-4899-8a14-93c54bc86c33",
+      "reviewed_at": "2026-08-26T12:18:41.967327+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:87e4448b7c5ecd7a0fc9c8bae727cd5023f1fdfb195572a1ac5cb99cf2b16d45",
+      "task_id": "meter_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "e17de17e-0dd9-48e6-b673-14628d04d54c",
+      "reviewed_at": "2026-08-26T12:18:47.012743+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:55a73a0ec65e47cb953b15c621eb1c156188994a5a0593975a31b3c4a04f6bb2",
+      "task_id": "meter_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "26cf1cf4-4131-4951-9ad6-fbcc5f5f697c",
+      "reviewed_at": "2026-08-26T12:18:51.913394+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:73e50fde1a4e49a6f762ca6d7fd5968a4e7336527ca4cf091dc6cb64024e9c7a",
+      "task_id": "meter_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "6c2ce6db-2dc3-479a-9d30-2a63a4f8df79",
+      "reviewed_at": "2026-08-26T12:18:53.593378+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:5850c3aed735322ff99a03b2498ee48d162a7abe97cb7bac5acfcf398361d2c4",
+      "task_id": "meter_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "645ecab2-cb81-474b-9ed7-f9a30a9648e3",
+      "reviewed_at": "2026-08-26T12:18:54.944303+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:75d5a9c63aadf72df97d2aa4c8c334587087e2a107efa0f003236bbb9ab7af71",
+      "task_id": "meter_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "19f67315-3800-4d58-9f65-14de62681053",
+      "reviewed_at": "2026-08-26T12:18:57.998555+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f9d5548346fbdccc0f5ffb3907ed710e254380a862f97040e7f6ea0c6d2029d6",
+      "task_id": "meter_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "9e86b645-fb8a-4519-aada-e67af52a9eb8",
+      "reviewed_at": "2026-08-26T12:19:00.367264+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ed0823fd6c0bb1fc321898bb493863c3e7b444082b76c4eadf86f82fd90a75a1",
+      "task_id": "meter_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "13dc74c5-05d6-490c-8d26-2144cf45a9ef",
+      "reviewed_at": "2026-08-26T12:19:02.292382+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9177c52a6f282ba3d435bf9cb7106817364c0ddc7273da369737fb12eb71c397",
+      "task_id": "meter_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "4f53e08e-edf4-47c9-8fe4-d8f99edcbde7",
+      "reviewed_at": "2026-08-26T12:45:40.622833+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:7081081e926f67358a517e77277bae626057be4dad746ba56249c90f965385ea",
+      "task_id": "pitch_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "8491cd62-a2ab-466a-bfc5-fcaf3527fc3c",
+      "reviewed_at": "2026-08-26T12:45:44.981049+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:dca199f61519546249451f3314d51857921c04970f925899d1d533a112a5d33c",
+      "task_id": "pitch_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "02de27fb-ae7d-4b30-8517-23460681fdf0",
+      "reviewed_at": "2026-08-26T12:45:47.243073+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4b82ddd98adb4ca2befd2a49a5697168c7ee309ca67859ed538e98d3417c5ace",
+      "task_id": "pitch_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ef710684-daea-4689-914e-499f662afa9d",
+      "reviewed_at": "2026-08-26T12:45:49.905278+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0bf46ecfd8b093e0227ac16202139da47f48a78515ff247e639d4527425d5bce",
+      "task_id": "pitch_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "8c2f63d2-5810-4a80-8c99-4c53675d2f12",
+      "reviewed_at": "2026-08-26T12:45:52.225965+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:166344781305c003e564c75d368511ba84f76bd622c75dd7b3091ef069bc6a06",
+      "task_id": "pitch_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2dca4c1a-30f9-4915-a1c2-e14c90984ca4",
+      "reviewed_at": "2026-08-26T12:47:45.134396+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b84e50b42cddbea47e0a8f6c61aab504269f58a9c3d2f5345000b49ff01f32e9",
+      "task_id": "pitch_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3a689250-ae69-4a2e-81b1-9f1068051ae4",
+      "reviewed_at": "2026-08-26T12:47:49.699077+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9d8fad2aad843588fac80afdc533cbfd7e80a1100ffc41ee0b4ad9d507e31d63",
+      "task_id": "pitch_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "c4c38ed8-0e3e-4ddb-a902-ca718e94b0c2",
+      "reviewed_at": "2026-08-26T12:47:50.827570+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0585b8992771319aa263f63be0528fa72ec306249c464f42e6cdab2fbf57f56e",
+      "task_id": "pitch_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "f0b7fd9b-aaeb-4d91-b416-ce6a0309f65d",
+      "reviewed_at": "2026-08-26T12:47:51.835827+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4cf6e677c04bd9b85d1a20ef78c9819317d5ea6fb0e5cd3c3e5319645764dd94",
+      "task_id": "pitch_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "1f604944-79ce-4563-b900-97f800bfd0c8",
+      "reviewed_at": "2026-08-26T12:47:52.752637+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:a06915754b13bb05c91af50402d56c8a199a009aac71b6c9741165667f4421aa",
+      "task_id": "pitch_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "003144b5-e85a-4e6d-8aba-4ad1facb815c",
+      "reviewed_at": "2026-08-26T12:47:53.968212+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2831726cf271b06354f811a91f3c41fb43d2c7b2f12233807d8e33fa1d8323e0",
+      "task_id": "pitch_011"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "a2519b4c-43b3-4726-b103-623ce2ec0c07",
+      "reviewed_at": "2026-08-26T12:47:55.008035+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3956fb85ade705e074ae696e86f01b1ab7798e60d00e6728fdc5cb44d1f6cfb8",
+      "task_id": "pitch_012"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "51565229-93c9-484a-896b-0344b7ab13e9",
+      "reviewed_at": "2026-08-26T12:47:56.087956+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:08fb18f87a37207fec25ee62611cbf9bc6bfca78a18cc41d304317e69eb5441a",
+      "task_id": "pitch_013"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "bbfe5995-2f56-459d-8de1-5d9edf1d85ab",
+      "reviewed_at": "2026-08-26T12:47:57.134995+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d064f7933dca98c6681548fab083f59bd9e5e397d28e9e1e5993be8340184d14",
+      "task_id": "pitch_014"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "7932e9e6-7dbc-4f19-ac49-e6c2a8c9ec41",
+      "reviewed_at": "2026-08-26T12:47:59.374819+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1d6ad40a90298cc89d41b3f6aa85d31d2b3d58c940a79194e4200d27d5925cef",
+      "task_id": "pitch_015"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "997a0d4c-0c7a-44e6-b5e9-01b2456caa88",
+      "reviewed_at": "2026-08-26T12:48:07.498823+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1d6ad40a90298cc89d41b3f6aa85d31d2b3d58c940a79194e4200d27d5925cef",
+      "task_id": "pitch_015"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "48971ff2-ae32-45b8-9ac7-2a54ac70a56b",
+      "reviewed_at": "2026-08-26T13:32:37.347745+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4acfdc6ea8102be13e98c78d9a60905f30c0f49e0ddf66d50f653f0c3b79223a",
+      "task_id": "rhythm_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "f333dcbd-ff8a-4e5f-9808-61d7b60397e2",
+      "reviewed_at": "2026-08-26T13:32:38.851266+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8221bf700bbebce240acb518882a648afda37c6da26f9efa842e2bc533fc37c2",
+      "task_id": "rhythm_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "c3c4d0fd-687c-4998-8814-7970a891b592",
+      "reviewed_at": "2026-08-26T13:32:40.201908+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2cd72642b516a4e148279f8a6d4932631471d0ea023f1f33f4b97846500a6860",
+      "task_id": "rhythm_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "43dd9aeb-e491-4f80-9e1a-5c6280c75738",
+      "reviewed_at": "2026-08-26T13:32:41.392112+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:5f2fd0e1e94c987b0b722331454d6d87f97645494f1d29604716d421952062d1",
+      "task_id": "rhythm_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "20d294a0-ecdd-4434-a2b8-014d4ab80296",
+      "reviewed_at": "2026-08-26T13:32:42.609078+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:7f062742a382f031287b827e792e07f753216ad3fe06cd1915b54d1b2db92fd0",
+      "task_id": "rhythm_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "8b1df17d-666b-4f8b-a27d-1e81f5cbfcf4",
+      "reviewed_at": "2026-08-26T13:34:12.551429+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:39cf7eda6985f281c6a22bf53b1aa727bf21d05a009f8b75826eb3d743b4242e",
+      "task_id": "rhythm_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "d5aac217-da64-4c62-847a-4afef2f411ed",
+      "reviewed_at": "2026-08-26T13:34:15.358825+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4b300b6a4c7e849ea9df86fcc53a25886148a048d443e41131cd0db1750ded4b",
+      "task_id": "rhythm_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2ce53681-3d94-4294-974c-e5633827db2b",
+      "reviewed_at": "2026-08-26T13:34:17.188417+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c69599a82242e459a2353c00ebf5db5478b4a6d8a28019ab07c96195885cb7f4",
+      "task_id": "rhythm_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "e8e0bdc6-c8cb-4240-b173-711abb443073",
+      "reviewed_at": "2026-08-26T13:34:19.100664+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:26498ac9617dedf372fe8296a4952214a34fe3439ec126606c046ee428e49601",
+      "task_id": "rhythm_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "6d022404-3416-4839-8351-f89e45386b76",
+      "reviewed_at": "2026-08-26T13:34:20.792969+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:697de0a1c98bc4a942db4930ea162ff0bf54f9eb75fc5f87214d2d6cd21e893a",
+      "task_id": "rhythm_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "f92b98e6-fb4f-4a6b-8453-11023b67220e",
+      "reviewed_at": "2026-08-26T13:34:30.311299+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f1636310bccfbad92df6ec4ba665c058046ecb03d68d8670d32b1ce5952d889c",
+      "task_id": "rhythm_011"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "19ee95e7-102b-4f08-8df9-1503b97faf57",
+      "reviewed_at": "2026-08-26T13:34:31.526743+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:dfd532b22d086959076f65f22dec1e2e1ae72bf9a5fb7dfdc55ccfcf37f812de",
+      "task_id": "rhythm_012"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "95cd93ec-2fb6-49e6-af22-0645a30f2141",
+      "reviewed_at": "2026-08-26T13:34:32.990242+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c2ed7360e1ea2286b1c07d38903f46ca41762a66f16c2aacce994e4d4434190d",
+      "task_id": "rhythm_013"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2abe274d-c747-429c-8c3b-0ff7abd1a14c",
+      "reviewed_at": "2026-08-26T13:34:34.428009+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1351f1ba10f47e7232dde0c5e47884e79a8fc8edf924a642402369eebb0be6d5",
+      "task_id": "rhythm_014"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "916a4b52-01f3-4344-820a-3ce46ecd5680",
+      "reviewed_at": "2026-08-26T13:34:35.868010+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:e0ad4fa3fc04b9ef66b8647f6345515545390daef414a04e8858b58d8ce96b18",
+      "task_id": "rhythm_015"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "53f8d859-32a7-459a-9c39-447c95913d22",
+      "reviewed_at": "2026-08-26T13:35:13.228422+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8ae8e75de8fb252c26c775b8bf99407035252438682efc1996a79cc741b44dce",
+      "task_id": "ties_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "7ff26e89-da40-4d8d-ae57-0f53be2c6785",
+      "reviewed_at": "2026-08-26T13:35:21.984401+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:63aa8c854eeb86e94ea5494b3e33246b65d8605f47b16bdc3b6ee01efce56fa8",
+      "task_id": "ties_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "6c2da1e1-e55a-495f-ba65-b9c242ec831a",
+      "reviewed_at": "2026-08-26T13:35:23.885479+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ac7079517842c7cec0ed893ae9e0f9885998f773e34ccc7784aef92d2d05c40d",
+      "task_id": "ties_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "25bb3edf-634a-41cb-be62-b4d830b84dc0",
+      "reviewed_at": "2026-08-26T13:35:25.500503+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b9ff84e6ddf2260bac8fd0b5873ea84c52fef0210321cac396718857f9058740",
+      "task_id": "ties_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "29da9d93-b541-43e7-a232-1a08e3b0cb8d",
+      "reviewed_at": "2026-08-26T13:35:27.317567+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1fbe26101bc8dcf992c4c13c453614f1d46f5a893367b52097d9930c7c1201a2",
+      "task_id": "ties_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "78efa02a-e663-4eff-ab50-17e9dad7eb2b",
+      "reviewed_at": "2026-08-26T13:35:28.788154+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b267b3b259b5898fb9ec87362f90e5e193660b60e2abd60d97c559ef838d8226",
+      "task_id": "ties_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "cca35640-052a-4527-b537-aba9aa68a624",
+      "reviewed_at": "2026-08-26T13:35:30.155467+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:04b4b5e0eb42b6e8c18dac6b3dfe58d9aed72449762f2271a511d91467a32cfa",
+      "task_id": "ties_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "efa772f4-28f0-42ac-9d43-a8fc3f4a06b6",
+      "reviewed_at": "2026-08-26T13:35:32.083512+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:5c9701141213b7830ace26dff011f5b11c1883181d16f30907088948f7f95cad",
+      "task_id": "ties_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "e49d78e5-9db9-4c2b-a923-275d909be0ab",
+      "reviewed_at": "2026-08-26T13:35:33.897179+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:485096932c358eda3f229eaafefec34241a288eab920c1ba225154420515f6cd",
+      "task_id": "ties_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "8d824d20-3acb-4d3a-8b6a-3c726dcd1b7e",
+      "reviewed_at": "2026-08-26T13:35:35.360738+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d9ffe80a636a0beb63a9358c75ea337fa852ecdecc73f089a46f787a06934401",
+      "task_id": "ties_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "5640e06a-4ad3-4289-bbee-384bf282f53a",
+      "reviewed_at": "2026-08-26T13:35:38.358735+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:cd254f0155be378e694a29c248f5759d68dfb88a3d10f9bf7eb8c4939c841f72",
+      "task_id": "voice_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "b996bb6b-45da-40c9-b6c4-126319b4a650",
+      "reviewed_at": "2026-08-26T13:35:42.140777+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fe5bd17a55242e3ced5428497505e2e98adac7adb7c602c0269d8c269c77115f",
+      "task_id": "voice_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2c78ec32-54be-4429-9e03-96493363e493",
+      "reviewed_at": "2026-08-26T13:35:44.828971+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:00dc9bda97752204ac00478131d0d3969160e8f6aaa3b4649c1a584806480b48",
+      "task_id": "voice_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "07d94181-278c-49ea-9e06-a0e4f66b53d7",
+      "reviewed_at": "2026-08-26T13:41:28.015526+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b8946337dcce065069926a47b3000b878e35530f672882a8426c7c2d4c3f528b",
+      "task_id": "voice_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "8ea1fdb4-8066-49c5-a046-6b2e1e590fd2",
+      "reviewed_at": "2026-08-26T13:41:29.725736+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f43eba269fdae6b755335e567c9c88e84d8d309a322e5e5e9f3ea98ac3e1cacf",
+      "task_id": "voice_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "ace167bd-6631-4e33-9726-27ba03de4022",
+      "reviewed_at": "2026-08-26T13:41:33.373152+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1fc79cfcde8931d9e8de0eaea5bbc443fef151a5bedf31738fe74565d0aec492",
+      "task_id": "voice_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "dc67de3d-2ab1-4a50-925c-1f797f021856",
+      "reviewed_at": "2026-08-26T13:41:35.210143+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0d85c2a55399bf31855d3420c056c51ec5c4dea5c81c16b3c04e5981173f1f72",
+      "task_id": "voice_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "fa2d6165-2bb4-4900-9725-f85a0cb98c2b",
+      "reviewed_at": "2026-08-26T13:41:37.041904+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3450eb68e628f08f7ec04a6d5f36f458b6627d43a0567d72b5b72a227377dc34",
+      "task_id": "voice_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "96e6ac47-d187-4d1c-a3ef-f86ba28d033c",
+      "reviewed_at": "2026-08-26T13:41:37.305327+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec266b7b4cfca84d119b568adf0d0d5a4aa0ee485489749d4af90d1cd8069ea3",
+      "task_id": "voice_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "d81d3555-7211-4b4e-8e2c-35917f2f6852",
+      "reviewed_at": "2026-08-26T13:41:44.181893+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c35c33067703ab14e6d32b7baf048930ee9686c8a39a45fc1c3555d79378057f",
+      "task_id": "dynamics_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "7d50f25b-1b6d-48a0-a68d-d3e2ad8693ea",
+      "reviewed_at": "2026-08-26T13:41:44.750764+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8cf5ef68eb6c86ee5a9162101c19922353234a5cdcc0b340f346e9cffea6e2e8",
+      "task_id": "dynamics_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "235ea092-32d1-4ced-817d-38aff4f071f6",
+      "reviewed_at": "2026-08-26T13:41:45.180933+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d09ce59378537cdb5e02590759c0bd9a56d36ac57ef9ae83de82d7bd8a53263a",
+      "task_id": "dynamics_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "8f4c8860-7ac2-44e6-b62f-6988a06971ac",
+      "reviewed_at": "2026-08-26T13:41:45.534462+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:99d8ccd2dc8ee627d1526505f016259b8644f9bc74318ab52b8d3d89d49d619b",
+      "task_id": "dynamics_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "823951df-e0ad-4e4a-9183-eb1179fdd0bc",
+      "reviewed_at": "2026-08-26T13:41:46.135388+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b47dd0cac717a85f1bcd81f47fa901e1f8303d6b55de683173f6045525357a93",
+      "task_id": "dynamics_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3060777c-ce5b-4cf5-8610-9e393cce4d26",
+      "reviewed_at": "2026-08-26T13:41:46.542396+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:363f68c0a219558157254c9cf602088110f4a4c7632c64ee5657da96327d1d80",
+      "task_id": "dynamics_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 3,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 2
+      },
+      "issue_codes": [],
+      "notes": "正常",
+      "review_id": "e6e1c955-97b7-4051-ba59-61a04d7759b4",
+      "reviewed_at": "2026-08-26T13:41:46.966587+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1f4a74377a53c60dbfa9fcfbead5194e4443a685467893a0c9993722017aa9e4",
+      "task_id": "dynamics_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "e70580ad-81b7-4c8f-a21f-0fa2143af5ee",
+      "reviewed_at": "2026-08-26T13:41:47.591553+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b174fb0b46314e273e544ea5ac03155f00de77413be120d63a207b5ee67d8772",
+      "task_id": "dynamics_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "d7af71c4-89b1-423c-8cbc-da9153d0365c",
+      "reviewed_at": "2026-08-26T13:41:48.035282+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1e39fc84e45ae6b04e9c066767fdbf9454dac5d7fba7216e52348238e812dc0f",
+      "task_id": "insertion_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "c5af20df-9ad0-4cb8-9661-fa697130070e",
+      "reviewed_at": "2026-08-26T13:41:48.455272+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:611912a8978608228e1edecdc75ace1839fafc45f87ea9368e09dab5e1e797fd",
+      "task_id": "insertion_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2dd3f14d-31b1-4e48-8831-4a9940a6c982",
+      "reviewed_at": "2026-08-26T13:41:48.882317+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2a50ed064291cb5eb1db463802a944357f4032697bb014dcb3c0c7bd9e791422",
+      "task_id": "insertion_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "56ee2334-82ae-4f42-a4b8-cc12e34831b6",
+      "reviewed_at": "2026-08-26T13:42:04.775710+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec266b7b4cfca84d119b568adf0d0d5a4aa0ee485489749d4af90d1cd8069ea3",
+      "task_id": "voice_009"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "fc48fdf1-7742-4caa-8cd3-c2445aa71a54",
+      "reviewed_at": "2026-08-26T13:43:21.385072+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:cd254f0155be378e694a29c248f5759d68dfb88a3d10f9bf7eb8c4939c841f72",
+      "task_id": "voice_001"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "31f2854a-b1c8-4b48-b6ad-7e2ddb88ff95",
+      "reviewed_at": "2026-08-26T13:43:29.441898+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fe5bd17a55242e3ced5428497505e2e98adac7adb7c602c0269d8c269c77115f",
+      "task_id": "voice_002"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "ec45b0d5-a01f-4e3b-b6a2-78170f2c6c50",
+      "reviewed_at": "2026-08-26T13:43:34.868249+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:00dc9bda97752204ac00478131d0d3969160e8f6aaa3b4649c1a584806480b48",
+      "task_id": "voice_003"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "56657708-9c4c-4498-ae71-255f192a66bf",
+      "reviewed_at": "2026-08-26T13:43:39.218228+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b8946337dcce065069926a47b3000b878e35530f672882a8426c7c2d4c3f528b",
+      "task_id": "voice_004"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "39c2d296-5c11-48c7-b13d-d31c7fd2fdef",
+      "reviewed_at": "2026-08-26T13:44:21.328065+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f43eba269fdae6b755335e567c9c88e84d8d309a322e5e5e9f3ea98ac3e1cacf",
+      "task_id": "voice_005"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "79095279-8e52-4c97-9c6e-4c07f89898e8",
+      "reviewed_at": "2026-08-26T13:44:29.483972+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1fc79cfcde8931d9e8de0eaea5bbc443fef151a5bedf31738fe74565d0aec492",
+      "task_id": "voice_006"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "82b2706e-ad26-4ee4-8ae6-ab12f127c105",
+      "reviewed_at": "2026-08-26T13:44:35.759095+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0d85c2a55399bf31855d3420c056c51ec5c4dea5c81c16b3c04e5981173f1f72",
+      "task_id": "voice_007"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "fcc53442-5d0e-4901-9df7-d83af2319828",
+      "reviewed_at": "2026-08-26T13:44:42.189292+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3450eb68e628f08f7ec04a6d5f36f458b6627d43a0567d72b5b72a227377dc34",
+      "task_id": "voice_008"
+    },
+    {
+      "decision": "needs_revision",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [
+        "target_scope_wrong"
+      ],
+      "notes": "正确",
+      "review_id": "bded8fe6-e289-4f35-9a23-291c741eeef3",
+      "reviewed_at": "2026-08-26T13:44:47.763449+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec266b7b4cfca84d119b568adf0d0d5a4aa0ee485489749d4af90d1cd8069ea3",
+      "task_id": "voice_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "41343daf-c33f-4422-a1f5-daacd84f00b2",
+      "reviewed_at": "2026-08-27T04:28:21.057591+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d0fc7f71951a1a3065f87472b7f18fa49e2a66d19de085758cc9050089c675a1",
+      "task_id": "voice_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "2dd80b4e-0186-4ba4-ad0d-b1401bc1b685",
+      "reviewed_at": "2026-08-27T04:28:23.214429+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:95060423ddb1fcdb6cb2acdc3a6781185df915bc2ab6e909340cb8bd9535f134",
+      "task_id": "voice_011"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "c3bfac16-84da-4616-90dd-60f83918370c",
+      "reviewed_at": "2026-08-27T04:28:25.703540+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4a65baa25f66b39a6ca0e21ab534da5d95eb29a6d463bc1e0cc07b4f6088c2e2",
+      "task_id": "voice_012"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "1183e0d8-4720-43c3-ac87-4306eb075bac",
+      "reviewed_at": "2026-08-27T04:28:27.635561+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fb0d21b766921b921a891d93ddad840856e9d89a96382d643c595b3e20c99e81",
+      "task_id": "voice_013"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "51d5d0a0-cd15-43e1-adf1-6b1e01d936e5",
+      "reviewed_at": "2026-08-27T04:28:29.708503+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:e4a854040bc84eab240b8aa0303c1bc2e77a6d5fef305278bf3b4d3f74ae8868",
+      "task_id": "voice_014"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "79b016da-d3a6-4b52-8f30-da8d0c7b933c",
+      "reviewed_at": "2026-08-27T04:28:31.621078+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d009e54381c036dd668d5875d6891e9d76f743e73adea4e8d393bbf16dfcca6f",
+      "task_id": "voice_015"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "62ba3a0d-df03-493c-9439-0ee28c8dd868",
+      "reviewed_at": "2026-08-27T04:28:40.032719+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fe5bd17a55242e3ced5428497505e2e98adac7adb7c602c0269d8c269c77115f",
+      "task_id": "voice_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "87658e9a-aff2-47e9-a5bf-1773d57fd4da",
+      "reviewed_at": "2026-08-27T04:28:44.990793+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:cd254f0155be378e694a29c248f5759d68dfb88a3d10f9bf7eb8c4939c841f72",
+      "task_id": "voice_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3727c8a2-d2e0-4cc2-8960-81137c8fbe51",
+      "reviewed_at": "2026-08-27T04:28:48.268085+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:00dc9bda97752204ac00478131d0d3969160e8f6aaa3b4649c1a584806480b48",
+      "task_id": "voice_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "b1f4f485-c383-4a6d-8053-7ce3f6093510",
+      "reviewed_at": "2026-08-27T04:28:51.842281+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b8946337dcce065069926a47b3000b878e35530f672882a8426c7c2d4c3f528b",
+      "task_id": "voice_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "d7b7e0a2-6a43-4ef7-b150-11d04ff42c11",
+      "reviewed_at": "2026-08-27T04:28:53.986496+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f43eba269fdae6b755335e567c9c88e84d8d309a322e5e5e9f3ea98ac3e1cacf",
+      "task_id": "voice_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "5ab17edc-36d4-4a65-971c-e869bad9f5c3",
+      "reviewed_at": "2026-08-27T04:28:56.264236+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1fc79cfcde8931d9e8de0eaea5bbc443fef151a5bedf31738fe74565d0aec492",
+      "task_id": "voice_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "1d8c7de0-38e7-4651-8195-1c0fbcf83623",
+      "reviewed_at": "2026-08-27T04:29:00.926189+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:0d85c2a55399bf31855d3420c056c51ec5c4dea5c81c16b3c04e5981173f1f72",
+      "task_id": "voice_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "3019da58-99fe-4c25-9775-29f80241b877",
+      "reviewed_at": "2026-08-27T04:29:03.573407+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3450eb68e628f08f7ec04a6d5f36f458b6627d43a0567d72b5b72a227377dc34",
+      "task_id": "voice_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "5770c27f-4e5c-4ba9-aa56-f62afcd36abd",
+      "reviewed_at": "2026-08-27T04:29:06.051651+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec266b7b4cfca84d119b568adf0d0d5a4aa0ee485489749d4af90d1cd8069ea3",
+      "task_id": "voice_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "3bdc427e-ea35-46a2-b80e-60ed300782c6",
+      "reviewed_at": "2026-08-27T04:30:19.978826+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fd2000c9ac44145274757cc9d37efc7405e0cdf9c5e5fa90cd9ba013fc799cd6",
+      "task_id": "compound_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "4d1326c3-6980-44ab-a462-68cb157931db",
+      "reviewed_at": "2026-08-27T04:30:23.425360+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fdea33025f080ccf7321b1d1fc74978d475bd741a26e5ebb8bda3da2c4423fbe",
+      "task_id": "compound_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "87041bc0-1e20-4558-8733-a1dfe6d15736",
+      "reviewed_at": "2026-08-27T04:30:24.449108+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ec7c5ed8d37a13900730126a29d4537518645d21b415938ccf84e2916d049060",
+      "task_id": "compound_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "a6919eb7-33c2-4141-ba1f-cbc993f4190c",
+      "reviewed_at": "2026-08-27T04:30:25.158923+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:c1d01beb34d8fa3d7909dd41bafb3bf3a321f900fff73c77d4331cb3c54a9fee",
+      "task_id": "compound_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "4e6b9954-ba79-41f7-8835-e1fc0e7d1ed2",
+      "reviewed_at": "2026-08-27T04:30:25.603032+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fbbc8d37176e9080c5f1ff9b6e374872376667104d724a19224de8adf7e9f08a",
+      "task_id": "compound_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "9209cc79-9766-4cf5-b630-71af06a357ba",
+      "reviewed_at": "2026-08-27T04:30:27.487003+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d42d5be5d81cd0ddc249e0573975b2a9df2fc527f666e90a3e6bda1c11941566",
+      "task_id": "compound_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "0b5cbf8d-0685-4563-b6be-c2568f71656f",
+      "reviewed_at": "2026-08-27T04:30:27.938733+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:3f45ba712ae372800029aca051cb935828ed435988fa6dfa443662e8614f24f6",
+      "task_id": "compound_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "0009b17d-eeaa-4f91-b381-e7cfd4abd121",
+      "reviewed_at": "2026-08-27T04:30:28.486147+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:659f7e4837264f22bd10c114664c829ec65de48b2fa81d4b4e7b473add187639",
+      "task_id": "compound_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "2d39a48d-d923-4684-8c3f-dcb7548bd0bc",
+      "reviewed_at": "2026-08-27T04:30:28.946420+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:443904d9a9d2ca3e3e9fe7d9262bf4b1eaeed75ee06bf2041d290ea09fd38c63",
+      "task_id": "compound_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "590f4cc3-d7ba-41bf-9293-fa0ae4981fae",
+      "reviewed_at": "2026-08-27T04:30:29.415317+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:267b7743377f541f3bcc75b5089bf2c08718ee2504ce5b147afc36475dc12f4e",
+      "task_id": "compound_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "52761898-0929-4651-9e63-5a910bf0f59c",
+      "reviewed_at": "2026-08-27T04:30:34.843028+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:9e2b143fdb7276529cb0b534ecb7a197c35a627c21f2045ee39fbb5d7dbac09e",
+      "task_id": "conflict_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 5,
+        "instruction_clarity": 5,
+        "musical_validity": 4,
+        "scope_correctness": 5
+      },
+      "issue_codes": [],
+      "notes": "正确",
+      "review_id": "4867ab34-dd30-492b-a6dd-ab2e6a000889",
+      "reviewed_at": "2026-08-27T04:32:01.723981+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "primary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8cf5ef68eb6c86ee5a9162101c19922353234a5cdcc0b340f346e9cffea6e2e8",
+      "task_id": "dynamics_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "f7fd1fd8-5142-41b8-a606-892ece7e0962",
+      "reviewed_at": "2026-08-27T04:32:04.810266+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d09ce59378537cdb5e02590759c0bd9a56d36ac57ef9ae83de82d7bd8a53263a",
+      "task_id": "dynamics_005"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "ab063054-2cfd-45b6-a5ad-a3f3250a691f",
+      "reviewed_at": "2026-08-27T04:32:05.433026+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:99d8ccd2dc8ee627d1526505f016259b8644f9bc74318ab52b8d3d89d49d619b",
+      "task_id": "dynamics_006"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "93d5f5ac-796f-40bb-968e-a75e3734b41e",
+      "reviewed_at": "2026-08-27T04:32:06.041404+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b47dd0cac717a85f1bcd81f47fa901e1f8303d6b55de683173f6045525357a93",
+      "task_id": "dynamics_007"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "50dcc689-f597-4715-9ff2-e84dd95cfae8",
+      "reviewed_at": "2026-08-27T04:32:07.250703+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:363f68c0a219558157254c9cf602088110f4a4c7632c64ee5657da96327d1d80",
+      "task_id": "dynamics_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "ca995238-db99-430e-a517-c4bbb7abfe73",
+      "reviewed_at": "2026-08-27T04:32:11.215799+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:363f68c0a219558157254c9cf602088110f4a4c7632c64ee5657da96327d1d80",
+      "task_id": "dynamics_008"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "b718d95f-58ea-44bd-8a02-348f914784ba",
+      "reviewed_at": "2026-08-27T04:32:11.715594+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:1f4a74377a53c60dbfa9fcfbead5194e4443a685467893a0c9993722017aa9e4",
+      "task_id": "dynamics_009"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "f8b34b16-182c-4f1f-9da5-e01092329adc",
+      "reviewed_at": "2026-08-27T04:32:15.774430+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d74d91dd114d64a5b6050e7f41ad326fe182eed1fcc12c4f421ae332b0579526",
+      "task_id": "insertion_010"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "e552cbeb-79ff-429f-8bb6-fd545db4ee84",
+      "reviewed_at": "2026-08-27T04:32:16.216029+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:eb28c85a37b3fc3f46937a07bc1d2cd2d3b8ae5efaac8c648157f3c51466e99f",
+      "task_id": "key_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "f1da6549-1394-4b56-80de-a652e2d97df7",
+      "reviewed_at": "2026-08-27T04:32:16.631049+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:f07410c6f8d208abb29eff07308ed4af2c15f3f139c8e47a2a8b6fb1f14a00a2",
+      "task_id": "key_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "6a8b7b88-e865-4fc2-bb6d-600bcabac675",
+      "reviewed_at": "2026-08-27T04:32:17.101585+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:262b8168f8336072130e0d63709fb9856cb506429a76b50ecffdd3cbc66d54ed",
+      "task_id": "key_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "25af47c8-5518-4e2c-94bd-9de2ad36f40b",
+      "reviewed_at": "2026-08-27T04:32:19.619068+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:87e4448b7c5ecd7a0fc9c8bae727cd5023f1fdfb195572a1ac5cb99cf2b16d45",
+      "task_id": "meter_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "4101dd96-f4bb-438f-9038-5e39cd49663e",
+      "reviewed_at": "2026-08-27T04:32:20.004038+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:55a73a0ec65e47cb953b15c621eb1c156188994a5a0593975a31b3c4a04f6bb2",
+      "task_id": "meter_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "e2a0e5ed-8a2d-4f85-9b44-d73dcdad34fe",
+      "reviewed_at": "2026-08-27T04:32:22.954195+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:4acfdc6ea8102be13e98c78d9a60905f30c0f49e0ddf66d50f653f0c3b79223a",
+      "task_id": "rhythm_001"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "bc2a7014-04dd-4297-a269-54bf9b3b4d46",
+      "reviewed_at": "2026-08-27T04:32:23.305927+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:8221bf700bbebce240acb518882a648afda37c6da26f9efa842e2bc533fc37c2",
+      "task_id": "rhythm_002"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "b6ab170b-ecfb-438c-afb8-c1bda17c792b",
+      "reviewed_at": "2026-08-27T04:32:23.638188+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:2cd72642b516a4e148279f8a6d4932631471d0ea023f1f33f4b97846500a6860",
+      "task_id": "rhythm_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "f29e8713-b625-4466-858b-c470643763b1",
+      "reviewed_at": "2026-08-27T04:32:25.649627+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:ac7079517842c7cec0ed893ae9e0f9885998f773e34ccc7784aef92d2d05c40d",
+      "task_id": "ties_003"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "21e493e1-9354-488d-aef6-46052f00a585",
+      "reviewed_at": "2026-08-27T04:32:26.160966+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:b9ff84e6ddf2260bac8fd0b5873ea84c52fef0210321cac396718857f9058740",
+      "task_id": "ties_004"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "c8acf145-cee3-4dee-a389-7efffd21a124",
+      "reviewed_at": "2026-08-27T04:32:29.848116+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:fb0d21b766921b921a891d93ddad840856e9d89a96382d643c595b3e20c99e81",
+      "task_id": "voice_013"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "538267d3-a39b-4519-b769-709923d83ee8",
+      "reviewed_at": "2026-08-27T04:32:30.274483+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:e4a854040bc84eab240b8aa0303c1bc2e77a6d5fef305278bf3b4d3f74ae8868",
+      "task_id": "voice_014"
+    },
+    {
+      "decision": "compliant",
+      "dimensions": {
+        "gold_correctness": 4,
+        "instruction_clarity": 4,
+        "musical_validity": 4,
+        "scope_correctness": 4
+      },
+      "issue_codes": [],
+      "notes": "",
+      "review_id": "9c7816b4-4146-44ef-8f73-1800a225197f",
+      "reviewed_at": "2026-08-27T04:32:30.720642+00:00",
+      "reviewer_id": "reviewer-01",
+      "reviewer_role": "secondary",
+      "schema_version": "1.0.0",
+      "task_fingerprint": "sha256:d009e54381c036dd668d5875d6891e9d76f743e73adea4e8d393bbf16dfcca6f",
+      "task_id": "voice_015"
+    }
+  ]
+}

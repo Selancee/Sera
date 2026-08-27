@@ -1,0 +1,7 @@
+[
+  {"case_id": "jazz_melody_expectation", "prompt": "Jazz piano sketch, ii-V-I, seventh chords, 8 measures", "expected_family": "jazz"},
+  {"case_id": "pop_hook_melody", "prompt": "Pop piano hook, bright, I-V-vi-IV, 8 measures", "expected_family": "pop"},
+  {"case_id": "classical_period_melody", "prompt": "Classical piano period, clear cadence, 8 measures", "expected_family": "classical"},
+  {"case_id": "chinese_pentatonic_melody", "prompt": "Chinese pentatonic piano in D major, open fifths, 8 measures", "expected_family": "chinese"},
+  {"case_id": "cyberpunk_cell_melody", "prompt": "Cyberpunk piano, ostinato bass, minor modal, syncopation, 8 measures", "expected_family": "cyberpunk"}
+]

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SeraEdit Benchmark Task",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id", "score_id", "category", "difficulty", "instruction_en", "instruction_zh",
+    "target_scope", "protected_scope", "gold_patch_path", "expected_output_path",
+    "expected_constraints", "expected_status", "unsupported_reason", "tags",
+    "created_by", "review_status"
+  ],
+  "properties": {
+    "task_id": {"type": "string", "pattern": "^[a-z_]+_[0-9]{3}$"},
+    "score_id": {"type": "string", "pattern": "^score_[0-9]{3}$"},
+    "category": {"type": "string"},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "instruction_en": {"type": "string", "minLength": 1},
+    "instruction_zh": {"type": "string", "minLength": 1},
+    "target_scope": {"type": "object"},
+    "protected_scope": {"type": "object"},
+    "gold_patch_path": {"type": ["string", "null"]},
+    "expected_output_path": {"type": ["string", "null"]},
+    "expected_constraints": {"type": "array", "items": {"type": "object"}},
+    "expected_status": {"enum": ["success", "refuse"]},
+    "unsupported_reason": {"type": ["string", "null"]},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "created_by": {"type": "string"},
+    "review_status": {"enum": ["pending_human_review", "verified", "rejected"]}
+  }
+}

@@ -1,0 +1,732 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": {
+    "schema_version": "0.6",
+    "score_id": "score_016",
+    "title": "SeraEdit Synthetic Core Fixture 16",
+    "composer": "SeraEdit deterministic fixture generator",
+    "metadata": {
+      "created_at": "2026-08-05T07:16:53.736857+00:00",
+      "updated_at": "2026-08-23T06:22:31.219835+00:00",
+      "source": "seraedit_synthetic_public_domain",
+      "prompt": "",
+      "agent_plan_id": "",
+      "title": "SeraEdit Synthetic Core Fixture 16",
+      "composer": "SeraEdit deterministic fixture generator",
+      "license": "CC0-1.0",
+      "benchmark_batch": "batch3",
+      "feature_profile": [
+        "independent_second_voice",
+        "chord"
+      ],
+      "notation_normalized": true,
+      "notation_normalization_report": {
+        "measures_checked": 3,
+        "duration_fixes": 0,
+        "rest_grouping_fixes": 0,
+        "tie_splits": 0,
+        "beaming_fixes": 0,
+        "overflow_fixes": 0
+      },
+      "beaming_assigned": true
+    },
+    "global": {
+      "key": "A minor",
+      "meter": "2/2",
+      "tempo": 78,
+      "pickup": false
+    },
+    "parts": [
+      {
+        "part_id": "piano",
+        "name": "Piano",
+        "instrument": "piano",
+        "staves": [
+          {
+            "staff_id": "right_hand",
+            "clef": "treble",
+            "measures": [
+              "m1",
+              "m2",
+              "m3"
+            ]
+          },
+          {
+            "staff_id": "left_hand",
+            "clef": "bass",
+            "measures": [
+              "m1",
+              "m2",
+              "m3"
+            ]
+          }
+        ]
+      }
+    ],
+    "tracks": [
+      {
+        "track_id": "piano_right_hand",
+        "role": "lead_melody",
+        "instrument": "piano",
+        "part_id": "piano",
+        "staff": "right_hand",
+        "voice": 1
+      },
+      {
+        "track_id": "piano_left_hand",
+        "role": "accompaniment",
+        "instrument": "piano",
+        "part_id": "piano",
+        "staff": "left_hand",
+        "voice": 1
+      }
+    ],
+    "measures": [
+      {
+        "measure_id": "m1",
+        "number": 1,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s016_m1_lh_1",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": "s016_source_chord",
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_lh_chord_2",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": true,
+            "chord_group_id": "s016_source_chord",
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_lh_v2_1",
+            "type": "note",
+            "pitch": "F2",
+            "duration": "whole",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_lh_2",
+            "type": "note",
+            "pitch": "D3",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_lh_3",
+            "type": "note",
+            "pitch": "G3",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_lh_4",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_rh_1",
+            "type": "note",
+            "pitch": "G4",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_rh_2",
+            "type": "note",
+            "pitch": "A4",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_rh_3",
+            "type": "note",
+            "pitch": "B4",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m1_rh_4",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          }
+        ]
+      },
+      {
+        "measure_id": "m2",
+        "number": 2,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s016_m2_lh_1",
+            "type": "note",
+            "pitch": "G3",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_lh_v2_1",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "whole",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_lh_2",
+            "type": "note",
+            "pitch": "C3",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_lh_3",
+            "type": "note",
+            "pitch": "G2",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_lh_4",
+            "type": "note",
+            "pitch": "A2",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_rh_1",
+            "type": "note",
+            "pitch": "A4",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_rh_2",
+            "type": "note",
+            "pitch": "B4",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_rh_3",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m2_rh_4",
+            "type": "note",
+            "pitch": "C4",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          }
+        ]
+      },
+      {
+        "measure_id": "m3",
+        "number": 3,
+        "section": "A",
+        "harmony": "I",
+        "cadence": "none",
+        "events": [
+          {
+            "event_id": "s016_m3_lh_1",
+            "type": "note",
+            "pitch": "G2",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_lh_v2_1",
+            "type": "note",
+            "pitch": "D3",
+            "duration": "whole",
+            "offset": 0.0,
+            "voice": 2,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_lh_2",
+            "type": "note",
+            "pitch": "A2",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_lh_3",
+            "type": "note",
+            "pitch": "F2",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_lh_4",
+            "type": "note",
+            "pitch": "E3",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "left_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_rh_1",
+            "type": "note",
+            "pitch": "B4",
+            "duration": "quarter",
+            "offset": 0.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_rh_2",
+            "type": "note",
+            "pitch": "C5",
+            "duration": "quarter",
+            "offset": 1.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_rh_3",
+            "type": "note",
+            "pitch": "C4",
+            "duration": "quarter",
+            "offset": 2.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          },
+          {
+            "event_id": "s016_m3_rh_4",
+            "type": "note",
+            "pitch": "D4",
+            "duration": "quarter",
+            "offset": 3.0,
+            "voice": 1,
+            "staff": "right_hand",
+            "tie": null,
+            "slur": null,
+            "accidental": "",
+            "dynamic": "mf",
+            "articulations": [],
+            "grace": false,
+            "is_chord_tone": false,
+            "chord_group_id": null,
+            "selected": false
+          }
+        ]
+      }
+    ],
+    "annotations": []
+  },
+  "musicxml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 3.1 Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">\n<score-partwise version=\"3.1\">\n  <work>\n    <work-title>SeraEdit Synthetic Core Fixture 16</work-title>\n  </work>\n  <identification>\n    <creator type=\"composer\">SeraEdit deterministic fixture generator</creator>\n  </identification>\n  <part-list>\n    <score-part id=\"P1\"><part-name>Piano</part-name></score-part>\n  </part-list>\n  <part id=\"P1\">\n    <direction placement=\"above\"><direction-type><metronome><beat-unit>quarter</beat-unit><per-minute>78</per-minute></metronome></direction-type></direction>\n      <measure number=\"1\">\n        <attributes>\n          <divisions>4</divisions>\n          <key>\n            <fifths>0</fifths>\n            <mode>minor</mode>\n          </key>\n          <time>\n            <beats>2</beats>\n            <beat-type>2</beat-type>\n          </time>\n          <staves>2</staves>\n          <clef number=\"1\"><sign>G</sign><line>2</line></clef>\n          <clef number=\"2\"><sign>F</sign><line>4</line></clef>\n        </attributes>\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s016_m1_rh_1 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_rh_2 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_rh_3 -->\n        <note>\n          <pitch>\n            <step>B</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_rh_4 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m1_lh_1 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_1</other-technical>\n              <other-technical>sera-chord-group-id:s016_source_chord</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_lh_chord_2 -->\n        <note>\n          <chord/>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_chord_2</other-technical>\n              <other-technical>sera-chord-group-id:s016_source_chord</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_lh_2 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_lh_3 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m1_lh_4 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m1_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>F</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>16</duration>\n          <voice>2</voice>\n          <type>whole</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m1_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n      <measure number=\"2\">\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s016_m2_rh_1 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_rh_2 -->\n        <note>\n          <pitch>\n            <step>B</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_rh_3 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_rh_4 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m2_lh_1 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_lh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_lh_2 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_lh_3 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m2_lh_4 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m2_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>16</duration>\n          <voice>2</voice>\n          <type>whole</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m2_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n      <measure number=\"3\">\n        <direction placement=\"above\"><direction-type><words>A I</words></direction-type></direction>\n        <!-- sera-event-id:s016_m3_rh_1 -->\n        <note>\n          <pitch>\n            <step>B</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_rh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_rh_2 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>5</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_rh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_rh_3 -->\n        <note>\n          <pitch>\n            <step>C</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_rh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_rh_4 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>4</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>1</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_rh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m3_lh_1 -->\n        <note>\n          <pitch>\n            <step>G</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_lh_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_lh_2 -->\n        <note>\n          <pitch>\n            <step>A</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_lh_2</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_lh_3 -->\n        <note>\n          <pitch>\n            <step>F</step>\n            <octave>2</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_lh_3</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <!-- sera-event-id:s016_m3_lh_4 -->\n        <note>\n          <pitch>\n            <step>E</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>4</duration>\n          <voice>1</voice>\n          <type>quarter</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_lh_4</other-technical>\n            </technical>\n          </notations>\n        </note>\n        <backup>\n          <duration>16</duration>\n        </backup>\n        <!-- sera-event-id:s016_m3_lh_v2_1 -->\n        <note>\n          <pitch>\n            <step>D</step>\n            <octave>3</octave>\n          </pitch>\n          <duration>16</duration>\n          <voice>2</voice>\n          <type>whole</type>\n          <staff>2</staff>\n          <notations>\n            <dynamics>\n              <mf/>\n            </dynamics>\n            <technical>\n              <other-technical>sera-event-id:s016_m3_lh_v2_1</other-technical>\n            </technical>\n          </notations>\n        </note>\n      </measure>\n  </part>\n</score-partwise>\n",
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "gold_meter_007",
+    "source_score_id": "score_016",
+    "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+    "instruction": "Change the global time signature from 4/4 to 2/2; keep all event durations unchanged.",
+    "target_scope": {
+      "whole_score": true
+    },
+    "protected_scope": {},
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "meter_007_op1",
+        "type": "change_time_signature",
+        "selector": {},
+        "arguments": {
+          "meter": "2/2"
+        },
+        "preconditions": [],
+        "expected_change_count": null
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "meter_equals",
+        "value": "2/2"
+      },
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "preserve_pitch"
+      }
+    ],
+    "provenance": {
+      "provider": "rule_template",
+      "model": "deterministic_core_v1",
+      "temperature": 0,
+      "seed": 42
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "basic_apply_only"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\": \"1.0.0\", \"patch_id\": \"gold_meter_007\", \"source_score_id\": \"score_016\", \"source_fingerprint\": \"sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f\", \"instruction\": \"Change the global time signature from 4/4 to 2/2; keep all event durations unchanged.\", \"target_scope\": {\"whole_score\": true}, \"protected_scope\": {}, \"preconditions\": [], \"operations\": [{\"operation_id\": \"meter_007_op1\", \"type\": \"change_time_signature\", \"selector\": {}, \"arguments\": {\"meter\": \"2/2\"}, \"preconditions\": [], \"expected_change_count\": null}], \"expected_effects\": [{\"type\": \"meter_equals\", \"value\": \"2/2\"}, {\"type\": \"preserve_duration\"}, {\"type\": \"preserve_pitch\"}], \"provenance\": {\"provider\": \"rule_template\", \"model\": \"deterministic_core_v1\", \"temperature\": 0, \"seed\": 42}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "gold_meter_007",
+      "source_score_id": "score_016",
+      "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+      "instruction": "Change the global time signature from 4/4 to 2/2; keep all event durations unchanged.",
+      "target_scope": {
+        "whole_score": true
+      },
+      "protected_scope": {},
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "meter_007_op1",
+          "type": "change_time_signature",
+          "selector": {},
+          "arguments": {
+            "meter": "2/2"
+          },
+          "preconditions": [],
+          "expected_change_count": null
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "meter_equals",
+          "value": "2/2"
+        },
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "preserve_pitch"
+        }
+      ],
+      "provenance": {
+        "provider": "rule_template",
+        "model": "deterministic_core_v1",
+        "temperature": 0,
+        "seed": 42
+      }
+    },
+    "provider": "mock",
+    "model": "benchmark-fixture-v2-roundtrip",
+    "latency_ms": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "estimated_cost": 0.0,
+    "request_id": "mock:meter_007:patch_only",
+    "finish_reason": "fixture",
+    "error": null,
+    "cached": true,
+    "retry_count": 0,
+    "request_hash": "45abe2d35572c4a1d5800a2e270c9da572da538407f5442fe4b4efda0c7f3fe2"
+  },
+  "processing_latency_ms": 3.054000000702217,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

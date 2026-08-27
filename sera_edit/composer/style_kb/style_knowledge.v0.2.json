@@ -1,0 +1,158 @@
+{
+  "schema_version": "0.2.0",
+  "knowledge_base_id": "sera_composer_style_kb_v02",
+  "provenance": {
+    "content_policy": "Original engineering summaries; no copied book passages or copyrighted score excerpts.",
+    "copyright_status": "Project-authored structured metadata.",
+    "intended_use": "High-level planning, deterministic candidate realization, criticism, and traceable explanation. Not a universal aesthetic model."
+  },
+  "styles": [
+    {
+      "style_id": "classical",
+      "display_name_zh": "古典",
+      "display_name_en": "Classical",
+      "aliases": ["古典", "classical", "common practice"],
+      "planning": {
+        "progressions": [["I", "IV", "ii", "V", "I", "vi", "ii", "V"], ["I", "vi", "IV", "V", "I", "IV", "V", "I"]],
+        "textures": ["melody_accompaniment", "contrapuntal", "arpeggiated"],
+        "motif_strategies": ["preserve_contour", "sequence", "call_response"],
+        "preferred_contours": ["arch", "wave", "descending"],
+        "tension_curve": [0.2, 0.34, 0.48, 0.68, 0.42, 0.62, 0.78, 0.18],
+        "dynamics_curve": ["mp", "mp", "mf", "f", "mf", "mf", "f", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.55, 0.9], "chromatic_ratio_target": [0.0, 0.08], "repetition_target": [0.15, 0.55], "leap_limit_semitones": 12},
+      "voice_leading": {"allow_parallel_fifths": false, "prefer_contrary_motion": true, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.28, "theory": 0.17, "playability": 0.1, "motif": 0.15, "phrase": 0.14, "style": 0.11, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-CLASSICAL-001", "title_zh": "结构音稳定", "summary_zh": "强拍优先使用和弦音，弱拍连接音应形成可解释的经过或邻接运动。", "tags": ["旋律", "和声", "强拍"], "modes": ["theory_variation", "reharmonize"]},
+        {"rule_id": "STYLE-CLASSICAL-002", "title_zh": "乐句问答", "summary_zh": "短句应具有前后呼应，并在闭合目标下形成明确的属到主或等价稳定终止。", "tags": ["乐句", "终止", "动机"], "modes": ["theory_variation", "reharmonize"]}
+      ]
+    },
+    {
+      "style_id": "romantic",
+      "display_name_zh": "浪漫主义",
+      "display_name_en": "Romantic",
+      "aliases": ["浪漫", "浪漫主义", "romantic", "lyrical"],
+      "planning": {
+        "progressions": [["I", "vi", "IV", "V", "iii", "vi", "ii", "V"], ["i", "VI", "iv", "V", "i", "III", "iv", "V"]],
+        "textures": ["arpeggiated", "layered", "melody_accompaniment"],
+        "motif_strategies": ["sequence", "preserve_contour", "inversion_hint"],
+        "preferred_contours": ["arch", "wave", "ascending"],
+        "tension_curve": [0.22, 0.38, 0.58, 0.74, 0.5, 0.72, 0.9, 0.2],
+        "dynamics_curve": ["p", "mp", "mf", "f", "mf", "f", "ff", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.45, 0.82], "chromatic_ratio_target": [0.0, 0.18], "repetition_target": [0.12, 0.48], "leap_limit_semitones": 14},
+      "voice_leading": {"allow_parallel_fifths": false, "prefer_contrary_motion": true, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.26, "theory": 0.16, "playability": 0.09, "motif": 0.14, "phrase": 0.18, "style": 0.12, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-ROMANTIC-001", "title_zh": "长线条与高潮", "summary_zh": "旋律应跨越局部音符形成较长方向，并在终止前建立可感知的音区或和声高潮。", "tags": ["旋律", "高潮", "张力"], "modes": ["theory_variation"]},
+        {"rule_id": "STYLE-ROMANTIC-002", "title_zh": "色彩服从方向", "summary_zh": "半音或色彩和声必须服务于趋向与解决，不能只为增加复杂度而堆叠。", "tags": ["半音", "和声", "解决"], "modes": ["theory_variation", "reharmonize"]}
+      ]
+    },
+    {
+      "style_id": "jazz",
+      "display_name_zh": "爵士",
+      "display_name_en": "Jazz",
+      "aliases": ["爵士", "jazz", "swing", "bebop"],
+      "planning": {
+        "progressions": [["I", "vi7", "ii7", "V7", "iii", "VI7", "ii7", "V7"], ["I", "IV", "iii", "VI7", "ii7", "V7", "I", "V7"]],
+        "textures": ["chordal", "melody_accompaniment", "layered"],
+        "motif_strategies": ["call_response", "sequence", "rhythmic_identity"],
+        "preferred_contours": ["wave", "arch", "ascending"],
+        "tension_curve": [0.28, 0.48, 0.62, 0.78, 0.5, 0.72, 0.86, 0.3],
+        "dynamics_curve": ["mp", "mf", "mf", "f", "mp", "mf", "f", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.38, 0.76], "chromatic_ratio_target": [0.05, 0.32], "repetition_target": [0.1, 0.45], "leap_limit_semitones": 15},
+      "voice_leading": {"allow_parallel_fifths": true, "prefer_contrary_motion": false, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.25, "theory": 0.18, "playability": 0.08, "motif": 0.14, "phrase": 0.13, "style": 0.17, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-JAZZ-001", "title_zh": "导向音与目标音", "summary_zh": "色彩音和半音连接应指向明确的和弦目标音，尤其在和声转换处。", "tags": ["导向音", "和弦", "半音"], "modes": ["theory_variation", "reharmonize"]},
+        {"rule_id": "STYLE-JAZZ-002", "title_zh": "短动机应答", "summary_zh": "使用短动机的变形和应答建立连贯性，避免每拍都引入无关材料。", "tags": ["动机", "应答", "旋律"], "modes": ["theory_variation"]}
+      ]
+    },
+    {
+      "style_id": "pop",
+      "display_name_zh": "流行",
+      "display_name_en": "Pop",
+      "aliases": ["流行", "pop", "song", "歌曲"],
+      "planning": {
+        "progressions": [["I", "V", "vi", "IV", "I", "V", "IV", "V"], ["vi", "IV", "I", "V", "vi", "IV", "V", "I"]],
+        "textures": ["melody_accompaniment", "layered", "chordal"],
+        "motif_strategies": ["rhythmic_identity", "call_response", "preserve_contour"],
+        "preferred_contours": ["arch", "wave", "static"],
+        "tension_curve": [0.3, 0.42, 0.52, 0.62, 0.45, 0.62, 0.78, 0.28],
+        "dynamics_curve": ["mp", "mp", "mf", "mf", "mf", "f", "f", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.58, 0.92], "chromatic_ratio_target": [0.0, 0.1], "repetition_target": [0.28, 0.72], "leap_limit_semitones": 12},
+      "voice_leading": {"allow_parallel_fifths": true, "prefer_contrary_motion": false, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.26, "theory": 0.14, "playability": 0.09, "motif": 0.2, "phrase": 0.13, "style": 0.13, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-POP-001", "title_zh": "可记忆轮廓", "summary_zh": "核心轮廓和节奏身份应在短范围内复现，并保留少量变化形成记忆点。", "tags": ["记忆", "重复", "动机"], "modes": ["theory_variation"]},
+        {"rule_id": "STYLE-POP-002", "title_zh": "和声上方的简洁旋律", "summary_zh": "旋律优先用级进与和弦骨干音，跳进后尽快以反向运动恢复平衡。", "tags": ["旋律", "级进", "跳进"], "modes": ["theory_variation"]}
+      ]
+    },
+    {
+      "style_id": "minimal",
+      "display_name_zh": "极简",
+      "display_name_en": "Minimal",
+      "aliases": ["极简", "minimal", "minimalist", "重复音乐"],
+      "planning": {
+        "progressions": [["I", "I", "IV", "IV", "vi", "vi", "V", "V"]],
+        "textures": ["arpeggiated", "layered", "sparse"],
+        "motif_strategies": ["rhythmic_identity", "sequence", "preserve_contour"],
+        "preferred_contours": ["wave", "static", "ascending"],
+        "tension_curve": [0.22, 0.28, 0.36, 0.44, 0.52, 0.62, 0.72, 0.32],
+        "dynamics_curve": ["mp", "mp", "mp", "mf", "mf", "mf", "f", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.62, 0.96], "chromatic_ratio_target": [0.0, 0.06], "repetition_target": [0.45, 0.9], "leap_limit_semitones": 9},
+      "voice_leading": {"allow_parallel_fifths": true, "prefer_contrary_motion": false, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.26, "theory": 0.12, "playability": 0.08, "motif": 0.24, "phrase": 0.1, "style": 0.15, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-MINIMAL-001", "title_zh": "渐进过程", "summary_zh": "以稳定动机为基底，每次只改变一个可听维度，使变化过程本身可被感知。", "tags": ["过程", "重复", "渐变"], "modes": ["theory_variation", "reharmonize"]},
+        {"rule_id": "STYLE-MINIMAL-002", "title_zh": "有限材料", "summary_zh": "限制音高集合与轮廓种类，通过位置、层次和相位感获得差异。", "tags": ["音高集合", "层次", "动机"], "modes": ["theory_variation"]}
+      ]
+    },
+    {
+      "style_id": "modal",
+      "display_name_zh": "调式",
+      "display_name_en": "Modal",
+      "aliases": ["调式", "modal", "mode", "民谣调式"],
+      "planning": {
+        "progressions": [["i", "VII", "VI", "VII", "i", "iv", "VII", "i"]],
+        "textures": ["sparse", "layered", "melody_accompaniment"],
+        "motif_strategies": ["preserve_contour", "sequence", "call_response"],
+        "preferred_contours": ["wave", "descending", "arch"],
+        "tension_curve": [0.24, 0.36, 0.46, 0.58, 0.42, 0.58, 0.7, 0.26],
+        "dynamics_curve": ["p", "mp", "mp", "mf", "mp", "mf", "f", "p"]
+      },
+      "melody": {"step_ratio_target": [0.55, 0.9], "chromatic_ratio_target": [0.0, 0.08], "repetition_target": [0.22, 0.66], "leap_limit_semitones": 12},
+      "voice_leading": {"allow_parallel_fifths": true, "prefer_contrary_motion": false, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.27, "theory": 0.14, "playability": 0.09, "motif": 0.18, "phrase": 0.13, "style": 0.14, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-MODAL-001", "title_zh": "调式中心", "summary_zh": "通过反复出现的中心音和特征级音确认调式身份，避免功能和声把它自动改写为普通大小调。", "tags": ["调式", "中心音", "特征音"], "modes": ["theory_variation", "reharmonize"]},
+        {"rule_id": "STYLE-MODAL-002", "title_zh": "开放终止", "summary_zh": "允许用持续音、五度或调式中心形成稳定感，不强制所有短句采用传统属主终止。", "tags": ["终止", "持续音", "开放"], "modes": ["theory_variation", "reharmonize"]}
+      ]
+    },
+    {
+      "style_id": "cinematic",
+      "display_name_zh": "电影配乐",
+      "display_name_en": "Cinematic",
+      "aliases": ["电影", "影视", "cinematic", "soundtrack", "史诗"],
+      "planning": {
+        "progressions": [["i", "VI", "III", "VII", "i", "iv", "VI", "V"], ["I", "iii", "vi", "IV", "I", "V", "IV", "V"]],
+        "textures": ["layered", "arpeggiated", "chordal"],
+        "motif_strategies": ["sequence", "rhythmic_identity", "preserve_contour"],
+        "preferred_contours": ["ascending", "arch", "wave"],
+        "tension_curve": [0.18, 0.34, 0.5, 0.68, 0.52, 0.74, 0.94, 0.24],
+        "dynamics_curve": ["p", "mp", "mf", "f", "mf", "f", "ff", "mp"]
+      },
+      "melody": {"step_ratio_target": [0.42, 0.82], "chromatic_ratio_target": [0.0, 0.14], "repetition_target": [0.2, 0.68], "leap_limit_semitones": 16},
+      "voice_leading": {"allow_parallel_fifths": true, "prefer_contrary_motion": false, "prefer_common_tones": true},
+      "critic_weights": {"safety": 0.25, "theory": 0.14, "playability": 0.09, "motif": 0.17, "phrase": 0.17, "style": 0.13, "preference": 0.05},
+      "rules": [
+        {"rule_id": "STYLE-CINEMATIC-001", "title_zh": "可追踪的张力弧", "summary_zh": "音区、和声与动机密度应共同指向高潮，随后提供清楚的释放或悬念。", "tags": ["张力", "高潮", "释放"], "modes": ["theory_variation", "reharmonize"]},
+        {"rule_id": "STYLE-CINEMATIC-002", "title_zh": "短核心动机", "summary_zh": "使用可识别的短动机支撑层次扩展，避免用持续变换掩盖主题身份。", "tags": ["动机", "层次", "主题"], "modes": ["theory_variation"]}
+      ]
+    }
+  ]
+}

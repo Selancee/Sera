@@ -5,6 +5,8 @@ python-dotenv>=1.0
 requests>=2.32
 pytest>=8.2
 pyyaml>=6.0
+httpx2>=2.5
+pyinstaller>=6.0
 
 # Optional symbolic/music tooling used when installed.
 music21>=9.1

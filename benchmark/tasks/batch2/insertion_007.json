@@ -1,0 +1,44 @@
+{
+  "task_id": "insertion_007",
+  "score_id": "score_008",
+  "category": "insertion_deletion",
+  "difficulty": "medium",
+  "instruction_en": "Replace the first note of measure 2 staff 1 with F-sharp 4 without changing its duration.",
+  "instruction_zh": "将第2小节第一谱表的第一个音替换为升F4，并保持时值不变。",
+  "target_scope": {
+    "measures": [
+      2
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/insertion_007.json",
+  "expected_output_path": "expected_outputs/insertion_007.score.json",
+  "expected_constraints": [
+    {
+      "type": "event_deleted",
+      "event_id": "s008_m2_rh_1"
+    },
+    {
+      "type": "event_inserted",
+      "event_id": "insertion_007_replacement",
+      "pitch": "F#4"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "insertion_deletion"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

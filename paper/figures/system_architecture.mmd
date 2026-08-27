@@ -1,0 +1,16 @@
+flowchart LR
+  XML["MusicXML"] --> DOC["Canonical ScoreDocument"]
+  DOC --> CTX["Target scope + compact context"]
+  INST["Natural-language instruction"] --> GEN["Patch generator"]
+  CTX --> GEN
+  GEN --> PATCH["Versioned ScorePatch"]
+  PATCH --> VAL["Schema + structural + duration validation"]
+  VAL --> PROTECT["Protected-scope + notation fidelity checks"]
+  PROTECT --> DECIDE{"Valid?"}
+  DECIDE -->|"yes"| APPLY["Transactional apply"]
+  DECIDE -->|"repairable"| REPAIR["Bounded repair"]
+  REPAIR --> VAL
+  DECIDE -->|"no"| REJECT["Reject + report"]
+  APPLY --> UPDATED["Updated ScoreDocument"]
+  UPDATED --> EXPORT["MusicXML export + round-trip check"]
+  UPDATED --> HISTORY["Diff + undo/redo"]

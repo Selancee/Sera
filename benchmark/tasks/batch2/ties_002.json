@@ -1,0 +1,51 @@
+{
+  "task_id": "ties_002",
+  "score_id": "score_008",
+  "category": "ties_slurs_ornaments",
+  "difficulty": "medium",
+  "instruction_en": "Add one slur from the first to the last note of measure 3 staff 1.",
+  "instruction_zh": "在第3小节第一谱表的第一个音到最后一个音之间添加一条连音线。",
+  "target_scope": {
+    "measures": [
+      3
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "gold_patch_path": "gold_patches/ties_002.json",
+  "expected_output_path": "expected_outputs/ties_002.score.json",
+  "expected_constraints": [
+    {
+      "type": "slur_equals",
+      "event_id": "s008_m3_rh_1",
+      "value": "start"
+    },
+    {
+      "type": "slur_equals",
+      "event_id": "s008_m3_rh_4",
+      "value": "stop"
+    },
+    {
+      "type": "preserve_pitch"
+    },
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "expected_status": "success",
+  "unsupported_reason": null,
+  "tags": [
+    "batch2",
+    "synthetic",
+    "deterministic",
+    "ties_slurs_ornaments"
+  ],
+  "created_by": "rule_template",
+  "review_status": "pending_human_review"
+}

@@ -30,6 +30,21 @@
       }
     },
     "parts": { "type": "array" },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["track_id", "role", "instrument", "part_id", "staff", "voice"],
+        "properties": {
+          "track_id": { "type": "string" },
+          "role": { "type": "string" },
+          "instrument": { "type": "string" },
+          "part_id": { "type": "string" },
+          "staff": { "type": "string" },
+          "voice": { "type": "integer" }
+        }
+      }
+    },
     "measures": {
       "type": "array",
       "items": {
@@ -67,4 +82,3 @@
     "annotations": { "type": "array" }
   }
 }
-

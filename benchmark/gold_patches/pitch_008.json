@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "patch_id": "gold_pitch_008",
+  "source_score_id": "score_009",
+  "source_fingerprint": "sha256:3b7be74fc903660eca2e6448ee8fec184471e784be5c7ad00aa809ad67264a01",
+  "instruction": "Transpose measure 1 of staff 1 by -2 semitones while preserving rhythm.",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "preconditions": [],
+  "operations": [
+    {
+      "operation_id": "pitch_008_op1",
+      "type": "transpose",
+      "selector": {
+        "event_ids": [
+          "s009_m1_rh_1",
+          "s009_m1_rh_2",
+          "s009_m1_rh_3",
+          "s009_m1_rh_4",
+          "s009_m1_rh_5",
+          "s009_m1_rh_6"
+        ]
+      },
+      "arguments": {
+        "semitones": -2
+      },
+      "preconditions": [],
+      "expected_change_count": 6
+    }
+  ],
+  "expected_effects": [
+    {
+      "type": "preserve_duration"
+    }
+  ],
+  "provenance": {
+    "provider": "rule_template",
+    "model": "deterministic_core_v1",
+    "temperature": 0,
+    "seed": 42
+  }
+}

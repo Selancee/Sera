@@ -48,6 +48,12 @@ export function applyLocalOperation(score: ScoreDocument, operation: ScoreOperat
     next.global.key = String(operation.after.key || operation.after.value || next.global.key);
   } else if (type === "change_meter") {
     next.global.meter = String(operation.after.meter || operation.after.value || next.global.meter);
+  } else if (type === "change_title") {
+    next.title = String(operation.after.title ?? operation.after.value ?? "");
+    next.metadata = { ...(next.metadata || {}), title: next.title };
+  } else if (type === "change_composer") {
+    next.composer = String(operation.after.composer ?? operation.after.value ?? "");
+    next.metadata = { ...(next.metadata || {}), composer: next.composer };
   }
 
   const applied = {
@@ -149,6 +155,11 @@ function updateEvent(score: ScoreDocument, operation: ScoreOperation) {
   if (type === "convert_rest_to_note") {
     event.type = "note";
     event.pitch = String(after.pitch || "C4");
+    if (after.duration) event.duration = String(after.duration);
+    if (after.offset !== undefined) event.offset = Number(after.offset);
+    if (after.staff) event.staff = String(after.staff);
+    if (after.voice) event.voice = Number(after.voice);
+    if (after.accidental !== undefined) event.accidental = String(after.accidental) as any;
   }
   if (type === "add_slur") event.slur = String(after.slur || "start");
   if (type === "remove_slur") event.slur = null;

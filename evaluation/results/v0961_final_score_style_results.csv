@@ -1,0 +1,3 @@
+actual_voicing_style_match_rate,case_id,chinese_pentatonic_actual_note_rate,classical_leading_tone_resolution_rate,cyberpunk_ostinato_actual_rate,final_harmony_style_match_rate,final_melody_style_match_rate,jazz_actual_extension_presence_rate,jazz_plain_triad_failure_rate,melody_expectation_score,metadata_score_consistency_rate,pass,pop_hook_contour_score,romantic_long_line_actual_score,style
+0.85,jazz_actual_extensions,1.0,1.0,1.0,0.85,1.0,1.0,0.0,0.6927,1.0,1.0,1.0,1.0,jazz
+0.9,pop_hook_loop,1.0,1.0,1.0,0.9,1.0,0.0,0.0,0.9734,1.0,1.0,1.0,1.0,pop

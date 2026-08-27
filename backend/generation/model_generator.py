@@ -28,10 +28,11 @@ class ModelGenerator:
     """Load optional symbolic-model artifacts and produce qualitative samples."""
 
     def __init__(self, project_root: str | Path | None = None) -> None:
+        self._explicit_project_root = project_root is not None
         self.project_root = Path(project_root) if project_root else Path(__file__).resolve().parents[2]
         self.training_runs_dir = self.project_root / "docs" / "training_runs"
         self.active_model_name = os.getenv("SERA_ACTIVE_SYMBOLIC_MODEL", "sera_symbolic_small").strip()
-        self.default_model_dir = self.project_root / "models" / self.active_model_name
+        self.default_model_dir = self._initial_default_model_dir()
         self.safe_generator = RuleBasedGenerator()
 
     def set_active_model(self, model_name: str) -> dict[str, Any]:
@@ -78,7 +79,9 @@ class ModelGenerator:
             "Sera rule-based generator V0.2",
             f"Sera neural-conditioned generator ({self.active_model_name})",
         )
+        base_metadata = dict(generated.metadata or {})
         generated.metadata = {
+            **base_metadata,
             "generator_mode": "model_conditioned",
             "model_backend": "pytorch_decoder",
             "model_name": self.active_model_name,
@@ -224,14 +227,16 @@ class ModelGenerator:
         """Return checkpoint candidates in runtime priority order."""
 
         explicit_checkpoint = os.environ.get("SERA_SYMBOLIC_MODEL_CHECKPOINT", "").strip()
-        if explicit_checkpoint:
+        if explicit_checkpoint and self._can_use_external_model_path(Path(explicit_checkpoint).expanduser()):
             path = Path(explicit_checkpoint).expanduser()
             return [path]
 
         explicit_dir = os.environ.get("SERA_SYMBOLIC_MODEL_DIR", "").strip()
         candidates: list[Path] = []
         if explicit_dir:
-            candidates.append(Path(explicit_dir).expanduser() / "model.pt")
+            explicit_model_dir = Path(explicit_dir).expanduser()
+            if self._can_use_external_model_path(explicit_model_dir):
+                candidates.append(explicit_model_dir / "model.pt")
         candidates.append(self.default_model_dir / "model.pt")
         if run_dir:
             candidates.append(run_dir / "model.pt")
@@ -240,6 +245,32 @@ class ModelGenerator:
             if path not in unique_candidates:
                 unique_candidates.append(path)
         return unique_candidates
+
+    def _initial_default_model_dir(self) -> Path:
+        """Resolve checkpoint directory without leaking another project root into tests."""
+
+        configured_dir = os.getenv("SERA_SYMBOLIC_MODEL_DIR", "").strip()
+        if configured_dir:
+            configured_path = Path(configured_dir).expanduser()
+            if self._can_use_external_model_path(configured_path):
+                return configured_path
+        active_dir = self.project_root / "models" / self.active_model_name
+        if active_dir.exists() or not self._explicit_project_root:
+            return active_dir
+        return self.project_root / "models" / "sera_symbolic_small"
+
+    def _can_use_external_model_path(self, path: Path) -> bool:
+        if not self._explicit_project_root:
+            return True
+        return self._is_relative_to(path.resolve(), self.project_root.resolve())
+
+    @staticmethod
+    def _is_relative_to(path: Path, parent: Path) -> bool:
+        try:
+            path.relative_to(parent)
+        except ValueError:
+            return False
+        return True
 
     @staticmethod
     def _prompt_from_plan(plan: CompositionPlan) -> str:

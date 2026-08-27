@@ -1,0 +1,94 @@
+{
+  "run_id": "conflict_001:en:r1",
+  "task_id": "conflict_001",
+  "language": "en",
+  "repetition": 1,
+  "instruction": "Change measure 1 to 5/8 while preserving every note duration and leaving no rests.",
+  "target_scope": {
+    "measures": [
+      1
+    ],
+    "staffs": [
+      1
+    ]
+  },
+  "host_target_scope": {
+    "measures": [
+      1
+    ],
+    "parts": [],
+    "staffs": [
+      "right_hand"
+    ],
+    "voices": [],
+    "event_ids": [],
+    "exclude_measures": [],
+    "exclude_event_ids": [],
+    "time_range": null,
+    "whole_score": false
+  },
+  "scope_stress": {
+    "mode": "exact",
+    "applied": false,
+    "extra_measures": [],
+    "reason": "exact benchmark scope"
+  },
+  "protected_scope": {
+    "staffs": [
+      2
+    ]
+  },
+  "generation": {
+    "status": "refused",
+    "patch": null,
+    "reason": "Changing meter while requiring all durations to remain unchanged is outside the safe local rule subset.",
+    "matched_intents": [
+      "conflict"
+    ],
+    "generator": {
+      "provider": "local_rule",
+      "model": "seraedit_rule_v1",
+      "formal_experiment_eligible": false,
+      "live": false,
+      "transport": "local",
+      "requested_provider": "local_rule",
+      "routing": "local_first",
+      "fallback_reason": "",
+      "scope_resolution": "requested_scope"
+    },
+    "provider_status": {
+      "provider": "local_rule",
+      "model": "seraedit_rule_v1",
+      "base_url": "",
+      "api_key_env": "",
+      "configured": false,
+      "available": false,
+      "transport": "local",
+      "fallback_local": true,
+      "timeout_seconds": 90.0,
+      "max_output_tokens": 4000,
+      "reasoning_effort": "low",
+      "store": false,
+      "supports_structured_outputs": false,
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "config_file": "",
+      "reason": "Explicit offline runtime acceptance mode.",
+      "mode": "local_rule",
+      "api_key_configured": false,
+      "credential_storage": "none",
+      "in_app_configuration": true,
+      "composer_timeout_seconds": 180.0
+    }
+  },
+  "preview": null,
+  "transaction": null,
+  "source_preserving_host_export": null,
+  "host_validation": null,
+  "host_error": null,
+  "constraint_errors": [],
+  "elapsed_ms": 0.5820999995194143,
+  "patch_fingerprint": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "semantic_patch_fingerprint": "d07935fefb9eb378b16d51bcd1510040077a17127c632f31657c65ebe9093765",
+  "post_fingerprint": "refused"
+}

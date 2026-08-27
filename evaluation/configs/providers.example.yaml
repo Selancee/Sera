@@ -1,0 +1,38 @@
+# Copy and edit locally. Never commit API keys.
+providers:
+  mock:
+    provider: mock
+    model: benchmark-fixture-v1
+  openai:
+    provider: openai
+    model: model-name
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    timeout_seconds: 90
+    requests_per_minute: 30
+    supports_structured_outputs: true
+    input_cost_per_million: null
+    output_cost_per_million: null
+  deepseek:
+    provider: deepseek
+    model: model-name
+    base_url: https://api.deepseek.com/v1
+    api_key_env: DEEPSEEK_API_KEY
+    timeout_seconds: 90
+    requests_per_minute: 30
+    supports_structured_outputs: false
+    input_cost_per_million: null
+    output_cost_per_million: null
+  qwen:
+    provider: qwen
+    model: model-name
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY
+    timeout_seconds: 90
+    requests_per_minute: 30
+    supports_structured_outputs: false
+    input_cost_per_million: null
+    output_cost_per_million: null
+
+# Prices are intentionally null because they change. Fill them from the
+# provider's current pricing page before any formal run.

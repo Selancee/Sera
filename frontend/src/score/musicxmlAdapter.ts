@@ -86,6 +86,7 @@ function noteXml(pitch: string, duration: number, staff: number, event?: ScoreEv
     `        <duration>${duration}</duration>`,
     `        <voice>${event?.voice || 1}</voice>`,
     `        <type>${durationType(duration)}</type>`,
+    isDottedDuration(duration) ? "        <dot/>" : "",
     `        <staff>${staff}</staff>`,
     event ? `        <notations><technical><other-technical>sera-event-id:${escapeXml(event.event_id)}</other-technical></technical></notations>` : "",
     "      </note>"
@@ -100,6 +101,7 @@ function restXml(duration: number, staff: number, event?: ScoreEvent) {
     `        <duration>${duration}</duration>`,
     `        <voice>${event?.voice || 1}</voice>`,
     `        <type>${durationType(duration)}</type>`,
+    isDottedDuration(duration) ? "        <dot/>" : "",
     `        <staff>${staff}</staff>`,
     event ? `        <notations><technical><other-technical>sera-event-id:${escapeXml(event.event_id)}</other-technical></technical></notations>` : "",
     "      </note>"
@@ -113,6 +115,7 @@ function durationToQuarters(duration: string) {
     quarter: 1,
     eighth: 0.5,
     sixteenth: 0.25,
+    dotted_half: 3,
     dotted_quarter: 1.5,
     dotted_eighth: 0.75
   }[duration] || 1;
@@ -128,6 +131,10 @@ function durationType(duration: number) {
     2: "eighth",
     1: "16th"
   }[duration] || "quarter";
+}
+
+function isDottedDuration(duration: number) {
+  return duration === 3 || duration === 6 || duration === 12;
 }
 
 function escapeXml(value: string) {

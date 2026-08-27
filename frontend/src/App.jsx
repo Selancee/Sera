@@ -3,6 +3,8 @@ import {
   evaluateRun,
   generateScore,
   generateSymbolicModelSample,
+  getBackendCapabilities,
+  getRendererStatus,
   getSymbolicModelRegistry,
   getSymbolicModelStatus,
   listExperiments,
@@ -11,18 +13,33 @@ import {
   submitRating
 } from "./api.js";
 import AgentPlanPanel from "./components/AgentPlanPanel.jsx";
+import CandidateMetadataPanel from "./components/CandidateMetadataPanel.jsx";
+import ConsistencyReportPanel from "./components/ConsistencyReportPanel.jsx";
 import ExperimentLogPanel from "./components/ExperimentLogPanel.jsx";
 import ExportPanel from "./components/ExportPanel.jsx";
+import HarmonyProfilePanel from "./components/HarmonyProfilePanel.jsx";
 import HumanEvaluationPanel from "./components/HumanEvaluationPanel.jsx";
+import KeyConsistencyPanel from "./components/KeyConsistencyPanel.jsx";
+import MelodyExpectationReportPanel from "./components/MelodyExpectationReportPanel.jsx";
+import MelodyLineReportPanel from "./components/MelodyLineReportPanel.jsx";
 import MidiPlayer from "./components/MidiPlayer.jsx";
 import PromptInput from "./components/PromptInput.jsx";
+import PromptConflictPanel from "./components/PromptConflictPanel.jsx";
+import ResolvedGenerationRequestPanel from "./components/ResolvedGenerationRequestPanel.jsx";
+import RuntimeErrorBoundary from "./components/RuntimeErrorBoundary.jsx";
+import ScoreMetadataPanel from "./components/ScoreMetadataPanel.jsx";
 import ScoreViewer from "./components/ScoreViewer.jsx";
 import SymbolicModelPanel from "./components/SymbolicModelPanel.jsx";
+import TrackPlanPanel from "./components/TrackPlanPanel.jsx";
 import ValidationReportPanel from "./components/ValidationReportPanel.jsx";
+import { resolveBackendBaseUrl } from "./desktop/desktopRuntime";
+import SeraAgentConsole from "./agent/SeraAgentConsole";
+import BenchmarkReviewWorkspace from "./review/BenchmarkReviewWorkspace";
+import { researchReviewEnabled } from "./review/researchReviewMode";
+import LanguageSelector from "./i18n/LanguageSelector";
+import { formatMusicTerm } from "./i18n/musicTerms";
+import { useI18n } from "./i18n/useI18n";
 import ScoreWorkbench from "./workbench/ScoreWorkbench";
-
-const DEFAULT_PROMPT =
-  "Compose a 16 measure romantic piano nocturne with a clear melody and flowing left hand.";
 
 const DEFAULT_PARAMS = {
   style: "romantic",
@@ -32,36 +49,59 @@ const DEFAULT_PARAMS = {
   tempo: 84,
   length: 16,
   difficulty: "intermediate",
+  rhythmic_density: "medium",
+  texture: "melody_accompaniment",
+  accompaniment_style: "bass_chord",
+  cadence_strength: "clear",
   generator_mode: "hybrid_v05",
   model_task_type: "melody_fragment"
 };
 
-const MAIN_TABS = ["Score", "Workbench", "Plan", "Validation", "Evaluation", "Model"];
+const DEFAULT_PARAM_SOURCES = Object.fromEntries(Object.keys(DEFAULT_PARAMS).map((key) => [key, "default"]));
 
-function promptWithParams(prompt, params) {
-  return [
-    prompt.trim(),
-    `Parameters: ${params.style} style, ${params.instrument}, ${params.key}, ${params.meter}, ${params.tempo} bpm, ${params.length} measures, ${params.difficulty} difficulty.`
-  ].join("\n");
+const LEGACY_GENERATION_ENABLED = import.meta.env.VITE_SERA_ENABLE_LEGACY_GENERATION === "true";
+const RESEARCH_REVIEW_ENABLED = researchReviewEnabled(import.meta.env.VITE_SERA_ENABLE_RESEARCH_REVIEW);
+
+const LEGACY_TABS = [
+  ["Score", "mode.score"],
+  ["Workbench", "mode.workbench"],
+  ["Plan", "mode.plan"],
+  ["Validation", "mode.validation"],
+  ["Evaluation", "mode.evaluation"],
+  ["Model", "mode.model"]
+];
+
+const MAIN_TABS = LEGACY_GENERATION_ENABLED ? LEGACY_TABS : [["Workbench", "mode.workbench"]];
+
+function makeVariationSeed() {
+  if (globalThis.crypto?.randomUUID) {
+    return globalThis.crypto.randomUUID();
+  }
+  return `sera-${Date.now().toString(36)}-${Math.random().toString(16).slice(2)}`;
 }
 
 export default function App() {
-  const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
+  const { t } = useI18n();
+  const [prompt, setPrompt] = useState("");
   const [params, setParams] = useState(DEFAULT_PARAMS);
+  const [paramSources, setParamSources] = useState(DEFAULT_PARAM_SOURCES);
   const [result, setResult] = useState(null);
   const [experiments, setExperiments] = useState([]);
   const [feedback, setFeedback] = useState("Make the cadence clearer and add more rhythmic contrast.");
-  const [modelPrompt, setModelPrompt] = useState(DEFAULT_PROMPT);
+  const [modelPrompt, setModelPrompt] = useState("");
   const [modelStatus, setModelStatus] = useState(null);
   const [modelRegistry, setModelRegistry] = useState({ models: [] });
   const [modelSample, setModelSample] = useState(null);
+  const [rendererStatus, setRendererStatus] = useState(null);
+  const [backendCapabilities, setBackendCapabilities] = useState(null);
   const [status, setStatus] = useState("ready");
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState("Score");
+  const [activeTab, setActiveTab] = useState(LEGACY_GENERATION_ENABLED ? "Score" : "Workbench");
+  const [researchReviewOpen, setResearchReviewOpen] = useState(false);
 
   const runId = result?.run_id || "";
-  const measures = useMemo(() => result?.plan?.measures || [], [result]);
   const evaluation = useMemo(() => result?.evaluation || {}, [result]);
+  const midiUrl = result?.midi_url || result?.exports?.midi || "";
 
   const refreshExperiments = useCallback(async () => {
     try {
@@ -91,17 +131,67 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    refreshExperiments();
-    refreshModelStatus();
+    if (LEGACY_GENERATION_ENABLED) {
+      refreshExperiments();
+      refreshModelStatus();
+    }
+    getBackendCapabilities().then(setBackendCapabilities).catch(() => setBackendCapabilities(null));
+    if (LEGACY_GENERATION_ENABLED) {
+      getRendererStatus().then(setRendererStatus).catch(() => setRendererStatus(null));
+    }
   }, [refreshExperiments, refreshModelStatus]);
+
+  const handleParamChange = useCallback((key, value) => {
+    setParams((current) => ({ ...current, [key]: value }));
+    setParamSources((current) => ({ ...current, [key]: "explicit" }));
+  }, []);
 
   const handleGenerate = useCallback(async () => {
     setStatus("generating");
     setError("");
     try {
-      const payload = await generateScore(promptWithParams(prompt, params), {
+      const variationSeed = makeVariationSeed();
+      const trimmedPrompt = prompt.trim();
+      const controlOnly = !trimmedPrompt;
+      const uiControls = {
+        style: params.style,
+        instrument: params.instrument,
+        key: params.key,
+        meter: params.meter,
+        tempo: params.tempo,
+        length_measures: params.length,
+        difficulty: params.difficulty,
+        rhythmic_density: params.rhythmic_density,
+        texture: params.texture,
+        accompaniment_style: params.accompaniment_style,
+        cadence_strength: params.cadence_strength
+      };
+      const payload = await generateScore({
+        raw_prompt: trimmedPrompt,
+        prompt: trimmedPrompt,
+        ui_controls: uiControls,
+        ui_control_sources: {
+          ...paramSources,
+          length_measures: paramSources.length,
+          instrument: paramSources.instrument
+        },
+        control_policy: {
+          prompt_priority: true,
+          show_conflicts: true,
+          allow_ui_defaults: true
+        },
+        prompt_context: {
+          source: "generate_page",
+          intent_source: controlOnly ? "control_only_intent" : "prompt_plus_controls",
+          language: navigator.language || "unknown"
+        },
         generator_mode: params.generator_mode,
-        model_task_type: params.model_task_type
+        generation_mode: controlOnly ? "control_only_intent" : "prompt_plus_controls",
+        candidate_count: 4,
+        model_task_type: params.model_task_type,
+        musicality_controls: {
+          variation_seed: variationSeed
+        }
       });
       setResult(payload);
       setActiveTab("Score");
@@ -111,7 +201,7 @@ export default function App() {
       setError(err.message);
       setStatus("error");
     }
-  }, [params, prompt, refreshExperiments]);
+  }, [paramSources, params, prompt, refreshExperiments]);
 
   const handleRevise = useCallback(async () => {
     if (!runId) return;
@@ -196,6 +286,17 @@ export default function App() {
     [refreshExperiments, runId]
   );
 
+  const handlePlayMidi = useCallback(() => {
+    if (!midiUrl) return;
+    const url = /^https?:\/\//i.test(midiUrl) ? midiUrl : `${resolveBackendBaseUrl()}${midiUrl.startsWith("/") ? "" : "/"}${midiUrl}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }, [midiUrl]);
+
+  const handleScoreMetadataChange = useCallback((field, value) => {
+    if (!["title", "composer"].includes(field)) return;
+    setResult((current) => updateResultMetadata(current, field, value));
+  }, []);
+
   const modelPanel = (
     <SymbolicModelPanel
       disabled={status === "modeling"}
@@ -209,6 +310,16 @@ export default function App() {
       setPrompt={setModelPrompt}
     />
   );
+const renderResetKey = `${activeTab}:${runId || "no-run"}:${status}`;
+
+  if (!LEGACY_GENERATION_ENABLED) {
+    return researchReviewOpen
+      ? <BenchmarkReviewWorkspace onClose={() => setResearchReviewOpen(false)} />
+      : <SeraAgentConsole
+          backendCapabilities={backendCapabilities}
+          onOpenResearchReview={RESEARCH_REVIEW_ENABLED ? () => setResearchReviewOpen(true) : undefined}
+        />;
+  }
 
   return (
     <div className="app-shell">
@@ -218,51 +329,103 @@ export default function App() {
             S
           </div>
           <div>
-            <h1>Sera - Agentic Text-to-Score Composition System</h1>
-            <p>Score Workbench V0.6</p>
+            <h1>{t("app.title")}</h1>
+            <p>{t("app.subtitle")}</p>
           </div>
         </div>
         <nav className="tabs" aria-label="Main views">
-          {MAIN_TABS.map((tab) => (
+          {MAIN_TABS.map(([tab, labelKey]) => (
             <button
               className={activeTab === tab ? "tab active" : "tab"}
               key={tab}
               onClick={() => setActiveTab(tab)}
               type="button"
             >
-              {tab}
+              {t(labelKey)}
             </button>
           ))}
         </nav>
-        <div className={`status-chip ${status}`}>{status}</div>
+        <LanguageSelector />
+        <div
+          className={`runtime-chip ${backendCapabilities?.api_contract ? "ok" : "warning"}`}
+          title={backendCapabilities?.api_contract ? `Backend contract: ${backendCapabilities.api_contract}` : "Backend contract unavailable"}
+        >
+          Backend {backendCapabilities?.api_contract || "unknown"}
+        </div>
+        <div className={`status-chip ${status}`}>{formatMusicTerm(status, t)}</div>
       </header>
 
       <main className="workspace">
         <aside className="left-rail">
-          <PromptInput
-            disabled={status === "generating"}
-            onGenerate={handleGenerate}
-            params={params}
-            prompt={prompt}
-            setParams={setParams}
-            setPrompt={setPrompt}
-          />
-          <ExperimentLogPanel experiments={experiments} selectedRunId={runId} />
+          {LEGACY_GENERATION_ENABLED ? (
+            <>
+              <PromptInput
+                disabled={status === "generating"}
+                onGenerate={handleGenerate}
+                onParamChange={handleParamChange}
+                params={params}
+                prompt={prompt}
+                controlOnly={!prompt.trim()}
+                setParams={setParams}
+                setPrompt={setPrompt}
+              />
+              <ExperimentLogPanel experiments={experiments} selectedRunId={runId} />
+            </>
+          ) : (
+            <div className="panel editing-layer-intro">
+              <strong>{t("editingLayer.primaryWorkflow")}</strong>
+              <ol>
+                <li>{t("editingLayer.step1")}</li>
+                <li>{t("editingLayer.step2")}</li>
+                <li>{t("editingLayer.step3")}</li>
+                <li>{t("editingLayer.step4")}</li>
+              </ol>
+              <small>{t("editingLayer.legacyHint")}</small>
+            </div>
+          )}
         </aside>
 
         <section className="score-stage" aria-label="Score workspace">
-          {activeTab === "Plan" && <AgentPlanPanel result={result} />}
-          {activeTab === "Workbench" && <ScoreWorkbench result={result} />}
-          {activeTab === "Score" && (
-            <>
-              <ScoreViewer measures={measures} result={result} />
-              <MidiPlayer measures={measures} tempo={result?.intent?.tempo_bpm || 96} />
-              <ValidationReportPanel result={result} />
-            </>
+          {activeTab === "Plan" && (
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="plan-tab" title="Agent Plan could not be rendered">
+              <AgentPlanPanel result={result} />
+            </RuntimeErrorBoundary>
           )}
-          {activeTab === "Validation" && <ValidationReportPanel detailed result={result} />}
+          {activeTab === "Workbench" && (
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="workbench-tab" title="Workbench could not be rendered">
+              <ScoreWorkbench result={result} />
+            </RuntimeErrorBoundary>
+          )}
+          {activeTab === "Score" && (
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="score-tab" title="Generated score view could not be rendered">
+              <PromptConflictPanel resolution={result?.prompt_control_resolution} />
+              <ScoreMetadataPanel onMetadataChange={handleScoreMetadataChange} result={result} />
+              <KeyConsistencyPanel report={result?.key_consistency_report || result?.generation_metadata?.key_consistency_report} />
+              <MelodyLineReportPanel
+                crossMeasureReport={result?.generation_metadata?.cross_measure_melodic_grammar_report || result?.metadata?.cross_measure_melodic_grammar_report}
+                report={result?.generation_metadata?.melody_line_report || result?.metadata?.melody_line_report}
+              />
+              <CandidateMetadataPanel metadata={result?.generation_metadata || result?.metadata} />
+              <MelodyExpectationReportPanel
+                report={result?.generation_metadata?.melody_expectation_report || result?.metadata?.melody_expectation_report}
+                metadata={result?.generation_metadata || result?.metadata}
+              />
+              <HarmonyProfilePanel metadata={result?.generation_metadata || result?.metadata} />
+              <TrackPlanPanel metadata={result?.generation_metadata || result?.metadata} scoreDocument={result?.score_document} />
+              <ScoreViewer onOpenWorkbench={() => setActiveTab("Workbench")} onPlayMidi={handlePlayMidi} rendererStatus={rendererStatus} result={result} />
+              <MidiPlayer result={result} />
+              <ResolvedGenerationRequestPanel resolution={result?.prompt_control_resolution} />
+              <ConsistencyReportPanel report={result?.consistency_report} />
+              <ValidationReportPanel result={result} />
+            </RuntimeErrorBoundary>
+          )}
+          {activeTab === "Validation" && (
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="validation-tab" title="Validation view could not be rendered">
+              <ValidationReportPanel detailed result={result} />
+            </RuntimeErrorBoundary>
+          )}
           {activeTab === "Evaluation" && (
-            <>
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="evaluation-tab" title="Evaluation view could not be rendered">
               <ResearchModePanel result={result} />
               <div className="evaluation-grid">
                 {Object.entries(evaluation).map(([key, value]) => (
@@ -272,45 +435,118 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </>
+            </RuntimeErrorBoundary>
           )}
-          {activeTab === "Model" && modelPanel}
+          {activeTab === "Model" && (
+            <RuntimeErrorBoundary resetKey={renderResetKey} scope="model-tab" title="Model view could not be rendered">
+              {modelPanel}
+            </RuntimeErrorBoundary>
+          )}
           {!result && activeTab !== "Model" && activeTab !== "Workbench" && (
             <div className="empty-state">
-              <strong>Ready for first generation</strong>
-              <span>Run the prompt to create MusicXML, MIDI, ABC, PDF, and an experiment log.</span>
+              <strong>{t("app.empty.title")}</strong>
+              <span>{t("app.empty.body")}</span>
             </div>
           )}
           {error && <div className="error-banner">{error}</div>}
         </section>
 
         <aside className="right-inspector">
-          <AgentPlanPanel compact result={result} />
-          <ExportPanel onEvaluate={handleEvaluate} result={result} />
-          <HumanEvaluationPanel
-            disabled={status === "generating" || status === "revising"}
-            onSubmit={handleRating}
-            result={result}
-          />
-          <div className="panel">
-            <label htmlFor="feedback">Revision</label>
-            <textarea
-              id="feedback"
-              rows="4"
-              value={feedback}
-              onChange={(event) => setFeedback(event.target.value)}
-            />
-            <button className="secondary-action" disabled={!runId} onClick={handleRevise} type="button">
-              Revise
-            </button>
-          </div>
+          {LEGACY_GENERATION_ENABLED ? (
+            <>
+              <RuntimeErrorBoundary resetKey={renderResetKey} scope="right-plan" title="Plan summary could not be rendered">
+                <AgentPlanPanel compact result={result} />
+              </RuntimeErrorBoundary>
+              <RuntimeErrorBoundary resetKey={renderResetKey} scope="export-panel" title="Export panel could not be rendered">
+                <ExportPanel onEvaluate={handleEvaluate} result={result} />
+              </RuntimeErrorBoundary>
+              <RuntimeErrorBoundary resetKey={renderResetKey} scope="rating-panel" title="Rating panel could not be rendered">
+                <HumanEvaluationPanel
+                  disabled={status === "generating" || status === "revising"}
+                  onSubmit={handleRating}
+                  result={result}
+                />
+              </RuntimeErrorBoundary>
+              <div className="panel">
+                <label htmlFor="feedback">{t("revision.label")}</label>
+                <textarea
+                  id="feedback"
+                  rows="4"
+                  value={feedback}
+                  onChange={(event) => setFeedback(event.target.value)}
+                />
+                <button className="secondary-action" disabled={!runId} onClick={handleRevise} type="button">
+                  {t("revision.button")}
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="panel editing-layer-principles">
+              <strong>{t("editingLayer.guardrails")}</strong>
+              <ul>
+                <li>{t("editingLayer.guardrail1")}</li>
+                <li>{t("editingLayer.guardrail2")}</li>
+                <li>{t("editingLayer.guardrail3")}</li>
+              </ul>
+            </div>
+          )}
         </aside>
       </main>
     </div>
   );
 }
 
+function updateResultMetadata(current, field, value) {
+  if (!current) return current;
+  const scoreDocument = current.score_document?.schema_version === "0.6"
+    ? {
+        ...current.score_document,
+        metadata: { ...(current.score_document.metadata || {}) }
+      }
+    : null;
+  if (scoreDocument) {
+    scoreDocument[field] = value;
+    scoreDocument.metadata[field] = value;
+  }
+  const title = field === "title" ? value : scoreDocument?.title || current.intent?.title || "Untitled Sera Score";
+  const composer = field === "composer" ? value : scoreDocument?.composer || "Sera";
+  const generationMetadata = {
+    ...(current.generation_metadata || {}),
+    metadata_sync_report: {
+      ...(current.generation_metadata?.metadata_sync_report || {}),
+      title_after: title,
+      composer_after: composer
+    }
+  };
+  return {
+    ...current,
+    intent: { ...(current.intent || {}), ...(field === "title" ? { title } : {}) },
+    score_document: scoreDocument || current.score_document,
+    musicxml: patchMusicXmlMetadata(current.musicxml || "", title, composer),
+    generation_metadata: generationMetadata
+  };
+}
+
+function patchMusicXmlMetadata(musicxml, title, composer) {
+  if (!musicxml) return musicxml;
+  let updated = String(musicxml).replace(/<work-title>.*?<\/work-title>/s, `<work-title>${escapeXml(title || "Untitled Sera Score")}</work-title>`);
+  if (updated === musicxml && /<score-partwise\b[^>]*>/i.test(updated)) {
+    updated = updated.replace(/(<score-partwise\b[^>]*>)/i, `$1\n  <work>\n    <work-title>${escapeXml(title || "Untitled Sera Score")}</work-title>\n  </work>`);
+  }
+  if (/<creator\s+type=["']composer["']>.*?<\/creator>/s.test(updated)) {
+    updated = updated.replace(/<creator\s+type=["']composer["']>.*?<\/creator>/s, `<creator type="composer">${escapeXml(composer || "Sera")}</creator>`);
+  } else if (updated.includes("</identification>")) {
+    updated = updated.replace("</identification>", `    <creator type="composer">${escapeXml(composer || "Sera")}</creator>\n  </identification>`);
+  }
+  return updated;
+}
+
+function escapeXml(value) {
+  return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
 function ResearchModePanel({ result }) {
+  const { t } = useI18n();
   const generation = result?.generation || {};
   const metadata = result?.metadata || {};
   const decoding = metadata.decoding || generation.decoding || {};
@@ -333,7 +569,7 @@ function ResearchModePanel({ result }) {
   return (
     <section className="panel research-panel">
       <div className="panel-heading">
-        <h2>Research Mode</h2>
+        <h2>{t("research.title")}</h2>
         <span>{metadata.generator_mode || generation.generator_mode || "pending"}</span>
       </div>
       <div className="research-grid">
