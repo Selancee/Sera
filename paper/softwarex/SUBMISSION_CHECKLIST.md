@@ -29,8 +29,8 @@
 - [x] Confirm the drafted sole-author CRediT roles and competing-interest statement.
 - [x] Confirm every contributor/copyright owner authorizes the MIT code release and
       the benchmark owner authorizes the CC0 dedication.
-- [ ] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
-- [ ] Review the release diff; exclude private/user-owned files; commit with authorization.
+- [x] Make `https://github.com/Selancee/Sera` publicly readable and inspect it logged out.
+- [x] Review the release diff; exclude private/user-owned files; commit with authorization.
 - [ ] Create an immutable release tag (recommended `v1.0.0`) and release asset.
 - [ ] Connect GitHub to Zenodo (or approved capsule), archive the tag and insert DOI/URL.
 - [ ] Replace C2/C3/S2/S3 and repository citation with the immutable URLs/DOI.

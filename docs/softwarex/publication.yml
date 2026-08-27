@@ -1,8 +1,8 @@
 software_version: "1.0.0"
 article_type: "Original Software Publication"
 repository_url: "https://github.com/Selancee/Sera"
-repository_public: false
-release_tag: null
+repository_public: true
+release_tag: "v1.0.0"
 archive_url: null
 archive_doi: null
 reproducible_capsule_url: null

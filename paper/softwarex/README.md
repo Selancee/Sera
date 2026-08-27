@@ -26,6 +26,7 @@ Regenerate in this order:
 .\.venv\Scripts\python.exe scripts\export_softwarex_package.py
 ```
 
-`--profile submission` must return exit code 0 before any upload. It currently fails
-deliberately until the author supplies identity/support metadata, confirms licensing,
-makes a tagged repository public and mints a permanent archive DOI.
+`--profile submission` must return exit code 0 before any journal upload. It currently
+fails deliberately only until the permanent archive DOI is minted and inserted.
+Identity, rights confirmation, public repository visibility, and the `v1.0.0` release
+metadata are complete.

@@ -29,9 +29,10 @@ pipeline execution only; it is not reported as LLM performance. This distinction
 together with auditable rejection reasons and protected-scope validation, makes the
 software useful for controlled research on reliable notation-editing agents.
 
-Before submission, replace this paragraph with the permanent tagged repository and
-archive DOI: [PUBLIC RELEASE URL AND DOI]. The code is prepared under the MIT License
-and the synthetic benchmark under CC0-1.0.
+The immutable tagged release is available at
+https://github.com/Selancee/Sera/releases/tag/v1.0.0. The permanent archive DOI will
+be inserted after Zenodo registration. The code is released under the MIT License and
+the synthetic benchmark under CC0-1.0.
 
 The sole author confirms that this manuscript is original and is not under
 consideration elsewhere.

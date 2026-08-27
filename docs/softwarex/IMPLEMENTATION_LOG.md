@@ -472,3 +472,17 @@
   present; this is a visual limitation, not a runtime failure.
 - Rebuilt and structurally checked the DOCX plus eight-page PDF at release version 1.0.0.
   Public visibility, tagging and GitHub Release creation remain pending the external step.
+
+# 2026-08-27 - Phase SX26: authorized public-release metadata closure
+
+- Applied the author's explicit authorization to change the GitHub repository from private
+  to public and verified anonymous API visibility at `https://github.com/Selancee/Sera`.
+- Bound the manuscript, availability statement and publication configuration to the
+  immutable `v1.0.0` release URL and the versioned Windows x64 asset URL. No DOI was
+  invented; C3/S3 and the archive metadata remain explicit Zenodo placeholders.
+- Rebuilt the line-numbered DOCX and eight-page PDF after link replacement. Draft package
+  verification passes, while strict submission verification now reports exactly one
+  author-owned blocker: `permanent archive DOI is missing`.
+- The verified public-release payload comprises the portable Windows executable plus
+  deterministic source and manuscript/reviewer archives. Git tagging and GitHub Release
+  upload are the next authorized external actions.

@@ -223,7 +223,7 @@ SeraEdit packages language-guided MusicXML editing as a source-bound, scoped, va
 and reversible transaction. Its principal contribution is an executable reliability
 boundary: the model proposes, while canonical score state, deterministic validators,
 protected-scope comparison, MusicXML round trips, and user review decide whether a
-revision exists. The open-source release candidate includes a desktop demonstration,
+revision exists. The open-source release includes a desktop demonstration,
 host bridge, benchmark, three evaluation conditions, automated metrics, tests, and
 reproducibility tooling. Future releases will prioritize formal model comparisons,
 cross-host testing, richer exact notation relations, and independent blinded musician
@@ -234,7 +234,7 @@ evaluation rather than weakening transaction safeguards.
 | Nr. | Code metadata description | Metadata |
 | --- | --- | --- |
 | C1 | Current code version | `1.0.0` |
-| C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera` (must be made public and tagged before submission) |
+| C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera/releases/tag/v1.0.0` |
 | C3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
 | C5 | Code versioning system used | Git |
@@ -248,7 +248,7 @@ evaluation rather than weakening transaction safeguards.
 | Nr. | Software metadata description | Metadata |
 | --- | --- | --- |
 | S1 | Current executable software version | `1.0.0` |
-| S2 | Permanent link to executable | `[RELEASE ASSET URL]` |
+| S2 | Permanent link to executable | `https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe` |
 | S3 | Permanent link to reproducible capsule | `[ZENODO OR CODE OCEAN DOI/URL]` |
 | S4 | Legal software license | MIT |
 | S5 | Computing platforms/operating systems | Windows 10/11 x64; source-level core also uses Python >=3.10 |
@@ -274,8 +274,9 @@ relationships that could have appeared to influence the work reported in this pa
 ## Data and code availability
 
 Source code, synthetic benchmark data, test fixtures, evaluation configuration, and
-the non-formal verification run will be available from the tagged public repository
-and permanent archive listed in C2-C3. No API key is distributed.
+the non-formal verification run are available from the tagged public repository in
+C2. The permanent archive in C3 will be inserted after DOI registration. No API key
+is distributed.
 
 ## References
 

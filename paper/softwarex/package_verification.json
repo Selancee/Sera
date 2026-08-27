@@ -1,6 +1,6 @@
 {
-  "profile": "draft",
-  "passed": true,
+  "profile": "submission",
+  "passed": false,
   "checks": {
     "required_files": {
       "missing": [],
@@ -22,7 +22,7 @@
       "spdx": "MIT"
     },
     "manuscript_limits": {
-      "main_text_words": 1747,
+      "main_text_words": 1746,
       "main_text_limit": 3000,
       "abstract_words": 105,
       "abstract_target": "approximately 100",
@@ -100,20 +100,17 @@
     "submission_metadata": {
       "passed": false,
       "blockers": [
-        "GitHub repository is not confirmed public",
-        "immutable release tag is missing",
         "permanent archive DOI is missing"
       ]
     }
   },
   "warnings": [
-    "The 30-task secondary check was repeated by the same pseudonymous reviewer; do not report inter-rater reliability",
-    "Draft is technically complete but not submission-ready"
+    "The 30-task secondary check was repeated by the same pseudonymous reviewer; do not report inter-rater reliability"
   ],
-  "errors": [],
+  "errors": [
+    "Author-owned publication metadata is incomplete"
+  ],
   "submission_blockers": [
-    "GitHub repository is not confirmed public",
-    "immutable release tag is missing",
     "permanent archive DOI is missing"
   ]
 }

@@ -2131,3 +2131,21 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
   release. Make the repository public only after committing this verified release candidate,
   then add final public URLs, tag the resulting commit, upload verified assets and recheck
   anonymous access. DOI minting follows the immutable public tag.
+
+## 2026-08-27 - Phase 52: public release metadata and submission gate reduction
+
+### Completed
+
+- Changed the authorized GitHub repository to public and independently confirmed anonymous
+  readability before preparing the immutable release links.
+- Replaced the generic repository/executable placeholders in the SoftwareX manuscript and
+  submission documents with the `v1.0.0` release and Windows asset URLs.
+- Rebuilt the DOCX/PDF manuscript and reran both readiness profiles. Draft verification
+  passes; strict verification has been reduced from three blockers to the single truthful
+  Zenodo/archive DOI gate.
+
+### Next external step
+
+- Commit these final release references, create and push annotated tag `v1.0.0`, publish
+  the GitHub Release with checksummed artifacts, and verify it without authentication.
+  The author's Zenodo connection and DOI registration remain separate and unperformed.
