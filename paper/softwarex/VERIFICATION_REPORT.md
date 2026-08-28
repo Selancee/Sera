@@ -35,8 +35,8 @@
 | Architecture figure | Mermaid CLI validation and SVG/PNG/PDF export; PNG visually inspected | Passed after one layout refinement |
 | DOCX structure | `python-docx` inspection | 3 tables, 1 embedded figure, line numbers, title present |
 | PDF compilation and visual QA | bundled Tectonic 0.17.0 plus 8 rendered-page inspection | 8 pages, all pages readable, figure/table visible, no replacement characters; only minor box-spacing warnings |
-| Draft package verifier | `verify_softwarex_package.py --profile draft` | Passed; strict profile has only seven author-controlled blockers |
-| Release archive integrity | `ZipFile.testzip()` plus allowlist inspection | Source/reviewer ZIP CRC passed; frozen human summary/manifest present; no `.env` or `node_modules` |
+| Draft and submission package verifiers | `verify_softwarex_package.py --profile draft` and `--profile submission` | Both passed after public Zenodo DOI activation; zero automated submission blockers |
+| Release archive integrity | `ZipFile.testzip()` plus allowlist inspection | Source/reviewer ZIP CRC passed; published source SHA-256 `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`; final manuscript digest is recorded only in the external `release_manifest.json` to avoid self-reference |
 
 The repeated `generated result render failed` messages printed during Vitest are the
 deliberate input of `RuntimeErrorBoundary.test.jsx`; the suite exit code was zero and
@@ -98,8 +98,7 @@ prerelease, and that all five uploaded asset digests match the local SHA-256 val
 
 ## Submission blockers
 
-- DOI `10.5281/zenodo.22128976` is reserved and inserted in C3/S3, but Zenodo draft
-  record `22128976` is not yet publicly published.
-
-This is deliberately detected by the strict verifier. It is not a software-test failure:
-the archive gate clears only after the corresponding author publishes the Zenodo record.
+No automated package blocker remains after publication of Zenodo record `22128976`.
+Version DOI `10.5281/zenodo.22128976` resolves publicly to the immutable SeraEdit
+1.0.0 source archive. Final journal-template conformity, author approval, APC review,
+and Editorial Manager submission remain author-controlled steps.

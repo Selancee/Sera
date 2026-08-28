@@ -275,9 +275,8 @@ relationships that could have appeared to influence the work reported in this pa
 
 Source code, synthetic benchmark data, test fixtures, evaluation configuration, and
 the non-formal verification run are available from the tagged public repository in
-C2. Zenodo has reserved `10.5281/zenodo.22128976` for the versioned deposit in C3;
-public DOI resolution begins when the corresponding author publishes that deposit.
-No API key is distributed.
+C2 and the immutable Zenodo software deposit in C3 at
+`https://doi.org/10.5281/zenodo.22128976`. No API key is distributed.
 
 ## References
 

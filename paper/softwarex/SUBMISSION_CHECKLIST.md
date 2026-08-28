@@ -35,12 +35,12 @@
 - [x] Create a Zenodo software deposit for the exact `v1.0.0` source archive, upload it,
       reserve DOI `10.5281/zenodo.22128976`, and insert the DOI/URL.
 - [x] Replace C2/C3/S2/S3 and repository citation with immutable release URLs and the
-      reserved Zenodo DOI.
-- [ ] Publish Zenodo record `22128976`, then mark `archive_status: published` and
+      public Zenodo version DOI.
+- [x] Publish Zenodo record `22128976`, then mark `archive_status: published` and
       `archive_published: true` in `docs/softwarex/publication.yml`.
 - [x] Compile and visually inspect the LaTeX PDF; final template conformity must still
       be confirmed against the current official downloadable template before upload.
-- [ ] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
-- [ ] Inspect both final ZIPs and their SHA-256 hashes.
+- [x] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
+- [x] Inspect both final ZIPs and their SHA-256 hashes.
 - [ ] Confirm all authors approve the exact manuscript and understand the current APC.
 - [ ] Upload through Editorial Manager manually; do not delegate account/identity actions.

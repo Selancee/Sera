@@ -21,16 +21,18 @@ and deterministic release packaging/readiness tools.
 - musical/aesthetic quality: not established;
 - cross-host support: MuseScore bridge exercised, Sibelius not verified;
 - public release reproducibility: repository and `v1.0.0` release independently verified;
-  Zenodo DOI `10.5281/zenodo.22128976` is reserved, with public archive activation pending.
+  Zenodo version DOI `10.5281/zenodo.22128976` is publicly registered and resolves to
+  the immutable SeraEdit 1.0.0 source archive.
 
 ## Honest readiness verdict
 
 `draft_prepared = true`  
-`submission_ready = false`
+`submission_ready = true`
 
-The remaining submission blocker is publication of Zenodo draft record `22128976`.
-The strict verifier distinguishes a reserved DOI from a public archive and prevents
-accidental submission while `archive_published` remains false.
+No automated package blocker remains after publication of Zenodo record `22128976`.
+The strict verifier confirms the public archive, citation propagation, technical
+evidence and completed benchmark review. Journal-template conformity, final author
+approval, APC review and Editorial Manager submission remain author-controlled.
 
 The ordinary submitted application does not need to expose the benchmark-review screen.
 The Windows package hides that route by default; the source distribution retains it as an
@@ -50,11 +52,9 @@ explicit research/reproducibility tool enabled with
 - Both archives pass CRC inspection, include the frozen human-review summary/manifest,
   and exclude `.env` plus `node_modules`.
 
-## Recommended final release sequence
+## Remaining author-controlled sequence
 
-1. The corresponding author reviews and publishes Zenodo draft record `22128976`.
-2. Mark the archive published in `docs/softwarex/publication.yml` and replace the
-   temporary reserved-status wording with final public-archive wording.
-3. Rebuild and visually inspect the manuscript PDF/DOCX and manuscript archive.
-4. Run the strict submission verifier and confirm the current SoftwareX template.
-5. The corresponding author completes the SoftwareX upload and declarations.
+1. Inspect the rebuilt manuscript PDF/DOCX and final manuscript/reviewer archive.
+2. Confirm the current SoftwareX template and all submission declarations.
+3. Review the current APC and approve the exact manuscript.
+4. Complete the Editorial Manager upload.

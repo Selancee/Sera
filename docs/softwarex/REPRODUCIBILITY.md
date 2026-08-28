@@ -89,8 +89,9 @@ evidence of remote-model accuracy.
 
 ## External reproducibility boundary
 
-The public repository and immutable release tag are available. Zenodo DOI
-`10.5281/zenodo.22128976` is reserved for the archive but does not resolve publicly
-until the corresponding author publishes the deposit. API-based experiments
-additionally require the reader's own provider key and may change with provider model
-versions. The mock verification path is offline and costs no tokens.
+The public repository, immutable release tag, and public Zenodo software deposit are
+available. Version DOI `10.5281/zenodo.22128976` resolves to the archived SeraEdit
+1.0.0 source release; concept DOI `10.5281/zenodo.22128975` resolves to the latest
+Zenodo version. API-based experiments additionally require the reader's own provider
+key and may change with provider model versions. The mock verification path is offline
+and costs no tokens.

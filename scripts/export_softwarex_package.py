@@ -153,16 +153,55 @@ def write_archive(path: Path, files: list[Path], kind: str) -> dict[str, object]
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Export deterministic SoftwareX source and LaTeX submission archives.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "paper" / "softwarex" / "release")
+    parser.add_argument(
+        "--preserve-existing-source",
+        action="store_true",
+        help=(
+            "Keep the existing versioned source ZIP and its manifest entry while "
+            "rebuilding the manuscript archive. Use this after the source ZIP has "
+            "been published to an immutable archive."
+        ),
+    )
     return parser
+
+
+def preserved_source_manifest(output_dir: Path) -> dict[str, object]:
+    manifest_path = output_dir / "release_manifest.json"
+    archive_path = output_dir / f"seraedit-{VERSION}-source.zip"
+    if not manifest_path.is_file() or not archive_path.is_file():
+        raise FileNotFoundError(
+            "Cannot preserve the source archive without both release_manifest.json "
+            f"and {archive_path.name}"
+        )
+    existing = json.loads(manifest_path.read_text(encoding="utf-8"))
+    source = dict(existing.get("source") or {})
+    expected = str(source.get("archive_sha256") or "")
+    actual = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    if not expected or actual != expected:
+        raise ValueError(
+            "Existing source archive does not match its recorded SHA-256; refusing "
+            "to replace or silently relabel the published artifact"
+        )
+    source["archive"] = str(archive_path)
+    source["archive_sha256"] = actual
+    source["preserved_published_artifact"] = True
+    return source
 
 
 def main() -> int:
     args = build_parser().parse_args()
-    source_files = collect(SOURCE_TREES, ROOT_FILES)
     manuscript_files = collect(MANUSCRIPT_TREES, ("CITATION.cff", "LICENSE"))
-    assert_safe(source_files)
     assert_safe(manuscript_files)
-    source_manifest = write_archive(args.output_dir / f"seraedit-{VERSION}-source.zip", source_files, "source_distribution")
+    if args.preserve_existing_source:
+        source_manifest = preserved_source_manifest(args.output_dir)
+    else:
+        source_files = collect(SOURCE_TREES, ROOT_FILES)
+        assert_safe(source_files)
+        source_manifest = write_archive(
+            args.output_dir / f"seraedit-{VERSION}-source.zip",
+            source_files,
+            "source_distribution",
+        )
     manuscript_manifest = write_archive(args.output_dir / f"seraedit-{VERSION}-softwarex-manuscript.zip", manuscript_files, "manuscript_sources")
     payload = {"source": source_manifest, "manuscript": manuscript_manifest}
     manifest_path = args.output_dir / "release_manifest.json"

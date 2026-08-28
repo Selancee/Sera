@@ -521,3 +521,27 @@
   wording, rebuild final manuscript assets, and require strict verification exit 0.
 - Paper impact: C3/S3 and citation metadata now carry the real reserved DOI without
   overstating public availability; no experimental metrics or scientific claims changed.
+
+# 2026-08-28 - Phase SX29: public Zenodo archive and strict submission readiness
+
+- Published Zenodo software record `22128976`. Version DOI
+  `10.5281/zenodo.22128976` now resolves publicly to SeraEdit 1.0.0; concept DOI
+  `10.5281/zenodo.22128975` represents all versions.
+- Updated `publication.yml` to `archive_status: published` and
+  `archive_published: true`, and propagated truthful public-archive wording through the
+  manuscript, cover letter, availability statement, reproducibility notes, final report,
+  requirements matrix and checklist.
+- Rebuilt the DOCX and eight-page PDF successfully. Added tested
+  `--preserve-existing-source` export behavior so post-publication manuscript rebuilds
+  cannot silently replace the immutable source ZIP.
+- Preserved source ZIP SHA-256
+  `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`. The rebuilt
+  manuscript/reviewer ZIP digest is stored only in the external
+  `release_manifest.json` to avoid self-reference.
+- Verification: all 420 Python tests passed; exporter tests 5/5; core benchmark 120/120;
+  both ZIP CRC checks passed; draft and submission package verifiers exited 0 with no
+  automated blocker.
+- Remaining scope is author-controlled: final visual manuscript check, current template
+  and APC confirmation, exact manuscript approval, and Editorial Manager upload.
+- Paper impact: the permanent-archive claim is now public and verifiable. No research
+  result or model-performance claim changed.

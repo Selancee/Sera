@@ -23,10 +23,10 @@ Regenerate in this order:
 .\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
 .\.venv\Scripts\python.exe scripts\generate_softwarex_docx.py
 .\.venv\Scripts\python.exe scripts\verify_softwarex_package.py --profile draft
-.\.venv\Scripts\python.exe scripts\export_softwarex_package.py
+.\.venv\Scripts\python.exe scripts\export_softwarex_package.py --preserve-existing-source
 ```
 
-`--profile submission` must return exit code 0 before any journal upload. DOI
-`10.5281/zenodo.22128976` is inserted but remains reserved, so strict verification
-continues to fail until the Zenodo record is publicly published. Identity, rights
-confirmation, public repository visibility, and the `v1.0.0` release metadata are complete.
+`--profile submission` must return exit code 0 before any journal upload. Public DOI
+`10.5281/zenodo.22128976` identifies the immutable Zenodo copy of the SeraEdit 1.0.0
+source release. Identity, rights confirmation, public repository visibility, and the
+`v1.0.0` release metadata are complete.

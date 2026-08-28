@@ -21,9 +21,10 @@ revision or a rejection.
 
 The source is prepared under the MIT License; the synthetic benchmark is CC0-1.0.
 Mock-fixture experiments verify software plumbing only and must not be reported as
-language-model performance. Author metadata and the public tagged release are complete;
-Zenodo DOI `10.5281/zenodo.22128976` is reserved and becomes public only when the
-corresponding author publishes the deposit.
+language-model performance. Author metadata, the public tagged release, and the
+immutable Zenodo software deposit are complete. Version DOI
+`10.5281/zenodo.22128976` is publicly registered and resolves to the archived
+SeraEdit 1.0.0 source release.
 
 > Sera 是建立在专业记谱环境之上的智能音乐编辑与协作层。
 

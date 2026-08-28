@@ -2185,3 +2185,35 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Review and publish Zenodo record `22128976`. Afterwards update the archive state and
   reserved wording, rebuild final manuscript assets, run strict verification to exit 0,
   and inspect the final journal upload package.
+
+## 2026-08-28 - Phase 55: Zenodo publication and final archive gate cleared
+
+### Completed
+
+- Published Zenodo software record `22128976`. Version DOI
+  `10.5281/zenodo.22128976` is public; Zenodo also minted concept DOI
+  `10.5281/zenodo.22128975` for all versions.
+- Changed the authoritative publication state to `archive_status: published` and
+  `archive_published: true`, then replaced temporary reservation wording throughout
+  the SoftwareX manuscript, availability statement, cover letter, readiness matrix,
+  reproducibility notes and submission checklist.
+- Rebuilt the line-numbered DOCX and eight-page PDF. Tectonic 0.17.0 exited 0 with the
+  pre-existing minor box-spacing and `lineno.sty` warnings.
+- Added a source-preservation mode to the SoftwareX exporter. The already published
+  source ZIP remained byte-identical at SHA-256
+  `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`; only the
+  manuscript/reviewer ZIP was rebuilt. Its final digest is recorded outside the ZIP in
+  `release_manifest.json` to avoid a self-referential archive.
+- Both ZIPs passed CRC inspection. All 420 Python tests passed; the 120-task core
+  benchmark validated 120/120 with complete external human-review evidence.
+- Draft and strict submission verifiers both exited 0 with zero automated blockers.
+
+### Remaining author action
+
+- Inspect the final manuscript rendering, confirm the current SoftwareX template and
+  APC, approve the exact submission, and upload it through Editorial Manager.
+
+### Paper impact
+
+- The code/data availability claim is now backed by a public immutable software
+  archive. No experimental metric, model-performance claim or aesthetic claim changed.
