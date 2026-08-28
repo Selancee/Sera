@@ -78,6 +78,12 @@ only if Editorial Manager provides an explicit software, supplementary-material,
 source-code category; the public GitHub release and Zenodo DOI remain the canonical
 software deposits.
 
+All upload DOCX files are rebuilt with hidden creator, last-editor, generation-tool,
+creation/modification timestamps and local filesystem paths removed. The PDF source
+sets authoring-tool and timestamp metadata to empty. Visible author identity and the
+required generative-AI disclosure remain intentionally present for single-anonymized
+review and publication ethics.
+
 ## Live guide limits checked
 
 - Single anonymized review; author identity remains in the manuscript.

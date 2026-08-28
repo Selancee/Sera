@@ -14,6 +14,11 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Inches, Pt
 
+try:
+    from scripts.submission_metadata import sanitize_docx_metadata
+except ModuleNotFoundError:  # direct `python scripts/...` execution
+    from submission_metadata import sanitize_docx_metadata
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "paper" / "softwarex" / "manuscript" / "seraedit_softwarex.md"
@@ -133,10 +138,14 @@ def build_document(source: Path, output: Path) -> None:
     enable_line_numbers(document)
     properties = document.core_properties
     properties.title = "SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches"
-    properties.subject = "SoftwareX Original Software Publication draft"
+    properties.subject = "SoftwareX Original Software Publication"
     properties.keywords = "MusicXML, symbolic music, score editing, structured patches, validation, research software"
+    properties.author = None
+    properties.last_modified_by = None
+    properties.comments = None
     output.parent.mkdir(parents=True, exist_ok=True)
     document.save(output)
+    sanitize_docx_metadata(output)
 
 
 def build_parser() -> argparse.ArgumentParser:

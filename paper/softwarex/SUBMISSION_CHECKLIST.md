@@ -23,6 +23,10 @@
 - [x] Deterministic source/manuscript ZIP archives and SHA-256 manifests generated.
 - [x] Cover letter, compliant highlights, CRediT, competing-interest, AI-use and
       availability drafts prepared in editable upload formats.
+- [x] Submission DOCX/PDF hidden metadata, authoring-tool traces, package timestamps
+      and local absolute paths are scrubbed and checked by an automated privacy gate.
+- [x] Required visible author identity, affiliation, corresponding email, ORCID and
+      generative-AI disclosure are intentionally retained for single-anonymized review.
 
 ## Must be completed by the author before upload
 
@@ -41,7 +45,7 @@
       `archive_published: true` in `docs/softwarex/publication.yml`.
 - [x] Re-check the current SoftwareX author guide, Original Software Publication type,
       4000-word and six-figure limits, and compile the final LaTeX PDF.
-- [ ] Visually inspect the final nine-page PDF after insertion of the mandatory
+- [x] Visually inspect the final nine-page PDF after insertion of the mandatory
       generative-AI disclosure immediately before the references.
 - [x] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
 - [x] Inspect both final ZIPs and their SHA-256 hashes.

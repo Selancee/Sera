@@ -4,7 +4,7 @@
   "checks": {
     "required_files": {
       "missing": [],
-      "count": 39
+      "count": 41
     },
     "version_consistency": {
       "passed": true,
@@ -48,6 +48,20 @@
     "generative_ai_disclosure": {
       "passed": true,
       "placement": "before references"
+    },
+    "submission_file_privacy": {
+      "passed": true,
+      "files": {
+        "paper/softwarex/manuscript/seraedit_softwarex.docx": [],
+        "paper/softwarex/submission/COVER_LETTER.docx": [],
+        "paper/softwarex/submission/DECLARATION_OF_INTEREST.docx": [],
+        "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.docx": [],
+        "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.docx": [],
+        "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.docx": [],
+        "paper/softwarex/manuscript/seraedit_softwarex.pdf": []
+      },
+      "preserved_visible_identity": "author, affiliation, corresponding email, ORCID",
+      "required_ai_disclosure_preserved": true
     },
     "figures": {
       "count": 1,

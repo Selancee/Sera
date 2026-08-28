@@ -10,6 +10,11 @@ from pathlib import Path
 from docx import Document
 from docx.shared import Inches, Pt
 
+try:
+    from scripts.submission_metadata import sanitize_docx_metadata
+except ModuleNotFoundError:  # direct `python scripts/...` execution
+    from submission_metadata import sanitize_docx_metadata
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SUBMISSION_DIR = ROOT / "paper" / "softwarex" / "submission"
@@ -74,9 +79,12 @@ def render_markdown_to_docx(source: Path, target: Path) -> None:
             document.add_paragraph(text)
 
     document.core_properties.title = source.stem.replace("_", " ").title()
-    document.core_properties.author = "Yuan Gao"
+    document.core_properties.author = None
+    document.core_properties.last_modified_by = None
+    document.core_properties.comments = None
     target.parent.mkdir(parents=True, exist_ok=True)
     document.save(target)
+    sanitize_docx_metadata(target)
 
 
 def validate_docx(path: Path) -> None:

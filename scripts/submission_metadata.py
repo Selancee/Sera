@@ -1,0 +1,166 @@
+"""Sanitize and audit hidden metadata in journal submission documents."""
+
+from __future__ import annotations
+
+import os
+import re
+import tempfile
+from pathlib import Path
+from xml.etree import ElementTree as ET
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
+
+
+FIXED_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+CORE_NS = {
+    "cp": "http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "dcterms": "http://purl.org/dc/terms/",
+}
+APP_NS = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
+WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+
+for prefix, uri in {
+    **CORE_NS,
+    "dcmitype": "http://purl.org/dc/dcmitype/",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+    "w": WORD_NS,
+    "vt": "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes",
+}.items():
+    ET.register_namespace(prefix, uri)
+
+
+def _remove_children(root: ET.Element, tags: set[str]) -> None:
+    for child in list(root):
+        if child.tag in tags:
+            root.remove(child)
+
+
+def _sanitize_core_xml(data: bytes) -> bytes:
+    root = ET.fromstring(data)
+    _remove_children(
+        root,
+        {
+            f"{{{CORE_NS['dc']}}}creator",
+            f"{{{CORE_NS['dc']}}}description",
+            f"{{{CORE_NS['cp']}}}lastModifiedBy",
+            f"{{{CORE_NS['dcterms']}}}created",
+            f"{{{CORE_NS['dcterms']}}}modified",
+        },
+    )
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def _sanitize_app_xml(data: bytes) -> bytes:
+    root = ET.fromstring(data)
+    _remove_children(
+        root,
+        {
+            f"{{{APP_NS}}}Application",
+            f"{{{APP_NS}}}AppVersion",
+            f"{{{APP_NS}}}Company",
+            f"{{{APP_NS}}}Manager",
+            f"{{{APP_NS}}}TotalTime",
+        },
+    )
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def _enable_word_privacy(data: bytes) -> bytes:
+    root = ET.fromstring(data)
+    for name in ("removePersonalInformation", "removeDateAndTime"):
+        tag = f"{{{WORD_NS}}}{name}"
+        if root.find(tag) is None:
+            root.append(ET.Element(tag))
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def sanitize_docx_metadata(path: Path) -> None:
+    """Atomically remove authoring-tool metadata and normalize package timestamps."""
+    path = Path(path)
+    with ZipFile(path) as source:
+        entries = [(item, source.read(item.filename)) for item in source.infolist()]
+
+    handle, temporary_name = tempfile.mkstemp(prefix=f".{path.stem}-", suffix=".docx", dir=path.parent)
+    os.close(handle)
+    temporary = Path(temporary_name)
+    try:
+        with ZipFile(temporary, "w", compression=ZIP_DEFLATED, compresslevel=9) as target:
+            for original, data in entries:
+                if original.filename == "docProps/core.xml":
+                    data = _sanitize_core_xml(data)
+                elif original.filename == "docProps/app.xml":
+                    data = _sanitize_app_xml(data)
+                elif original.filename == "word/settings.xml":
+                    data = _enable_word_privacy(data)
+                info = ZipInfo(original.filename, date_time=FIXED_ZIP_TIMESTAMP)
+                info.compress_type = ZIP_DEFLATED
+                info.external_attr = original.external_attr
+                info.create_system = original.create_system
+                info.comment = b""
+                target.writestr(info, data)
+        try:
+            os.replace(temporary, path)
+        except PermissionError:
+            payload = temporary.read_bytes()
+            path.write_bytes(payload)
+            if path.read_bytes() != payload:  # pragma: no cover - defensive I/O guard
+                raise OSError(f"Sanitized DOCX verification failed: {path}")
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def docx_metadata_violations(path: Path) -> list[str]:
+    """Return hidden-metadata or local-path findings for a submission DOCX."""
+    path = Path(path)
+    findings: list[str] = []
+    with ZipFile(path) as package:
+        names = set(package.namelist())
+        forbidden_parts = names.intersection({"docProps/custom.xml", "word/comments.xml", "word/people.xml"})
+        findings.extend(f"unexpected private metadata part: {name}" for name in sorted(forbidden_parts))
+        for info in package.infolist():
+            if info.date_time != FIXED_ZIP_TIMESTAMP:
+                findings.append(f"non-normalized package timestamp: {info.filename}")
+                break
+        for name in sorted(names):
+            if not name.endswith((".xml", ".rels")):
+                continue
+            text = package.read(name).decode("utf-8", errors="ignore")
+            lowered = text.lower()
+            for token in ("python-docx", "generated by python", "c:\\users\\", "c:/users/", "d:\\sera", "d:/sera"):
+                if token in lowered:
+                    findings.append(f"forbidden metadata/path token in {name}: {token}")
+            if name == "docProps/core.xml":
+                root = ET.fromstring(text)
+                for label, tag in {
+                    "creator": f"{{{CORE_NS['dc']}}}creator",
+                    "description": f"{{{CORE_NS['dc']}}}description",
+                    "lastModifiedBy": f"{{{CORE_NS['cp']}}}lastModifiedBy",
+                    "created": f"{{{CORE_NS['dcterms']}}}created",
+                    "modified": f"{{{CORE_NS['dcterms']}}}modified",
+                }.items():
+                    if root.find(tag) is not None:
+                        findings.append(f"core property remains: {label}")
+            elif name == "docProps/app.xml":
+                root = ET.fromstring(text)
+                for label in ("Application", "AppVersion", "Company", "Manager", "TotalTime"):
+                    if root.find(f"{{{APP_NS}}}{label}") is not None:
+                        findings.append(f"extended property remains: {label}")
+    return sorted(set(findings))
+
+
+def pdf_metadata_violations(path: Path) -> list[str]:
+    """Inspect unencrypted PDF metadata for tool, timestamp, identity, and local paths."""
+    data = Path(path).read_bytes()
+    lowered = data.lower()
+    findings: list[str] = []
+    for token in (b"python-docx", b"tectonic", b"xdvipdfmx", b"latex with hyperref", b"c:/users/", b"d:/sera", b"asus"):
+        if token in lowered:
+            findings.append(f"forbidden PDF metadata/path token: {token.decode('ascii')}")
+    for key in (b"Author", b"Creator", b"Producer", b"CreationDate", b"ModDate"):
+        pattern = rb"/" + key + rb"\s*(\((?:\\.|[^)])*\)|<[^>]*>)"
+        for match in re.finditer(pattern, data, flags=re.DOTALL):
+            value = match.group(1).strip(b"()<> \t\r\n\x00")
+            if value:
+                findings.append(f"non-empty PDF {key.decode('ascii')} metadata")
+                break
+    return sorted(set(findings))

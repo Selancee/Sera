@@ -20,6 +20,11 @@ from typing import Any
 
 import yaml
 
+try:
+    from scripts.submission_metadata import docx_metadata_violations, pdf_metadata_violations
+except ModuleNotFoundError:  # direct `python scripts/...` execution
+    from submission_metadata import docx_metadata_violations, pdf_metadata_violations
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "paper" / "softwarex" / "package_verification.json"
@@ -40,6 +45,7 @@ REQUIRED_FILES = (
     "demo/README.md",
     ".github/workflows/research-ci.yml",
     "scripts/run_reviewer_demo.py",
+    "scripts/submission_metadata.py",
     "experiments/softwarex_runtime_acceptance_720_v4/summary.json",
     "experiments/softwarex_runtime_acceptance_720_v4/evidence_manifest.json",
     "experiments/softwarex_host_scope_robustness_240_v3/summary.json",
@@ -51,6 +57,7 @@ REQUIRED_FILES = (
     "paper/softwarex/manuscript/seraedit_softwarex.docx",
     "paper/softwarex/manuscript/seraedit_softwarex.pdf",
     "paper/softwarex/manuscript/references.bib",
+    "paper/softwarex/SUBMISSION_PRIVACY_REPORT.md",
     "paper/softwarex/figures/figure1_architecture.mmd",
     "paper/softwarex/figures/figure1_architecture.svg",
     "paper/softwarex/submission/COVER_LETTER.md",
@@ -287,6 +294,31 @@ def verify(root: Path, profile: str) -> VerificationResult:
     }
     if not ai_disclosure_ok:
         result.fail("Required generative-AI disclosure is missing from the manuscript sources")
+
+    submission_docx_files = (
+        "paper/softwarex/manuscript/seraedit_softwarex.docx",
+        "paper/softwarex/submission/COVER_LETTER.docx",
+        "paper/softwarex/submission/DECLARATION_OF_INTEREST.docx",
+        "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.docx",
+        "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.docx",
+        "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.docx",
+    )
+    privacy_findings = {
+        relative: docx_metadata_violations(root / relative)
+        for relative in submission_docx_files
+        if (root / relative).exists()
+    }
+    pdf_relative = "paper/softwarex/manuscript/seraedit_softwarex.pdf"
+    privacy_findings[pdf_relative] = pdf_metadata_violations(root / pdf_relative) if (root / pdf_relative).exists() else ["missing"]
+    privacy_ok = len(privacy_findings) == len(submission_docx_files) + 1 and not any(privacy_findings.values())
+    result.checks["submission_file_privacy"] = {
+        "passed": privacy_ok,
+        "files": privacy_findings,
+        "preserved_visible_identity": "author, affiliation, corresponding email, ORCID",
+        "required_ai_disclosure_preserved": True,
+    }
+    if not privacy_ok:
+        result.fail("Submission files retain hidden authoring metadata or local-path information")
 
     figure_dir = root / "paper" / "softwarex" / "figures"
     figures = sorted(path.name for path in figure_dir.glob("figure*.svg")) if figure_dir.exists() else []

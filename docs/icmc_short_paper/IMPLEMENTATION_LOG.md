@@ -2254,3 +2254,31 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - Submission metadata and file formatting now track the current live journal guidance.
   No experimental result or research claim changed.
+
+## 2026-08-28 - Phase 57: SoftwareX submission privacy audit
+
+### Completed
+
+- Inspected the final SoftwareX PDF and six DOCX upload files for hidden identity,
+  authoring-tool, generation-date, comments, custom properties and local paths.
+- Added deterministic DOCX metadata sanitization, PDF metadata checks and a strict
+  submission privacy gate. Rebuilt all upload files while retaining the required
+  visible author identity, affiliation, corresponding email, ORCID and AI disclosure.
+- Added regression tests and an auditable privacy report. Focused tests passed 19/19,
+  the complete Python suite passed 424/424, and strict submission verification passed
+  all 41 required-file checks with no automated blocker.
+- Rebuilt the manuscript/reviewer ZIP at SHA-256
+  `19468783babeb110dadb6694df7be2ac48762138830f3ff4fc43ddc48cc747b3`;
+  both ZIP CRC checks passed and the already published source ZIP remained byte-identical
+  at `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`.
+
+### Remaining author action
+
+- Authorize creation of the SoftwareX journal registration, transmission of personal
+  data and files, review the Editorial Manager-generated PDF, and explicitly confirm
+  the final submission.
+
+### Paper impact
+
+- No experimental result or research claim changed. The phase removes incidental file
+  metadata and makes submission privacy reproducible.

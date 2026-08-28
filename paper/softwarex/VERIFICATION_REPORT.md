@@ -34,7 +34,8 @@
 | Windows package smoke | `smoke_test_packaged_app.ps1` | Frozen 120-task evidence, exact `compound_001` scope, `meter_001`, `voice_010`/`voice_004` source-preserving revisions and launcher/Electron runtime passed |
 | Architecture figure | Mermaid CLI validation and SVG/PNG/PDF export; PNG visually inspected | Passed after one layout refinement |
 | DOCX structure | `python-docx` inspection | 3 tables, 1 embedded figure, line numbers, title present |
-| PDF compilation and visual QA | bundled Tectonic 0.17.0 | Final nine-page PDF compiled after adding the mandatory AI disclosure; final author visual inspection remains pending |
+| Submission privacy | `scripts/submission_metadata.py` plus strict package verifier | Six DOCX files and the final PDF contain no flagged hidden creator/tool/date metadata or local absolute paths; required visible identity and AI disclosure remain |
+| PDF compilation and visual QA | bundled Tectonic 0.17.0 plus nine-page raster contact-sheet inspection | Final nine-page PDF compiled and visually checked after adding the mandatory AI disclosure; no clipped or blank page found |
 | Draft and submission package verifiers | `verify_softwarex_package.py --profile draft` and `--profile submission` | Both passed after public Zenodo DOI activation; zero automated submission blockers |
 | Release archive integrity | `ZipFile.testzip()` plus allowlist inspection | Source/reviewer ZIP CRC passed; published source SHA-256 `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`; final manuscript digest is recorded only in the external `release_manifest.json` to avoid self-reference |
 
@@ -82,15 +83,23 @@ review PDF after the current Elsevier generative-AI declaration was inserted bef
 the references. The remaining TeX messages are the pre-existing minor
 underfull/overfull box-spacing and `lineno.sty` warnings rather than compilation
 errors. The line-numbered DOCX was regenerated and structurally validated with three
-tables, one embedded figure and the disclosure text. The final nine-page PDF still
-requires the corresponding author's visual inspection before upload; the earlier
-eight-page version had been rasterized and inspected but is no longer the final file.
+tables, one embedded figure and the disclosure text. The final nine-page PDF has
+now been rasterized page by page and visually inspected; no blank page, clipped
+body, missing figure, or misplaced disclosure was found.
+
+The six Word upload files were rebuilt with normalized package timestamps and Word
+privacy flags, then audited to ensure that creator, last-modifier, authoring-tool,
+generation-description and local-path metadata were absent. The PDF metadata audit
+likewise found no non-empty author, creator, producer or timestamp field and no local
+path or document-generation tool token. This does not anonymize the article: the
+visible author, affiliation, corresponding email and ORCID remain intentionally in
+the manuscript and declarations, as does the required generative-AI disclosure.
 
 ## Release hashes
 
 - Windows x64 portable: `66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756`;
 - source ZIP: `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`;
-- manuscript/reviewer ZIP: `fc341979dac1855003bb996b586285c3b5944af81ab7edcbb5c0ad008bc8e693`;
+- manuscript/reviewer ZIP: `19468783babeb110dadb6694df7be2ac48762138830f3ff4fc43ddc48cc747b3`;
 - immutable tag commit: `b23afcf08c26c46625fc3f24d82882495de9348f`.
 
 The public release is `https://github.com/Selancee/Sera/releases/tag/v1.0.0`.

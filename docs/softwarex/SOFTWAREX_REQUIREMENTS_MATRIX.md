@@ -29,4 +29,5 @@ complete; it does not imply a public release.
 | Dependency/license inventory | `paper/softwarex/dependency_licenses.*` | Prepared after generator run |
 | Citation metadata | `CITATION.cff`, `codemeta.json` | Author, ORCID, email, release and public DOI integrated |
 | Cover letter and declarations | `paper/softwarex/submission/` | Identity and author declarations completed; public DOI integrated |
+| Submission-file privacy | `paper/softwarex/SUBMISSION_PRIVACY_REPORT.md`, `scripts/submission_metadata.py` | Hidden DOCX/PDF authoring metadata and local paths removed; required visible identity and AI disclosure retained |
 | Reviewer-oriented final audit | `scripts/verify_softwarex_package.py --profile submission` | Technical, human-review and public-archive gates pass |

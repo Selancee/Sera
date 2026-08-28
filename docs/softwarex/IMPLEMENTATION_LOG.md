@@ -569,3 +569,21 @@
   identity/files, review of the assembled submission and APC, and final submission.
 - Paper impact: no experimental metric, statistical result, or model-performance claim
   changed.
+
+# 2026-08-28 - Phase SX31: submission-file privacy hardening
+
+- Audited the six Word upload files and final PDF for hidden creator, last-modifier,
+  application, timestamp, comment, custom-property, local-path and document-generation
+  metadata. The original generated Word packages contained authoring-tool/date traces;
+  these were removed without deleting visible publication content.
+- Added `scripts/submission_metadata.py`, integrated deterministic DOCX sanitization into
+  both document builders, cleared PDF producer/date metadata in the LaTeX source, and
+  made submission privacy a blocking check in the strict package verifier.
+- Rebuilt all upload documents. The seven-file privacy audit reports no findings while
+  intentionally retaining the confirmed author, affiliation, corresponding email,
+  ORCID, public release links and required generative-AI disclosure.
+- Added a submission privacy report and regression coverage. The focused suite passed
+  19/19, the complete Python suite passed 424/424, and strict SoftwareX verification
+  exited 0 with 41/41 required files and no automated blocker.
+- Paper impact: no experiment, metric or scientific claim changed; only submission
+  metadata hygiene and auditability changed.
