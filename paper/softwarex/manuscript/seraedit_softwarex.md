@@ -278,6 +278,13 @@ the non-formal verification run are available from the tagged public repository 
 C2 and the immutable Zenodo software deposit in C3 at
 `https://doi.org/10.5281/zenodo.22128976`. No API key is distributed.
 
+## Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
+
+During preparation of this work, the author used OpenAI Codex to assist with source
+code implementation, testing, documentation structuring, and language editing. The
+author reviewed and edited all generated material and takes full responsibility for
+the content of the publication. No AI system is listed as an author.
+
 ## References
 
 [1] M. Good (Ed.), MusicXML 4.0, W3C Music Notation Community Group Final Report, 2021.  

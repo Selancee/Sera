@@ -1,4 +1,4 @@
-[DATE]
+28 August 2026
 
 Editors-in-Chief  
 SoftwareX

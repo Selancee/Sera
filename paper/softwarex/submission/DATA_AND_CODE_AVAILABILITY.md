@@ -8,6 +8,6 @@ No API key or user score is distributed.
 
 - Tagged source release: https://github.com/Selancee/Sera/releases/tag/v1.0.0
 - Windows x64 portable executable: https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe
-- Reserved Zenodo DOI: https://doi.org/10.5281/zenodo.22128976
-  (public resolution begins when the deposit is published)
+- Public Zenodo version DOI: https://doi.org/10.5281/zenodo.22128976
+- Zenodo concept DOI (all versions): https://doi.org/10.5281/zenodo.22128975
 - Reproduction protocol: `docs/softwarex/REPRODUCIBILITY.md`

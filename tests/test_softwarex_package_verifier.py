@@ -3,6 +3,8 @@ from pathlib import Path
 from scripts.verify_softwarex_package import (
     archive_submission_blockers,
     abstract_word_count,
+    highlight_lengths,
+    has_required_ai_disclosure,
     keyword_count,
     main_text_word_count,
     normalized_version,
@@ -40,6 +42,20 @@ These words do not count.
     assert main_text_word_count(text) == 9
     assert abstract_word_count(text) == 4
     assert keyword_count(text) == 3
+
+
+def test_highlight_lengths_count_characters_and_optional_bullet_markers():
+    text = "Short highlight.\n- Another highlight with spaces.\n\n"
+    assert highlight_lengths(text) == [16, 30]
+
+
+def test_ai_disclosure_requires_heading_and_author_responsibility_in_both_sources():
+    disclosure = (
+        "Declaration of generative AI and AI-assisted technologies in the manuscript preparation process\n"
+        "The author takes full responsibility for\nthe content of the publication."
+    )
+    assert has_required_ai_disclosure(disclosure, disclosure)
+    assert not has_required_ai_disclosure(disclosure, "")
 
 
 def test_required_softwarex_tree_is_workspace_relative():

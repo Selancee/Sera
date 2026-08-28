@@ -24,7 +24,7 @@
 | Host-selection localization replay | `scripts/run_runtime_acceptance.py ... --host-scope-mode expanded_adjacent` | 240/240 passed; 220/220 executable runs completed source-preserving host export/re-import; 174/174 widened-selection runs passed; 0 unsafe executions |
 | Experiment drift/recompute | `scripts/verify_reproducibility.py --experiment softwarex_verification_120_v1 --skip-tests` | All 7 evidence checks true |
 | Human-review evidence/API | frozen API export plus `tests/test_human_review_evidence_export.py` | 120/120 primary, 30/30 repeated checks, 194 audit records; frozen hashes match |
-| Python regression | `.venv\Scripts\python.exe -m pytest -q` | 408 collected and passed |
+| Python regression | `.venv\Scripts\python.exe -m pytest -q` | 420 collected; full suite exited 0 |
 | Frontend regression | `npm.cmd test -- --run` | 72 files, 120 tests passed |
 | Frontend production build | `npm.cmd run build` | 216 modules transformed; build passed |
 | Offline reviewer demo | `scripts/run_reviewer_demo.py` | 6/6 representative tasks passed; 5/5 executable tasks produced host-openable MusicXML |
@@ -34,7 +34,7 @@
 | Windows package smoke | `smoke_test_packaged_app.ps1` | Frozen 120-task evidence, exact `compound_001` scope, `meter_001`, `voice_010`/`voice_004` source-preserving revisions and launcher/Electron runtime passed |
 | Architecture figure | Mermaid CLI validation and SVG/PNG/PDF export; PNG visually inspected | Passed after one layout refinement |
 | DOCX structure | `python-docx` inspection | 3 tables, 1 embedded figure, line numbers, title present |
-| PDF compilation and visual QA | bundled Tectonic 0.17.0 plus 8 rendered-page inspection | 8 pages, all pages readable, figure/table visible, no replacement characters; only minor box-spacing warnings |
+| PDF compilation and visual QA | bundled Tectonic 0.17.0 | Final nine-page PDF compiled after adding the mandatory AI disclosure; final author visual inspection remains pending |
 | Draft and submission package verifiers | `verify_softwarex_package.py --profile draft` and `--profile submission` | Both passed after public Zenodo DOI activation; zero automated submission blockers |
 | Release archive integrity | `ZipFile.testzip()` plus allowlist inspection | Source/reviewer ZIP CRC passed; published source SHA-256 `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`; final manuscript digest is recorded only in the external `release_manifest.json` to avoid self-reference |
 
@@ -69,27 +69,28 @@ also replayed `compound_001` with host measures 2-3 and verified that only
 
 ## Manuscript checks
 
-- Numbered Sections 1-5: 1747 words by the repository verifier;
+- Numbered Sections 1-5: 1746 words by the repository verifier (current limit 4000);
 - Abstract: 105 words;
-- Keywords: 6;
-- Numbered manuscript figures: 1;
+- Keywords: 6 (current accepted range 1-7);
+- Numbered manuscript figures: 1 (current maximum 6);
 - Code metadata C1-C9 and executable metadata S1-S8: included;
 - Official v4 structural basis: `elsarticle`, preprint single column, line numbers,
   numbered Sections 1-5, metadata tables and numeric references.
 
-The LaTeX source compiled successfully with bundled Tectonic 0.17.0 to an eight-page
-review PDF. All eight pages were rasterized and visually inspected: text, metadata
-tables, architecture figure, evidence table, line numbers and references are present
-and readable. Extracted text contains no Unicode replacement characters. The remaining
-TeX messages are minor underfull/overfull box-spacing warnings rather than compilation
-errors. The line-numbered DOCX was regenerated and structurally validated as an
-alternative review format.
+The LaTeX source compiled successfully with bundled Tectonic 0.17.0 to a nine-page
+review PDF after the current Elsevier generative-AI declaration was inserted before
+the references. The remaining TeX messages are the pre-existing minor
+underfull/overfull box-spacing and `lineno.sty` warnings rather than compilation
+errors. The line-numbered DOCX was regenerated and structurally validated with three
+tables, one embedded figure and the disclosure text. The final nine-page PDF still
+requires the corresponding author's visual inspection before upload; the earlier
+eight-page version had been rasterized and inspected but is no longer the final file.
 
 ## Release hashes
 
 - Windows x64 portable: `66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756`;
 - source ZIP: `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`;
-- manuscript/reviewer ZIP: `f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444`;
+- manuscript/reviewer ZIP: `fc341979dac1855003bb996b586285c3b5944af81ab7edcbb5c0ad008bc8e693`;
 - immutable tag commit: `b23afcf08c26c46625fc3f24d82882495de9348f`.
 
 The public release is `https://github.com/Selancee/Sera/releases/tag/v1.0.0`.

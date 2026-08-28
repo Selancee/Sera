@@ -59,6 +59,12 @@ REQUIRED_FILES = (
     "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.md",
     "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.md",
     "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.md",
+    "paper/softwarex/submission/EDITORIAL_MANAGER_FILL_IN.md",
+    "paper/softwarex/submission/COVER_LETTER.docx",
+    "paper/softwarex/submission/DECLARATION_OF_INTEREST.docx",
+    "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.docx",
+    "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.docx",
+    "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.docx",
 )
 
 
@@ -126,6 +132,29 @@ def abstract_word_count(markdown: str) -> int:
 def keyword_count(markdown: str) -> int:
     match = re.search(r"^Keywords:\s*(.+)$", markdown, re.MULTILINE)
     return len([item for item in match.group(1).split(";") if item.strip()]) if match else 0
+
+
+def highlight_lengths(text: str) -> list[int]:
+    """Return character counts for non-empty highlight bullets, including spaces."""
+    lines = []
+    for raw_line in text.splitlines():
+        line = re.sub(r"^\s*[-*]\s+", "", raw_line).strip()
+        if line:
+            lines.append(len(line))
+    return lines
+
+
+def has_required_ai_disclosure(markdown: str, latex: str) -> bool:
+    heading = "Declaration of generative AI and AI-assisted technologies in the manuscript preparation process"
+    responsibility = "takes full responsibility for the content of the publication"
+    normalized_markdown = re.sub(r"\s+", " ", markdown)
+    normalized_latex = re.sub(r"\s+", " ", latex)
+    return (
+        heading in normalized_markdown
+        and heading in normalized_latex
+        and responsibility in normalized_markdown
+        and responsibility in normalized_latex
+    )
 
 
 def valid_mit_license(text: str) -> bool:
@@ -223,18 +252,41 @@ def verify(root: Path, profile: str) -> VerificationResult:
     keywords = keyword_count(manuscript)
     result.checks["manuscript_limits"] = {
         "main_text_words": words,
-        "main_text_limit": 3000,
+        "main_text_limit": 4000,
         "abstract_words": abstract_words,
-        "abstract_target": "approximately 100",
+        "abstract_limit": 250,
         "keywords": keywords,
-        "keyword_limit": 6,
+        "keyword_limit": 7,
     }
-    if words == 0 or words > 3000:
-        result.fail(f"SoftwareX main text word count is {words}; expected 1-3000")
-    if not 70 <= abstract_words <= 130:
-        result.warnings.append(f"Abstract has {abstract_words} words; journal template requests approximately 100")
-    if not 1 <= keywords <= 6:
-        result.fail(f"Keyword count is {keywords}; expected 1-6")
+    if words == 0 or words > 4000:
+        result.fail(f"SoftwareX main text word count is {words}; expected 1-4000")
+    if abstract_words == 0 or abstract_words > 250:
+        result.fail(f"Abstract has {abstract_words} words; expected 1-250")
+    if not 1 <= keywords <= 7:
+        result.fail(f"Keyword count is {keywords}; expected 1-7")
+
+    highlights_path = root / "paper" / "softwarex" / "submission" / "HIGHLIGHTS.txt"
+    highlights = highlight_lengths(highlights_path.read_text(encoding="utf-8")) if highlights_path.exists() else []
+    highlights_ok = 3 <= len(highlights) <= 5 and all(length <= 85 for length in highlights)
+    result.checks["highlights"] = {
+        "passed": highlights_ok,
+        "count": len(highlights),
+        "character_lengths": highlights,
+        "count_range": [3, 5],
+        "maximum_characters_per_highlight": 85,
+    }
+    if not highlights_ok:
+        result.fail("Highlights must contain 3-5 non-empty bullets of at most 85 characters each")
+
+    latex_path = root / "paper" / "softwarex" / "manuscript" / "seraedit_softwarex.tex"
+    latex = latex_path.read_text(encoding="utf-8") if latex_path.exists() else ""
+    ai_disclosure_ok = has_required_ai_disclosure(manuscript, latex)
+    result.checks["generative_ai_disclosure"] = {
+        "passed": ai_disclosure_ok,
+        "placement": "before references",
+    }
+    if not ai_disclosure_ok:
+        result.fail("Required generative-AI disclosure is missing from the manuscript sources")
 
     figure_dir = root / "paper" / "softwarex" / "figures"
     figures = sorted(path.name for path in figure_dir.glob("figure*.svg")) if figure_dir.exists() else []

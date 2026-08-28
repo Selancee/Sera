@@ -545,3 +545,27 @@
   and APC confirmation, exact manuscript approval, and Editorial Manager upload.
 - Paper impact: the permanent-archive claim is now public and verifiable. No research
   result or model-performance claim changed.
+
+# 2026-08-28 - Phase SX30: Editorial Manager preparation and live-guide alignment
+
+- Verified the current official SoftwareX submission entry and Guide for Authors.
+  Aligned the automated readiness limits to 4000 main-text words, six figures, a
+  250-word abstract, 1-7 keywords, and 3-5 highlights of at most 85 characters.
+- Added a field-by-field Editorial Manager preparation sheet and corrected the one
+  remaining stale reserved-DOI sentence in the standalone availability statement.
+- Added a tested, reproducible Word-attachment builder for the cover letter and four
+  declarations required during submission; the Markdown files remain the auditable
+  source of those attachments.
+- Inserted the mandatory generative-AI disclosure into the Markdown and LaTeX
+  manuscript sources before the references, regenerated the line-numbered DOCX, and
+  compiled the final nine-page PDF with Tectonic 0.17.0. Final visual inspection remains
+  author-controlled.
+- Focused tests passed 15/15, the complete Python suite exited 0, strict submission
+  verification exited 0, and both final ZIPs passed CRC checks. The preserved source
+  digest remains `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`;
+  the rebuilt manuscript/reviewer digest is recorded only in the external release
+  manifest and the top-level research log, avoiding a self-referential archive hash.
+- Final external actions remain author-controlled: account sign-in, transmission of
+  identity/files, review of the assembled submission and APC, and final submission.
+- Paper impact: no experimental metric, statistical result, or model-performance claim
+  changed.

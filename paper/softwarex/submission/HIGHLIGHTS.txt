@@ -1,5 +1,5 @@
 Structured ScorePatch transactions bind edits to an exact MusicXML source.
 Target and protected scopes make unintended score changes measurable and rejectable.
-Layered validation and MusicXML round trips commit atomically or roll back completely.
+Layered validation and MusicXML round trips commit atomically or fully roll back.
 Offline fixtures, 120 tasks, and three conditions support reproducible evaluation.
 A local desktop and MuseScore bridge keep the notation host as the visual authority.

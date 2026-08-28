@@ -2217,3 +2217,40 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - The code/data availability claim is now backed by a public immutable software
   archive. No experimental metric, model-performance claim or aesthetic claim changed.
+
+## 2026-08-28 - Phase 56: live SoftwareX submission preparation
+
+### Completed
+
+- Opened and verified the live SoftwareX Editorial Manager entry and current Guide for
+  Authors. Recorded the current Original Software Publication limits: 4000 main-text
+  words, six figures, 250 abstract words, 1-7 keywords, and 3-5 highlights of at most
+  85 characters each.
+- Updated the submission verifier to enforce those live limits and added deterministic
+  highlight-length validation with regression coverage.
+- Removed the stale reserved-Zenodo wording from the separate availability statement,
+  dated the cover letter, and prepared a field-by-field Editorial Manager fill-in sheet.
+- Added a reproducible converter and tests for editable Word versions of the cover
+  letter, competing-interest statement, CRediT statement, AI disclosure, and data/code
+  availability statement.
+- Added the required generative-AI disclosure to both manuscript sources immediately
+  before the references, regenerated the line-numbered DOCX, and compiled the final
+  nine-page PDF with bundled Tectonic 0.17.0. Final visual inspection remains an
+  explicit author action.
+- Verification: the focused submission tests passed 15/15, the complete Python test
+  suite exited 0, the strict SoftwareX submission profile exited 0, and both final ZIPs
+  passed CRC inspection. The immutable source ZIP stayed byte-identical at SHA-256
+  `7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6`;
+  the rebuilt manuscript/reviewer ZIP is
+  `fc341979dac1855003bb996b586285c3b5944af81ab7edcbb5c0ad008bc8e693`.
+
+### Remaining author action
+
+- Sign in to Editorial Manager, authorize transmission of the prepared identity and
+  manuscript files, inspect the assembled review PDF and current APC, then explicitly
+  approve the final submission.
+
+### Paper impact
+
+- Submission metadata and file formatting now track the current live journal guidance.
+  No experimental result or research claim changed.

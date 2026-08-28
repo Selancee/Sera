@@ -1,10 +1,10 @@
 {
-  "profile": "draft",
+  "profile": "submission",
   "passed": true,
   "checks": {
     "required_files": {
       "missing": [],
-      "count": 33
+      "count": 39
     },
     "version_consistency": {
       "passed": true,
@@ -23,11 +23,31 @@
     },
     "manuscript_limits": {
       "main_text_words": 1746,
-      "main_text_limit": 3000,
+      "main_text_limit": 4000,
       "abstract_words": 105,
-      "abstract_target": "approximately 100",
+      "abstract_limit": 250,
       "keywords": 6,
-      "keyword_limit": 6
+      "keyword_limit": 7
+    },
+    "highlights": {
+      "passed": true,
+      "count": 5,
+      "character_lengths": [
+        74,
+        84,
+        81,
+        82,
+        84
+      ],
+      "count_range": [
+        3,
+        5
+      ],
+      "maximum_characters_per_highlight": 85
+    },
+    "generative_ai_disclosure": {
+      "passed": true,
+      "placement": "before references"
     },
     "figures": {
       "count": 1,

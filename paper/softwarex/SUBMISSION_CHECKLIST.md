@@ -3,8 +3,8 @@
 ## Prepared locally
 
 - [x] Original Software Publication Sections 1-5 follow SoftwareX v4 structure.
-- [x] Main text is below 3000 words; abstract is approximately 100 words.
-- [x] Six keywords or fewer and one manuscript figure.
+- [x] Main text is below the current 4000-word limit; abstract is below 250 words.
+- [x] Six keywords are within the current 1-7 range; one manuscript figure is present.
 - [x] Mandatory C1-C9 code metadata and optional S1-S8 executable metadata included.
 - [x] MIT root license and CC0 benchmark license present.
 - [x] Direct dependency/license inventory and third-party notices present.
@@ -21,7 +21,8 @@
 - [x] Python/frontend regression, frontend build and Windows package smoke passed.
 - [x] Line-numbered DOCX with embedded figure and metadata tables generated.
 - [x] Deterministic source/manuscript ZIP archives and SHA-256 manifests generated.
-- [x] Cover letter, highlights, CRediT, competing-interest, AI-use and availability drafts prepared.
+- [x] Cover letter, compliant highlights, CRediT, competing-interest, AI-use and
+      availability drafts prepared in editable upload formats.
 
 ## Must be completed by the author before upload
 
@@ -38,9 +39,13 @@
       public Zenodo version DOI.
 - [x] Publish Zenodo record `22128976`, then mark `archive_status: published` and
       `archive_published: true` in `docs/softwarex/publication.yml`.
-- [x] Compile and visually inspect the LaTeX PDF; final template conformity must still
-      be confirmed against the current official downloadable template before upload.
+- [x] Re-check the current SoftwareX author guide, Original Software Publication type,
+      4000-word and six-figure limits, and compile the final LaTeX PDF.
+- [ ] Visually inspect the final nine-page PDF after insertion of the mandatory
+      generative-AI disclosure immediately before the references.
 - [x] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
 - [x] Inspect both final ZIPs and their SHA-256 hashes.
 - [ ] Confirm all authors approve the exact manuscript and understand the current APC.
-- [ ] Upload through Editorial Manager manually; do not delegate account/identity actions.
+- [ ] Log in to SoftwareX Editorial Manager and create the author-owned submission.
+- [ ] Upload the prepared files, inspect the system-built review PDF, and explicitly
+      approve the final submission; do not delegate password, ORCID or payment actions.

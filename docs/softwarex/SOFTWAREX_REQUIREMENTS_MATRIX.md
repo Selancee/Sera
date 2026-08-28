@@ -24,7 +24,7 @@ complete; it does not imply a public release.
 | Human task/Gold review | `experiments/softwarex_human_review_120_v1` | 120/120 primary reviews and 30/30 stratified repeat checks; zero stale records; same pseudonymous reviewer, so no inter-rater claim |
 | End-user review screen | Not required by the SoftwareX article structure | Kept as optional source-level research tooling; hidden in ordinary builds unless `VITE_SERA_ENABLE_RESEARCH_REVIEW=true` |
 | Component diagram | `paper/softwarex/figures/figure1_architecture.*` | Prepared |
-| Review manuscript rendering | `paper/softwarex/manuscript/seraedit_softwarex.pdf` and `.docx` | 8-page PDF compiled with Tectonic and visually checked; DOCX structurally checked |
+| Review manuscript rendering | `paper/softwarex/manuscript/seraedit_softwarex.pdf` and `.docx` | Final nine-page PDF compiled with Tectonic; DOCX structurally checked; final PDF visual check remains author-controlled |
 | Experimental setting and limitations | Manuscript Sections 3-5 | Prepared |
 | Dependency/license inventory | `paper/softwarex/dependency_licenses.*` | Prepared after generator run |
 | Citation metadata | `CITATION.cff`, `codemeta.json` | Author, ORCID, email, release and public DOI integrated |
