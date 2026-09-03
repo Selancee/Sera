@@ -587,3 +587,15 @@
   exited 0 with 41/41 required files and no automated blocker.
 - Paper impact: no experiment, metric or scientific claim changed; only submission
   metadata hygiene and auditability changed.
+
+# 2026-08-29 - Phase SX32: clean-checkout Research CI regression repair
+
+- Traced the eight GitHub Research CI failure notifications to one repository-state
+  mismatch: `test_runtime_acceptance_evidence_export.py` read an ignored local experiment
+  directory that is unavailable in a clean GitHub Actions checkout.
+- Replaced the hidden local-data dependency with a small generated fixture that exercises
+  the exporter deterministically, and added a separate integrity test for the tracked
+  `softwarex_runtime_acceptance_720_v4` publication snapshot.
+- The repair changes test inputs only. It does not alter the published Zenodo archive,
+  the SoftwareX submission files, runtime evidence, experimental metrics or scientific
+  claims.
