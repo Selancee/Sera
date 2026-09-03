@@ -599,3 +599,14 @@
 - The repair changes test inputs only. It does not alter the published Zenodo archive,
   the SoftwareX submission files, runtime evidence, experimental metrics or scientific
   claims.
+
+# 2026-09-03 - Phase SX33: public DOI and journal-status synchronization
+
+- Recorded the completed SoftwareX submission date, manuscript number
+  `SOFTX-D-26-01135`, and the dated **Under Review** status in the authoritative
+  publication metadata and reviewer-facing repository documentation.
+- Replaced pre-submission checklist/report wording with the completed submission state
+  while retaining APC and any future revision decisions as author-controlled actions.
+- Kept the published `v1.0.0` tag and Zenodo record `10.5281/zenodo.22128976`
+  immutable. No software behavior, evidence file, experimental metric or scientific
+  claim changed.

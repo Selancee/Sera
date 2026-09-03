@@ -110,5 +110,6 @@ prerelease, and that all five uploaded asset digests match the local SHA-256 val
 
 No automated package blocker remains after publication of Zenodo record `22128976`.
 Version DOI `10.5281/zenodo.22128976` resolves publicly to the immutable SeraEdit
-1.0.0 source archive. Final journal-template conformity, author approval, APC review,
-and Editorial Manager submission remain author-controlled steps.
+1.0.0 source archive. The manuscript was submitted to SoftwareX on 28 August 2026 as
+`SOFTX-D-26-01135` and was last confirmed **Under Review** on 3 September 2026. Future
+revision decisions and any applicable APC arrangement remain author-controlled.

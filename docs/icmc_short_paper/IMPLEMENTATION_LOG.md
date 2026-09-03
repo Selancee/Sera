@@ -2282,3 +2282,22 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No experimental result or research claim changed. The phase removes incidental file
   metadata and makes submission privacy reproducible.
+
+## 2026-09-03 - Phase 58: SoftwareX public CI and submission-state synchronization
+
+### Completed
+
+- Repaired the clean-checkout Research CI regression by replacing an ignored local
+  experiment dependency with a generated fixture and a separate integrity check for the
+  tracked publication snapshot.
+- Recorded the SoftwareX submission date, manuscript number `SOFTX-D-26-01135`, and
+  the dated **Under Review** status across the authoritative publication metadata and
+  reviewer-facing repository documentation.
+- Preserved the published `v1.0.0` tag and Zenodo record
+  `10.5281/zenodo.22128976` without modification.
+
+### Paper impact
+
+- No software behavior, experimental result or scientific claim changed. The phase
+  repairs public CI reproducibility and aligns repository metadata with the completed
+  journal submission.

@@ -1,5 +1,12 @@
 # SoftwareX submission checklist
 
+## Recorded submission
+
+- Journal: SoftwareX
+- Manuscript number: `SOFTX-D-26-01135`
+- Submitted: 28 August 2026
+- Last confirmed status: **Under Review** on 3 September 2026
+
 ## Prepared locally
 
 - [x] Original Software Publication Sections 1-5 follow SoftwareX v4 structure.
@@ -49,7 +56,8 @@
       generative-AI disclosure immediately before the references.
 - [x] Run `scripts/verify_softwarex_package.py --profile submission` and require exit 0.
 - [x] Inspect both final ZIPs and their SHA-256 hashes.
-- [ ] Confirm all authors approve the exact manuscript and understand the current APC.
-- [ ] Log in to SoftwareX Editorial Manager and create the author-owned submission.
-- [ ] Upload the prepared files, inspect the system-built review PDF, and explicitly
+- [x] Confirm the sole author approves the exact submitted manuscript.
+- [x] Log in to SoftwareX Editorial Manager and create the author-owned submission.
+- [x] Upload the prepared files, inspect the system-built review PDF, and explicitly
       approve the final submission; do not delegate password, ORCID or payment actions.
+- [ ] Reconfirm the applicable APC and funding arrangement if the manuscript is accepted.

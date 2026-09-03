@@ -23,4 +23,9 @@ originality_statement_confirmed: true
 license_owner_confirmed: true
 benchmark_cc0_owner_confirmed: true
 benchmark_human_review_complete: true
-submission_date: null
+journal: "SoftwareX"
+manuscript_number: "SOFTX-D-26-01135"
+submission_date: "2026-08-28"
+submission_status: "under_review"
+submission_status_label: "Under Review"
+submission_status_last_confirmed: "2026-09-03"

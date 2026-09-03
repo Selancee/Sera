@@ -1,7 +1,15 @@
 # SoftwareX Editorial Manager fill-in sheet
 
 Verified against the live SoftwareX Guide for Authors and Editorial Manager entry on
-28 August 2026. This is a preparation sheet, not proof that a submission has been sent.
+28 August 2026. This began as the preparation sheet for the submission recorded below;
+the retained field values remain the auditable record of what was prepared for upload.
+
+## Recorded submission
+
+- Journal: SoftwareX
+- Manuscript number: `SOFTX-D-26-01135`
+- Submitted: 28 August 2026
+- Last confirmed status: **Under Review** on 3 September 2026
 
 ## Official entry points
 

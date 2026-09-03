@@ -31,8 +31,10 @@ and deterministic release packaging/readiness tools.
 
 No automated package blocker remains after publication of Zenodo record `22128976`.
 The strict verifier confirms the public archive, citation propagation, technical
-evidence and completed benchmark review. Journal-template conformity, final author
-approval, APC review and Editorial Manager submission remain author-controlled.
+evidence and completed benchmark review. The manuscript was submitted to SoftwareX on
+28 August 2026 as `SOFTX-D-26-01135` and was last confirmed **Under Review** on
+3 September 2026. Future revision decisions and any applicable APC arrangement remain
+author-controlled.
 
 The ordinary submitted application does not need to expose the benchmark-review screen.
 The Windows package hides that route by default; the source distribution retains it as an
@@ -54,7 +56,7 @@ explicit research/reproducibility tool enabled with
 
 ## Remaining author-controlled sequence
 
-1. Inspect the rebuilt manuscript PDF/DOCX and final manuscript/reviewer archive.
-2. Confirm the current SoftwareX template and all submission declarations.
-3. Review the current APC and approve the exact manuscript.
-4. Complete the Editorial Manager upload.
+1. Monitor Editorial Manager and the corresponding-author mailbox for reviewer action.
+2. Preserve the submitted manuscript and immutable `v1.0.0`/Zenodo snapshot.
+3. Evaluate and prepare any requested revision without rewriting historical evidence.
+4. Reconfirm the applicable APC and funding arrangement if the manuscript is accepted.

@@ -26,6 +26,11 @@ immutable Zenodo software deposit are complete. Version DOI
 `10.5281/zenodo.22128976` is publicly registered and resolves to the archived
 SeraEdit 1.0.0 source release.
 
+The accompanying manuscript was submitted to SoftwareX on 28 August 2026 as
+`SOFTX-D-26-01135`. Elsevier reported the manuscript as **Under Review** on
+3 September 2026; this dated status is informational and does not change the
+immutable software release or its DOI.
+
 > Sera 是建立在专业记谱环境之上的智能音乐编辑与协作层。
 
 当前主流程已经从“提示词生成整首乐谱”切换为：在 MuseScore Studio、Sibelius Ultimate 或其他专业记谱软件中打开乐谱并确定选区，由 Sera 读取宿主上下文、接受自然语言编辑要求、审查结构化 `ScorePatch`，通过校验后生成不覆盖原文件的新修订。

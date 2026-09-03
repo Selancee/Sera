@@ -31,3 +31,4 @@ complete; it does not imply a public release.
 | Cover letter and declarations | `paper/softwarex/submission/` | Identity and author declarations completed; public DOI integrated |
 | Submission-file privacy | `paper/softwarex/SUBMISSION_PRIVACY_REPORT.md`, `scripts/submission_metadata.py` | Hidden DOCX/PDF authoring metadata and local paths removed; required visible identity and AI disclosure retained |
 | Reviewer-oriented final audit | `scripts/verify_softwarex_package.py --profile submission` | Technical, human-review and public-archive gates pass |
+| Journal submission | SoftwareX Editorial Manager | Submitted 28 August 2026 as `SOFTX-D-26-01135`; last confirmed **Under Review** on 3 September 2026 |

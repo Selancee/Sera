@@ -30,3 +30,8 @@ Regenerate in this order:
 `10.5281/zenodo.22128976` identifies the immutable Zenodo copy of the SeraEdit 1.0.0
 source release. Identity, rights confirmation, public repository visibility, and the
 `v1.0.0` release metadata are complete.
+
+The manuscript was submitted to SoftwareX on 28 August 2026 with manuscript number
+`SOFTX-D-26-01135`. Its last recorded journal status is **Under Review**, confirmed
+3 September 2026. The status is dated because Editorial Manager may change it without
+changing the archived software release.
