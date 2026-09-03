@@ -1,5 +1,9 @@
 # Sera
 
+<p align="center">
+  <img src="assets/branding/sera-icon-256.png" alt="Sera application icon" width="128" />
+</p>
+
 [![Research CI](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml/badge.svg)](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml)
 
 ## SoftwareX release track

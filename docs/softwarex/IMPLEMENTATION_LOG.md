@@ -610,3 +610,20 @@
 - Kept the published `v1.0.0` tag and Zenodo record `10.5281/zenodo.22128976`
   immutable. No software behavior, evidence file, experimental metric or scientific
   claim changed.
+
+# 2026-09-03 - Phase SX34: Sera-specific application identity
+
+- Replaced the Electron default atom icon with a Sera-specific `S` score-ribbon and
+  structured-patch mark generated for this repository without third-party visual input.
+- Added one canonical master, deterministic PNG/ICO derivatives, a favicon set, README
+  branding, a GitHub social-preview image and a provenance/trademark-boundary record.
+- Wired the icon into Electron Builder, the Electron window and the PyInstaller
+  compatibility launcher. Added regression checks for asset signatures, ICO frames,
+  social-preview dimensions and packaging configuration.
+- Rebuilt the Windows package and extracted the embedded 32-pixel icon from both
+  `dist_desktop/Sera.exe` and `dist_desktop/release/win-unpacked/Sera.exe`; both display
+  the new Sera mark. The packaged backend, frontend, launcher and Electron smoke passed.
+- The rebuilt executables remain unsigned local artifacts. The immutable SoftwareX
+  `v1.0.0` tag, GitHub Release assets and Zenodo archive were not replaced.
+- Paper impact: none. This is a post-submission brand and packaging change, not a change
+  to the archived software evidence or any scientific claim.

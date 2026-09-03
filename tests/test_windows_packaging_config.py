@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import struct
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +14,9 @@ def test_electron_builder_config_packages_backend_and_frontend() -> None:
     assert package["scripts"]["dist"] == "electron-builder --win dir --x64"
     assert package["scripts"]["dist:portable"] == "electron-builder --win portable --x64"
     assert build["directories"]["output"] == "../dist_desktop/release"
+    assert build["win"]["icon"] == "icon.ico"
+    assert "icon.png" in build["files"]
+    assert "icon.ico" in build["files"]
     assert {"target": "dir", "arch": ["x64"]} in build["win"]["target"]
     assert {"target": "portable", "arch": ["x64"]} in build["win"]["target"]
 
@@ -52,3 +56,34 @@ def test_pyinstaller_entrypoints_use_onedir_without_temp_extraction() -> None:
     assert "$Root\\dist\\Sera\\Sera.exe" in build_script
     assert 'Copy-Item -Recurse -Force "$Root\\dist\\SeraBackend\\*" $BackendOut' in build_script
     assert 'Copy-Item -Recurse -Force "$Root\\dist\\Sera\\*" $DesktopRoot' in build_script
+
+
+def test_sera_brand_assets_are_wired_into_desktop_and_frontend() -> None:
+    master = ROOT / "assets" / "branding" / "sera-icon-master.png"
+    github_mark = ROOT / "assets" / "branding" / "sera-icon-256.png"
+    social_preview = ROOT / "assets" / "branding" / "sera-github-social-preview.png"
+    brand_ico = ROOT / "assets" / "branding" / "sera-icon.ico"
+    electron_png = ROOT / "electron" / "icon.png"
+    electron_ico = ROOT / "electron" / "icon.ico"
+    favicon = ROOT / "frontend" / "public" / "favicon.ico"
+    frontend_html = (ROOT / "frontend" / "index.html").read_text(encoding="utf-8")
+    electron_main = (ROOT / "electron" / "main.js").read_text(encoding="utf-8")
+    desktop_spec = (ROOT / "packaging" / "desktop" / "desktop.spec").read_text(encoding="utf-8")
+
+    for png in (master, github_mark, electron_png):
+        assert png.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
+
+    preview_bytes = social_preview.read_bytes()
+    assert preview_bytes.startswith(b"\x89PNG\r\n\x1a\n")
+    assert struct.unpack(">II", preview_bytes[16:24]) == (1280, 640)
+
+    for ico in (brand_ico, electron_ico, favicon):
+        reserved, image_type, image_count = struct.unpack("<HHH", ico.read_bytes()[:6])
+        assert reserved == 0
+        assert image_type == 1
+        assert image_count >= 4
+
+    assert 'icon: path.join(__dirname, "icon.png")' in electron_main
+    assert 'icon=str(project_root / "assets" / "branding" / "sera-icon.ico")' in desktop_spec
+    assert 'href="./favicon.ico"' in frontend_html
+    assert 'href="./apple-touch-icon.png"' in frontend_html

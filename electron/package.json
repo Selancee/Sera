@@ -28,6 +28,8 @@
     "files": [
       "main.js",
       "preload.js",
+      "icon.png",
+      "icon.ico",
       "package.json"
     ],
     "extraResources": [
@@ -47,6 +49,7 @@
       }
     ],
     "win": {
+      "icon": "icon.ico",
       "target": [
         {
           "target": "dir",

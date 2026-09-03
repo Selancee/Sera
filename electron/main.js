@@ -375,6 +375,7 @@ async function createWindow() {
     width: 1280,
     height: 860,
     title: "Sera",
+    icon: path.join(__dirname, "icon.png"),
     show: false,
     backgroundColor: "#f4f2eb",
     webPreferences: {

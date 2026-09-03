@@ -39,6 +39,7 @@ exe = EXE(
     [],
     exclude_binaries=True,
     name="Sera",
+    icon=str(project_root / "assets" / "branding" / "sera-icon.ico"),
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

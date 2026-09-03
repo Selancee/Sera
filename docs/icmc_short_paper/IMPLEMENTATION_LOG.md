@@ -2301,3 +2301,20 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - No software behavior, experimental result or scientific claim changed. The phase
   repairs public CI reproducibility and aligns repository metadata with the completed
   journal submission.
+
+## 2026-09-03 - Phase 59: Sera application-icon replacement
+
+### Completed
+
+- Replaced the unconfigured Electron/PyInstaller default icon path with a Sera-specific
+  brand mark and committed master, Windows ICO, application PNG, favicon, README and
+  GitHub social-preview derivatives with provenance.
+- Added packaging regression coverage, rebuilt both Windows executable paths and
+  verified the embedded Sera icon by extracting it from each generated EXE.
+- Ran the packaged backend/frontend/desktop smoke successfully. The generated
+  executables remain unsigned local artifacts.
+
+### Paper impact
+
+- No experiment, metric or scientific claim changed. The submitted `v1.0.0` and Zenodo
+  snapshot remain immutable; the icon applies to post-submission `main` and future builds.
