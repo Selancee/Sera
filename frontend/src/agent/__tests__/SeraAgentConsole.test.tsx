@@ -41,7 +41,7 @@ describe("SeraAgentConsole", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     window.history.replaceState({}, "", "/");
-    window.localStorage.setItem("sera.language", "zh-CN");
+    window.localStorage.setItem("sera.language", "en");
     api.getNotationHosts.mockResolvedValue({
       hosts: [
         { host_id: "musescore", display_name: "MuseScore Studio" },
@@ -81,13 +81,13 @@ describe("SeraAgentConsole", () => {
     await waitFor(() => expect(api.getNotationHosts).toHaveBeenCalledOnce());
     await waitFor(() => expect(api.getSeraEditProviderStatus).toHaveBeenCalledOnce());
 
-    expect(screen.getByLabelText("Agent provider status").textContent).toContain("本地规则");
-    expect(screen.getByText("连接记谱宿主")).toBeTruthy();
-    expect(screen.getByText("与 Sera 对话")).toBeTruthy();
-    expect(screen.getAllByText("修改提案").length).toBeGreaterThanOrEqual(2);
-    expect((screen.getByRole("button", { name: "发送消息" }) as HTMLButtonElement).disabled).toBe(true);
-    fireEvent.click(screen.getByRole("tab", { name: /修改提案/ }));
-    expect((screen.getByRole("button", { name: "生成修改提案" }) as HTMLButtonElement).disabled).toBe(true);
+    expect(screen.getByLabelText("Agent provider status").textContent).toContain("Local rules");
+    expect(screen.getByText("Connect a notation host")).toBeTruthy();
+    expect(screen.getByText("Chat with Sera")).toBeTruthy();
+    expect(screen.getAllByText("Edit proposal").length).toBeGreaterThanOrEqual(2);
+    expect((screen.getByRole("button", { name: "Send message" }) as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.click(screen.getByRole("tab", { name: /Edit proposal/ }));
+    expect((screen.getByRole("button", { name: "Generate edit proposal" }) as HTMLButtonElement).disabled).toBe(true);
 
     expect(screen.queryByText("音符输入")).toBeNull();
     expect(screen.queryByText("Score Inspector")).toBeNull();
@@ -111,8 +111,8 @@ describe("SeraAgentConsole", () => {
     renderConsole();
     await waitFor(() => expect(api.getSeraEditProviderStatus).toHaveBeenCalledOnce());
 
-    fireEvent.change(screen.getByLabelText("向 Sera 提问"), { target: { value: "大二度是多少个半音？" } });
-    fireEvent.click(screen.getByRole("button", { name: "发送消息" }));
+    fireEvent.change(screen.getByLabelText("Ask Sera a question"), { target: { value: "大二度是多少个半音？" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
 
     await screen.findByText(/大二度通常等于两个半音/);
     expect(api.chatWithSera).toHaveBeenCalledWith(
@@ -122,7 +122,7 @@ describe("SeraAgentConsole", () => {
       {}
     );
     expect(api.generateStrictScorePatchPreview).not.toHaveBeenCalled();
-    expect(screen.queryByText("验证通过")).toBeNull();
+    expect(screen.queryByText("Validation passed")).toBeNull();
   });
 
   it("configures a live provider inside Sera without retaining the key in the rendered UI", async () => {
@@ -148,12 +148,12 @@ describe("SeraAgentConsole", () => {
     renderConsole();
     await waitFor(() => expect(api.getSeraEditProviderStatus).toHaveBeenCalledOnce());
 
-    fireEvent.click(screen.getByRole("button", { name: "模型设置" }));
-    expect(screen.getByRole("dialog", { name: "模型与 API 设置" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Model settings" }));
+    expect(screen.getByRole("dialog", { name: "Model and API settings" })).toBeTruthy();
     const keyInput = screen.getByLabelText("API Key") as HTMLInputElement;
     expect(keyInput.type).toBe("password");
     fireEvent.change(keyInput, { target: { value: "secret-only-in-request" } });
-    fireEvent.click(screen.getByRole("button", { name: "保存并启用" }));
+    fireEvent.click(screen.getByRole("button", { name: "Save and enable" }));
 
     await waitFor(() => expect(api.saveSeraEditProviderConfiguration).toHaveBeenCalledWith({
       provider: "openai",
@@ -164,7 +164,7 @@ describe("SeraAgentConsole", () => {
       reasoning_effort: "low",
       composer_timeout_seconds: 180
     }));
-    await waitFor(() => expect(screen.queryByRole("dialog", { name: "模型与 API 设置" })).toBeNull());
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Model and API settings" })).toBeNull());
     expect(screen.getByLabelText("Agent provider status").textContent).toContain("openai · gpt-5.6-terra");
     expect(document.body.textContent).not.toContain("secret-only-in-request");
     const storedValues = Array.from(
@@ -191,11 +191,11 @@ describe("SeraAgentConsole", () => {
     });
     renderConsole();
     await waitFor(() => expect(api.getSeraEditProviderStatus).toHaveBeenCalledOnce());
-    fireEvent.click(screen.getByRole("button", { name: "模型设置" }));
-    fireEvent.click(screen.getByRole("button", { name: "使用本地规则" }));
+    fireEvent.click(screen.getByRole("button", { name: "Model settings" }));
+    fireEvent.click(screen.getByRole("button", { name: "Use local rules" }));
 
     await waitFor(() => expect(api.clearSeraEditProviderConfiguration).toHaveBeenCalledOnce());
-    expect(screen.getByLabelText("Agent provider status").textContent).toContain("本地规则");
+    expect(screen.getByLabelText("Agent provider status").textContent).toContain("Local rules");
   });
 
   it("loads a host session, generates a validated patch, and exports a new host revision", async () => {
@@ -266,15 +266,15 @@ describe("SeraAgentConsole", () => {
 
     renderConsole();
 
-    await screen.findByText(/已从 MuseScore Studio 接收《Host Score》/);
+    await screen.findByText(/Received from MuseScore Studio: “Host Score”/);
     expect(screen.getByText("M1–M2")).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("tab", { name: /修改提案/ }));
-    fireEvent.change(screen.getByLabelText("描述乐谱修改"), { target: { value: "将选区升高大二度" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成修改提案" }));
+    fireEvent.click(screen.getByRole("tab", { name: /Edit proposal/ }));
+    fireEvent.change(screen.getByLabelText("Describe your score edit"), { target: { value: "将选区升高大二度" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate edit proposal" }));
 
-    await screen.findByText("验证通过");
-    expect(screen.getByText("移调")).toBeTruthy();
+    await screen.findByText("Validation passed");
+    expect(screen.getByText("Transpose")).toBeTruthy();
     expect(api.generateStrictScorePatchPreview).toHaveBeenCalledWith(
       score,
       "将选区升高大二度",
@@ -282,8 +282,8 @@ describe("SeraAgentConsole", () => {
       {}
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "应用并生成宿主修订" }));
-    await waitFor(() => expect(screen.getAllByText(/修订 1 已就绪/).length).toBeGreaterThan(0));
+    fireEvent.click(screen.getByRole("button", { name: "Apply and create host revision" }));
+    await waitFor(() => expect(screen.getAllByText(/Revision 1 is ready/).length).toBeGreaterThan(0));
     expect(api.applyStrictScorePatch).toHaveBeenCalledOnce();
     expect(api.exportNotationBridgeRevision).toHaveBeenCalledWith(session.session_id, score, 0);
   });
@@ -347,16 +347,16 @@ describe("SeraAgentConsole", () => {
     });
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Old Host Score》/);
-    fireEvent.click(screen.getByRole("tab", { name: /修改提案/ }));
-    fireEvent.change(screen.getByLabelText("描述乐谱修改"), { target: { value: "将选区升高大二度" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成修改提案" }));
-    await screen.findByText("验证通过");
+    await screen.findByText(/Received from MuseScore Studio: “Old Host Score”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Edit proposal/ }));
+    fireEvent.change(screen.getByLabelText("Describe your score edit"), { target: { value: "将选区升高大二度" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate edit proposal" }));
+    await screen.findByText("Validation passed");
 
     act(() => notifyDesktopSession({ sequence: 4, session_id: "bridge_new_12345678" }));
 
-    expect(screen.queryByRole("button", { name: "应用并生成宿主修订" })).toBeNull();
-    expect(screen.getByText("正在接收宿主上下文")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Apply and create host revision" })).toBeNull();
+    expect(screen.getByText("Receiving host context")).toBeTruthy();
     expect(api.applyStrictScorePatch).not.toHaveBeenCalled();
     expect(api.exportNotationBridgeRevision).not.toHaveBeenCalled();
     await waitFor(() => expect(api.getNotationBridgeWorkspace).toHaveBeenCalledWith("bridge_new_12345678"));
@@ -428,17 +428,17 @@ describe("SeraAgentConsole", () => {
     });
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Key Signature Host》/);
-    fireEvent.click(screen.getByRole("tab", { name: /修改提案/ }));
-    fireEvent.change(screen.getByLabelText("描述乐谱修改"), { target: { value: "将调号改为G major，但不要移调音符。" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成修改提案" }));
+    await screen.findByText(/Received from MuseScore Studio: “Key Signature Host”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Edit proposal/ }));
+    fireEvent.change(screen.getByLabelText("Describe your score edit"), { target: { value: "将调号改为G major，但不要移调音符。" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate edit proposal" }));
 
-    await screen.findByText("验证通过");
-    expect(screen.getByText("修改调号")).toBeTruthy();
-    expect(screen.getByText(/全谱 · key: G major/)).toBeTruthy();
-    expect(screen.getByText(/调号是全谱属性；已将宿主选区安全提升为全谱范围/)).toBeTruthy();
-    expect(screen.getByText("全局").parentElement?.textContent).toContain("1");
-    expect(screen.queryByText("不支持此修改")).toBeNull();
+    await screen.findByText("Validation passed");
+    expect(screen.getByText("Change key signature")).toBeTruthy();
+    expect(screen.getByText(/Whole score · key: G major/)).toBeTruthy();
+    expect(screen.getByText(/Key signature is a score-wide property/)).toBeTruthy();
+    expect(screen.getByText("Global").parentElement?.textContent).toContain("1");
+    expect(screen.queryByText("Unsupported edit")).toBeNull();
   });
 
   it("creates ranked theory candidates before reusing the proposal review", async () => {
@@ -613,20 +613,20 @@ describe("SeraAgentConsole", () => {
     });
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Composer Host Score》/);
-    fireEvent.click(screen.getByRole("tab", { name: /创作草案/ }));
-    fireEvent.change(screen.getByLabelText("描述创作目标"), { target: { value: "创作古典变化" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成创作候选" }));
+    await screen.findByText(/Received from MuseScore Studio: “Composer Host Score”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Compose/ }));
+    fireEvent.change(screen.getByLabelText("Describe your composition goal"), { target: { value: "创作古典变化" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate candidates" }));
 
     await screen.findByText("CompositionPlan");
     expect(screen.getByText("I – V")).toBeTruthy();
     expect(screen.getByText("TH-SAFE-001")).toBeTruthy();
-    expect(screen.getByText(/Composer V0.4 知识检索/)).toBeTruthy();
-    expect(screen.getByText(/本地大库 358 张规则卡/)).toBeTruthy();
-    expect(screen.getByText(/本次高层计划：本地即时初稿/)).toBeTruthy();
-    expect(screen.getByText(/本地安全候选已就绪；实时 LLM 正在后台优化/)).toBeTruthy();
+    expect(screen.getByText(/Composer V0.4 knowledge retrieval/)).toBeTruthy();
+    expect(screen.getByText(/Local library: 358 rule cards/)).toBeTruthy();
+    expect(screen.getByText(/Plan source: immediate local draft/)).toBeTruthy();
+    expect(screen.getByText(/Safe local candidates are ready/)).toBeTruthy();
     expect(screen.getAllByText(/melody_accompaniment/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/内部评审 16\/16 个候选/)).toBeTruthy();
+    expect(screen.getByText(/Internally reviewed 16\/16 candidates/)).toBeTruthy();
     expect(api.previewCompositionCandidates).toHaveBeenCalledWith(
       score,
       "创作古典变化",
@@ -644,21 +644,21 @@ describe("SeraAgentConsole", () => {
       completed_at: 2,
       error: "模型超时"
     });
-    await screen.findByText(/LLM 后台优化未完成：模型超时/);
-    expect(screen.getByText(/当前本地候选仍可正常使用/)).toBeTruthy();
+    await screen.findByText(/Background LLM refinement did not complete: 模型超时/);
+    expect(screen.getByText(/Local candidates remain available/)).toBeTruthy();
 
-    fireEvent.click(screen.getByLabelText("动机更清楚"));
-    fireEvent.click(screen.getByRole("button", { name: "我更喜欢这个版本" }));
-    await screen.findByText(/累计 1 次本机偏好/);
+    fireEvent.click(screen.getByLabelText("Clearer motif"));
+    fireEvent.click(screen.getByRole("button", { name: "Prefer this version" }));
+    await screen.findByText(/Total 1 local preferences/);
     expect(api.submitCompositionPreference).toHaveBeenCalledWith(expect.objectContaining({
       comparison_id: "comparison_1",
       selected_candidate_id: "candidate_1",
       reasons: ["motif"]
     }));
 
-    fireEvent.click(screen.getByRole("button", { name: "选择此候选并审查" }));
-    await screen.findByText("验证通过");
-    expect(screen.getByText("修改音高")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Select and review candidate" }));
+    await screen.findByText("Validation passed");
+    expect(screen.getByText("Set pitch")).toBeTruthy();
     expect(api.applyStrictScorePatch).not.toHaveBeenCalled();
   });
 
@@ -726,16 +726,16 @@ describe("SeraAgentConsole", () => {
     });
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Melody Rewrite Host》/);
-    fireEvent.click(screen.getByRole("tab", { name: /修改提案/ }));
-    fireEvent.change(screen.getByLabelText("描述乐谱修改"), { target: { value: "重写当前选区旋律并保持节奏" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成修改提案" }));
+    await screen.findByText(/Received from MuseScore Studio: “Melody Rewrite Host”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Edit proposal/ }));
+    fireEvent.change(screen.getByLabelText("Describe your score edit"), { target: { value: "重写当前选区旋律并保持节奏" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate edit proposal" }));
 
-    await screen.findByText("验证通过");
-    expect(screen.getByText("Composer 自动路由")).toBeTruthy();
-    expect(screen.getByText(/已评审 3 个候选 · 最佳评分 94/)).toBeTruthy();
-    expect(screen.getByText("修改音高")).toBeTruthy();
-    expect(screen.queryByText("不支持此修改")).toBeNull();
+    await screen.findByText("Validation passed");
+    expect(screen.getByText("Composer automatic routing")).toBeTruthy();
+    expect(screen.getByText(/Reviewed 3 candidates · Best score 94/)).toBeTruthy();
+    expect(screen.getByText("Set pitch")).toBeTruthy();
+    expect(screen.queryByText("Unsupported edit")).toBeNull();
   });
 
   it("shows immediate Composer progress and a visible failure instead of appearing idle", async () => {
@@ -755,19 +755,19 @@ describe("SeraAgentConsole", () => {
     }));
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Slow Composer Score》/);
-    fireEvent.click(screen.getByRole("tab", { name: /创作草案/ }));
-    fireEvent.change(screen.getByLabelText("描述创作目标"), { target: { value: "创作浪漫主义变化" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成创作候选" }));
+    await screen.findByText(/Received from MuseScore Studio: “Slow Composer Score”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Compose/ }));
+    fireEvent.change(screen.getByLabelText("Describe your composition goal"), { target: { value: "创作浪漫主义变化" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate candidates" }));
 
     const progress = await screen.findByRole("status");
-    expect(progress.textContent).toContain("正在读取宿主选区与理论约束");
-    expect(progress.textContent).toContain("实时 LLM 会在后台继续优化并自动更新候选");
-    expect(screen.getByRole("button", { name: /规划中 0s/ })).toBeTruthy();
+    expect(progress.textContent).toContain("Reading the host selection and theory constraints");
+    expect(progress.textContent).toContain("Live LLM refinement will update candidates automatically");
+    expect(screen.getByRole("button", { name: /Planning 0s/ })).toBeTruthy();
 
     rejectPreview(new Error("模型服务暂时不可用"));
     const alert = await screen.findByRole("alert");
-    expect(alert.textContent).toContain("创作候选没有生成");
+    expect(alert.textContent).toContain("No composition candidates generated");
     expect(alert.textContent).toContain("模型服务暂时不可用");
   });
 
@@ -817,16 +817,16 @@ describe("SeraAgentConsole", () => {
     });
 
     renderConsole();
-    await screen.findByText(/已从 MuseScore Studio 接收《Protected Melody》/);
-    fireEvent.click(screen.getByRole("tab", { name: /创作草案/ }));
-    fireEvent.change(screen.getByLabelText("描述创作目标"), { target: { value: "重新和声化并保留旋律" } });
-    fireEvent.click(screen.getByRole("button", { name: "生成创作候选" }));
+    await screen.findByText(/Received from MuseScore Studio: “Protected Melody”/);
+    fireEvent.click(screen.getByRole("tab", { name: /Compose/ }));
+    fireEvent.change(screen.getByLabelText("Describe your composition goal"), { target: { value: "重新和声化并保留旋律" } });
+    fireEvent.click(screen.getByRole("button", { name: "Generate candidates" }));
 
     const alert = await screen.findByRole("alert");
-    expect(alert.textContent).toContain("候选已安全拒绝");
-    expect(alert.textContent).toContain("目标选区中的 8 个音符全部位于保护范围内");
-    expect(alert.textContent).toContain("目标音符8");
-    expect(alert.textContent).toContain("受保护8");
+    expect(alert.textContent).toContain("Candidates safely rejected");
+    expect(alert.textContent).toContain("All 8 target notes are protected");
+    expect(alert.textContent).toContain("Target notes8");
+    expect(alert.textContent).toContain("Protected8");
     expect(alert.textContent).toContain("缩小保护范围");
   });
 });

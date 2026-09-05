@@ -41,6 +41,5 @@ export function supportedLanguages(): SupportedLanguage[] {
 function detectInitialLanguage(): SupportedLanguage {
   const saved = window.localStorage.getItem(STORAGE_KEY) as SupportedLanguage | null;
   if (saved && saved in dictionaries) return saved;
-  const browser = window.navigator.language;
-  return browser.toLowerCase().startsWith("zh") ? "zh-CN" : "en";
+  return "en";
 }

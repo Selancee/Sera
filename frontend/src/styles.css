@@ -265,7 +265,7 @@
   padding: 16px;
 }
 
-.review-filter-stack > div { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+.review-filter-stack > div { display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr); }
 .review-filter-stack label,
 .review-form-panel > label {
   color: #4c5c60;
@@ -2028,6 +2028,15 @@
 }
 
 @media (max-width: 620px) {
+  .agent-topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .agent-topbar-actions {
+    justify-content: flex-start;
+  }
+
   .agent-candidate-actions {
     grid-template-columns: 1fr;
   }

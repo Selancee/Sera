@@ -33,7 +33,7 @@ async function request(path, options = {}) {
     return response.json();
   } catch (error) {
     if (controller?.signal.aborted) {
-      throw new Error(`Sera 后端在 ${Math.round(timeoutMs / 1000)} 秒内没有返回，请重试或检查模型 API。`);
+      throw new Error(`The Sera backend did not respond within ${Math.round(timeoutMs / 1000)} seconds. Try again or check the model API.`);
     }
     throw error;
   } finally {

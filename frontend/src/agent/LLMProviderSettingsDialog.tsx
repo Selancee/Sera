@@ -95,7 +95,7 @@ export default function LLMProviderSettingsDialog({
       onClose();
     } catch (caught: any) {
       setApiKey("");
-      setError(caught?.message || "模型配置保存失败。请检查服务商、模型和 API Key。");
+      setError(caught?.message || "Could not save model settings. Check the provider, model, and API key.");
     } finally {
       setSaving(false);
     }
@@ -110,7 +110,7 @@ export default function LLMProviderSettingsDialog({
       onSaved(payload.status as ProviderStatus);
       onClose();
     } catch (caught: any) {
-      setError(caught?.message || "无法切换到本地规则。");
+      setError(caught?.message || "Could not switch to local rules.");
     } finally {
       setSaving(false);
     }
@@ -127,44 +127,44 @@ export default function LLMProviderSettingsDialog({
         <header>
           <div>
             <span>Agent runtime</span>
-            <h1 id="llm-settings-title">模型与 API 设置</h1>
+            <h1 id="llm-settings-title">Model and API settings</h1>
           </div>
-          <button aria-label="关闭模型设置" disabled={saving} onClick={onClose} type="button">×</button>
+          <button aria-label="Close model settings" disabled={saving} onClick={onClose} type="button">×</button>
         </header>
 
         <form onSubmit={handleSubmit}>
           <label>
-            模型服务商
+            Model provider
             <select
-              aria-label="模型服务商"
+              aria-label="Model provider"
               disabled={saving}
               onChange={(event) => handleProviderChange(event.target.value as ProviderId)}
               value={provider}
             >
               <option value="openai">OpenAI</option>
               <option value="deepseek">DeepSeek</option>
-              <option value="qwen">通义千问（Qwen）</option>
-              <option value="openai-compatible">OpenAI 兼容接口</option>
+              <option value="qwen">Qwen</option>
+              <option value="openai-compatible">OpenAI-compatible API</option>
             </select>
           </label>
 
           <label>
-            模型名称
+            Model name
             <input
-              aria-label="模型名称"
+              aria-label="Model name"
               autoComplete="off"
               disabled={saving}
               onChange={(event) => setModel(event.target.value)}
-              placeholder="例如 gpt-5.6-terra"
+              placeholder="For example: gpt-5.6-terra"
               required
               value={model}
             />
           </label>
 
           <label>
-            API 地址
+            API URL
             <input
-              aria-label="API 地址"
+              aria-label="API URL"
               autoCapitalize="none"
               autoComplete="off"
               disabled={saving}
@@ -186,7 +186,7 @@ export default function LLMProviderSettingsDialog({
               autoComplete="new-password"
               disabled={saving}
               onChange={(event) => setApiKey(event.target.value)}
-              placeholder={canRetainCredential ? "已安全保存；留空则保留" : "粘贴 API Key"}
+              placeholder={canRetainCredential ? "Saved securely; leave blank to keep" : "Paste API key"}
               required={!canRetainCredential}
               spellCheck={false}
               type="password"
@@ -195,14 +195,14 @@ export default function LLMProviderSettingsDialog({
           </label>
 
           <p className="agent-credential-note" id="api-key-storage-note">
-            密钥由 Windows 当前用户加密保存。界面、状态接口和对话记录均不会回显密钥。
+            The key is encrypted for the current Windows user. It is never displayed in the interface, status API, or conversation history.
           </p>
 
           <div className="agent-settings-row">
             <label>
-              推理强度
+              Reasoning effort
               <select
-                aria-label="推理强度"
+                aria-label="Reasoning effort"
                 disabled={saving}
                 onChange={(event) => setReasoningEffort(event.target.value)}
                 value={reasoningEffort}
@@ -220,15 +220,15 @@ export default function LLMProviderSettingsDialog({
                 onChange={(event) => setFallbackLocal(event.target.checked)}
                 type="checkbox"
               />
-              API 失败时自动使用本地规则
+              Use local rules if the API fails
             </label>
           </div>
 
           <label>
-            Composer 后台等待（秒）
+            Composer background timeout (seconds)
             <input
               aria-describedby="composer-timeout-note"
-              aria-label="Composer 后台等待秒数"
+              aria-label="Composer background timeout in seconds"
               disabled={saving}
               max={600}
               min={30}
@@ -239,22 +239,22 @@ export default function LLMProviderSettingsDialog({
             />
           </label>
           <p className="agent-credential-note" id="composer-timeout-note">
-            只限制后台高层规划，不会阻塞本地候选。DeepSeek V4 Pro 等慢推理模型建议 180–300 秒。
+            This timeout applies to background planning; local candidates remain available. Allow 180–300 seconds for slower reasoning models such as DeepSeek V4 Pro.
           </p>
 
           {error && <p className="agent-settings-error" role="alert">{error}</p>}
 
           <footer>
             <button className="secondary" disabled={saving} onClick={handleUseLocalRules} type="button">
-              使用本地规则
+              Use local rules
             </button>
             <div>
-              <button className="secondary" disabled={saving} onClick={onClose} type="button">取消</button>
+              <button className="secondary" disabled={saving} onClick={onClose} type="button">Cancel</button>
               <button
                 disabled={saving || !model.trim() || !baseUrl.trim() || composerTimeoutSeconds < 30 || composerTimeoutSeconds > 600}
                 type="submit"
               >
-                {saving ? "正在安全保存…" : "保存并启用"}
+                {saving ? "Saving securely…" : "Save and enable"}
               </button>
             </div>
           </footer>

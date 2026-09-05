@@ -11,10 +11,10 @@ export function StartupScreen({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (!health) {
-    return <div className="startup-screen">正在完成 Sera 本地引擎健康检查…</div>;
+    return <div className="startup-screen">Checking the Sera local engine…</div>;
   }
   if (!health.ok) {
-    return <div className="startup-screen error">Sera 本地引擎不可用：{health.error}</div>;
+    return <div className="startup-screen error">Sera local engine unavailable: {health.error}</div>;
   }
   return <>{children}</>;
 }

@@ -161,27 +161,27 @@ describe("BenchmarkReviewWorkspace", () => {
   it("shows task evidence without rendering or manually editing notation", async () => {
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
 
-    expect(await screen.findByText("事件级差异")).toBeInTheDocument();
-    expect(screen.getByText("Gold 基准证据 · 本页面不调用 LLM")).toBeInTheDocument();
-    expect(screen.getByText("无 · 只检查 Gold 基准")).toBeInTheDocument();
-    expect(screen.getByText("Agent 实跑 6/6")).toBeInTheDocument();
+    expect(await screen.findByText("Event diff")).toBeInTheDocument();
+    expect(screen.getByText("Gold benchmark evidence · No LLM calls on this page")).toBeInTheDocument();
+    expect(screen.getByText("None · Gold benchmark review only")).toBeInTheDocument();
+    expect(screen.getByText("Agent runtime 6/6")).toBeInTheDocument();
     expect(screen.getByText("120/120")).toBeInTheDocument();
     expect(screen.getAllByText("m1_rh_1").length).toBeGreaterThan(0);
     expect(screen.queryByText("音符输入")).not.toBeInTheDocument();
-    expect(screen.getByText("已触发艺术美感校准")).toBeInTheDocument();
+    expect(screen.getByText("Preference calibration triggered")).toBeInTheDocument();
   });
 
-  it("explains every task-code family in Chinese", async () => {
+  it("explains every task-code family in English", async () => {
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
-    await screen.findByText("事件级差异");
+    await screen.findByText("Event diff");
 
-    fireEvent.click(screen.getByRole("button", { name: "编号标准" }));
+    fireEvent.click(screen.getByRole("button", { name: "Task ID standards" }));
 
-    expect(screen.getByRole("region", { name: "编号标准总表" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Task ID standards reference" })).toBeInTheDocument();
     expect(screen.getByText("pitch_001–015")).toBeInTheDocument();
     expect(screen.getByText("meter_001–010")).toBeInTheDocument();
     expect(screen.getByText("conflict_001–010")).toBeInTheDocument();
-    expect(screen.getByText(/数字只是任务序号/)).toBeInTheDocument();
+    expect(screen.getByText(/task sequence numbers/)).toBeInTheDocument();
   });
 
   it("makes refusal tasks explicit and treats zero score changes as correct", async () => {
@@ -190,13 +190,13 @@ describe("BenchmarkReviewWorkspace", () => {
 
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
 
-    expect(await screen.findByText(/本题不是要求生成修改后的谱/)).toHaveTextContent("不是模型超时、空响应或返回失败");
-    expect(screen.getByText(/0 处修改即为合格/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "打开拒绝后原谱（应不变）" })).toBeInTheDocument();
-    expect(screen.getByText(/6 次均按任务合同安全拒绝，未进入事务应用/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "打开 Sera 中文拒绝结果" })).toBeInTheDocument();
-    expect(screen.getByText("必须安全拒绝：拍号与固定总时值互相矛盾")).toBeInTheDocument();
-    expect(screen.getByText("基准契约验证通过")).toBeInTheDocument();
+    expect(await screen.findByText(/This task passes only when the edit is refused/)).toHaveTextContent("it is not a timeout, empty response, or provider failure");
+    expect(screen.getByText(/Zero changes is a pass/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open refused score (unchanged)" })).toBeInTheDocument();
+    expect(screen.getByText(/6 runs safely refused as required, without applying a transaction/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open Sera Chinese refusal" })).toBeInTheDocument();
+    expect(screen.getByText("Must safely refuse: The meter conflicts with the fixed total duration")).toBeInTheDocument();
+    expect(screen.getByText("Benchmark contract validated")).toBeInTheDocument();
   });
 
   it("shows concrete before and after values for a global key-signature change", async () => {
@@ -231,21 +231,21 @@ describe("BenchmarkReviewWorkspace", () => {
 
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
 
-    expect(await screen.findByRole("region", { name: "MuseScore 力度记号判读" })).toHaveTextContent("事件级修改 1 处");
-    expect(screen.getByText(/MuseScore 新增力度记号 2 个/)).toBeInTheDocument();
-    expect(screen.getByText(/恢复记号不是额外的事件级修改/)).toBeInTheDocument();
+    expect(await screen.findByRole("region", { name: "Interpreting MuseScore dynamic marks" })).toHaveTextContent("Event changes 1");
+    expect(screen.getByText(/New MuseScore dynamic marks 2/)).toBeInTheDocument();
+    expect(screen.getByText(/the reset is not an additional ScoreDocument edit/)).toBeInTheDocument();
   });
 
   it("requires an issue for noncompliance and appends a traceable review", async () => {
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
-    await screen.findByText("事件级差异");
+    await screen.findByText("Event diff");
 
-    fireEvent.click(screen.getByRole("button", { name: /需修订/ }));
-    fireEvent.click(screen.getByRole("button", { name: "保存并进入下一条" }));
-    expect(await screen.findByText(/必须选择至少一个问题类型/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Needs revision/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Save and continue" }));
+    expect(await screen.findByText(/Select at least one issue type/)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("音乐性不合理"));
-    fireEvent.click(screen.getByRole("button", { name: "保存并进入下一条" }));
+    fireEvent.click(screen.getByLabelText("Musically implausible"));
+    fireEvent.click(screen.getByRole("button", { name: "Save and continue" }));
 
     await waitFor(() => expect(api.submitBenchmarkReview).toHaveBeenCalledWith(expect.objectContaining({
       task_id: "pitch_001",
@@ -253,14 +253,14 @@ describe("BenchmarkReviewWorkspace", () => {
       decision: "needs_revision",
       issue_codes: ["musically_implausible"]
     })));
-    expect(await screen.findByText(/基准原文件未被修改/)).toBeInTheDocument();
+    expect(await screen.findByText(/the original benchmark files are unchanged/)).toBeInTheDocument();
   });
 
   it("prepares a MusicXML artifact and opens it through the desktop bridge", async () => {
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
-    await screen.findByText("事件级差异");
+    await screen.findByText("Event diff");
 
-    fireEvent.click(screen.getByRole("button", { name: "打开原始谱" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open source score" }));
 
     await waitFor(() => expect(api.prepareBenchmarkReviewArtifact).toHaveBeenCalledWith("pitch_001", "source"));
     expect(desktop.openDesktopLocalFile).toHaveBeenCalledWith(expect.stringContaining("source.musicxml"));
@@ -268,11 +268,11 @@ describe("BenchmarkReviewWorkspace", () => {
 
   it("opens the actual bilingual Sera runtime output for efficient host review", async () => {
     render(<BenchmarkReviewWorkspace onClose={vi.fn()} />);
-    await screen.findByText("事件级差异");
+    await screen.findByText("Event diff");
 
-    fireEvent.click(screen.getByRole("button", { name: "打开 Sera 中文输出" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open Sera Chinese output" }));
 
     await waitFor(() => expect(api.prepareBenchmarkReviewArtifact).toHaveBeenCalledWith("pitch_001", "runtime_zh"));
-    expect(screen.getByText(/6 次生成、事务、保护范围和 MusicXML 回读均通过/)).toBeInTheDocument();
+    expect(screen.getByText(/6 runs passed generation, transaction, protected scope, and MusicXML round-trip checks/)).toBeInTheDocument();
   });
 });

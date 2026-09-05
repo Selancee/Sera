@@ -29,10 +29,10 @@ describe("SeraEditResearchPanel", () => {
     );
 
     expect(screen.getByText("M1 · staff right_hand")).toBeTruthy();
-    fireEvent.click(screen.getByText("生成并预览"));
+    fireEvent.click(screen.getByText("Generate and preview"));
     expect(onGenerate).toHaveBeenCalledOnce();
-    fireEvent.click(screen.getByText("将选中音符设为强奏和断奏。"));
-    expect(setInstruction).toHaveBeenCalledWith("将选中音符设为强奏和断奏。");
+    fireEvent.click(screen.getByText("Set the selected notes to forte and staccato."));
+    expect(setInstruction).toHaveBeenCalledWith("Set the selected notes to forte and staccato.");
   });
 
   it("renders validation and enables apply for a warning-only proposal", () => {
@@ -89,7 +89,7 @@ describe("SeraEditResearchPanel", () => {
       />
     );
 
-    expect(screen.getByText("全部严格检查通过")).toBeTruthy();
+    expect(screen.getByText("All strict checks passed")).toBeTruthy();
     fireEvent.click(screen.getByText("Apply"));
     expect(onApply).toHaveBeenCalledOnce();
   });

@@ -4,9 +4,9 @@ import type {
 } from "../score/scoreTypes";
 
 const PRESETS = [
-  "将选中音符升高大二度，并保持节奏不变。",
-  "将选中音符设为强奏和断奏。",
-  "改为5/8拍，同时保持全部时值不变。"
+  "Transpose the selected notes up a major second while preserving rhythm.",
+  "Set the selected notes to forte and staccato.",
+  "Change to 5/8 while preserving all durations."
 ];
 
 export default function SeraEditResearchPanel({
@@ -61,16 +61,16 @@ export default function SeraEditResearchPanel({
   return (
     <section className="workbench-panel seraedit-research-panel">
       <div className="panel-heading tight">
-        <h2>SeraEdit 严格编辑</h2>
+        <h2>SeraEdit strict editing</h2>
         <span>ScorePatch 1.0</span>
       </div>
       <p className="research-note">
-        本地规则演示：结果可预览、验证、拒绝和撤销；不计入正式模型实验。
+        Local rule demo: preview, validate, reject, and undo edits. These results are excluded from formal model experiments.
       </p>
       <label className="research-field">
-        编辑指令
+        Edit instruction
         <textarea
-          aria-label="SeraEdit 编辑指令"
+          aria-label="SeraEdit instruction"
           onChange={(event) => setInstruction(event.target.value)}
           rows={4}
           value={instruction}
@@ -80,23 +80,23 @@ export default function SeraEditResearchPanel({
         <strong>Target scope</strong>
         <code>{scopeSummary(targetScope)}</code>
         <strong>Protected scope</strong>
-        <code>{scopeSummary(protectedScope) || "目标范围之外自动保护"}</code>
+        <code>{scopeSummary(protectedScope) || "Automatically protect everything outside the target scope"}</code>
       </div>
       <div className="strict-scope-controls">
         <label>
-          谱表
-          <select aria-label="严格编辑目标谱表" onChange={(event) => onTargetStaffChange(event.target.value)} value={targetStaff}>
-            <option value="both">全部谱表</option>
-            <option value="right_hand">右手 / 上方谱表</option>
-            <option value="left_hand">左手 / 下方谱表</option>
+          Staff
+          <select aria-label="Strict editing target staff" onChange={(event) => onTargetStaffChange(event.target.value)} value={targetStaff}>
+            <option value="both">All staves</option>
+            <option value="right_hand">Right hand / upper staff</option>
+            <option value="left_hand">Left hand / lower staff</option>
           </select>
         </label>
         <label>
-          声部
-          <select aria-label="严格编辑目标声部" onChange={(event) => onTargetVoiceChange(event.target.value)} value={targetVoice}>
-            <option value="all">全部声部</option>
-            <option value="1">声部 1</option>
-            <option value="2">声部 2</option>
+          Voice
+          <select aria-label="Strict editing target voice" onChange={(event) => onTargetVoiceChange(event.target.value)} value={targetVoice}>
+            <option value="all">All voices</option>
+            <option value="1">Voice 1</option>
+            <option value="2">Voice 2</option>
           </select>
         </label>
       </div>
@@ -109,7 +109,7 @@ export default function SeraEditResearchPanel({
       </div>
       <div className="toolbar-row">
         <button disabled={busy || !instruction.trim()} onClick={onGenerate} type="button">
-          {busy ? "严格验证中…" : "生成并预览"}
+          {busy ? "Validating…" : "Generate and preview"}
         </button>
         <button disabled={!canApply || busy} onClick={onApply} type="button">Apply</button>
         <button disabled={!generation || busy} onClick={onReject} type="button">Reject</button>
@@ -142,14 +142,14 @@ export default function SeraEditResearchPanel({
           {report && (
             <div className="validation-card strict-validation">
               <strong>Validation report: {report.status}</strong>
-              {!report.errors.length && !report.warnings.length && <span>全部严格检查通过</span>}
+              {!report.errors.length && !report.warnings.length && <span>All strict checks passed</span>}
               {[...report.errors, ...report.warnings].map((issue, index) => (
                 <span key={`${issue.code}-${issue.stage}-${index}`}>
                   {issue.code} · {issue.stage}: {issue.message}
                 </span>
               ))}
               <details>
-                <summary>查看分层检查</summary>
+                <summary>View validation layers</summary>
                 <pre>{JSON.stringify(report.checks, null, 2)}</pre>
               </details>
             </div>

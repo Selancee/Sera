@@ -151,15 +151,15 @@ function escapeHtml(value) {
 
 function startupPageHtml(error = "") {
   const failed = Boolean(error);
-  const heading = failed ? "Sera 本地引擎启动失败" : "正在启动 Sera 本地引擎";
+  const heading = failed ? "Sera local engine failed to start" : "Starting the Sera local engine";
   const detail = failed
     ? escapeHtml(error)
-    : "正在解压并加载乐谱编辑服务。首次启动通常需要 15–60 秒，请勿重复打开应用。";
+    : "Loading the score editing service. First startup usually takes 15–60 seconds. Please keep this window open.";
   return `<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
 <title>Sera</title><style>
 :root{color-scheme:light}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f2eb;color:#17211e;font-family:"Segoe UI","Microsoft YaHei",sans-serif}.card{width:min(560px,calc(100vw - 48px));padding:42px;border:1px solid #d8d4c8;border-radius:22px;background:#fff;box-shadow:0 18px 60px rgba(24,35,31,.1)}.brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}.mark{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#17211e;color:#fff;font-size:24px;font-weight:700}h1{margin:0;font-size:25px}p{margin:12px 0 0;color:#58635f;line-height:1.7}.bar{height:6px;margin-top:28px;overflow:hidden;border-radius:999px;background:#e6e3da}.bar::after{content:"";display:block;width:42%;height:100%;border-radius:inherit;background:#16866f;animation:loading 1.35s ease-in-out infinite}.error{padding:14px 16px;border-radius:12px;background:#fff1ed;color:#8b2f24;word-break:break-word}.hint{font-size:13px}@keyframes loading{0%{transform:translateX(-110%)}100%{transform:translateX(340%)}}
-</style></head><body><main class="card"><div class="brand"><div class="mark">S</div><div><h1>${heading}</h1><p>Sera · 智能乐谱编辑与协作层</p></div></div><p class="${failed ? "error" : ""}">${detail}</p>${failed ? '<p class="hint">请关闭应用后重试；若持续失败，请检查 8000 端口和打包日志。</p>' : '<div class="bar" aria-label="正在加载"></div><p class="hint">后端健康检查通过后，工作台会自动出现。</p>'}</main></body></html>`;
+</style></head><body><main class="card"><div class="brand"><div class="mark">S</div><div><h1>${heading}</h1><p>Sera · Intelligent score editing and collaboration</p></div></div><p class="${failed ? "error" : ""}">${detail}</p>${failed ? '<p class="hint">Close the app and try again. If the problem persists, check port 8000 and the packaging logs.</p>' : '<div class="bar" aria-label="Loading"></div><p class="hint">The workspace will open automatically when the engine is ready.</p>'}</main></body></html>`;
 }
 
 async function showStartupPage(win, error = "") {

@@ -117,7 +117,7 @@ export function subscribeDesktopOpenSession(callback: (payload: DesktopSessionMe
 
 export async function openDesktopLocalFile(path: string) {
   if (!window.seraDesktop?.openLocalFile) {
-    return { ok: false, error: "仅 Sera 桌面版可以直接打开本地宿主检查文件。" };
+    return { ok: false, error: "Local host inspection files can only be opened directly in Sera Desktop." };
   }
   return window.seraDesktop.openLocalFile(path);
 }

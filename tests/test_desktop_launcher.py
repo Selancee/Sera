@@ -95,8 +95,9 @@ def test_electron_shell_waits_for_backend_health_and_shows_inline_startup_state(
     assert "waitForBackendReady" in main
     assert 'return app.isPackaged ? 90000 : 45000' in main
     assert '`${runtime.base_url.replace(/\\/$/, "")}/health`' in main
-    assert "正在启动 Sera 本地引擎" in main
-    assert "首次启动通常需要 15–60 秒" in main
+    assert "Starting the Sera local engine" in main
+    assert "First startup usually takes 15–60 seconds" in main
+    assert '<html lang="en">' in main
     assert "show: false" in main
     assert "await showStartupPage(win)" in main
     assert "win.show()" in main

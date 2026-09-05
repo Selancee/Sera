@@ -36,25 +36,25 @@ export default function StrictScoreComparison({ generation }: { generation: Stri
   if (!comparison || !generation?.patch || !preview) return null;
 
   return (
-    <section aria-label="严格补丁前后乐谱对照" className="strict-score-comparison">
+    <section aria-label="Strict patch score comparison" className="strict-score-comparison">
       <div className="strict-comparison-heading">
         <div>
-          <span className="eyebrow">未应用提案 · authoritative comparison</span>
-          <h2>当前谱面与 ScorePatch 提案</h2>
+          <span className="eyebrow">Unapplied proposal · Authoritative comparison</span>
+          <h2>Current score and ScorePatch proposal</h2>
         </div>
         <div className="strict-comparison-counts">
-          <span className="change-badge changed">修改 {comparison.counts.changed}</span>
-          <span className="change-badge added">新增 {comparison.counts.added}</span>
-          <span className="change-badge deleted">删除 {comparison.counts.deleted}</span>
-          <span className="change-badge protected">保护区意外变化 {comparison.protectedChanges}</span>
+          <span className="change-badge changed">Changed {comparison.counts.changed}</span>
+          <span className="change-badge added">Added {comparison.counts.added}</span>
+          <span className="change-badge deleted">Deleted {comparison.counts.deleted}</span>
+          <span className="change-badge protected">Unexpected protected changes {comparison.protectedChanges}</span>
         </div>
       </div>
       <p className="strict-comparison-note">
-        左侧来自当前唯一权威 ScoreDocument；右侧来自尚未提交的事务克隆。只有点击 Apply 且全部验证通过后，右侧才会成为当前谱面。
+        The left side shows the current authoritative ScoreDocument. The right side shows an uncommitted transaction preview. It becomes the current score only after you click Apply and all checks pass.
       </p>
       <div className="strict-comparison-scope">
         <span><strong>Target</strong> {scopeSummary(generation.patch.target_scope)}</span>
-        <span><strong>Protected</strong> {scopeSummary(generation.patch.protected_scope) || "目标范围之外"}</span>
+        <span><strong>Protected</strong> {scopeSummary(generation.patch.protected_scope) || "Outside the target scope"}</span>
         <span><strong>Fingerprint</strong> {shortFingerprint(preview.source_fingerprint)} → {shortFingerprint(preview.post_fingerprint)}</span>
       </div>
       {comparison.rows.length ? (
@@ -62,11 +62,11 @@ export default function StrictScoreComparison({ generation }: { generation: Stri
           <table className="strict-comparison-table">
             <thead>
               <tr>
-                <th>位置</th>
-                <th>范围</th>
-                <th>当前权威谱面</th>
-                <th>未应用提案</th>
-                <th>变化</th>
+                <th>Position</th>
+                <th>Scope</th>
+                <th>Current authoritative score</th>
+                <th>Unapplied proposal</th>
+                <th>Change</th>
               </tr>
             </thead>
             <tbody>
@@ -83,7 +83,7 @@ export default function StrictScoreComparison({ generation }: { generation: Stri
           </table>
         </div>
       ) : (
-        <p className="strict-comparison-empty">提案未产生事件级变化；请检查全局属性变化或验证报告。</p>
+        <p className="strict-comparison-empty">No event changes in this proposal. Check global changes or the validation report.</p>
       )}
     </section>
   );
@@ -197,5 +197,5 @@ function shortFingerprint(value: string) {
 }
 
 function changeLabel(kind: ChangeRow["kind"]) {
-  return kind === "added" ? "新增" : kind === "deleted" ? "删除" : "修改";
+  return kind === "added" ? "Added" : kind === "deleted" ? "Deleted" : "Changed";
 }

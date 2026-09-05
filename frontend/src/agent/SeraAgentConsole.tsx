@@ -15,6 +15,7 @@ import {
 import LLMProviderSettingsDialog, { type ProviderStatus } from "./LLMProviderSettingsDialog";
 import { readPendingDesktopSession, subscribeDesktopOpenSession } from "../desktop/desktopRuntime";
 import LanguageSelector from "../i18n/LanguageSelector";
+import { englishSystemText } from "../i18n/systemText";
 import { bridgeSessionIdFromSearch, safeBridgeSessionId } from "../score/notationBridge";
 import {
   buildStrictScoreScopes,
@@ -53,14 +54,14 @@ type ComposerMode = "chat" | "edit" | "compose";
 const FALLBACK_HOSTS: HostCapability[] = [
   { host_id: "musescore", display_name: "MuseScore Studio" },
   { host_id: "sibelius", display_name: "Avid Sibelius Ultimate" },
-  { host_id: "musicxml", display_name: "通用 MusicXML" }
+  { host_id: "musicxml", display_name: "Generic MusicXML" }
 ];
 
 const INITIAL_MESSAGES: AgentMessage[] = [
   {
     id: 1,
     role: "assistant",
-    text: "你可以直接向我提问；普通对话不会修改乐谱。需要编辑时，请切换到“修改提案”，连接宿主后生成可验证的 ScorePatch。"
+    text: "Ask me a question to get started. Chat leaves your score unchanged. To edit, connect your notation host and switch to Edit proposal to generate a validated ScorePatch."
   }
 ];
 
@@ -87,7 +88,7 @@ export default function SeraAgentConsole({
   const [providerSettingsOpen, setProviderSettingsOpen] = useState(false);
   const [history, setHistory] = useState<StrictPatchHistory>(EMPTY_STRICT_PATCH_HISTORY);
   const [busy, setBusy] = useState(false);
-  const [status, setStatus] = useState("等待宿主连接");
+  const [status, setStatus] = useState("Waiting for a host connection");
   const [deliveryNotice, setDeliveryNotice] = useState("");
   const [compositionRunning, setCompositionRunning] = useState(false);
   const [compositionElapsedSeconds, setCompositionElapsedSeconds] = useState(0);
@@ -162,21 +163,21 @@ export default function SeraAgentConsole({
           });
           const hasCandidates = payload.result.candidates.length > 0;
           setCompositionRefinementNotice(hasCandidates
-            ? "实时 LLM 规划已完成，候选已自动更新；仍需选择后进入最终审查。"
-            : "实时 LLM 高层规划已返回，但其实现候选仍未通过安全检查；下方诊断来自 LLM 计划后的实际搜索。");
+            ? "Live LLM planning is complete and candidates have been updated. Select a candidate for final review."
+            : "Live LLM planning is complete, but the resulting candidates failed safety checks. Diagnostics below describe the search based on that plan.");
           setStatus(hasCandidates
-            ? `LLM 优化完成 · 已生成 ${payload.result.candidates.length} 个候选`
-            : "LLM 已反馈 · 实现候选未通过安全检查");
+            ? `LLM refinement complete · Generated ${payload.result.candidates.length} candidates`
+            : "LLM responded · Candidates failed safety checks");
           setCompositionRefinementJobId("");
           return;
         }
         if (payload.status === "failed") {
           setComposition((current) => current ? {
             ...current,
-            refinement: { ...current.refinement!, status: "failed", error: payload.error || "模型未返回合法计划" }
+            refinement: { ...current.refinement!, status: "failed", error: payload.error || "The model did not return a valid plan" }
           } : current);
-          setCompositionRefinementNotice(`LLM 后台优化未完成：${payload.error || "模型未返回合法计划"}。当前本地候选仍可正常使用。`);
-          setStatus("LLM 优化失败 · 已保留本地安全候选");
+          setCompositionRefinementNotice(`Background LLM refinement did not complete: ${payload.error || "The model did not return a valid plan"}. Local candidates remain available.`);
+          setStatus("LLM refinement failed · Safe local candidates retained");
           setCompositionRefinementJobId("");
           return;
         }
@@ -186,12 +187,12 @@ export default function SeraAgentConsole({
         transientFailures += 1;
         if (transientFailures <= 5) {
           setCompositionRefinementNotice(
-            `读取 LLM 后台状态时出现连接波动，正在重试（${transientFailures}/5）；当前本地结果不受影响。`
+            `Connection interrupted while checking LLM progress. Retrying (${transientFailures}/5). Local results remain available.`
           );
           timer = window.setTimeout(poll, 2000);
           return;
         }
-        setCompositionRefinementNotice(`连续 5 次无法读取 LLM 后台状态：${error?.message || "未知错误"}。当前本地结果仍可使用。`);
+        setCompositionRefinementNotice(`Unable to check LLM progress after 5 attempts: ${error?.message || "Unknown error"}. Local results remain available.`);
         setCompositionRefinementJobId("");
       }
     };
@@ -223,7 +224,7 @@ export default function SeraAgentConsole({
     setCompositionRefinementJobId("");
     setHistory(EMPTY_STRICT_PATCH_HISTORY);
     setDeliveryNotice("");
-    setStatus("正在切换到最新宿主会话");
+    setStatus("Switching to the latest host session");
     const url = new URL(window.location.href);
     url.searchParams.set("bridge_session", nextSessionId);
     url.searchParams.set("desktop", "1");
@@ -235,7 +236,7 @@ export default function SeraAgentConsole({
     if (!sessionId) return;
     let cancelled = false;
     setBusy(true);
-    setStatus("正在接收宿主上下文");
+    setStatus("Receiving host context");
     getNotationBridgeWorkspace(sessionId)
       .then((payload) => {
         if (cancelled) return;
@@ -243,8 +244,8 @@ export default function SeraAgentConsole({
       })
       .catch((error: Error) => {
         if (cancelled) return;
-        setStatus(`宿主会话加载失败：${error.message}`);
-        appendMessage("assistant", `无法读取宿主会话：${error.message}`);
+        setStatus(`Host session failed to load: ${error.message}`);
+        appendMessage("assistant", `Unable to read the host session: ${error.message}`);
       })
       .finally(() => {
         if (!cancelled) setBusy(false);
@@ -280,15 +281,15 @@ export default function SeraAgentConsole({
       {
         id: ++messageIdRef.current,
         role: "assistant",
-        text: `已从 ${hostDisplayName(hosts, nextSession?.host_id)} 接收《${nextScore.title || "未命名乐谱"}》和宿主选区 M${range.start_measure}–M${range.end_measure}。你可以继续对话；要编辑乐谱，请切换到“修改提案”。`
+        text: `Received from ${hostDisplayName(hosts, nextSession?.host_id)}: “${nextScore.title || "Untitled score"}”, host selection M${range.start_measure}–M${range.end_measure}. You can continue chatting. Switch to Edit proposal to edit the score.`
       }
     ]);
-    setStatus(`已连接 ${hostDisplayName(hosts, nextSession?.host_id)}`);
+    setStatus(`Connected to ${hostDisplayName(hosts, nextSession?.host_id)}`);
   }
 
   async function handleMusicXmlImport(file: File) {
     setBusy(true);
-    setStatus("正在导入宿主 MusicXML");
+    setStatus("Importing MusicXML from the host");
     try {
       const payload = await createNotationBridgeSession(
         selectedHost,
@@ -305,8 +306,8 @@ export default function SeraAgentConsole({
       }
       loadBridgeWorkspace(payload);
     } catch (error: any) {
-      setStatus(`MusicXML 导入失败：${error.message}`);
-      appendMessage("assistant", `宿主文件没有成功导入：${error.message}`);
+      setStatus(`MusicXML import failed: ${error.message}`);
+      appendMessage("assistant", `Host file import failed: ${error.message}`);
     } finally {
       setBusy(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -321,7 +322,7 @@ export default function SeraAgentConsole({
       content: message.text
     }));
     setBusy(true);
-    setStatus("正在进行普通对话 · 不会修改乐谱");
+    setStatus("Chatting · Score remains unchanged");
     appendMessage("user", requestText);
     setChatInput("");
     try {
@@ -334,11 +335,11 @@ export default function SeraAgentConsole({
       if (payload.provider_status) setProviderStatus(payload.provider_status as unknown as ProviderStatus);
       appendMessage("assistant", payload.answer);
       setStatus(payload.status === "answered"
-        ? "对话完成 · 乐谱未修改"
-        : `对话不可用 · ${payload.reason || "请检查模型设置"}`);
+        ? "Chat complete · Score unchanged"
+        : `Chat unavailable · ${payload.reason || "Check the model settings"}`);
     } catch (error: any) {
-      appendMessage("assistant", `对话请求失败：${error.message}。乐谱未修改。`);
-      setStatus(`对话请求失败：${error.message}`);
+      appendMessage("assistant", `Chat request failed: ${error.message}. The score is unchanged.`);
+      setStatus(`Chat request failed: ${error.message}`);
     } finally {
       setBusy(false);
     }
@@ -356,7 +357,7 @@ export default function SeraAgentConsole({
     setCompositionRefinementNotice("");
     setPreferenceNotice("");
     setDeliveryNotice("");
-    setStatus("正在生成并验证 ScorePatch");
+    setStatus("Generating and validating ScorePatch");
     try {
       const payload = await generateStrictScorePatchPreview(
         scoreDocument,
@@ -374,18 +375,18 @@ export default function SeraAgentConsole({
           ? `Composer / ${payload.generator.provider} / ${payload.generator.model}`
           : payload.generator.live
             ? `${payload.generator.provider} / ${payload.generator.model}`
-            : "本地确定性编辑器";
+            : "Local deterministic editor";
         const repair = !payload.generator.composition_route && payload.generator.repair_strategy && payload.generator.repair_strategy !== "none"
-          ? ` · ${payload.generator.repair_strategy} 修复`
+          ? ` · ${payload.generator.repair_strategy} repair`
           : "";
-        setStatus(`已通过 ${engine} 生成提案 · ${validationStatus}${repair}`);
+        setStatus(`Generated with ${engine} · Proposal ${validationStatus}${repair}`);
         setEditInstruction("");
       } else {
-        setStatus(`${payload.reason || payload.status} · 乐谱未修改`);
+        setStatus(`${payload.reason || payload.status} · Score unchanged`);
       }
     } catch (error: any) {
       if (activeSessionIdRef.current !== requestSessionId) return;
-      setStatus(`提案生成失败：${error.message}`);
+      setStatus(`Proposal generation failed: ${error.message}`);
     } finally {
       if (activeSessionIdRef.current === requestSessionId) setBusy(false);
     }
@@ -404,7 +405,7 @@ export default function SeraAgentConsole({
     setCompositionRefinementNotice("");
     setPreferenceNotice("");
     setDeliveryNotice("");
-    setStatus("正在规划和验证创作候选");
+    setStatus("Planning and validating composition candidates");
     setCompositionRunning(true);
     try {
       const payload = await previewCompositionCandidates(
@@ -423,25 +424,25 @@ export default function SeraAgentConsole({
           (payload.provider_status as Record<string, unknown> | undefined)?.composer_timeout_seconds || 180
         ));
         setCompositionRefinementNotice(payload.candidates.length > 0
-          ? `本地安全候选已就绪；实时 LLM 正在后台优化（最多等待 ${waitSeconds} 秒），你现在就可以先审查本地候选。`
-          : `这 16 个只是本地初稿候选；实时 LLM 仍在后台规划（最多等待 ${waitSeconds} 秒），返回后会自动重新实现并更新诊断。`);
+          ? `Safe local candidates are ready. Live LLM refinement continues in the background (up to ${waitSeconds} seconds). You can review local candidates now.`
+          : `These 16 candidates are local drafts. Live LLM planning continues in the background (up to ${waitSeconds} seconds). Candidates and diagnostics will update when it finishes.`);
       } else if (payload.refinement?.status === "failed") {
-        setCompositionRefinementNotice(`LLM 后台优化失败：${payload.refinement.error || "模型未返回合法计划"}。当前本地候选仍可使用。`);
+        setCompositionRefinementNotice(`Background LLM refinement failed: ${payload.refinement.error || "The model did not return a valid plan"}. Local candidates remain available.`);
       }
       if (payload.provider_status) setProviderStatus(payload.provider_status as unknown as ProviderStatus);
       if (payload.status === "generated") {
         setCompositionBrief("");
-        setStatus(`已生成 ${payload.candidates.length} 个候选 · 全部保留宿主节奏与排版`);
+        setStatus(`Generated ${payload.candidates.length} candidates · Host rhythm and layout preserved`);
       } else if (payload.refinement?.status === "running") {
-        setStatus("本地候选未通过 · 正在等待实时 LLM 反馈");
+        setStatus("Local candidates failed checks · Waiting for the live LLM");
       } else {
-        setStatus(payload.reason || "当前创作简述不能安全生成候选");
+        setStatus(payload.reason || "No safe candidates could be generated from this brief");
       }
     } catch (error: any) {
       if (activeSessionIdRef.current !== requestSessionId) return;
-      const message = error?.message || "未知错误";
+      const message = error?.message || "Unknown error";
       setCompositionError(message);
-      setStatus(`创作候选生成失败：${message}`);
+      setStatus(`Composition candidate generation failed: ${message}`);
     } finally {
       if (activeSessionIdRef.current === requestSessionId) {
         setCompositionRunning(false);
@@ -470,13 +471,13 @@ export default function SeraAgentConsole({
       preview: candidate.preview
     });
     setGenerationSessionId(safeBridgeSessionId(bridgeSession?.session_id));
-    setStatus(`${candidate.label} 已进入最终提案审查；尚未修改宿主乐谱`);
+    setStatus(`${englishSystemText(candidate.label)} is ready for final proposal review. The host score is unchanged`);
   }
 
   async function handlePreferCandidate(candidate: CompositionCandidate, reasons: CompositionPreferenceReason[]) {
     if (!composition?.comparison_id || !composition.plan) return;
     setBusy(true);
-    setPreferenceNotice("正在记录本机偏好…");
+    setPreferenceNotice("Saving your preference locally…");
     try {
       const payload = await submitCompositionPreference({
         comparison_id: composition.comparison_id,
@@ -497,11 +498,11 @@ export default function SeraAgentConsole({
       });
       setComposition((current) => current ? { ...current, preference_profile: payload.preference_profile } : current);
       setPreferenceNotice(payload.recorded
-        ? `已记录 ${candidate.label}；累计 ${payload.preference_profile.feedback_count} 次本机偏好。`
-        : `${candidate.label} 的偏好已经记录过。`);
-      setStatus("Composer 偏好已保存在本机；下一次候选排序会使用聚合画像");
+        ? `Recorded ${englishSystemText(candidate.label)}; Total ${payload.preference_profile.feedback_count} local preferences.`
+        : `${englishSystemText(candidate.label)} preference was already recorded.`);
+      setStatus("Composer preferences saved locally. The aggregated profile will inform the next candidate ranking");
     } catch (error: any) {
-      setPreferenceNotice(`偏好未保存：${error?.message || "未知错误"}`);
+      setPreferenceNotice(`Preference could not be saved: ${error?.message || "Unknown error"}`);
     } finally {
       setBusy(false);
     }
@@ -513,14 +514,14 @@ export default function SeraAgentConsole({
     const requestSessionId = safeBridgeSessionId(bridgeSession.session_id);
     if (!requestSessionId || generationSessionId !== requestSessionId) return;
     setBusy(true);
-    setStatus("正在应用事务并生成宿主修订");
+    setStatus("Applying the transaction and preparing a host revision");
     try {
       const beforeScore = scoreDocument;
       const applied = await applyStrictScorePatch(beforeScore, patch);
       if (activeSessionIdRef.current !== requestSessionId) return;
       if (!applied.committed) {
         setGeneration((current) => current ? { ...current, preview: applied } : current);
-        setStatus(applied.rollback_reason || "事务已回滚，乐谱未修改");
+        setStatus(applied.rollback_reason || "Transaction rolled back; the score is unchanged");
         return;
       }
       const afterScore = applied.score_document as ScoreDocument;
@@ -539,12 +540,12 @@ export default function SeraAgentConsole({
       }));
       setGeneration(null);
       setGenerationSessionId("");
-      const notice = `修订 ${exported.revision} 已就绪。请返回 ${hostName}，点击“Refresh and open applied revision”。`;
+      const notice = `Revision ${exported.revision} is ready. Return to ${hostName} and click “Refresh and open applied revision”.`;
       setDeliveryNotice(notice);
-      setStatus(`宿主修订 ${exported.revision} 已就绪`);
+      setStatus(`Host revision ${exported.revision} is ready`);
     } catch (error: any) {
       if (activeSessionIdRef.current !== requestSessionId) return;
-      setStatus(`宿主修订生成失败：${error.message}`);
+      setStatus(`Host revision generation failed: ${error.message}`);
     } finally {
       if (activeSessionIdRef.current === requestSessionId) setBusy(false);
     }
@@ -555,7 +556,7 @@ export default function SeraAgentConsole({
     const undone = undoStrictPatch(history, scoreDocument);
     if (!undone) return;
     setBusy(true);
-    setStatus("正在生成撤销修订");
+    setStatus("Preparing an undo revision");
     try {
       const exported = await exportNotationBridgeRevision(
         bridgeSession.session_id,
@@ -565,11 +566,11 @@ export default function SeraAgentConsole({
       setScoreDocument(undone.scoreDocument);
       setHistory(undone.history);
       setBridgeSession(exported.session);
-      const notice = `撤销修订 ${exported.revision} 已就绪。请在 ${hostName} 中打开最新修订。`;
+      const notice = `Undo revision ${exported.revision} is ready. In ${hostName}, open the latest revision.`;
       setDeliveryNotice(notice);
-      setStatus(`撤销修订 ${exported.revision} 已就绪`);
+      setStatus(`Undo revision ${exported.revision} is ready`);
     } catch (error: any) {
-      setStatus(`撤销修订失败：${error.message}`);
+      setStatus(`Undo revision failed: ${error.message}`);
     } finally {
       setBusy(false);
     }
@@ -578,7 +579,7 @@ export default function SeraAgentConsole({
   function handleReject() {
     setGeneration(null);
     setGenerationSessionId("");
-    setStatus("提案已拒绝 · 乐谱未修改");
+    setStatus("Proposal rejected · Score unchanged");
   }
 
   return (
@@ -588,35 +589,35 @@ export default function SeraAgentConsole({
           <div className="agent-brand-mark" aria-hidden="true">S</div>
           <div>
             <strong>Sera</strong>
-            <span>智能乐谱编辑 Agent</span>
+            <span>Intelligent score editing agent</span>
           </div>
         </div>
         <div className="agent-topbar-actions">
           {onOpenResearchReview && (
             <button className="agent-research-review-button" onClick={onOpenResearchReview} type="button">
-              研究复核
+              Research review
             </button>
           )}
           <span className={`agent-backend-state ${backendCapabilities?.api_contract ? "ready" : "waiting"}`}>
             <i aria-hidden="true" />
-            {backendCapabilities?.api_contract ? "后端已就绪" : "检查后端"}
+            {backendCapabilities?.api_contract ? "Backend ready" : "Check backend"}
           </span>
           <span
             aria-label="Agent provider status"
             className={`agent-provider-state ${providerStatus?.available ? "live" : "local"}`}
-            title={providerStatus?.reason || "正在读取 Agent provider 状态"}
+            title={providerStatus?.reason || "Checking agent provider status"}
           >
             <i aria-hidden="true" />
             {providerStatus?.available
               ? `${providerStatus.provider} · ${providerStatus.model}`
-              : "本地规则"}
+              : "Local rules"}
           </span>
           <button
             className="agent-provider-settings-button"
             onClick={() => setProviderSettingsOpen(true)}
             type="button"
           >
-            模型设置
+            Model settings
           </button>
           <LanguageSelector />
         </div>
@@ -625,13 +626,13 @@ export default function SeraAgentConsole({
       <main className="agent-console-grid">
         <aside className="agent-connection-rail">
           <div>
-            <h1>连接记谱宿主</h1>
-            <p>乐谱显示与手工记谱始终留在专业宿主软件中。</p>
+            <h1>Connect a notation host</h1>
+            <p>View and manually edit your score in your notation software.</p>
           </div>
 
           <section className="agent-rail-section">
-            <h2>选择宿主</h2>
-            <div className="agent-host-list" role="radiogroup" aria-label="选择记谱宿主">
+            <h2>Select a host</h2>
+            <div className="agent-host-list" role="radiogroup" aria-label="Select a notation host">
               {hosts.map((host) => (
                 <button
                   aria-checked={selectedHost === host.host_id}
@@ -651,25 +652,25 @@ export default function SeraAgentConsole({
           </section>
 
           <section className="agent-rail-section agent-steps">
-            <h2>连接步骤</h2>
+            <h2>Connection steps</h2>
             <ol>
-              <li><span>1</span><p>在宿主中打开目标乐谱</p></li>
-              <li><span>2</span><p>选择需要 Agent 修改的范围</p></li>
-              <li><span>3</span><p>运行 Sera Bridge 并返回此窗口</p></li>
+              <li><span>1</span><p>Open your score in the notation host</p></li>
+              <li><span>2</span><p>Select the region you want the agent to edit</p></li>
+              <li><span>3</span><p>Run Sera Bridge and return to this window</p></li>
             </ol>
           </section>
 
           <section className="agent-rail-section agent-session-summary">
-            <h2>连接状态</h2>
+            <h2>Connection status</h2>
             <p className={connected ? "connected" : "disconnected"}>
               <i aria-hidden="true" />
-              {connected ? `已连接到 ${hostName}` : "等待宿主发送乐谱"}
+              {connected ? `Connected to ${hostName}` : "Waiting for a score from the host"}
             </p>
             {connected && scoreDocument && (
               <dl>
-                <div><dt>当前乐谱</dt><dd>{scoreDocument.title || "未命名乐谱"}</dd></div>
-                <div><dt>宿主选区</dt><dd>M{selectedRange.start_measure}–M{selectedRange.end_measure}</dd></div>
-                <div><dt>修订</dt><dd>{bridgeSession.revision ?? 0}</dd></div>
+                <div><dt>Current score</dt><dd>{scoreDocument.title || "Untitled score"}</dd></div>
+                <div><dt>Host selection</dt><dd>M{selectedRange.start_measure}–M{selectedRange.end_measure}</dd></div>
+                <div><dt>Revision</dt><dd>{bridgeSession.revision ?? 0}</dd></div>
               </dl>
             )}
           </section>
@@ -677,37 +678,37 @@ export default function SeraAgentConsole({
           <div className="agent-import-action">
             <input
               accept=".musicxml,.xml"
-              aria-label="导入宿主 MusicXML 文件"
+              aria-label="Import a MusicXML file from the host"
               className="agent-visually-hidden"
               onChange={(event) => event.target.files?.[0] && handleMusicXmlImport(event.target.files[0])}
               ref={fileInputRef}
               type="file"
             />
             <button disabled={busy} onClick={() => fileInputRef.current?.click()} type="button">
-              导入宿主 MusicXML
+              Import host MusicXML
             </button>
-            <small>MuseScore Bridge 不可用时的非破坏式后备路径</small>
+            <small>Import a copy when MuseScore Bridge is unavailable</small>
           </div>
         </aside>
 
-        <section className="agent-conversation" aria-label="与 Sera 对话">
+        <section className="agent-conversation" aria-label="Chat with Sera">
           <header>
-            <h1>与 Sera 对话</h1>
-            <p>普通问答不会触碰乐谱；编辑指令通过独立的受验证提案通道处理。</p>
+            <h1>Chat with Sera</h1>
+            <p>Ask questions in Chat. Use Edit proposal to generate and review validated score changes.</p>
           </header>
           <div className="agent-message-list" aria-live="polite">
             {messages.map((message) => (
               <article className={`agent-message ${message.role}`} key={message.id}>
-                <span className="agent-avatar" aria-hidden="true">{message.role === "assistant" ? "S" : "你"}</span>
+                <span className="agent-avatar" aria-hidden="true">{message.role === "assistant" ? "S" : "You"}</span>
                 <div>
-                  <strong>{message.role === "assistant" ? "Sera" : "你"}</strong>
+                  <strong>{message.role === "assistant" ? "Sera" : "You"}</strong>
                   <p>{message.text}</p>
                 </div>
               </article>
             ))}
           </div>
           <div className="agent-composer">
-            <div className="agent-composer-mode" role="tablist" aria-label="选择对话、修改提案或创作草案">
+            <div className="agent-composer-mode" role="tablist" aria-label="Choose Chat, Edit proposal, or Compose">
               <button
                 aria-selected={composerMode === "chat"}
                 className={composerMode === "chat" ? "selected" : ""}
@@ -715,8 +716,8 @@ export default function SeraAgentConsole({
                 role="tab"
                 type="button"
               >
-                对话
-                <small>只回答，不改乐谱</small>
+                Chat
+                <small>Answers without score changes</small>
               </button>
               <button
                 aria-selected={composerMode === "edit"}
@@ -725,8 +726,8 @@ export default function SeraAgentConsole({
                 role="tab"
                 type="button"
               >
-                修改提案
-                <small>生成并验证 ScorePatch</small>
+                Edit proposal
+                <small>Generate and validate ScorePatch</small>
               </button>
               <button
                 aria-selected={composerMode === "compose"}
@@ -735,71 +736,71 @@ export default function SeraAgentConsole({
                 role="tab"
                 type="button"
               >
-                创作草案
-                <small>理论规划 · 多候选 · 再审查</small>
+                Compose
+                <small>Plan, compare, and review</small>
               </button>
             </div>
             {composerMode === "chat" ? (
               <>
                 <textarea
-                  aria-label="向 Sera 提问"
+                  aria-label="Ask Sera a question"
                   disabled={busy}
                   onChange={(event) => setChatInput(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleChat();
                   }}
-                  placeholder="询问乐理、Sera 用法，或让 Sera 帮你把编辑意图说清楚…"
+                  placeholder="Ask about music theory, using Sera, or describing your intended edit…"
                   rows={5}
                   value={chatInput}
                 />
                 <div className="agent-composer-footer">
-                  <span>对话回答不会生成、应用或导出乐谱修改</span>
+                  <span>Chat does not generate, apply, or export score edits</span>
                   <button disabled={busy || !chatInput.trim()} onClick={handleChat} type="button">
-                    {busy ? "处理中…" : "发送消息"}
+                    {busy ? "Working…" : "Send message"}
                   </button>
                 </div>
               </>
             ) : composerMode === "edit" ? (
               <>
                 <textarea
-                  aria-label="描述乐谱修改"
+                  aria-label="Describe your score edit"
                   disabled={!connected || busy}
                   onChange={(event) => setEditInstruction(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleGenerate();
                   }}
-                  placeholder={connected ? "例如：将当前选区升高大二度，并保持节奏不变…" : "请先连接记谱宿主，再生成修改提案…"}
+                  placeholder={connected ? "For example: transpose the selection up a major second while preserving rhythm…" : "Connect a notation host before generating an edit proposal…"}
                   rows={5}
                   value={editInstruction}
                 />
                 <div className="agent-composer-footer">
-                  <span>{connected ? `绑定宿主目标范围：M${selectedRange.start_measure}–M${selectedRange.end_measure}` : "修改提案需要宿主乐谱与选区"}</span>
+                  <span>{connected ? `Host target range: M${selectedRange.start_measure}–M${selectedRange.end_measure}` : "Edit proposals require a host score and selection"}</span>
                   <button disabled={!connected || busy || !editInstruction.trim()} onClick={handleGenerate} type="button">
-                    {busy ? "生成并验证中…" : "生成修改提案"}
+                    {busy ? "Generating and validating…" : "Generate edit proposal"}
                   </button>
                 </div>
               </>
             ) : (
               <>
                 <textarea
-                  aria-label="描述创作目标"
+                  aria-label="Describe your composition goal"
                   disabled={!connected || busy}
                   onChange={(event) => setCompositionBrief(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleCompose();
                   }}
                   placeholder={connected
-                    ? "例如：把当前选区改写成有清晰终止的浪漫主义钢琴段落，保留节奏和配器…"
-                    : "请先连接记谱宿主并选择 1–8 个小节…"}
+                    ? "For example: rewrite the selection as a Romantic piano passage with a clear cadence, preserving rhythm and instrumentation…"
+                    : "Connect a notation host and select 1–8 measures first…"}
                   rows={5}
                   value={compositionBrief}
                 />
                 <div className="agent-composer-footer">
                   <span>{connected
-                    ? `基于宿主节奏骨架：M${selectedRange.start_measure}–M${selectedRange.end_measure}`
-                    : "创作草案需要宿主乐谱与选区"}</span>
+                    ? `Based on host rhythm: M${selectedRange.start_measure}–M${selectedRange.end_measure}`
+                    : "Composition requires a host score and selection"}</span>
                   <button disabled={!connected || busy || !compositionBrief.trim()} onClick={handleCompose} type="button">
-                    {compositionRunning ? `规划中 ${compositionElapsedSeconds}s` : "生成创作候选"}
+                    {compositionRunning ? `Planning ${compositionElapsedSeconds}s` : "Generate candidates"}
                   </button>
                 </div>
               </>
@@ -809,15 +810,15 @@ export default function SeraAgentConsole({
 
         <aside className="agent-proposal-rail">
           <header>
-            <h1>{composition && !generation ? "创作候选" : "修改提案"}</h1>
+            <h1>{composition && !generation ? "Composition candidates" : "Edit proposal"}</h1>
             <p>{composition && !generation
-              ? "候选共享同一个理论计划，并分别通过确定性乐理与宿主安全检查。"
-              : "与普通对话分离；这里只审查、应用或拒绝受验证的 Agent 修改。"}</p>
+              ? "Candidates share a theory plan and undergo individual theory and host safety checks."
+              : "Review, apply, or reject validated agent edits here."}</p>
           </header>
           {!generation && !composition && !deliveryNotice && !compositionRunning && !compositionError && (
             <div className="agent-proposal-empty">
-              <strong>{connected ? "等待编辑指令" : "尚未连接宿主"}</strong>
-              <p>{connected ? "生成后将在此显示操作摘要、验证结果和保护范围检查。" : "从宿主发送乐谱后即可开始。"}</p>
+              <strong>{connected ? "Waiting for an edit instruction" : "No host connected"}</strong>
+              <p>{connected ? "Generated proposals will show operation summaries, validation results, and protected scope checks here." : "Send a score from your host to get started."}</p>
             </div>
           )}
           {compositionRunning && !generation && !composition && (
@@ -827,15 +828,15 @@ export default function SeraAgentConsole({
                 <strong>{compositionProgressMessage(compositionElapsedSeconds)}</strong>
               </div>
               <progress max={20} value={Math.min(compositionElapsedSeconds, 20)} />
-              <p>已运行 {compositionElapsedSeconds} 秒。Sera 正在先生成本地安全初稿，LLM 不再阻塞这个步骤。</p>
-              <small>初稿出现后即可使用；实时 LLM 会在后台继续优化并自动更新候选。</small>
+              <p>Elapsed: {compositionElapsedSeconds} seconds. Sera is preparing safe local drafts while the LLM works in the background.</p>
+              <small>Review drafts as soon as they appear. Live LLM refinement will update candidates automatically.</small>
             </section>
           )}
           {compositionError && !compositionRunning && !generation && !composition && (
             <section className="agent-composition-error" role="alert">
-              <strong>创作候选没有生成</strong>
+              <strong>No composition candidates generated</strong>
               <p>{compositionError}</p>
-              <small>请确认模型 API 可用，或在“模型设置”中切换为本地规则后重试。</small>
+              <small>Check that the model API is available, or select Local rules in Model settings and try again.</small>
             </section>
           )}
           {composition && !generation && (
@@ -859,16 +860,16 @@ export default function SeraAgentConsole({
           )}
           {deliveryNotice && (
             <div className="agent-delivery-success">
-              <strong>宿主修订已生成</strong>
+              <strong>Host revision generated</strong>
               <p>{deliveryNotice}</p>
             </div>
           )}
           {history.done.length > 0 && !generation && (
             <button className="agent-undo-revision" disabled={busy} onClick={handleUndoAndExport} type="button">
-              撤销上次 Agent 修订
+              Undo last agent revision
             </button>
           )}
-          <footer>{status}</footer>
+          <footer>{englishSystemText(status)}</footer>
         </aside>
       </main>
       {providerSettingsOpen && (
@@ -878,8 +879,8 @@ export default function SeraAgentConsole({
           onSaved={(nextStatus) => {
             setProviderStatus(nextStatus);
             setStatus(nextStatus.available
-              ? `已启用 ${nextStatus.provider} · ${nextStatus.model}`
-              : "已切换为本地规则");
+              ? `Enabled ${nextStatus.provider} · ${nextStatus.model}`
+              : "Switched to local rules");
           }}
         />
       )}
@@ -888,9 +889,9 @@ export default function SeraAgentConsole({
 }
 
 function compositionProgressMessage(elapsedSeconds: number) {
-  if (elapsedSeconds < 4) return "正在读取宿主选区与理论约束";
-  if (elapsedSeconds < 16) return "正在生成本地初稿并执行安全评审";
-  return "正在完成本地候选；LLM 已转入后台优化";
+  if (elapsedSeconds < 4) return "Reading the host selection and theory constraints";
+  if (elapsedSeconds < 16) return "Generating local drafts and running safety checks";
+  return "Finalizing local candidates; LLM refinement continues in the background";
 }
 
 function CompositionCandidateReview({
@@ -911,11 +912,11 @@ function CompositionCandidateReview({
   const plan = composition.plan;
   const [preferenceReasons, setPreferenceReasons] = useState<CompositionPreferenceReason[]>([]);
   const reasonOptions: Array<{ value: CompositionPreferenceReason; label: string }> = [
-    { value: "motif", label: "动机更清楚" },
-    { value: "phrase", label: "乐句更自然" },
-    { value: "harmony", label: "和声更合适" },
-    { value: "style", label: "风格更准确" },
-    { value: "playability", label: "更易演奏" }
+    { value: "motif", label: "Clearer motif" },
+    { value: "phrase", label: "More natural phrasing" },
+    { value: "harmony", label: "Better harmony" },
+    { value: "style", label: "Closer style match" },
+    { value: "playability", label: "Easier to play" }
   ];
   return (
     <div className="agent-composition-review">
@@ -928,64 +929,64 @@ function CompositionCandidateReview({
           </div>
           <h2>CompositionPlan</h2>
           <p className="agent-harmony-path">{plan.harmonic_progression.join(" – ")}</p>
-          <p>动机：{plan.motif_strategy} · 张力曲线：{plan.tension_curve.map((value) => Math.round(value * 100)).join(" / ")}</p>
+          <p>Motif: {plan.motif_strategy} · Tension curve: {plan.tension_curve.map((value) => Math.round(value * 100)).join(" / ")}</p>
         </section>
       )}
 
-      <section className={`agent-planner-source ${composition.planner.planner === "live_llm" ? "live" : "local"}`} aria-label="本次规划来源">
+      <section className={`agent-planner-source ${composition.planner.planner === "live_llm" ? "live" : "local"}`} aria-label="Planning source">
         <div>
           <strong>{composition.planner.planner === "live_llm"
-            ? "本次高层计划：实时 LLM"
+            ? "Plan source: live LLM"
             : composition.refinement?.status === "running"
-              ? "本次高层计划：本地即时初稿"
-              : "本次高层计划：本地理论回退"}</strong>
+              ? "Plan source: immediate local draft"
+              : "Plan source: local theory fallback"}</strong>
           <span>{composition.planner.provider || "local_rule"} · {composition.planner.model || "sera_composer_rules_v1"}</span>
         </div>
         <p>
-          {typeof composition.planner.latency_ms === "number" ? `${Math.round(composition.planner.latency_ms)} ms` : "耗时未知"}
+          {typeof composition.planner.latency_ms === "number" ? `${Math.round(composition.planner.latency_ms)} ms` : "Timing unavailable"}
           {composition.planner.request_id ? ` · request ${composition.planner.request_id}` : ""}
-          {composition.run_trace?.persisted ? ` · 审计 ${composition.run_trace.trace_id}` : ""}
+          {composition.run_trace?.persisted ? ` · Trace ${composition.run_trace.trace_id}` : ""}
         </p>
         {composition.planner.planner !== "live_llm" && composition.planner.fallback_reason && (
-          <small>{composition.planner.fallback_reason}</small>
+          <small>{englishSystemText(composition.planner.fallback_reason)}</small>
         )}
       </section>
 
       {refinementNotice && (
         <section className={`agent-refinement-notice ${composition.refinement?.status || "ready"}`} role="status" aria-live="polite">
-          <strong>{composition.refinement?.status === "running" ? "LLM 正在后台优化" : "LLM 后台状态"}</strong>
+          <strong>{composition.refinement?.status === "running" ? "LLM refinement in progress" : "Background LLM status"}</strong>
           <p>{refinementNotice}</p>
         </section>
       )}
 
       {composition.style_knowledge && (
-        <section className="agent-style-knowledge" aria-label="风格知识库证据">
+        <section className="agent-style-knowledge" aria-label="Style knowledge evidence">
           <div>
-            <strong>Composer V0.4 知识检索 · {composition.style_knowledge.display_name_zh}</strong>
+            <strong>Composer V0.4 knowledge retrieval · {composition.style_knowledge.style_id.replaceAll("_", " ")}</strong>
             <span>v{composition.style_knowledge.schema_version}</span>
           </div>
           <p>
-            本地大库 {composition.style_knowledge.retrieval.total_cards} 张规则卡 / {composition.style_knowledge.retrieval.pack_count} 个知识包；
-            本次只选 {composition.style_knowledge.retrieval.selected_cards} 张，约 {composition.style_knowledge.retrieval.estimated_tokens}/{composition.style_knowledge.retrieval.token_budget} tokens。
+            Local library: {composition.style_knowledge.retrieval.total_cards} rule cards / {composition.style_knowledge.retrieval.pack_count} knowledge packs;
+            selected for this run: {composition.style_knowledge.retrieval.selected_cards} cards, approximately {composition.style_knowledge.retrieval.estimated_tokens}/{composition.style_knowledge.retrieval.token_budget} tokens.
           </p>
           <p>
-            乐器 {composition.style_knowledge.query.instruments.join("、") || "通用"} ·
-            目标 {composition.style_knowledge.query.goals.join("、") || "通用"} ·
-            内部评审 {composition.search_summary.evaluated}/{composition.search_summary.search_width} 个候选，展示 {composition.search_summary.returned} 个。
+            Instruments {composition.style_knowledge.query.instruments.join(", ") || "General"} ·
+            Target {composition.style_knowledge.query.goals.join(", ") || "General"} ·
+            Internally reviewed {composition.search_summary.evaluated}/{composition.search_summary.search_width} candidates; showing {composition.search_summary.returned}.
           </p>
           {composition.texture_analysis && (
             <p>
-              原谱织体 {composition.texture_analysis.texture}（{Math.round(composition.texture_analysis.confidence * 100)}%） ·
-              {" "}{composition.texture_analysis.voice_count} 个活动声部 · 计划目标 {plan?.texture || "未指定"}
+              Source texture {composition.texture_analysis.texture} ({Math.round(composition.texture_analysis.confidence * 100)}%) ·
+              {" "}{composition.texture_analysis.voice_count} active voices · Planned target {plan?.texture || "Not specified"}
             </p>
           )}
           <details className="agent-knowledge-rules">
-            <summary>查看本次检索规则（{composition.style_knowledge.matched_rules.length}）</summary>
+            <summary>Retrieved rules ({composition.style_knowledge.matched_rules.length})</summary>
             <ol>
               {composition.style_knowledge.matched_rules.map((rule) => (
                 <li key={rule.rule_id}>
-                  <div><strong>{rule.title_zh}</strong><span>{rule.domain}</span></div>
-                  <p>{rule.action_zh}</p>
+                  <div><strong>{rule.rule_id}</strong><span>{rule.domain.replaceAll("_", " ")}</span></div>
+                  <details><summary>Original knowledge text</summary><strong lang="zh-CN">{rule.title_zh}</strong><p lang="zh-CN">{rule.action_zh}</p></details>
                   <small>{rule.rule_id} · {rule.match_reason}</small>
                 </li>
               ))}
@@ -993,9 +994,9 @@ function CompositionCandidateReview({
           </details>
           {composition.phrase_analysis && (
             <small>
-              原谱主线 {composition.phrase_analysis.primary_voice_id || "未识别"} ·
-              轮廓 {composition.phrase_analysis.source_motif.contour} ·
-              动机间隔 {composition.phrase_analysis.source_motif.intervals.join(" / ") || "不足"}
+              Source melody {composition.phrase_analysis.primary_voice_id || "Not identified"} ·
+              Contour {composition.phrase_analysis.source_motif.contour} ·
+              Motif intervals {composition.phrase_analysis.source_motif.intervals.join(" / ") || "Insufficient data"}
             </small>
           )}
         </section>
@@ -1003,7 +1004,7 @@ function CompositionCandidateReview({
 
       {composition.candidates.length > 0 && (
         <fieldset className="agent-preference-reasons">
-          <legend>比较候选时，你更看重什么？（可选）</legend>
+          <legend>What matters most when comparing candidates? (Optional)</legend>
           {reasonOptions.map((option) => (
             <label key={option.value}>
               <input
@@ -1016,7 +1017,7 @@ function CompositionCandidateReview({
               {option.label}
             </label>
           ))}
-          <small>只在本机保存候选评分与选择，不保存乐谱音符或个人身份。</small>
+          <small>Only candidate ratings and choices are saved locally. Notes and personal identity are not stored.</small>
         </fieldset>
       )}
 
@@ -1024,16 +1025,16 @@ function CompositionCandidateReview({
 
       {composition.status === "plan_only" && (
         <section className="agent-composition-plan-only">
-          <strong>仅生成方案，不直接应用</strong>
-          <p>{composition.reason}</p>
-          {plan?.orchestration_notes?.map((note, index) => <p key={index}>• {note}</p>)}
+          <strong>Plan only; no changes applied</strong>
+          <p>{englishSystemText(composition.reason)}</p>
+          {plan?.orchestration_notes?.map((note, index) => <p key={index}>• {englishSystemText(note)}</p>)}
         </section>
       )}
 
       {composition.status === "unsupported" && (
         <CompositionFailurePanel
           analysis={composition.failure_analysis}
-          fallbackReason={composition.reason}
+          fallbackReason={englishSystemText(composition.reason)}
           refinementStatus={composition.refinement?.status}
           composerTimeoutSeconds={Number(
             (composition.provider_status as Record<string, unknown> | undefined)?.composer_timeout_seconds || 180
@@ -1045,20 +1046,20 @@ function CompositionCandidateReview({
         <article className="agent-candidate-card" key={candidate.candidate_id}>
           <header>
             <div>
-              <strong>{candidate.label}</strong>
-              <small>{candidate.review.status === "valid" ? "通过安全检查" : "未通过安全检查"}</small>
+              <strong>{englishSystemText(candidate.label)}</strong>
+              <small>{candidate.review.status === "valid" ? "Safety checks passed" : "Safety checks failed"}</small>
             </div>
             <span>{Math.round(candidate.review.overall_score * 100)}</span>
           </header>
-          <p>{candidate.explanation}</p>
+          <p>{englishSystemText(candidate.explanation)}</p>
           <dl>
-            <div><dt>理论</dt><dd>{Math.round(candidate.review.theory_score * 100)}</dd></div>
-            <div><dt>动机</dt><dd>{Math.round(candidate.review.motif_score * 100)}</dd></div>
-            <div><dt>乐句</dt><dd>{Math.round(candidate.review.phrase_score * 100)}</dd></div>
-            <div><dt>风格</dt><dd>{Math.round(candidate.review.style_score * 100)}</dd></div>
-            <div><dt>演奏</dt><dd>{Math.round(candidate.review.playability_score * 100)}</dd></div>
-            <div><dt>期待</dt><dd>{Math.round((candidate.review.melody_expectation_score ?? 0) * 100)}</dd></div>
-            <div><dt>偏好</dt><dd>{Math.round(candidate.review.preference_score * 100)}</dd></div>
+            <div><dt>Theory</dt><dd>{Math.round(candidate.review.theory_score * 100)}</dd></div>
+            <div><dt>Motif</dt><dd>{Math.round(candidate.review.motif_score * 100)}</dd></div>
+            <div><dt>Phrase</dt><dd>{Math.round(candidate.review.phrase_score * 100)}</dd></div>
+            <div><dt>Style</dt><dd>{Math.round(candidate.review.style_score * 100)}</dd></div>
+            <div><dt>Playability</dt><dd>{Math.round(candidate.review.playability_score * 100)}</dd></div>
+            <div><dt>Expectation</dt><dd>{Math.round((candidate.review.melody_expectation_score ?? 0) * 100)}</dd></div>
+            <div><dt>Preference</dt><dd>{Math.round(candidate.review.preference_score * 100)}</dd></div>
           </dl>
           <ul>
             {candidate.review.findings.map((finding) => (
@@ -1075,14 +1076,14 @@ function CompositionCandidateReview({
               onClick={() => onSelect(candidate)}
               type="button"
             >
-              选择此候选并审查
+              Select and review candidate
             </button>
             <button
               disabled={candidate.review.status !== "valid" || busy || !composition.comparison_id}
               onClick={() => onPrefer(candidate, preferenceReasons)}
               type="button"
             >
-              我更喜欢这个版本
+              Prefer this version
             </button>
           </div>
         </article>
@@ -1090,7 +1091,7 @@ function CompositionCandidateReview({
 
       {composition.theory_context.length > 0 && (
         <details className="agent-theory-trace">
-          <summary>理论依据（{composition.theory_context.length}）</summary>
+          <summary>Theory references ({composition.theory_context.length})</summary>
           {composition.theory_context.map((item) => (
             <p key={item.claim_id}><strong>{item.claim_id} · {item.title}</strong><br />{item.rule}</p>
           ))}
@@ -1118,11 +1119,11 @@ function CompositionFailurePanel({
       <div>
         <span aria-hidden="true">!</span>
         <div>
-          <strong>{refinementStatus === "running" ? "本地候选已拒绝，LLM 仍在后台规划" : "候选已安全拒绝"}</strong>
-          <p>{analysis?.summary || fallbackReason}</p>
+          <strong>{refinementStatus === "running" ? "Local candidates rejected; LLM planning continues" : "Candidates safely rejected"}</strong>
+          <p>{englishSystemText(analysis?.summary || fallbackReason)}</p>
           {refinementStatus === "running" && (
             <p>
-              这不是 LLM 最终反馈。Sera 最多等待 {Math.round(composerTimeoutSeconds)} 秒；LLM 返回后会自动重新搜索并替换本诊断。
+              LLM planning is still in progress. Sera will wait up to {Math.round(composerTimeoutSeconds)} seconds, then repeat the search and update diagnostics when the LLM responds.
             </p>
           )}
         </div>
@@ -1130,25 +1131,25 @@ function CompositionFailurePanel({
       {analysis && (
         <>
           <dl>
-            <div><dt>目标音符</dt><dd>{counts.target_notes ?? 0}</dd></div>
-            <div><dt>受保护</dt><dd>{counts.protected_target_notes ?? 0}</dd></div>
-            <div><dt>已评审</dt><dd>{counts.evaluated ?? 0}</dd></div>
-            <div><dt>已拒绝</dt><dd>{counts.rejected ?? 0}</dd></div>
+            <div><dt>Target notes</dt><dd>{counts.target_notes ?? 0}</dd></div>
+            <div><dt>Protected</dt><dd>{counts.protected_target_notes ?? 0}</dd></div>
+            <div><dt>Reviewed</dt><dd>{counts.evaluated ?? 0}</dd></div>
+            <div><dt>Rejected</dt><dd>{counts.rejected ?? 0}</dd></div>
           </dl>
           {failedChecks.length > 0 && (
             <p className="agent-failure-checks">
-              失败层：{failedChecks.map(([name, count]) => `${compositionFailureLabel(name)} ${count}`).join(" · ")}
+              Failed checks: {failedChecks.map(([name, count]) => `${compositionFailureLabel(name)} ${count}`).join(" · ")}
             </p>
           )}
           <ol>
-            {analysis.suggestions.map((suggestion, index) => <li key={index}>{suggestion}</li>)}
+            {analysis.suggestions.map((suggestion, index) => <li key={index}>{englishSystemText(suggestion)}</li>)}
           </ol>
           {analysis.rejected_examples.length > 0 && (
             <details>
-              <summary>技术诊断（{analysis.code}）</summary>
+              <summary>Technical diagnostics ({analysis.code})</summary>
               {analysis.rejected_examples.map((example) => (
                 <p key={example.candidate_id}>
-                  {example.candidate_id} · {example.failed_checks.map(compositionFailureLabel).join("、") || example.transaction_status}
+                  {example.candidate_id} · {example.failed_checks.map(compositionFailureLabel).join(", ") || example.transaction_status}
                   {example.error_codes.length ? ` · ${example.error_codes.join(", ")}` : ""}
                 </p>
               ))}
@@ -1182,58 +1183,58 @@ function ProposalReview({
   return (
     <div className="agent-proposal-content">
       <section className="agent-generator-evidence" aria-label="Patch generator evidence">
-        <span>{generation.generator.composition_route ? "Composer 自动路由" : generation.generator.live ? "LLM API" : "本地规则"}</span>
+        <span>{generation.generator.composition_route ? "Composer automatic routing" : generation.generator.live ? "LLM API" : "Local rules"}</span>
         <strong>{generation.generator.provider} · {generation.generator.model}</strong>
         {typeof generation.generator.latency_ms === "number" && (
           <small>{Math.round(generation.generator.latency_ms)} ms</small>
         )}
         {generation.generator.composition_route && (
           <small>
-            已评审 {generation.generator.candidate_count || 0} 个候选
+            Reviewed {generation.generator.candidate_count || 0} candidates
             {generation.generator.evaluated_candidate_count
-              ? `（内部搜索 ${generation.generator.evaluated_candidate_count}）`
+              ? `(internal search ${generation.generator.evaluated_candidate_count})`
               : ""}
             {typeof generation.generator.selected_candidate_score === "number"
-              ? ` · 最佳评分 ${Math.round(generation.generator.selected_candidate_score * 100)}`
+              ? ` · Best score ${Math.round(generation.generator.selected_candidate_score * 100)}`
               : ""}
             {generation.generator.style_knowledge_version
-              ? ` · 风格库 v${generation.generator.style_knowledge_version}`
+              ? ` · Style library v${generation.generator.style_knowledge_version}`
               : ""}
           </small>
         )}
         {!generation.generator.composition_route && generation.generator.repair_strategy && generation.generator.repair_strategy !== "none" && (
           <small>
-            已安全修正模型输出格式
+            Model output format repaired safely
             {generation.generator.generation_attempts && generation.generator.generation_attempts > 1
-              ? ` · ${generation.generator.generation_attempts} 次请求`
+              ? ` · ${generation.generator.generation_attempts} requests`
               : ""}
           </small>
         )}
         {generation.generator.fallback_reason && (
-          <small title={generation.generator.fallback_reason}>已启用安全回退</small>
+          <small title={generation.generator.fallback_reason}>Safe fallback enabled</small>
         )}
         {patch?.target_scope.whole_score && generation.generator.scope_resolution === "promoted_to_whole_score_for_global_key_signature" && (
-          <small>调号是全谱属性；已将宿主选区安全提升为全谱范围，音符仍受保持约束。</small>
+          <small>Key signature is a score-wide property. The selection was expanded to the whole score while note preservation constraints remain active.</small>
         )}
       </section>
       <div className={`agent-validation-state ${validated ? "valid" : "invalid"}`}>
         <span aria-hidden="true">{validated ? "✓" : "!"}</span>
         <div>
-          <strong>{validated ? "验证通过" : generation.status === "unsupported" ? "不支持此修改" : "不可安全应用"}</strong>
-          <p>{validated ? "提案结构有效，可按事务方式应用。" : generation.reason || "请检查下方验证信息。"}</p>
+          <strong>{validated ? "Validation passed" : generation.status === "unsupported" ? "Unsupported edit" : "Cannot apply safely"}</strong>
+          <p>{validated ? "The proposal is structurally valid and can be applied as a transaction." : englishSystemText(generation.reason) || "Review the validation details below."}</p>
         </div>
       </div>
 
       {!validated && generation.composition_evidence?.failure_analysis && (
         <CompositionFailurePanel
           analysis={generation.composition_evidence.failure_analysis}
-          fallbackReason={generation.reason || "Composer 候选未通过安全检查。"}
+          fallbackReason={generation.reason || "Composer candidates failed safety checks."}
         />
       )}
 
       {patch && (
         <section className="agent-operation-summary">
-          <h2>修改摘要</h2>
+          <h2>Edit summary</h2>
           <ol>
             {patch.operations.map((operation, index) => (
               <li key={operation.operation_id || index}>
@@ -1250,39 +1251,39 @@ function ProposalReview({
 
       {preview && (
         <section className="agent-diff-summary">
-          <h2>元素变化</h2>
+          <h2>Element changes</h2>
           <dl>
-            <div><dt>修改</dt><dd>{preview.diff.changed?.length || 0}</dd></div>
-            <div><dt>新增</dt><dd>{preview.diff.added?.length || 0}</dd></div>
-            <div><dt>删除</dt><dd>{preview.diff.deleted?.length || 0}</dd></div>
-            <div><dt>全局</dt><dd>{Object.keys(preview.diff.global_changes || {}).length}</dd></div>
+            <div><dt>Changed</dt><dd>{preview.diff.changed?.length || 0}</dd></div>
+            <div><dt>Added</dt><dd>{preview.diff.added?.length || 0}</dd></div>
+            <div><dt>Deleted</dt><dd>{preview.diff.deleted?.length || 0}</dd></div>
+            <div><dt>Global</dt><dd>{Object.keys(preview.diff.global_changes || {}).length}</dd></div>
           </dl>
         </section>
       )}
 
       <section className="agent-protected-state">
-        <h2>保护范围</h2>
+        <h2>Protected scope</h2>
         <p className={report?.errors.some((issue) => issue.code === "E11") ? "failed" : "passed"}>
           <span aria-hidden="true">{report?.errors.some((issue) => issue.code === "E11") ? "!" : "✓"}</span>
-          {report?.errors.some((issue) => issue.code === "E11") ? "发现保护范围违规" : "未发现选区外意外修改"}
+          {report?.errors.some((issue) => issue.code === "E11") ? "Protected scope violation detected" : "No unexpected changes outside the selection detected"}
         </p>
       </section>
 
       {issues.length > 0 && (
         <details className="agent-validation-details">
-          <summary>验证信息（{issues.length}）</summary>
+          <summary>Validation details ({issues.length})</summary>
           {issues.map((issue, index) => <ValidationIssue key={`${issue.code}-${index}`} issue={issue} />)}
         </details>
       )}
 
       <div className="agent-proposal-actions">
-        <button disabled={!canApply || busy} onClick={onApply} type="button">应用并生成宿主修订</button>
-        <button disabled={busy} onClick={onReject} type="button">拒绝</button>
+        <button disabled={!canApply || busy} onClick={onApply} type="button">Apply and create host revision</button>
+        <button disabled={busy} onClick={onReject} type="button">Reject</button>
       </div>
 
       {patch && (
         <details className="agent-json-details">
-          <summary>提案详情（ScorePatch JSON）</summary>
+          <summary>Proposal details (ScorePatch JSON)</summary>
           <pre>{JSON.stringify(patch, null, 2)}</pre>
         </details>
       )}
@@ -1291,7 +1292,7 @@ function ProposalReview({
 }
 
 function ValidationIssue({ issue }: { issue: StrictValidationIssue }) {
-  return <p><strong>{issue.code}</strong> · {issue.message}</p>;
+  return <p><strong>{issue.code}</strong> · {englishSystemText(issue.message)}</p>;
 }
 
 function hostSelectedRange(score: ScoreDocument | null, session: any) {
@@ -1312,7 +1313,7 @@ function hostDisplayName(hosts: HostCapability[], hostId = "") {
   return hosts.find((host) => host.host_id === hostId)?.display_name
     || FALLBACK_HOSTS.find((host) => host.host_id === hostId)?.display_name
     || hostId
-    || "记谱宿主";
+    || "Notation host";
 }
 
 function hostMonogram(hostId: string) {
@@ -1323,22 +1324,22 @@ function hostMonogram(hostId: string) {
 
 function operationTitle(type: string) {
   const titles: Record<string, string> = {
-    transpose: "移调",
-    set_pitch: "修改音高",
-    set_duration: "修改时值",
-    insert_note: "插入音符",
-    insert_rest: "插入休止符",
-    delete_event: "删除记谱事件",
-    set_dynamic: "修改力度",
-    set_articulation: "修改演奏法",
-    set_tie: "修改延音线",
-    set_slur: "修改连音线",
-    change_key_signature: "修改调号",
-    change_time_signature: "修改拍号",
-    move_to_voice: "移动到声部",
-    duplicate_motif: "复制动机",
-    replace_chord: "替换和弦",
-    batch: "批量修改"
+    transpose: "Transpose",
+    set_pitch: "Set pitch",
+    set_duration: "Set duration",
+    insert_note: "Insert note",
+    insert_rest: "Insert rest",
+    delete_event: "Delete event",
+    set_dynamic: "Set dynamic",
+    set_articulation: "Set articulation",
+    set_tie: "Set tie",
+    set_slur: "Set slur",
+    change_key_signature: "Change key signature",
+    change_time_signature: "Change time signature",
+    move_to_voice: "Move to voice",
+    duplicate_motif: "Duplicate motif",
+    replace_chord: "Replace chord",
+    batch: "Batch edit"
   };
   return titles[type] || type.replaceAll("_", " ");
 }
@@ -1346,40 +1347,40 @@ function operationTitle(type: string) {
 function operationDescription(operation: StrictScorePatch["operations"][number]) {
   const selector = operation.selector || {};
   const target = ["change_key_signature", "change_time_signature"].includes(operation.type)
-    ? "全谱"
+    ? "Whole score"
     : selector.event_ids?.length
-    ? `${selector.event_ids.length} 个事件`
+    ? `${selector.event_ids.length} events`
     : selector.measures?.length
-      ? `小节 ${selector.measures.join("、")}`
-      : "宿主选区";
+      ? `Measures ${selector.measures.join(", ")}`
+      : "Host selection";
   const argumentsText = Object.entries(operation.arguments || {})
     .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(", ") : String(value)}`)
-    .join("；");
+    .join("; ");
   return `${target}${argumentsText ? ` · ${argumentsText}` : ""}`;
 }
 
 function compositionFindingLabel(check: string) {
   const labels: Record<string, string> = {
-    host_scaffold_preserved: "宿主骨架保持",
-    chord_tone_anchoring: "和弦骨干音",
-    cadence_resolution: "终止解决",
-    register_playability: "音域与可演奏性",
-    voice_leading: "声部进行",
-    motif_coherence: "动机一致性",
-    phrase_direction: "乐句与张力方向",
-    style_profile_match: "风格知识匹配",
-    melodic_expectation: "旋律期待代理",
-    texture_structure_preserved: "织体骨架保持"
+    host_scaffold_preserved: "Host structure preserved",
+    chord_tone_anchoring: "Chord tone anchoring",
+    cadence_resolution: "Cadence resolution",
+    register_playability: "Register and playability",
+    voice_leading: "Voice leading",
+    motif_coherence: "Motif coherence",
+    phrase_direction: "Phrase and tension direction",
+    style_profile_match: "Style knowledge match",
+    melodic_expectation: "Melodic expectation proxy",
+    texture_structure_preserved: "Texture structure preserved"
   };
   return labels[check] || check.replaceAll("_", " ");
 }
 
 function compositionFailureLabel(check: string) {
   const labels: Record<string, string> = {
-    transaction_validation: "事务验证",
-    protected_scope: "保护范围",
-    rhythm_or_structure: "节奏/结构保持",
-    new_playability_conflict: "新增可演奏性冲突"
+    transaction_validation: "Transaction validation",
+    protected_scope: "Protected scope",
+    rhythm_or_structure: "Rhythm and structure preserved",
+    new_playability_conflict: "New playability conflict"
   };
   return labels[check] || check;
 }

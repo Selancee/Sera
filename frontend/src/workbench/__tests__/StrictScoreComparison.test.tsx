@@ -79,9 +79,9 @@ describe("StrictScoreComparison", () => {
       }
     };
     render(<StrictScoreComparison generation={generation} />);
-    expect(screen.getByText("当前谱面与 ScorePatch 提案")).toBeTruthy();
+    expect(screen.getByText("Current score and ScorePatch proposal")).toBeTruthy();
     expect(screen.getByText("C4")).toBeTruthy();
     expect(screen.getByText("D4")).toBeTruthy();
-    expect(screen.getByText("保护区意外变化 0")).toBeTruthy();
+    expect(screen.getByText("Unexpected protected changes 0")).toBeTruthy();
   });
 });

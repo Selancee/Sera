@@ -2318,3 +2318,67 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No experiment, metric or scientific claim changed. The submitted `v1.0.0` and Zenodo
   snapshot remain immutable; the icon applies to post-submission `main` and future builds.
+
+## 2026-09-05 - Phase 60: complete the English frontend interface
+
+### Completed
+
+- Translated the agent console, chat/edit/compose controls, model settings, research
+  panel, benchmark review workspace, score comparison, and desktop startup/error
+  screens. English is the default for a new language preference, including on a
+  Chinese-language OS; an existing explicit language preference remains respected.
+- Added display-only translations for known Chinese system diagnostics and candidate
+  summaries. Unknown provider output, user text, score metadata, source instructions,
+  and knowledge-card content retain their original values. Review instructions prefer
+  their existing English version; original Chinese source text remains accessible in
+  expandable details. No backend, benchmark, score schema, API payload, or persisted
+  review enum was changed.
+- Adjusted the review filters and narrow-screen header to fit longer English labels.
+- Added guards against untranslated frontend labels, tests for language preference
+  preservation and system-message formatting, and updated existing UI assertions
+  while preserving Chinese user-input and backend fixtures.
+- Rebuilt the production frontend and the local Electron package used by `run_app.bat`.
+  Both staged backend EXEs remain byte-identical to their pre-change SHA-256 hashes;
+  all seven production frontend files match the packaged copies. The immutable
+  `v1.0.0` release and archived research assets were not replaced.
+
+### Modified files
+
+- `frontend/src/agent/{SeraAgentConsole,LLMProviderSettingsDialog}.tsx`;
+  `frontend/src/review/BenchmarkReviewWorkspace.tsx`;
+  `frontend/src/workbench/{ScoreWorkbench,SeraEditResearchPanel,StrictScoreComparison}.tsx`.
+- `frontend/src/i18n/index.ts`, new `systemText.ts` and `systemMessages.en.json`;
+  `frontend/src/desktop/{startupScreen.tsx,desktopRuntime.ts}`;
+  `frontend/src/api.js`, `frontend/src/styles.css`, and `electron/main.js`.
+- Related frontend unit/integration tests and `tests/test_desktop_launcher.py`.
+
+### Verification
+
+- Complete frontend suite: 73 test files, 127 tests passed. Focused Windows packaging,
+  desktop startup, patch application, MusicXML import/export, host-scope localization,
+  and notation round-trip regression tests: 31 passed. Production build passed.
+- Browser QA at 1280 x 720 and 390 x 844 covered the main interface, model settings,
+  mode controls, real 120-task review data and a refusal case. The final fresh page
+  had no console warnings/errors or horizontal overflow; English labels and preserved
+  original-source details were inspected. Model settings and review records were not
+  saved during this browser inspection.
+- Preservation audit: all 801 tracked backend, `sera_edit`, and benchmark files were
+  unchanged; existing Chinese user-input fixture values were preserved exactly.
+- Packaged backend, frozen review evidence, host-scope/voice round-trips, desktop
+  launcher, Electron startup and clean shutdown passed. The temporary smoke harness
+  launched helpers hidden and sent WM_CLOSE to the owned Electron window, because
+  .NET CloseMainWindow cannot find a hidden main window. No application shutdown
+  code was changed. The 720 frozen runs are existing evidence, not new experiments.
+
+### Remaining limits and next step
+
+- Free-form user/model responses and original research/knowledge content are data and
+  retain their original language. Saved Chinese UI preferences can be switched to
+  English with the existing Language selector. Paid live-model calls and interactive
+  MuseScore/Sibelius editing were not exercised in this translation pass.
+- Commit and synchronize this frontend change to GitHub, then verify its current CI.
+
+### Paper impact
+
+- No experimental run, metric, benchmark, or scientific claim changed. This phase
+  changes presentation and language defaults only.
