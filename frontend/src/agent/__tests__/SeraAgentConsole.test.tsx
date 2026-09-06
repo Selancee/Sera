@@ -75,6 +75,50 @@ describe("SeraAgentConsole", () => {
     desktop.subscribeDesktopOpenSession.mockReturnValue(() => undefined);
   });
 
+  it("switches the real console and an open settings dialog both ways without losing drafts or repeating requests", async () => {
+    const view = renderConsole();
+    await waitFor(() => expect(api.getNotationHosts).toHaveBeenCalledOnce());
+    fireEvent.change(screen.getByLabelText("Ask Sera a question"), { target: { value: "我的草稿 Apply C4" } });
+    fireEvent.click(screen.getByRole("button", { name: "Model settings" }));
+    fireEvent.change(screen.getByLabelText("Model name"), { target: { value: "my-custom-model" } });
+    fireEvent.change(screen.getByLabelText("Language"), { target: { value: "zh-CN" } });
+    expect(screen.getByText("连接记谱宿主")).toBeTruthy();
+    expect(screen.getByText("等待宿主连接")).toBeTruthy();
+    expect(screen.getByText(/你可以直接向我提问/)).toBeTruthy();
+    expect((screen.getByLabelText("向 Sera 提问") as HTMLTextAreaElement).value).toBe("我的草稿 Apply C4");
+    expect((screen.getByLabelText("模型名称") as HTMLInputElement).value).toBe("my-custom-model");
+    expect(screen.getByRole("button", { name: "保存并启用" })).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("语言"), { target: { value: "en" } });
+    expect(screen.getByText("Connect a notation host")).toBeTruthy();
+    expect(screen.getByText("Waiting for a host connection")).toBeTruthy();
+    expect((screen.getByLabelText("Ask Sera a question") as HTMLTextAreaElement).value).toBe("我的草稿 Apply C4");
+    expect((screen.getByLabelText("Model name") as HTMLInputElement).value).toBe("my-custom-model");
+    fireEvent.click(screen.getByRole("button", { name: "Close model settings" }));
+    fireEvent.click(screen.getByRole("tab", { name: /Compose/ }));
+    fireEvent.change(screen.getByLabelText("Language"), { target: { value: "zh-CN" } });
+    expect(screen.getByLabelText("描述创作目标")).toBeTruthy();
+    expect(api.getNotationHosts).toHaveBeenCalledOnce();
+    expect(api.getSeraEditProviderStatus).toHaveBeenCalledOnce();
+    expect(api.saveSeraEditProviderConfiguration).not.toHaveBeenCalled();
+    expect(api.generateStrictScorePatchPreview).not.toHaveBeenCalled();
+    expect(window.localStorage.getItem("sera.language")).toBe("zh-CN");
+    view.unmount();
+    renderConsole();
+    expect(screen.getByText("连接记谱宿主")).toBeTruthy();
+  });
+
+  it("preserves user and model text that happens to match an interface label", async () => {
+    api.chatWithSera.mockResolvedValue({ status: "answered", answer: "Apply" });
+    renderConsole();
+    fireEvent.change(screen.getByLabelText("Ask Sera a question"), { target: { value: "Apply" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+    await waitFor(() => expect(screen.getAllByText("Apply")).toHaveLength(2));
+    fireEvent.change(screen.getByLabelText("Language"), { target: { value: "zh-CN" } });
+    expect(screen.getAllByText("Apply")).toHaveLength(2);
+    expect(api.chatWithSera).toHaveBeenCalledOnce();
+    expect(api.applyStrictScorePatch).not.toHaveBeenCalled();
+  });
+
   it("keeps the default product focused on host connection, conversation, and proposal review", async () => {
     renderConsole();
 

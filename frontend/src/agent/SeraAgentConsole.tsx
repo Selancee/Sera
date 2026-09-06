@@ -1,3 +1,4 @@
+import { useUiText } from "../i18n/useUiText";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   applyStrictScorePatch,
@@ -47,6 +48,7 @@ type AgentMessage = {
   id: number;
   role: "assistant" | "user";
   text: string;
+  localize?: boolean;
 };
 
 type ComposerMode = "chat" | "edit" | "compose";
@@ -61,6 +63,7 @@ const INITIAL_MESSAGES: AgentMessage[] = [
   {
     id: 1,
     role: "assistant",
+    localize: true,
     text: "Ask me a question to get started. Chat leaves your score unchanged. To edit, connect your notation host and switch to Edit proposal to generate a validated ScorePatch."
   }
 ];
@@ -72,6 +75,7 @@ export default function SeraAgentConsole({
   backendCapabilities?: any;
   onOpenResearchReview?: () => void;
 }) {
+  const { ui, language, systemText } = useUiText();
   const [hosts, setHosts] = useState<HostCapability[]>(FALLBACK_HOSTS);
   const [selectedHost, setSelectedHost] = useState("musescore");
   const [bridgeSession, setBridgeSession] = useState<any>(null);
@@ -245,7 +249,7 @@ export default function SeraAgentConsole({
       .catch((error: Error) => {
         if (cancelled) return;
         setStatus(`Host session failed to load: ${error.message}`);
-        appendMessage("assistant", `Unable to read the host session: ${error.message}`);
+        appendMessage("assistant", `Unable to read the host session: ${error.message}`, true);
       })
       .finally(() => {
         if (!cancelled) setBusy(false);
@@ -255,9 +259,9 @@ export default function SeraAgentConsole({
     };
   }, [sessionId]);
 
-  function appendMessage(role: AgentMessage["role"], text: string) {
+  function appendMessage(role: AgentMessage["role"], text: string, localize = false) {
     messageIdRef.current += 1;
-    const message = { id: messageIdRef.current, role, text };
+    const message = { id: messageIdRef.current, role, text, localize };
     setMessages((current) => [...current, message]);
   }
 
@@ -281,6 +285,7 @@ export default function SeraAgentConsole({
       {
         id: ++messageIdRef.current,
         role: "assistant",
+        localize: true,
         text: `Received from ${hostDisplayName(hosts, nextSession?.host_id)}: “${nextScore.title || "Untitled score"}”, host selection M${range.start_measure}–M${range.end_measure}. You can continue chatting. Switch to Edit proposal to edit the score.`
       }
     ]);
@@ -307,7 +312,7 @@ export default function SeraAgentConsole({
       loadBridgeWorkspace(payload);
     } catch (error: any) {
       setStatus(`MusicXML import failed: ${error.message}`);
-      appendMessage("assistant", `Host file import failed: ${error.message}`);
+      appendMessage("assistant", `Host file import failed: ${error.message}`, true);
     } finally {
       setBusy(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -338,7 +343,7 @@ export default function SeraAgentConsole({
         ? "Chat complete · Score unchanged"
         : `Chat unavailable · ${payload.reason || "Check the model settings"}`);
     } catch (error: any) {
-      appendMessage("assistant", `Chat request failed: ${error.message}. The score is unchanged.`);
+      appendMessage("assistant", `Chat request failed: ${error.message}. The score is unchanged.`, true);
       setStatus(`Chat request failed: ${error.message}`);
     } finally {
       setBusy(false);
@@ -588,37 +593,33 @@ export default function SeraAgentConsole({
         <div className="agent-brand">
           <div className="agent-brand-mark" aria-hidden="true">S</div>
           <div>
-            <strong>Sera</strong>
-            <span>Intelligent score editing agent</span>
+            <strong>{ui("Sera")}</strong>
+            <span>{ui("Intelligent score editing agent")}</span>
           </div>
         </div>
         <div className="agent-topbar-actions">
           {onOpenResearchReview && (
-            <button className="agent-research-review-button" onClick={onOpenResearchReview} type="button">
-              Research review
-            </button>
+            <button className="agent-research-review-button" onClick={onOpenResearchReview} type="button"> {ui("Research review")} </button>
           )}
           <span className={`agent-backend-state ${backendCapabilities?.api_contract ? "ready" : "waiting"}`}>
             <i aria-hidden="true" />
-            {backendCapabilities?.api_contract ? "Backend ready" : "Check backend"}
+            {ui(backendCapabilities?.api_contract ? "Backend ready" : "Check backend")}
           </span>
           <span
-            aria-label="Agent provider status"
+            aria-label={ui("Agent provider status")}
             className={`agent-provider-state ${providerStatus?.available ? "live" : "local"}`}
-            title={providerStatus?.reason || "Checking agent provider status"}
+            title={ui(providerStatus?.reason || "Checking agent provider status")}
           >
             <i aria-hidden="true" />
-            {providerStatus?.available
+            {ui(providerStatus?.available
               ? `${providerStatus.provider} · ${providerStatus.model}`
-              : "Local rules"}
+              : "Local rules")}
           </span>
           <button
             className="agent-provider-settings-button"
             onClick={() => setProviderSettingsOpen(true)}
             type="button"
-          >
-            Model settings
-          </button>
+          > {ui("Model settings")} </button>
           <LanguageSelector />
         </div>
       </header>
@@ -626,13 +627,13 @@ export default function SeraAgentConsole({
       <main className="agent-console-grid">
         <aside className="agent-connection-rail">
           <div>
-            <h1>Connect a notation host</h1>
-            <p>View and manually edit your score in your notation software.</p>
+            <h1>{ui("Connect a notation host")}</h1>
+            <p>{ui("View and manually edit your score in your notation software.")}</p>
           </div>
 
           <section className="agent-rail-section">
-            <h2>Select a host</h2>
-            <div className="agent-host-list" role="radiogroup" aria-label="Select a notation host">
+            <h2>{ui("Select a host")}</h2>
+            <div className="agent-host-list" role="radiogroup" aria-label={ui("Select a notation host")}>
               {hosts.map((host) => (
                 <button
                   aria-checked={selectedHost === host.host_id}
@@ -644,7 +645,7 @@ export default function SeraAgentConsole({
                   type="button"
                 >
                   <span className="agent-host-monogram" aria-hidden="true">{hostMonogram(host.host_id)}</span>
-                  <span>{host.display_name}</span>
+                  <span>{ui(host.display_name)}</span>
                   <i aria-hidden="true" />
                 </button>
               ))}
@@ -652,25 +653,25 @@ export default function SeraAgentConsole({
           </section>
 
           <section className="agent-rail-section agent-steps">
-            <h2>Connection steps</h2>
+            <h2>{ui("Connection steps")}</h2>
             <ol>
-              <li><span>1</span><p>Open your score in the notation host</p></li>
-              <li><span>2</span><p>Select the region you want the agent to edit</p></li>
-              <li><span>3</span><p>Run Sera Bridge and return to this window</p></li>
+              <li><span>1</span><p>{ui("Open your score in the notation host")}</p></li>
+              <li><span>2</span><p>{ui("Select the region you want the agent to edit")}</p></li>
+              <li><span>3</span><p>{ui("Run Sera Bridge and return to this window")}</p></li>
             </ol>
           </section>
 
           <section className="agent-rail-section agent-session-summary">
-            <h2>Connection status</h2>
+            <h2>{ui("Connection status")}</h2>
             <p className={connected ? "connected" : "disconnected"}>
               <i aria-hidden="true" />
-              {connected ? `Connected to ${hostName}` : "Waiting for a score from the host"}
+              {ui(connected ? `Connected to ${hostName}` : "Waiting for a score from the host")}
             </p>
             {connected && scoreDocument && (
               <dl>
-                <div><dt>Current score</dt><dd>{scoreDocument.title || "Untitled score"}</dd></div>
-                <div><dt>Host selection</dt><dd>M{selectedRange.start_measure}–M{selectedRange.end_measure}</dd></div>
-                <div><dt>Revision</dt><dd>{bridgeSession.revision ?? 0}</dd></div>
+                <div><dt>{ui("Current score")}</dt><dd>{scoreDocument.title || ui("Untitled score")}</dd></div>
+                <div><dt>{ui("Host selection")}</dt><dd>M{selectedRange.start_measure}–M{selectedRange.end_measure}</dd></div>
+                <div><dt>{ui("Revision")}</dt><dd>{bridgeSession.revision ?? 0}</dd></div>
               </dl>
             )}
           </section>
@@ -678,46 +679,42 @@ export default function SeraAgentConsole({
           <div className="agent-import-action">
             <input
               accept=".musicxml,.xml"
-              aria-label="Import a MusicXML file from the host"
+              aria-label={ui("Import a MusicXML file from the host")}
               className="agent-visually-hidden"
               onChange={(event) => event.target.files?.[0] && handleMusicXmlImport(event.target.files[0])}
               ref={fileInputRef}
               type="file"
             />
-            <button disabled={busy} onClick={() => fileInputRef.current?.click()} type="button">
-              Import host MusicXML
-            </button>
-            <small>Import a copy when MuseScore Bridge is unavailable</small>
+            <button disabled={busy} onClick={() => fileInputRef.current?.click()} type="button"> {ui("Import host MusicXML")} </button>
+            <small>{ui("Import a copy when MuseScore Bridge is unavailable")}</small>
           </div>
         </aside>
 
-        <section className="agent-conversation" aria-label="Chat with Sera">
+        <section className="agent-conversation" aria-label={ui("Chat with Sera")}>
           <header>
-            <h1>Chat with Sera</h1>
-            <p>Ask questions in Chat. Use Edit proposal to generate and review validated score changes.</p>
+            <h1>{ui("Chat with Sera")}</h1>
+            <p>{ui("Ask questions in Chat. Use Edit proposal to generate and review validated score changes.")}</p>
           </header>
           <div className="agent-message-list" aria-live="polite">
             {messages.map((message) => (
               <article className={`agent-message ${message.role}`} key={message.id}>
-                <span className="agent-avatar" aria-hidden="true">{message.role === "assistant" ? "S" : "You"}</span>
+                <span className="agent-avatar" aria-hidden="true">{ui(message.role === "assistant" ? "S" : "You")}</span>
                 <div>
-                  <strong>{message.role === "assistant" ? "Sera" : "You"}</strong>
-                  <p>{message.text}</p>
+                  <strong>{ui(message.role === "assistant" ? "Sera" : "You")}</strong>
+                  <p>{message.localize ? ui(message.text) : message.text}</p>
                 </div>
               </article>
             ))}
           </div>
           <div className="agent-composer">
-            <div className="agent-composer-mode" role="tablist" aria-label="Choose Chat, Edit proposal, or Compose">
+            <div className="agent-composer-mode" role="tablist" aria-label={ui("Choose Chat, Edit proposal, or Compose")}>
               <button
                 aria-selected={composerMode === "chat"}
                 className={composerMode === "chat" ? "selected" : ""}
                 onClick={() => setComposerMode("chat")}
                 role="tab"
                 type="button"
-              >
-                Chat
-                <small>Answers without score changes</small>
+              > {ui("Chat")} <small>{ui("Answers without score changes")}</small>
               </button>
               <button
                 aria-selected={composerMode === "edit"}
@@ -725,9 +722,7 @@ export default function SeraAgentConsole({
                 onClick={() => setComposerMode("edit")}
                 role="tab"
                 type="button"
-              >
-                Edit proposal
-                <small>Generate and validate ScorePatch</small>
+              > {ui("Edit proposal")} <small>{ui("Generate and validate ScorePatch")}</small>
               </button>
               <button
                 aria-selected={composerMode === "compose"}
@@ -735,72 +730,70 @@ export default function SeraAgentConsole({
                 onClick={() => setComposerMode("compose")}
                 role="tab"
                 type="button"
-              >
-                Compose
-                <small>Plan, compare, and review</small>
+              > {ui("Compose")} <small>{ui("Plan, compare, and review")}</small>
               </button>
             </div>
             {composerMode === "chat" ? (
               <>
                 <textarea
-                  aria-label="Ask Sera a question"
+                  aria-label={ui("Ask Sera a question")}
                   disabled={busy}
                   onChange={(event) => setChatInput(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleChat();
                   }}
-                  placeholder="Ask about music theory, using Sera, or describing your intended edit…"
+                  placeholder={ui("Ask about music theory, using Sera, or describing your intended edit…")}
                   rows={5}
                   value={chatInput}
                 />
                 <div className="agent-composer-footer">
-                  <span>Chat does not generate, apply, or export score edits</span>
+                  <span>{ui("Chat does not generate, apply, or export score edits")}</span>
                   <button disabled={busy || !chatInput.trim()} onClick={handleChat} type="button">
-                    {busy ? "Working…" : "Send message"}
+                    {ui(busy ? "Working…" : "Send message")}
                   </button>
                 </div>
               </>
             ) : composerMode === "edit" ? (
               <>
                 <textarea
-                  aria-label="Describe your score edit"
+                  aria-label={ui("Describe your score edit")}
                   disabled={!connected || busy}
                   onChange={(event) => setEditInstruction(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleGenerate();
                   }}
-                  placeholder={connected ? "For example: transpose the selection up a major second while preserving rhythm…" : "Connect a notation host before generating an edit proposal…"}
+                  placeholder={ui(connected ? "For example: transpose the selection up a major second while preserving rhythm…" : "Connect a notation host before generating an edit proposal…")}
                   rows={5}
                   value={editInstruction}
                 />
                 <div className="agent-composer-footer">
-                  <span>{connected ? `Host target range: M${selectedRange.start_measure}–M${selectedRange.end_measure}` : "Edit proposals require a host score and selection"}</span>
+                  <span>{ui(connected ? `Host target range: M${selectedRange.start_measure}–M${selectedRange.end_measure}` : "Edit proposals require a host score and selection")}</span>
                   <button disabled={!connected || busy || !editInstruction.trim()} onClick={handleGenerate} type="button">
-                    {busy ? "Generating and validating…" : "Generate edit proposal"}
+                    {ui(busy ? "Generating and validating…" : "Generate edit proposal")}
                   </button>
                 </div>
               </>
             ) : (
               <>
                 <textarea
-                  aria-label="Describe your composition goal"
+                  aria-label={ui("Describe your composition goal")}
                   disabled={!connected || busy}
                   onChange={(event) => setCompositionBrief(event.target.value)}
                   onKeyDown={(event) => {
                     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") handleCompose();
                   }}
-                  placeholder={connected
+                  placeholder={ui(connected
                     ? "For example: rewrite the selection as a Romantic piano passage with a clear cadence, preserving rhythm and instrumentation…"
-                    : "Connect a notation host and select 1–8 measures first…"}
+                    : "Connect a notation host and select 1–8 measures first…")}
                   rows={5}
                   value={compositionBrief}
                 />
                 <div className="agent-composer-footer">
-                  <span>{connected
+                  <span>{ui(connected
                     ? `Based on host rhythm: M${selectedRange.start_measure}–M${selectedRange.end_measure}`
-                    : "Composition requires a host score and selection"}</span>
+                    : "Composition requires a host score and selection")}</span>
                   <button disabled={!connected || busy || !compositionBrief.trim()} onClick={handleCompose} type="button">
-                    {compositionRunning ? `Planning ${compositionElapsedSeconds}s` : "Generate candidates"}
+                    {ui(compositionRunning ? `Planning ${compositionElapsedSeconds}s` : "Generate candidates")}
                   </button>
                 </div>
               </>
@@ -810,33 +803,33 @@ export default function SeraAgentConsole({
 
         <aside className="agent-proposal-rail">
           <header>
-            <h1>{composition && !generation ? "Composition candidates" : "Edit proposal"}</h1>
-            <p>{composition && !generation
+            <h1>{ui(composition && !generation ? "Composition candidates" : "Edit proposal")}</h1>
+            <p>{ui(composition && !generation
               ? "Candidates share a theory plan and undergo individual theory and host safety checks."
-              : "Review, apply, or reject validated agent edits here."}</p>
+              : "Review, apply, or reject validated agent edits here.")}</p>
           </header>
           {!generation && !composition && !deliveryNotice && !compositionRunning && !compositionError && (
             <div className="agent-proposal-empty">
-              <strong>{connected ? "Waiting for an edit instruction" : "No host connected"}</strong>
-              <p>{connected ? "Generated proposals will show operation summaries, validation results, and protected scope checks here." : "Send a score from your host to get started."}</p>
+              <strong>{ui(connected ? "Waiting for an edit instruction" : "No host connected")}</strong>
+              <p>{ui(connected ? "Generated proposals will show operation summaries, validation results, and protected scope checks here." : "Send a score from your host to get started.")}</p>
             </div>
           )}
           {compositionRunning && !generation && !composition && (
             <section className="agent-composition-progress" role="status" aria-live="polite">
               <div>
                 <span className="agent-progress-spinner" aria-hidden="true" />
-                <strong>{compositionProgressMessage(compositionElapsedSeconds)}</strong>
+                <strong>{ui(compositionProgressMessage(compositionElapsedSeconds))}</strong>
               </div>
               <progress max={20} value={Math.min(compositionElapsedSeconds, 20)} />
-              <p>Elapsed: {compositionElapsedSeconds} seconds. Sera is preparing safe local drafts while the LLM works in the background.</p>
-              <small>Review drafts as soon as they appear. Live LLM refinement will update candidates automatically.</small>
+              <p>{ui("Elapsed:")} {compositionElapsedSeconds} {ui("seconds. Sera is preparing safe local drafts while the LLM works in the background.")}</p>
+              <small>{ui("Review drafts as soon as they appear. Live LLM refinement will update candidates automatically.")}</small>
             </section>
           )}
           {compositionError && !compositionRunning && !generation && !composition && (
             <section className="agent-composition-error" role="alert">
-              <strong>No composition candidates generated</strong>
-              <p>{compositionError}</p>
-              <small>Check that the model API is available, or select Local rules in Model settings and try again.</small>
+              <strong>{ui("No composition candidates generated")}</strong>
+              <p>{ui(compositionError)}</p>
+              <small>{ui("Check that the model API is available, or select Local rules in Model settings and try again.")}</small>
             </section>
           )}
           {composition && !generation && (
@@ -860,16 +853,14 @@ export default function SeraAgentConsole({
           )}
           {deliveryNotice && (
             <div className="agent-delivery-success">
-              <strong>Host revision generated</strong>
-              <p>{deliveryNotice}</p>
+              <strong>{ui("Host revision generated")}</strong>
+              <p>{ui(deliveryNotice)}</p>
             </div>
           )}
           {history.done.length > 0 && !generation && (
-            <button className="agent-undo-revision" disabled={busy} onClick={handleUndoAndExport} type="button">
-              Undo last agent revision
-            </button>
+            <button className="agent-undo-revision" disabled={busy} onClick={handleUndoAndExport} type="button"> {ui("Undo last agent revision")} </button>
           )}
-          <footer>{englishSystemText(status)}</footer>
+          <footer>{ui(systemText(status))}</footer>
         </aside>
       </main>
       {providerSettingsOpen && (
@@ -909,6 +900,7 @@ function CompositionCandidateReview({
   onPrefer: (candidate: CompositionCandidate, reasons: CompositionPreferenceReason[]) => void;
   onSelect: (candidate: CompositionCandidate) => void;
 }) {
+  const { ui, language, systemText } = useUiText();
   const plan = composition.plan;
   const [preferenceReasons, setPreferenceReasons] = useState<CompositionPreferenceReason[]>([]);
   const reasonOptions: Array<{ value: CompositionPreferenceReason; label: string }> = [
@@ -927,76 +919,66 @@ function CompositionCandidateReview({
             <span>{plan.texture}</span>
             <span>{plan.key}</span>
           </div>
-          <h2>CompositionPlan</h2>
+          <h2>{ui("CompositionPlan")}</h2>
           <p className="agent-harmony-path">{plan.harmonic_progression.join(" – ")}</p>
-          <p>Motif: {plan.motif_strategy} · Tension curve: {plan.tension_curve.map((value) => Math.round(value * 100)).join(" / ")}</p>
+          <p>{ui("Motif:")} {plan.motif_strategy} {ui("· Tension curve:")} {plan.tension_curve.map((value) => Math.round(value * 100)).join(" / ")}</p>
         </section>
       )}
 
-      <section className={`agent-planner-source ${composition.planner.planner === "live_llm" ? "live" : "local"}`} aria-label="Planning source">
+      <section className={`agent-planner-source ${composition.planner.planner === "live_llm" ? "live" : "local"}`} aria-label={ui("Planning source")}>
         <div>
-          <strong>{composition.planner.planner === "live_llm"
+          <strong>{ui(composition.planner.planner === "live_llm"
             ? "Plan source: live LLM"
             : composition.refinement?.status === "running"
               ? "Plan source: immediate local draft"
-              : "Plan source: local theory fallback"}</strong>
+              : "Plan source: local theory fallback")}</strong>
           <span>{composition.planner.provider || "local_rule"} · {composition.planner.model || "sera_composer_rules_v1"}</span>
         </div>
         <p>
-          {typeof composition.planner.latency_ms === "number" ? `${Math.round(composition.planner.latency_ms)} ms` : "Timing unavailable"}
-          {composition.planner.request_id ? ` · request ${composition.planner.request_id}` : ""}
-          {composition.run_trace?.persisted ? ` · Trace ${composition.run_trace.trace_id}` : ""}
+          {ui(typeof composition.planner.latency_ms === "number" ? `${Math.round(composition.planner.latency_ms)} ms` : "Timing unavailable")}
+          {ui(composition.planner.request_id ? ` · request ${composition.planner.request_id}` : "")}
+          {ui(composition.run_trace?.persisted ? ` · Trace ${composition.run_trace.trace_id}` : "")}
         </p>
         {composition.planner.planner !== "live_llm" && composition.planner.fallback_reason && (
-          <small>{englishSystemText(composition.planner.fallback_reason)}</small>
+          <small>{ui(systemText(composition.planner.fallback_reason))}</small>
         )}
       </section>
 
       {refinementNotice && (
         <section className={`agent-refinement-notice ${composition.refinement?.status || "ready"}`} role="status" aria-live="polite">
-          <strong>{composition.refinement?.status === "running" ? "LLM refinement in progress" : "Background LLM status"}</strong>
-          <p>{refinementNotice}</p>
+          <strong>{ui(composition.refinement?.status === "running" ? "LLM refinement in progress" : "Background LLM status")}</strong>
+          <p>{ui(refinementNotice)}</p>
         </section>
       )}
 
       {composition.style_knowledge && (
-        <section className="agent-style-knowledge" aria-label="Style knowledge evidence">
+        <section className="agent-style-knowledge" aria-label={ui("Style knowledge evidence")}>
           <div>
-            <strong>Composer V0.4 knowledge retrieval · {composition.style_knowledge.style_id.replaceAll("_", " ")}</strong>
+            <strong>{ui("Composer V0.4 knowledge retrieval ·")} {language === "zh-CN" ? composition.style_knowledge.display_name_zh : composition.style_knowledge.style_id.replaceAll("_", " ")}</strong>
             <span>v{composition.style_knowledge.schema_version}</span>
           </div>
-          <p>
-            Local library: {composition.style_knowledge.retrieval.total_cards} rule cards / {composition.style_knowledge.retrieval.pack_count} knowledge packs;
-            selected for this run: {composition.style_knowledge.retrieval.selected_cards} cards, approximately {composition.style_knowledge.retrieval.estimated_tokens}/{composition.style_knowledge.retrieval.token_budget} tokens.
-          </p>
-          <p>
-            Instruments {composition.style_knowledge.query.instruments.join(", ") || "General"} ·
-            Target {composition.style_knowledge.query.goals.join(", ") || "General"} ·
-            Internally reviewed {composition.search_summary.evaluated}/{composition.search_summary.search_width} candidates; showing {composition.search_summary.returned}.
+          <p> {ui("Local library:")} {composition.style_knowledge.retrieval.total_cards} {ui("rule cards /")} {composition.style_knowledge.retrieval.pack_count} {ui("knowledge packs; selected for this run:")} {composition.style_knowledge.retrieval.selected_cards} {ui("cards, approximately")} {composition.style_knowledge.retrieval.estimated_tokens}/{composition.style_knowledge.retrieval.token_budget} {ui("tokens.")} </p>
+          <p> {ui("Instruments")} {ui(composition.style_knowledge.query.instruments.join(", ") || "General")} {ui("· Target")} {ui(composition.style_knowledge.query.goals.join(", ") || "General")} {ui("· Internally reviewed")} {composition.search_summary.evaluated}/{composition.search_summary.search_width} {ui("candidates; showing")} {composition.search_summary.returned}.
           </p>
           {composition.texture_analysis && (
-            <p>
-              Source texture {composition.texture_analysis.texture} ({Math.round(composition.texture_analysis.confidence * 100)}%) ·
-              {" "}{composition.texture_analysis.voice_count} active voices · Planned target {plan?.texture || "Not specified"}
+            <p> {ui("Source texture")} {composition.texture_analysis.texture} ({Math.round(composition.texture_analysis.confidence * 100)}%) ·
+              {" "}{composition.texture_analysis.voice_count} {ui("active voices · Planned target")} {ui(plan?.texture || "Not specified")}
             </p>
           )}
           <details className="agent-knowledge-rules">
-            <summary>Retrieved rules ({composition.style_knowledge.matched_rules.length})</summary>
+            <summary>{ui("Retrieved rules (")}{composition.style_knowledge.matched_rules.length})</summary>
             <ol>
               {composition.style_knowledge.matched_rules.map((rule) => (
                 <li key={rule.rule_id}>
                   <div><strong>{rule.rule_id}</strong><span>{rule.domain.replaceAll("_", " ")}</span></div>
-                  <details><summary>Original knowledge text</summary><strong lang="zh-CN">{rule.title_zh}</strong><p lang="zh-CN">{rule.action_zh}</p></details>
+                  <details><summary>{ui("Original knowledge text")}</summary><strong lang="zh-CN">{rule.title_zh}</strong><p lang="zh-CN">{rule.action_zh}</p></details>
                   <small>{rule.rule_id} · {rule.match_reason}</small>
                 </li>
               ))}
             </ol>
           </details>
           {composition.phrase_analysis && (
-            <small>
-              Source melody {composition.phrase_analysis.primary_voice_id || "Not identified"} ·
-              Contour {composition.phrase_analysis.source_motif.contour} ·
-              Motif intervals {composition.phrase_analysis.source_motif.intervals.join(" / ") || "Insufficient data"}
+            <small> {ui("Source melody")} {ui(composition.phrase_analysis.primary_voice_id || "Not identified")} {ui("· Contour")} {composition.phrase_analysis.source_motif.contour} {ui("· Motif intervals")} {ui(composition.phrase_analysis.source_motif.intervals.join(" / ") || "Insufficient data")}
             </small>
           )}
         </section>
@@ -1004,7 +986,7 @@ function CompositionCandidateReview({
 
       {composition.candidates.length > 0 && (
         <fieldset className="agent-preference-reasons">
-          <legend>What matters most when comparing candidates? (Optional)</legend>
+          <legend>{ui("What matters most when comparing candidates? (Optional)")}</legend>
           {reasonOptions.map((option) => (
             <label key={option.value}>
               <input
@@ -1014,27 +996,27 @@ function CompositionCandidateReview({
                   : current.filter((value) => value !== option.value))}
                 type="checkbox"
               />
-              {option.label}
+              {ui(option.label)}
             </label>
           ))}
-          <small>Only candidate ratings and choices are saved locally. Notes and personal identity are not stored.</small>
+          <small>{ui("Only candidate ratings and choices are saved locally. Notes and personal identity are not stored.")}</small>
         </fieldset>
       )}
 
-      {preferenceNotice && <p className="agent-preference-notice" role="status">{preferenceNotice}</p>}
+      {preferenceNotice && <p className="agent-preference-notice" role="status">{ui(preferenceNotice)}</p>}
 
       {composition.status === "plan_only" && (
         <section className="agent-composition-plan-only">
-          <strong>Plan only; no changes applied</strong>
-          <p>{englishSystemText(composition.reason)}</p>
-          {plan?.orchestration_notes?.map((note, index) => <p key={index}>• {englishSystemText(note)}</p>)}
+          <strong>{ui("Plan only; no changes applied")}</strong>
+          <p>{ui(systemText(composition.reason))}</p>
+          {plan?.orchestration_notes?.map((note, index) => <p key={index}>• {ui(systemText(note))}</p>)}
         </section>
       )}
 
       {composition.status === "unsupported" && (
         <CompositionFailurePanel
           analysis={composition.failure_analysis}
-          fallbackReason={englishSystemText(composition.reason)}
+          fallbackReason={composition.reason}
           refinementStatus={composition.refinement?.status}
           composerTimeoutSeconds={Number(
             (composition.provider_status as Record<string, unknown> | undefined)?.composer_timeout_seconds || 180
@@ -1046,26 +1028,26 @@ function CompositionCandidateReview({
         <article className="agent-candidate-card" key={candidate.candidate_id}>
           <header>
             <div>
-              <strong>{englishSystemText(candidate.label)}</strong>
-              <small>{candidate.review.status === "valid" ? "Safety checks passed" : "Safety checks failed"}</small>
+              <strong>{ui(systemText(candidate.label))}</strong>
+              <small>{ui(candidate.review.status === "valid" ? "Safety checks passed" : "Safety checks failed")}</small>
             </div>
             <span>{Math.round(candidate.review.overall_score * 100)}</span>
           </header>
-          <p>{englishSystemText(candidate.explanation)}</p>
+          <p>{ui(systemText(candidate.explanation))}</p>
           <dl>
-            <div><dt>Theory</dt><dd>{Math.round(candidate.review.theory_score * 100)}</dd></div>
-            <div><dt>Motif</dt><dd>{Math.round(candidate.review.motif_score * 100)}</dd></div>
-            <div><dt>Phrase</dt><dd>{Math.round(candidate.review.phrase_score * 100)}</dd></div>
-            <div><dt>Style</dt><dd>{Math.round(candidate.review.style_score * 100)}</dd></div>
-            <div><dt>Playability</dt><dd>{Math.round(candidate.review.playability_score * 100)}</dd></div>
-            <div><dt>Expectation</dt><dd>{Math.round((candidate.review.melody_expectation_score ?? 0) * 100)}</dd></div>
-            <div><dt>Preference</dt><dd>{Math.round(candidate.review.preference_score * 100)}</dd></div>
+            <div><dt>{ui("Theory")}</dt><dd>{Math.round(candidate.review.theory_score * 100)}</dd></div>
+            <div><dt>{ui("Motif")}</dt><dd>{Math.round(candidate.review.motif_score * 100)}</dd></div>
+            <div><dt>{ui("Phrase")}</dt><dd>{Math.round(candidate.review.phrase_score * 100)}</dd></div>
+            <div><dt>{ui("Style")}</dt><dd>{Math.round(candidate.review.style_score * 100)}</dd></div>
+            <div><dt>{ui("Playability")}</dt><dd>{Math.round(candidate.review.playability_score * 100)}</dd></div>
+            <div><dt>{ui("Expectation")}</dt><dd>{Math.round((candidate.review.melody_expectation_score ?? 0) * 100)}</dd></div>
+            <div><dt>{ui("Preference")}</dt><dd>{Math.round(candidate.review.preference_score * 100)}</dd></div>
           </dl>
           <ul>
             {candidate.review.findings.map((finding) => (
               <li className={finding.passed ? "passed" : "failed"} key={finding.check}>
                 <span aria-hidden="true">{finding.passed ? "✓" : "!"}</span>
-                {compositionFindingLabel(finding.check)}
+                {ui(compositionFindingLabel(finding.check))}
                 <small>{finding.claim_id}</small>
               </li>
             ))}
@@ -1075,23 +1057,19 @@ function CompositionCandidateReview({
               disabled={candidate.review.status !== "valid" || busy}
               onClick={() => onSelect(candidate)}
               type="button"
-            >
-              Select and review candidate
-            </button>
+            > {ui("Select and review candidate")} </button>
             <button
               disabled={candidate.review.status !== "valid" || busy || !composition.comparison_id}
               onClick={() => onPrefer(candidate, preferenceReasons)}
               type="button"
-            >
-              Prefer this version
-            </button>
+            > {ui("Prefer this version")} </button>
           </div>
         </article>
       ))}
 
       {composition.theory_context.length > 0 && (
         <details className="agent-theory-trace">
-          <summary>Theory references ({composition.theory_context.length})</summary>
+          <summary>{ui("Theory references (")}{composition.theory_context.length})</summary>
           {composition.theory_context.map((item) => (
             <p key={item.claim_id}><strong>{item.claim_id} · {item.title}</strong><br />{item.rule}</p>
           ))}
@@ -1112,6 +1090,7 @@ function CompositionFailurePanel({
   refinementStatus?: "running" | "ready" | "failed";
   composerTimeoutSeconds: number;
 }) {
+  const { ui, language, systemText } = useUiText();
   const counts = analysis?.counts || {};
   const failedChecks = Object.entries(analysis?.failed_check_counts || {}).filter(([, value]) => value > 0);
   return (
@@ -1119,37 +1098,34 @@ function CompositionFailurePanel({
       <div>
         <span aria-hidden="true">!</span>
         <div>
-          <strong>{refinementStatus === "running" ? "Local candidates rejected; LLM planning continues" : "Candidates safely rejected"}</strong>
-          <p>{englishSystemText(analysis?.summary || fallbackReason)}</p>
+          <strong>{ui(refinementStatus === "running" ? "Local candidates rejected; LLM planning continues" : "Candidates safely rejected")}</strong>
+          <p>{ui(systemText(analysis?.summary || fallbackReason))}</p>
           {refinementStatus === "running" && (
-            <p>
-              LLM planning is still in progress. Sera will wait up to {Math.round(composerTimeoutSeconds)} seconds, then repeat the search and update diagnostics when the LLM responds.
-            </p>
+            <p> {ui("LLM planning is still in progress. Sera will wait up to")} {Math.round(composerTimeoutSeconds)} {ui("seconds, then repeat the search and update diagnostics when the LLM responds.")} </p>
           )}
         </div>
       </div>
       {analysis && (
         <>
           <dl>
-            <div><dt>Target notes</dt><dd>{counts.target_notes ?? 0}</dd></div>
-            <div><dt>Protected</dt><dd>{counts.protected_target_notes ?? 0}</dd></div>
-            <div><dt>Reviewed</dt><dd>{counts.evaluated ?? 0}</dd></div>
-            <div><dt>Rejected</dt><dd>{counts.rejected ?? 0}</dd></div>
+            <div><dt>{ui("Target notes")}</dt><dd>{counts.target_notes ?? 0}</dd></div>
+            <div><dt>{ui("Protected")}</dt><dd>{counts.protected_target_notes ?? 0}</dd></div>
+            <div><dt>{ui("Reviewed")}</dt><dd>{counts.evaluated ?? 0}</dd></div>
+            <div><dt>{ui("Rejected")}</dt><dd>{counts.rejected ?? 0}</dd></div>
           </dl>
           {failedChecks.length > 0 && (
-            <p className="agent-failure-checks">
-              Failed checks: {failedChecks.map(([name, count]) => `${compositionFailureLabel(name)} ${count}`).join(" · ")}
+            <p className="agent-failure-checks"> {ui("Failed checks:")} {failedChecks.map(([name, count]) => `${ui(compositionFailureLabel(name))} ${count}`).join(" · ")}
             </p>
           )}
           <ol>
-            {analysis.suggestions.map((suggestion, index) => <li key={index}>{englishSystemText(suggestion)}</li>)}
+            {analysis.suggestions.map((suggestion, index) => <li key={index}>{ui(systemText(suggestion))}</li>)}
           </ol>
           {analysis.rejected_examples.length > 0 && (
             <details>
-              <summary>Technical diagnostics ({analysis.code})</summary>
+              <summary>{ui("Technical diagnostics (")}{analysis.code})</summary>
               {analysis.rejected_examples.map((example) => (
                 <p key={example.candidate_id}>
-                  {example.candidate_id} · {example.failed_checks.map(compositionFailureLabel).join(", ") || example.transaction_status}
+                  {example.candidate_id} · {example.failed_checks.map((check) => ui(compositionFailureLabel(check))).join(", ") || example.transaction_status}
                   {example.error_codes.length ? ` · ${example.error_codes.join(", ")}` : ""}
                 </p>
               ))}
@@ -1174,6 +1150,7 @@ function ProposalReview({
   onApply: () => void;
   onReject: () => void;
 }) {
+  const { ui, language, systemText } = useUiText();
   const preview = generation.preview;
   const report = preview?.validation_report;
   const patch = generation.patch;
@@ -1182,46 +1159,42 @@ function ProposalReview({
 
   return (
     <div className="agent-proposal-content">
-      <section className="agent-generator-evidence" aria-label="Patch generator evidence">
-        <span>{generation.generator.composition_route ? "Composer automatic routing" : generation.generator.live ? "LLM API" : "Local rules"}</span>
+      <section className="agent-generator-evidence" aria-label={ui("Patch generator evidence")}>
+        <span>{ui(generation.generator.composition_route ? "Composer automatic routing" : generation.generator.live ? "LLM API" : "Local rules")}</span>
         <strong>{generation.generator.provider} · {generation.generator.model}</strong>
         {typeof generation.generator.latency_ms === "number" && (
-          <small>{Math.round(generation.generator.latency_ms)} ms</small>
+          <small>{Math.round(generation.generator.latency_ms)} {ui("ms")}</small>
         )}
         {generation.generator.composition_route && (
-          <small>
-            Reviewed {generation.generator.candidate_count || 0} candidates
-            {generation.generator.evaluated_candidate_count
-              ? `(internal search ${generation.generator.evaluated_candidate_count})`
-              : ""}
-            {typeof generation.generator.selected_candidate_score === "number"
+          <small> {ui("Reviewed")} {generation.generator.candidate_count || 0} {ui("candidates")} {ui(generation.generator.evaluated_candidate_count
+              ? ui(`(internal search ${generation.generator.evaluated_candidate_count})`)
+              : "")}
+            {ui(typeof generation.generator.selected_candidate_score === "number"
               ? ` · Best score ${Math.round(generation.generator.selected_candidate_score * 100)}`
-              : ""}
-            {generation.generator.style_knowledge_version
+              : "")}
+            {ui(generation.generator.style_knowledge_version
               ? ` · Style library v${generation.generator.style_knowledge_version}`
-              : ""}
+              : "")}
           </small>
         )}
         {!generation.generator.composition_route && generation.generator.repair_strategy && generation.generator.repair_strategy !== "none" && (
-          <small>
-            Model output format repaired safely
-            {generation.generator.generation_attempts && generation.generator.generation_attempts > 1
+          <small> {ui("Model output format repaired safely")} {ui(generation.generator.generation_attempts && generation.generator.generation_attempts > 1
               ? ` · ${generation.generator.generation_attempts} requests`
-              : ""}
+              : "")}
           </small>
         )}
         {generation.generator.fallback_reason && (
-          <small title={generation.generator.fallback_reason}>Safe fallback enabled</small>
+          <small title={ui(generation.generator.fallback_reason)}>{ui("Safe fallback enabled")}</small>
         )}
         {patch?.target_scope.whole_score && generation.generator.scope_resolution === "promoted_to_whole_score_for_global_key_signature" && (
-          <small>Key signature is a score-wide property. The selection was expanded to the whole score while note preservation constraints remain active.</small>
+          <small>{ui("Key signature is a score-wide property. The selection was expanded to the whole score while note preservation constraints remain active.")}</small>
         )}
       </section>
       <div className={`agent-validation-state ${validated ? "valid" : "invalid"}`}>
         <span aria-hidden="true">{validated ? "✓" : "!"}</span>
         <div>
-          <strong>{validated ? "Validation passed" : generation.status === "unsupported" ? "Unsupported edit" : "Cannot apply safely"}</strong>
-          <p>{validated ? "The proposal is structurally valid and can be applied as a transaction." : englishSystemText(generation.reason) || "Review the validation details below."}</p>
+          <strong>{ui(validated ? "Validation passed" : generation.status === "unsupported" ? "Unsupported edit" : "Cannot apply safely")}</strong>
+          <p>{ui(validated ? "The proposal is structurally valid and can be applied as a transaction." : systemText(generation.reason) || "Review the validation details below.")}</p>
         </div>
       </div>
 
@@ -1234,14 +1207,14 @@ function ProposalReview({
 
       {patch && (
         <section className="agent-operation-summary">
-          <h2>Edit summary</h2>
+          <h2>{ui("Edit summary")}</h2>
           <ol>
             {patch.operations.map((operation, index) => (
               <li key={operation.operation_id || index}>
                 <span>{index + 1}</span>
                 <div>
-                  <strong>{operationTitle(operation.type)}</strong>
-                  <p>{operationDescription(operation)}</p>
+                  <strong>{ui(operationTitle(operation.type))}</strong>
+                  <p>{operationDescription(operation, ui)}</p>
                 </div>
               </li>
             ))}
@@ -1251,39 +1224,39 @@ function ProposalReview({
 
       {preview && (
         <section className="agent-diff-summary">
-          <h2>Element changes</h2>
+          <h2>{ui("Element changes")}</h2>
           <dl>
-            <div><dt>Changed</dt><dd>{preview.diff.changed?.length || 0}</dd></div>
-            <div><dt>Added</dt><dd>{preview.diff.added?.length || 0}</dd></div>
-            <div><dt>Deleted</dt><dd>{preview.diff.deleted?.length || 0}</dd></div>
-            <div><dt>Global</dt><dd>{Object.keys(preview.diff.global_changes || {}).length}</dd></div>
+            <div><dt>{ui("Changed")}</dt><dd>{preview.diff.changed?.length || 0}</dd></div>
+            <div><dt>{ui("Added")}</dt><dd>{preview.diff.added?.length || 0}</dd></div>
+            <div><dt>{ui("Deleted")}</dt><dd>{preview.diff.deleted?.length || 0}</dd></div>
+            <div><dt>{ui("Global")}</dt><dd>{Object.keys(preview.diff.global_changes || {}).length}</dd></div>
           </dl>
         </section>
       )}
 
       <section className="agent-protected-state">
-        <h2>Protected scope</h2>
+        <h2>{ui("Protected scope")}</h2>
         <p className={report?.errors.some((issue) => issue.code === "E11") ? "failed" : "passed"}>
           <span aria-hidden="true">{report?.errors.some((issue) => issue.code === "E11") ? "!" : "✓"}</span>
-          {report?.errors.some((issue) => issue.code === "E11") ? "Protected scope violation detected" : "No unexpected changes outside the selection detected"}
+          {ui(report?.errors.some((issue) => issue.code === "E11") ? "Protected scope violation detected" : "No unexpected changes outside the selection detected")}
         </p>
       </section>
 
       {issues.length > 0 && (
         <details className="agent-validation-details">
-          <summary>Validation details ({issues.length})</summary>
+          <summary>{ui("Validation details (")}{issues.length})</summary>
           {issues.map((issue, index) => <ValidationIssue key={`${issue.code}-${index}`} issue={issue} />)}
         </details>
       )}
 
       <div className="agent-proposal-actions">
-        <button disabled={!canApply || busy} onClick={onApply} type="button">Apply and create host revision</button>
-        <button disabled={busy} onClick={onReject} type="button">Reject</button>
+        <button disabled={!canApply || busy} onClick={onApply} type="button">{ui("Apply and create host revision")}</button>
+        <button disabled={busy} onClick={onReject} type="button">{ui("Reject")}</button>
       </div>
 
       {patch && (
         <details className="agent-json-details">
-          <summary>Proposal details (ScorePatch JSON)</summary>
+          <summary>{ui("Proposal details (ScorePatch JSON)")}</summary>
           <pre>{JSON.stringify(patch, null, 2)}</pre>
         </details>
       )}
@@ -1292,7 +1265,8 @@ function ProposalReview({
 }
 
 function ValidationIssue({ issue }: { issue: StrictValidationIssue }) {
-  return <p><strong>{issue.code}</strong> · {englishSystemText(issue.message)}</p>;
+  const { ui, language, systemText } = useUiText();
+  return <p><strong>{issue.code}</strong> · {ui(systemText(issue.message))}</p>;
 }
 
 function hostSelectedRange(score: ScoreDocument | null, session: any) {
@@ -1344,7 +1318,7 @@ function operationTitle(type: string) {
   return titles[type] || type.replaceAll("_", " ");
 }
 
-function operationDescription(operation: StrictScorePatch["operations"][number]) {
+function operationDescription(operation: StrictScorePatch["operations"][number], ui: (text: string) => string) {
   const selector = operation.selector || {};
   const target = ["change_key_signature", "change_time_signature"].includes(operation.type)
     ? "Whole score"
@@ -1356,7 +1330,7 @@ function operationDescription(operation: StrictScorePatch["operations"][number])
   const argumentsText = Object.entries(operation.arguments || {})
     .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(", ") : String(value)}`)
     .join("; ");
-  return `${target}${argumentsText ? ` · ${argumentsText}` : ""}`;
+  return `${ui(target)}${argumentsText ? ` · ${argumentsText}` : ""}`;
 }
 
 function compositionFindingLabel(check: string) {

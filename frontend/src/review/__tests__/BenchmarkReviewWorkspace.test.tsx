@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import BenchmarkReviewWorkspace from "../BenchmarkReviewWorkspace";
+import { I18nProvider } from "../../i18n";
 
 const api = vi.hoisted(() => ({
   exportBenchmarkReviews: vi.fn(),
@@ -156,6 +157,24 @@ describe("BenchmarkReviewWorkspace", () => {
     api.prepareBenchmarkReviewArtifact.mockResolvedValue({ path: "C:\\Sera\\research_reviews\\workspace\\pitch_001\\source.musicxml" });
     api.exportBenchmarkReviews.mockResolvedValue({ record_count: 1, csv_path: "C:\\Sera\\research_reviews\\reviews.csv" });
     desktop.openDesktopLocalFile.mockResolvedValue({ ok: true });
+  });
+
+  it("switches review labels and existing bilingual evidence without changing notes, task, or review data", async () => {
+    const original = JSON.stringify(detail);
+    render(<I18nProvider><BenchmarkReviewWorkspace onClose={vi.fn()} /></I18nProvider>);
+    await screen.findByText("Event diff");
+    fireEvent.change(screen.getByLabelText("Review notes"), { target: { value: "保留我的复核记录 Apply" } });
+    fireEvent.change(screen.getByLabelText("Language"), { target: { value: "zh-CN" } });
+    expect(screen.getByText("事件级差异")).toBeInTheDocument();
+    expect(screen.getByText("原始英文指令")).toBeInTheDocument();
+    expect((screen.getByLabelText("复核说明") as HTMLTextAreaElement).value).toBe("保留我的复核记录 Apply");
+    expect(screen.getAllByText(detail.task.instruction.zh).length).toBeGreaterThan(0);
+    fireEvent.change(screen.getByLabelText("语言"), { target: { value: "en" } });
+    expect(screen.getByText("Event diff")).toBeInTheDocument();
+    expect((screen.getByLabelText("Review notes") as HTMLTextAreaElement).value).toBe("保留我的复核记录 Apply");
+    expect(api.getBenchmarkReviewTask).toHaveBeenCalledOnce();
+    expect(api.submitBenchmarkReview).not.toHaveBeenCalled();
+    expect(JSON.stringify(detail)).toBe(original);
   });
 
   it("shows task evidence without rendering or manually editing notation", async () => {

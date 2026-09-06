@@ -1,3 +1,4 @@
+import { useUiText } from "../i18n/useUiText";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   applyStrictScorePatch,
@@ -112,6 +113,7 @@ import ScoreToolbar from "./ScoreToolbar";
 
 export default function ScoreWorkbench({ result }: { result: any }) {
   const { t } = useI18n();
+  const { ui } = useUiText();
   const initialScore = useMemo(() => scoreDocumentFromResult(result), [result]);
   const [scoreDocument, setScoreDocument] = useState<ScoreDocument>(initialScore);
   const [history, setHistory] = useState<OperationHistory>(EMPTY_OPERATION_HISTORY);
@@ -134,7 +136,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
   const [showBeatGrid, setShowBeatGrid] = useState(true);
   const [hoverTarget, setHoverTarget] = useState<HitTarget | null>(null);
   const [clickPreview, setClickPreview] = useState<ClickToNotatePreview | null>(null);
-  const [instruction, setInstruction] = useState("Transpose the selected notes up a major second while preserving rhythm.");
+  const [instruction, setInstruction] = useState(() => ui("Transpose the selected notes up a major second while preserving rhythm."));
   const [agentConstraints, setAgentConstraints] = useState({ preserve_harmony: true, preserve_form: true, preserve_manual_edits: true, patch_size_limit: "small", target_staff: "both", target_voice: "all" });
   const [musicalityControls, setMusicalityControls] = useState<MusicalityControls>(DEFAULT_MUSICALITY_CONTROLS);
   const [patchPreview, setPatchPreview] = useState<any>(null);
@@ -1069,7 +1071,7 @@ export default function ScoreWorkbench({ result }: { result: any }) {
           <section className="workbench-panel workflow-switcher">
             <div className="panel-heading tight">
               <h2>Agent workflow</h2>
-              <span>Local Electron</span>
+              <span>{ui("Local Electron")}</span>
             </div>
             <div className="toolbar-row">
               <button className={agentWorkflow === "strict" ? "active" : ""} onClick={() => setAgentWorkflow("strict")} type="button">

@@ -2382,3 +2382,64 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No experimental run, metric, benchmark, or scientific claim changed. This phase
   changes presentation and language defaults only.
+
+## 2026-09-06 - Phase 61: restore reactive Chinese and English switching
+
+### Root cause and completed fix
+
+- Phase 60 replaced hardcoded Chinese UI text with hardcoded English instead of
+  connecting those surfaces to the existing language context. The selector persisted
+  Chinese correctly, but the agent, settings, review, and strict-edit panels did not
+  consume that preference. This was a frontend regression introduced in phase 60.
+- Added a bilingual interface catalog and `useUiText`, subscribed to the existing
+  `I18nProvider`. Labels, accessible names, placeholders, local status messages and
+  operation explanations now update on language changes without remounting the app.
+  The existing English UI and saved language preference remain available.
+- Local system messages are explicitly tagged for display translation. User messages,
+  provider answers, score titles, identifiers, raw patches and diagnostic interpolation
+  values remain intact. Switching does not rewrite stored chat messages or API payloads.
+- Review evidence selects the existing English/Chinese source field for the chosen
+  language. The other source remains accessible in expandable details. Added a language
+  selector to the review page. Draft instructions, model settings and review notes
+  are retained while switching; built-in preset buttons use the selected language.
+
+### Modified files
+
+- New `frontend/src/i18n/useUiText.ts`, `locales/ui.zh-CN.json`, and
+  `__tests__/uiText.test.ts`.
+- Agent console and model dialog; benchmark review workspace; strict-edit research
+  panel, score comparison and workbench; React desktop startup screen.
+- Agent and benchmark review integration tests. No backend or research data file changed.
+
+### Verification
+
+- Complete frontend regression: 74 files, 133 tests passed. New integration tests
+  exercise English -> Chinese -> English, switching with a settings dialog open,
+  preservation of drafts/notes/model names, saved preference on remount, no repeated
+  requests, and no accidental translation of user/provider text matching a UI label.
+- Catalog tests check nonempty translations, interpolation-slot preservation, every
+  dynamic message template, and retention of score titles and diagnostic details.
+- Production build passed. Real production-page browser QA passed at 1280 x 860 and
+  390 x 844: main screen/settings switch both ways, draft fields survive, Chinese
+  remains selected after reload, no blank page/framework overlay/runtime errors,
+  no horizontal overflow and no API mutations or live-model calls.
+- Browser plugin was not available in this session and Playwright was not installed;
+  QA used the existing headless Microsoft Edge via CDP with an isolated temporary
+  profile, without installing dependencies or changing the user's browser profile.
+- Rebuilt the local Electron package. All seven packaged frontend files match the
+  production build; both backend EXE hashes match their pre-change values.
+- Packaged backend, existing frozen evidence, host-scope/voice round-trips, launcher,
+  Electron startup and graceful shutdown passed using the hidden-window smoke harness
+  described in phase 60. Existing frozen runs were checked, not regenerated.
+
+### Remaining limits and next step
+
+- Unknown provider output and original score/knowledge content retain their language.
+  This pass does not add paid-model experiments or interactive notation-host testing.
+- Commit the correction and synchronize the previously authorized GitHub update;
+  verify the current remote CI.
+
+### Paper impact
+
+- No benchmark, metric, experiment or scientific claim changed. The published
+  `v1.0.0` and Zenodo archive remain unchanged.

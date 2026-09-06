@@ -1,3 +1,4 @@
+import { useUiText } from "../i18n/useUiText";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   clearSeraEditProviderConfiguration,
@@ -40,6 +41,7 @@ export default function LLMProviderSettingsDialog({
   onClose: () => void;
   onSaved: (status: ProviderStatus) => void;
 }) {
+  const { ui, language, systemText } = useUiText();
   const hasRemoteConfiguration = Boolean(currentStatus && isRemoteProvider(currentStatus.provider));
   const initialProvider = hasRemoteConfiguration
     ? currentStatus!.provider as ProviderId
@@ -126,50 +128,44 @@ export default function LLMProviderSettingsDialog({
       >
         <header>
           <div>
-            <span>Agent runtime</span>
-            <h1 id="llm-settings-title">Model and API settings</h1>
+            <span>{ui("Agent runtime")}</span>
+            <h1 id="llm-settings-title">{ui("Model and API settings")}</h1>
           </div>
-          <button aria-label="Close model settings" disabled={saving} onClick={onClose} type="button">×</button>
+          <button aria-label={ui("Close model settings")} disabled={saving} onClick={onClose} type="button">×</button>
         </header>
 
         <form onSubmit={handleSubmit}>
-          <label>
-            Model provider
-            <select
-              aria-label="Model provider"
+          <label> {ui("Model provider")} <select
+              aria-label={ui("Model provider")}
               disabled={saving}
               onChange={(event) => handleProviderChange(event.target.value as ProviderId)}
               value={provider}
             >
-              <option value="openai">OpenAI</option>
-              <option value="deepseek">DeepSeek</option>
-              <option value="qwen">Qwen</option>
-              <option value="openai-compatible">OpenAI-compatible API</option>
+              <option value="openai">{ui("OpenAI")}</option>
+              <option value="deepseek">{ui("DeepSeek")}</option>
+              <option value="qwen">{ui("Qwen")}</option>
+              <option value="openai-compatible">{ui("OpenAI-compatible API")}</option>
             </select>
           </label>
 
-          <label>
-            Model name
-            <input
-              aria-label="Model name"
+          <label> {ui("Model name")} <input
+              aria-label={ui("Model name")}
               autoComplete="off"
               disabled={saving}
               onChange={(event) => setModel(event.target.value)}
-              placeholder="For example: gpt-5.6-terra"
+              placeholder={ui("For example: gpt-5.6-terra")}
               required
               value={model}
             />
           </label>
 
-          <label>
-            API URL
-            <input
-              aria-label="API URL"
+          <label> {ui("API URL")} <input
+              aria-label={ui("API URL")}
               autoCapitalize="none"
               autoComplete="off"
               disabled={saving}
               onChange={(event) => setBaseUrl(event.target.value)}
-              placeholder="https://api.example.com/v1"
+              placeholder={ui("https://api.example.com/v1")}
               required
               spellCheck={false}
               type="url"
@@ -177,16 +173,14 @@ export default function LLMProviderSettingsDialog({
             />
           </label>
 
-          <label>
-            API Key
-            <input
+          <label> {ui("API Key")} <input
               aria-describedby="api-key-storage-note"
-              aria-label="API Key"
+              aria-label={ui("API Key")}
               autoCapitalize="none"
               autoComplete="new-password"
               disabled={saving}
               onChange={(event) => setApiKey(event.target.value)}
-              placeholder={canRetainCredential ? "Saved securely; leave blank to keep" : "Paste API key"}
+              placeholder={ui(canRetainCredential ? "Saved securely; leave blank to keep" : "Paste API key")}
               required={!canRetainCredential}
               spellCheck={false}
               type="password"
@@ -194,23 +188,19 @@ export default function LLMProviderSettingsDialog({
             />
           </label>
 
-          <p className="agent-credential-note" id="api-key-storage-note">
-            The key is encrypted for the current Windows user. It is never displayed in the interface, status API, or conversation history.
-          </p>
+          <p className="agent-credential-note" id="api-key-storage-note"> {ui("The key is encrypted for the current Windows user. It is never displayed in the interface, status API, or conversation history.")} </p>
 
           <div className="agent-settings-row">
-            <label>
-              Reasoning effort
-              <select
-                aria-label="Reasoning effort"
+            <label> {ui("Reasoning effort")} <select
+                aria-label={ui("Reasoning effort")}
                 disabled={saving}
                 onChange={(event) => setReasoningEffort(event.target.value)}
                 value={reasoningEffort}
               >
-                <option value="minimal">Minimal</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="minimal">{ui("Minimal")}</option>
+                <option value="low">{ui("Low")}</option>
+                <option value="medium">{ui("Medium")}</option>
+                <option value="high">{ui("High")}</option>
               </select>
             </label>
             <label className="agent-settings-check">
@@ -219,16 +209,12 @@ export default function LLMProviderSettingsDialog({
                 disabled={saving}
                 onChange={(event) => setFallbackLocal(event.target.checked)}
                 type="checkbox"
-              />
-              Use local rules if the API fails
-            </label>
+              /> {ui("Use local rules if the API fails")} </label>
           </div>
 
-          <label>
-            Composer background timeout (seconds)
-            <input
+          <label> {ui("Composer background timeout (seconds)")} <input
               aria-describedby="composer-timeout-note"
-              aria-label="Composer background timeout in seconds"
+              aria-label={ui("Composer background timeout in seconds")}
               disabled={saving}
               max={600}
               min={30}
@@ -238,23 +224,19 @@ export default function LLMProviderSettingsDialog({
               value={composerTimeoutSeconds}
             />
           </label>
-          <p className="agent-credential-note" id="composer-timeout-note">
-            This timeout applies to background planning; local candidates remain available. Allow 180–300 seconds for slower reasoning models such as DeepSeek V4 Pro.
-          </p>
+          <p className="agent-credential-note" id="composer-timeout-note"> {ui("This timeout applies to background planning; local candidates remain available. Allow 180–300 seconds for slower reasoning models such as DeepSeek V4 Pro.")} </p>
 
-          {error && <p className="agent-settings-error" role="alert">{error}</p>}
+          {error && <p className="agent-settings-error" role="alert">{ui(error)}</p>}
 
           <footer>
-            <button className="secondary" disabled={saving} onClick={handleUseLocalRules} type="button">
-              Use local rules
-            </button>
+            <button className="secondary" disabled={saving} onClick={handleUseLocalRules} type="button"> {ui("Use local rules")} </button>
             <div>
-              <button className="secondary" disabled={saving} onClick={onClose} type="button">Cancel</button>
+              <button className="secondary" disabled={saving} onClick={onClose} type="button">{ui("Cancel")}</button>
               <button
                 disabled={saving || !model.trim() || !baseUrl.trim() || composerTimeoutSeconds < 30 || composerTimeoutSeconds > 600}
                 type="submit"
               >
-                {saving ? "Saving securely…" : "Save and enable"}
+                {ui(saving ? "Saving securely…" : "Save and enable")}
               </button>
             </div>
           </footer>
