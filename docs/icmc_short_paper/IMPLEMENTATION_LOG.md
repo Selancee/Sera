@@ -2443,3 +2443,42 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No benchmark, metric, experiment or scientific claim changed. The published
   `v1.0.0` and Zenodo archive remain unchanged.
+
+## 2026-09-10 - Phase 62: remove the command-window flash from desktop launch
+
+### Completed
+
+- Found the actual desktop `Sera.lnk` pointing to `run_app.bat`. Windows therefore
+  started a command interpreter before the existing Electron GUI. Electron already
+  hides its backend subprocess; changing backend packaging was unnecessary.
+- Updated `scripts/create_desktop_shortcut.ps1` to point directly to the existing
+  `dist_desktop/release/win-unpacked/Sera.exe`, clear obsolete arguments, and use its
+  icon. The script derives the project location instead of hardcoding a drive and
+  supports an explicit shortcut destination. If the package is missing, it fails
+  before changing an existing shortcut.
+- Backed up and corrected the user's desktop shortcut. Updated the Windows launch
+  instructions in `README.md`; the batch file remains a terminal/development entry.
+
+### Verification
+
+- Real shortcut creation checks passed from a relocated directory containing spaces,
+  including migration of an existing batch shortcut, removal of stale arguments,
+  direct GUI targeting, and byte-preservation of the shortcut when a package is missing.
+- Confirmed the executable uses the Windows GUI subsystem. Launched the corrected
+  shortcut with the user's existing Sera session running and observed no new visible
+  console windows over five seconds. The original backend PID stayed unchanged and
+  `/health` remained `ok`. Application EXE and `app.asar` hashes were unchanged.
+- Desktop-launcher and Windows-packaging regression tests: 13 passed.
+
+### Limits and next step
+
+- Cold start and shutdown were not repeated because Sera was already running with
+  the user's work. The existing session was preserved. Directly double-clicking the
+  development `.bat` still opens a command interpreter by Windows design; daily
+  startup should use the repaired Sera desktop icon or the GUI executable.
+- Record the fix in a local commit. No application rebuild is required.
+
+### Paper impact
+
+- No Core/World/Forge implementation, frontend, score, benchmark, experiment, or
+  scientific claim changed. This is a Windows shortcut and documentation correction.

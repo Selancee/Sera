@@ -60,13 +60,21 @@ immutable software release or its DOI.
 
 MuseScore v0.3 插件与安装说明见 [`integrations/musescore/README.md`](integrations/musescore/README.md)。发送前必须先保存乐谱；当前回传会在 MuseScore 中打开新乐谱，原位 patch 和单步宿主撤销尚未实现，不应当描述为已验证能力。
 
-Windows 本地应用启动：
+Windows 日常启动请使用桌面的 **Sera** 快捷方式，或直接打开已构建的图形程序：
 
 ```powershell
-.\run_app.bat
+.\dist_desktop\release\win-unpacked\Sera.exe
 ```
 
-首次启动会准备 Electron 运行时和本地后端。应用窗口会先显示“正在启动 Sera 本地引擎”，持续检查本机后端的 `/health`；健康检查通过后才加载 Agent Console。当前打包版使用 onedir 后端，直接从应用目录加载，不会再把大型 `_MEI*` 运行时解压到 `%TEMP%`。真正超时或后端提前退出时，错误会直接显示在启动窗口内。MuseScore 创建桥接会话后，Sera 窗口会自动置前并读取对应乐谱/选区上下文。只有需要 Vite 热更新时才使用 `.\run_web_app.bat`。
+这两个入口直接启动 Electron，不会先弹出命令框。创建或修复桌面快捷方式：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\create_desktop_shortcut.ps1
+```
+
+`run_app.bat` 保留为终端/源码开发入口；直接双击 `.bat` 会由 Windows 打开命令框。
+
+打包版直接使用随附的 Electron 运行时和本地后端；源码开发入口在需要时准备依赖。应用窗口会先显示“正在启动 Sera 本地引擎”，持续检查本机后端的 `/health`；健康检查通过后才加载 Agent Console。当前打包版使用 onedir 后端，直接从应用目录加载，不会再把大型 `_MEI*` 运行时解压到 `%TEMP%`。真正超时或后端提前退出时，错误会直接显示在启动窗口内。MuseScore 创建桥接会话后，Sera 窗口会自动置前并读取对应乐谱/选区上下文。只有需要 Vite 热更新时才使用 `.\run_web_app.bat`。
 
 已构建且完成可见冒烟的 unpacked 本地包位于：
 
@@ -76,7 +84,7 @@ Windows 本地应用启动：
 
 当前验收覆盖：本地启动、宿主桥接会话读取、自然语言生成 C4→D4 严格提案、保护范围 0 意外变化、生成 revision，以及退出后的后端进程树和端口释放。portable 单文件安装器仍未完成稳定验收，因此优先使用上述 unpacked 目录版。
 
-请使用上述 `release\win-unpacked\Sera.exe` 或根目录 `run_app.bat`。`dist_desktop\Sera.exe` 是兼容性打包冒烟所需的旧启动器，不是当前推荐的桌面入口；不要同时启动两个入口。
+日常使用请选择桌面 Sera 快捷方式或上述 `release\win-unpacked\Sera.exe`。`dist_desktop\Sera.exe` 是兼容性打包冒烟所需的旧启动器，不是当前推荐的桌面入口；不要同时启动两个入口。
 
 重新构建主本地包：
 
@@ -118,13 +126,16 @@ User Prompt -> Prompt Understanding Agent -> Structured Music Intent -> Composit
 
 ## Quick Start
 
-Recommended on Windows:
+For a console-free Windows launch, open the desktop **Sera** shortcut or the built application:
 
 ```powershell
-D:\Sera\run_app.bat
+.\dist_desktop\release\win-unpacked\Sera.exe
 ```
 
-This one-click launcher builds the local Workbench, starts the source backend on the notation bridge port, and opens the Electron desktop window. It does not open an external browser. Use `D:\Sera\run_web_app.bat` only when Vite hot reload is explicitly needed.
+`run_app.bat` remains available for terminal/source development. Double-clicking a
+batch file opens a command window; the desktop shortcut targets the GUI executable directly.
+
+The packaged application starts its bundled backend and opens the Electron desktop window. The batch launcher uses that package when available and otherwise prepares the source development runtime. Neither opens an external browser. Use `D:\Sera\run_web_app.bat` only when Vite hot reload is explicitly needed.
 
 Optional desktop shortcut:
 
