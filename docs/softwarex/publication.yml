@@ -26,6 +26,10 @@ benchmark_human_review_complete: true
 journal: "SoftwareX"
 manuscript_number: "SOFTX-D-26-01135"
 submission_date: "2026-08-28"
-submission_status: "under_review"
-submission_status_label: "Under Review"
-submission_status_last_confirmed: "2026-09-03"
+submission_status: "minor_revision"
+submission_status_label: "Minor revision (decision email)"
+submission_status_last_confirmed: "2026-10-01"
+submission_status_evidence: "Gmail decision message 1a0f6ad167a06641, read 2026-10-02"
+revision_deadline: "2026-10-31"
+revision_portal_status_verified: false
+revision_reviewer_comments_retrieved: false

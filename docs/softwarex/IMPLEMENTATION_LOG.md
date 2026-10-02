@@ -627,3 +627,53 @@
   `v1.0.0` tag, GitHub Release assets and Zenodo archive were not replaced.
 - Paper impact: none. This is a post-submission brand and packaging change, not a change
   to the archived software evidence or any scientific claim.
+
+# 2026-10-02 - Phase SX35: minor-revision intake and submission baseline
+
+- Read the actual Gmail decision for `SOFTX-D-26-01135`, dated 1 October 2026:
+  minor revision and modification, revised manuscript due 31 October 2026.
+  The email has no individual reviewer comments or attachments and explicitly
+  directs the author to Editorial Manager. The available browser session reached
+  the public login page; full reports and original portal uploads remain pending
+  authenticated access. No reviewer-specific request has been inferred as fact.
+- Created local branch `codex/softwarex-minor-revision-20261002` from `a0702ec`.
+  Retained 25 byte-preserving submission-ready files from `a21acbe`, with Git blob
+  IDs, SHA-256 and byte counts in
+  `paper/softwarex/baselines/submission_2026-08-28/BASELINE_MANIFEST.json`.
+  Original manuscript Markdown/TeX/DOCX/PDF match that commit exactly. These remain
+  submission-ready repository evidence until the actual portal uploads are checked.
+- Copied the local original release archives and saved source snapshots at the
+  submission-ready and pre-revision commits under ignored local artifacts. Verified
+  the public GitHub tag resolves to `b23afcf` and the local source archive matches
+  its public Release digest. Retained a freshly downloaded public manuscript ZIP
+  separately: its digest is `f3cdf06e...d3444`, whereas the pre-revision local ZIP is
+  `19468783...747b3`. Both ZIPs pass CRC checks; the public copy predates final DOI
+  insertion and the manuscript's AI-use declaration. Neither archive was replaced.
+- Added read-only `scripts/verify_softwarex_revision_baseline.py` and four regression
+  tests for baseline mutation, draft separation, missing optional local archives,
+  and path escape. Disabled Git newline conversion for frozen files because this
+  checkout uses `core.autocrlf=true`.
+- Created the R1 plan, response template, empty sourced-comment matrix, change log
+  and unchanged Markdown working copy under
+  `paper/softwarex/revisions/2026-10_minor_r1/`. Updated current publication status
+  metadata and the SoftwareX workspace README with the email-confirmed decision,
+  deadline, and explicit portal/report verification status.
+- Validation: 25 frozen files and seven local archives passed; focused baseline,
+  submission metadata/assets, package-verifier and export tests passed 28/28;
+  original submission verification passed all 41 required-file checks with no
+  errors or blockers. Report saved separately to
+  `artifacts/softwarex_revision_20261002/pre_revision_submission_check.json`.
+- Unresolved: platform login is required to read complete reviewer reports and
+  confirm the original uploaded files. The specific comment-by-comment plan and
+  manuscript corrections will follow those reports; the reply template is not a
+  completed response. The deadline email gives no cutoff time/timezone.
+- Paper impact: no original manuscript prose, software behavior, benchmark,
+  experimental output, metric or scientific claim changed. No formal experiment
+  was newly run. Public `v1.0.0`, Release assets and Zenodo deposit remain intact;
+  no Git push, email reply or journal resubmission was performed.
+- Browser follow-up: the author explicitly selected the Codex in-app Browser.
+  Connected it and showed its panel, but navigation to Editorial Manager failed
+  because saved browser access permissions could not be verified. The in-app tab
+  is still blank. Do not represent the earlier separate browser preview as the
+  author's selected login session; continue only in the in-app Browser after its
+  access is restored. This is an access blocker, not a retrieved reviewer report.

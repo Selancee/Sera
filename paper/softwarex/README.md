@@ -32,6 +32,9 @@ source release. Identity, rights confirmation, public repository visibility, and
 `v1.0.0` release metadata are complete.
 
 The manuscript was submitted to SoftwareX on 28 August 2026 with manuscript number
-`SOFTX-D-26-01135`. Its last recorded journal status is **Under Review**, confirmed
-3 September 2026. The status is dated because Editorial Manager may change it without
-changing the archived software release.
+`SOFTX-D-26-01135`. The decision email dated 1 October 2026 invites **minor revision**,
+due **31 October 2026**. The email was read on 2 October; the authenticated portal
+status and individual reviewer comments still require access to Editorial Manager.
+See [the R1 workspace](revisions/2026-10_minor_r1/README.md) and
+[the frozen submission-ready baseline](baselines/submission_2026-08-28/README.md).
+Original manuscript files and deposited `v1.0.0` software remain unchanged.
