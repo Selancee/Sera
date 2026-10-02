@@ -1,0 +1,18 @@
+{
+  "tested_commit": "b4a9718f626e70c79eb506b8cc02637cd9008a96",
+  "python_suite": {
+    "tests": 444,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "answer_blind_offline_runs": 18,
+  "answer_blind_integrity_checks": 14,
+  "validator_replayed_cases": 200,
+  "invalid_mutations_rejected": 180,
+  "canonical_valid_controls_rejected": 3,
+  "canonical_valid_controls": 20,
+  "live_provider_calls": 0,
+  "live_status": "authorized_waiting_for_DEEPSEEK_API_KEY_in_user_environment",
+  "note": "Offline fixture and mutation evidence do not constitute real-model performance."
+}

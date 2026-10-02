@@ -2523,3 +2523,8 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Full suite at 230dbf7: 443 passed, zero failures/errors/skips. A subsequent newline-portability regression test passes; producer hashes now normalize only Python line endings.
 - New answer-blind offline smoke: 18/18 fixture runs; analysis generation exercised. These are explicitly mock evidence. Frozen revision fixture still reproduces all 360 rows and passes 13 checks; baseline 25 files and 7 archives remain intact.
 - DeepSeek live testing is authorized but has made no calls pending local user environment credential configuration. See LIVE_EXPERIMENT_PROTOCOL.md and VALIDATOR_DETECTION_REPORT.md.
+
+### Final offline preflight
+
+- Commit b4a9718: 444 tests passed, zero failures/errors/skips. New answer-blind fixture completed 18/18 and passed 14 integrity/recomputation checks. All 200 saved detector cases replay with identical reports, commit decisions and fingerprints.
+- Receipt: paper/softwarex/revisions/2026-10_minor_r1/DEEPSEEK_PREFLIGHT_VALIDATION.json. No DeepSeek requests were made: the user environment credential is not configured yet.
