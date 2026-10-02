@@ -1,0 +1,33 @@
+%%{init: {'theme':'base', 'themeVariables': {'fontFamily':'Arial', 'primaryColor':'#eaf3f2', 'primaryTextColor':'#132a33', 'primaryBorderColor':'#5c8588', 'lineColor':'#425d64', 'secondaryColor':'#f5f1e8', 'tertiaryColor':'#eef1f4'}}}%%
+flowchart TD
+  H["MuseScore / MusicXML application"] --> X["Temporary MusicXML snapshot"]
+
+  subgraph Sera["SeraEdit local process"]
+    direction TB
+    subgraph Proposal["Source-bound proposal"]
+      direction LR
+      I["Canonical ScoreDocument<br/>stable event IDs + fingerprint"]
+      C["Instruction + target scope<br/>+ protected scope"]
+      G["Rule or LLM<br/>patch generator"]
+      P["Versioned ScorePatch"]
+      I --> C --> G --> P
+    end
+    subgraph Review["Validation and transaction"]
+      direction LR
+      V["Schema + structure + duration<br/>notation + protected-scope validators"]
+      T["Atomic transaction<br/>clone, apply, round trip"]
+      R{"Valid?"}
+      D["Reviewable diff<br/>validation report + undo"]
+      J["Reject / repair<br/>source unchanged"]
+      V --> T --> R
+    end
+    P --> V
+    R -->|yes| D
+    R -->|no| J
+  end
+
+  X --> I
+  D --> O["Separate reviewed MusicXML revision<br/>for visual host inspection"]
+
+  classDef decision fill:#f4dfd8,stroke:#9b5a4d,color:#301b17;
+  class R decision;

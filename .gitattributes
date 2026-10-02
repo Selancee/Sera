@@ -1,0 +1,4 @@
+# Frozen submission copies must retain exact bytes even with core.autocrlf=true.
+paper/softwarex/baselines/**/files/** -text whitespace=-blank-at-eol
+# The initial revision Markdown also retains the submitted hard line breaks.
+paper/softwarex/revisions/**/manuscript/*.md -text whitespace=-blank-at-eol
