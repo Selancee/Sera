@@ -19,7 +19,7 @@ Evidence: `experiments/softwarex_validator_detection_200_v1/`.
 | stale_source | E05 | 20/20 | 20/20 |
 | wrong_dynamic_semantics | E15 | 0/20 | 20/20 |
 
-Duration mutations produced E07 in eight cases and E08 (voice collision) in twelve; both detect the intended timing fault. All 180 invalid patches were rejected after the fix. All 183 rejections (including three controls) returned the original fingerprint. Caller-owned score objects remained unchanged in all 200 cases; there were no exceptions.
+Duration mutations produced E08 (voice collision) in all 20 cases; eight also produced E07. Both detect the intended timing fault. All 180 invalid patches were rejected after the fix. All 183 rejections (including three controls) returned the original fingerprint. Caller-owned score objects remained unchanged in all 200 cases; there were no exceptions.
 
 The pre-fix wrong-dynamic cases had **0/20 targeted semantic detections**. Three happened to be rejected by the XML round-trip checker for a different reason. Thus generic rejection (3/20) must not be misreported as semantic detection. The new `dynamic_equals` check detects 20/20 on the same cases: this is regression evidence after diagnosis.
 
