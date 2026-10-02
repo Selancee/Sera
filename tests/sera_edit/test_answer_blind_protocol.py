@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import hashlib
 from pathlib import Path
 
 import pytest
@@ -11,6 +12,7 @@ from evaluation.conditions.sera_edit_conditions import run_condition
 from evaluation.runners.runtime_controls import BudgetExceeded, BudgetLedger
 from sera_edit.generation.prompts import build_condition_messages, build_repair_messages
 from sera_edit.providers.base import ProviderResponse
+from scripts.verify_reproducibility import _hash_mismatches
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -62,3 +64,12 @@ def test_budget_survives_interruption_and_resume(tmp_path):
         resumed.reserve(.5)
     assert resumed.spent_usd == .6
     assert resumed.estimate([{"content": "谱" * 1000}], 100) >= .0031
+
+
+def test_producer_hash_accepts_crlf_but_rejects_code_drift(tmp_path):
+    path = tmp_path / "producer.py"
+    expected = {path.name: hashlib.sha256(b"value = 1\n").hexdigest()}
+    path.write_bytes(b"value = 1\r\n")
+    assert not _hash_mismatches(expected, tmp_path, normalize_text=True)
+    path.write_bytes(b"value = 2\r\n")
+    assert _hash_mismatches(expected, tmp_path, normalize_text=True)

@@ -82,7 +82,9 @@ def analyze(experiment: Path, output: Path) -> dict:
     with (output / "comparison.csv").open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore"); writer.writeheader()
         writer.writerows({"condition": k, **v} for k, v in report["conditions"].items())
-    lines = [f"# {manifest['experiment_id']}", "", report["claim_boundary"], "", "| Condition | Strict editing success | Outputs | Outputs with leakage | Correct refusal | Estimated USD |", "|---|---:|---:|---:|---:|---:|"]
+    lines = [f"# {manifest['experiment_id']}", "", f"Result class: {manifest['result_class']}",
+             "These results are not formal model evidence." if manifest['result_class'] != "formal_live" else "Scored live-provider experiment.",
+             "", report["claim_boundary"], "", "| Condition | Strict editing success | Outputs | Outputs with leakage | Correct refusal | Estimated USD |", "|---|---:|---:|---:|---:|---:|"]
     for name, r in report["conditions"].items():
         lines.append(f"| {name} | {r['strict_edit_success']}/{r['editing_tasks']} | {r['editing_outputs_produced']} | {r['outputs_with_leakage']} | {r['correct_refusals']}/{r['refusal_tasks']} | {r['estimated_cost_usd']:.4f} |")
     lines += ["", "Strict success: " + report["strict_success"], "", "Leakage is measured among produced editing outputs; rejection is not a successful edit.", "", "Repairs are additional calls available only to Sera Full. This is a system comparison, not a matched-call-budget causal estimate.", "", report["cost_basis"], "", "Paired source-cluster bootstrap intervals are exploratory; the 120 tasks are not 120 independent scores.", "", "```json", json.dumps(report["paired_source_bootstrap"], indent=2), "```", ""]

@@ -71,8 +71,31 @@ selection count from “66 tasks” to “66 runs.”
 
 ## Pending responses
 
-- P0-LIVE: real-provider comparison deferred at the author's request. No mock or
-  rule-based result will be substituted for it.
-- P0-VALIDATORS: error-detection/false-rejection experiment remains pending.
+- P0-LIVE: the author has selected DeepSeek and authorized testing. The answer-blind
+  protocol is implemented; the live run awaits environment-only credential setup.
+  No mock or rule-based result will be substituted for it.
 - Literature, platform support, UI evidence, terminology and other P1 points remain
   to be completed before this response is ready for submission.
+
+## P0-VALIDATORS — local evidence, manuscript integration pending
+
+**Comment:** The ability of validators to detect errors is asserted but never measured.
+
+**Response draft:** We added a constructed-error study on 20 existing synthetic
+scores, with 180 labeled mutations and 20 canonical-valid controls. The study
+preserves the input patches, detector reports, source hashes and rollback checks.
+It exposed an ignored `dynamic_equals` postcondition, which we corrected. After
+the correction, all 180 invalid patches were rejected and all rejected transactions
+returned the original fingerprint. The same-case post-fix test is regression
+evidence, and the pre-fix results remain available.
+
+The pipeline also rejected three of the 20 canonical-valid controls because
+grace-note dynamics changed during MusicXML round-trip. We report this 15%
+end-to-end rejection rate as an export/representation limitation; it is not an
+isolated validator false-positive estimate. We distinguish targeted semantic
+detection from rejection for an unrelated fault and do not infer real-model error
+prevalence or generalization from these constructed cases.
+
+**Evidence:** `VALIDATOR_DETECTION_REPORT.md` and
+`experiments/softwarex_validator_detection_200_v1/`. Final manuscript location and
+rendered line numbers remain pending.

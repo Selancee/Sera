@@ -123,7 +123,9 @@ def _implementation_hashes() -> dict[str, str]:
     paths = [path for directory in ("sera_edit", "evaluation", "backend")
              for path in (ROOT / directory).rglob("*.py")]
     paths += [ROOT / "scripts/validate_benchmark.py", ROOT / "scripts/recompute_metrics.py"]
-    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+    # Python's universal-newline text hashing permits LF/CRLF checkouts without
+    # weakening detection of executable text changes.
+    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
             for path in sorted(paths)}
 
 

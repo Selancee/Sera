@@ -2516,3 +2516,10 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Validator pilots retained: v1 controls exposed chord export representability; v2 has 3/20 grace-dynamic round-trip rejections and reveals an unchecked dynamic_equals effect. Added event/value validation with regression tests.
 - Tests at this stage: initial full suite 441 passed; subsequent focused suite 21 passed; six smoke task definitions validate. Final suite and frozen post-fix study follow.
 - Live API has not run: awaiting user-level DEEPSEEK_API_KEY setup. No public release, Git push or journal submission.
+
+### Local test evidence
+
+- Clean producer 230dbf7 generated 200 validator cases: 180/180 invalid patches rejected, 3/20 canonical-valid controls rejected on grace-note dynamic round-trip fidelity, all 200 caller inputs unchanged and all 183 rollbacks verified. Pre-fix semantic detections were 0/20; all pre-fix cases retained.
+- Full suite at 230dbf7: 443 passed, zero failures/errors/skips. A subsequent newline-portability regression test passes; producer hashes now normalize only Python line endings.
+- New answer-blind offline smoke: 18/18 fixture runs; analysis generation exercised. These are explicitly mock evidence. Frozen revision fixture still reproduces all 360 rows and passes 13 checks; baseline 25 files and 7 archives remain intact.
+- DeepSeek live testing is authorized but has made no calls pending local user environment credential configuration. See LIVE_EXPERIMENT_PROTOCOL.md and VALIDATOR_DETECTION_REPORT.md.

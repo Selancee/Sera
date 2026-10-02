@@ -35,14 +35,15 @@ def _csv_rows(path: Path) -> dict[str, dict[str, str]]:
     return indexed
 
 
-def _hash_mismatches(entries: dict[str, str], base: Path) -> list[dict[str, Any]]:
+def _hash_mismatches(entries: dict[str, str], base: Path, *, normalize_text: bool = False) -> list[dict[str, Any]]:
     mismatches = []
     for name, expected in entries.items():
         path = (base / name).resolve()
         if not path.is_relative_to(base.resolve()):
             mismatches.append({"path": name, "error": "path escapes evidence root"})
             continue
-        actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+        data = (path.read_text(encoding="utf-8").encode("utf-8") if normalize_text else path.read_bytes()) if path.is_file() else None
+        actual = hashlib.sha256(data).hexdigest() if data is not None else None
         if actual != expected:
             mismatches.append({"path": name, "expected": expected, "actual": actual})
     return mismatches
@@ -93,7 +94,7 @@ def verify(experiment_dir: Path, *, run_tests: bool = True, output_dir: Path | N
     diagnostics: dict[str, Any] = {}
     for key in ("input_file_hashes", "evidence_file_hashes", "implementation_hashes"):
         if key in manifest:
-            diagnostics[key] = _hash_mismatches(manifest[key], ROOT)
+            diagnostics[key] = _hash_mismatches(manifest[key], ROOT, normalize_text=key == "implementation_hashes")
             checks[key] = bool(manifest[key]) and not diagnostics[key]
     if "evidence_file_hashes" in manifest:
         expected_paths = {run[field] for run in runs for field in ("raw_output_path", "normalized_output_path")}
