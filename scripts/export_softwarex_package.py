@@ -27,10 +27,13 @@ ROOT_FILES = (
     ".gitattributes", "pyproject.toml", "requirements.txt", "requirements-tested-windows.txt",
     "requirements-training.txt", "requirements-publication.txt",
     "evaluation/__init__.py", "evaluation/benchmark_io.py",
+    "run_app.bat", "run_web_app.bat", "run_backend.bat", "run_frontend.bat", "stop_app.bat",
+    "docs/brand-asset-provenance.md",
 )
 SOURCE_TREES = (
     ".github", "backend", "sera_edit", "frontend", "electron", "integrations/musescore",
     "benchmark", "demo", "scripts", "tests", "packaging/windows",
+    "packaging/backend", "packaging/desktop", "assets/branding",
     "docs/softwarex", "docs/architecture", "evaluation/analysis", "evaluation/conditions",
     "evaluation/metrics", "evaluation/runners", "evaluation/statistics",
     "evaluation/error_analysis", "evaluation/reporting", "evaluation/configs",

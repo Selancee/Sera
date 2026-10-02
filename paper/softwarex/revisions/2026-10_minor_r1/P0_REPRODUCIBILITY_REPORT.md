@@ -26,7 +26,10 @@ A later passing run does not retroactively make the original tag or deposit repr
 - The ignored-directory test had already been repaired after the original tag. It
   now builds a small fixture and separately checks the tracked 720-run snapshot.
 - Source export includes required evaluation modules, training modules used by
-  regression tests, and revision evidence. Existing source ZIPs cannot be silently
+  regression tests, backend/desktop packaging entry points, launchers, branding
+  assets and revision evidence. Full archive tests caught nine additional missing-file
+  failures after the initial import repair, making the archive check essential.
+  Existing source ZIPs cannot be silently
   overwritten. Local candidates use an explicit label and record Git provenance.
 - `.gitattributes` preserves byte-hashed benchmark, dependency and publication
   evidence files, including existing human-review hashes. The first clean-checkout

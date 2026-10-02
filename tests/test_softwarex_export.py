@@ -39,6 +39,10 @@ def test_source_package_contains_required_evaluation_modules_and_hash_policy():
         "evaluation/runners/experiment_runner.py",
         "evaluation/configs/softwarex_revision_mock.yaml",
         "tests/sera_edit/test_reproducibility_contract.py",
+        "evaluation/v0961_final_score_style_integration/run_v0961_eval.py",
+        "packaging/backend/run_backend_packaged.py", "packaging/backend/backend.spec",
+        "packaging/desktop/run_desktop_app.py", "packaging/desktop/desktop.spec",
+        "run_app.bat", "run_web_app.bat", "assets/branding/sera-icon.ico",
     } <= files
 
 
