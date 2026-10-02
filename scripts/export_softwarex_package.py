@@ -24,19 +24,21 @@ MAX_FILE_BYTES = 20 * 1024 * 1024
 ROOT_FILES = (
     ".env.example", "LICENSE", "THIRD_PARTY_NOTICES.md", "CITATION.cff",
     "codemeta.json", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "SECURITY.md",
-    "pyproject.toml", "requirements.txt", "requirements-tested-windows.txt",
+    ".gitattributes", "pyproject.toml", "requirements.txt", "requirements-tested-windows.txt",
     "requirements-training.txt", "requirements-publication.txt",
+    "evaluation/__init__.py", "evaluation/benchmark_io.py",
 )
 SOURCE_TREES = (
     ".github", "backend", "sera_edit", "frontend", "electron", "integrations/musescore",
     "benchmark", "demo", "scripts", "tests", "packaging/windows",
-    "docs/softwarex", "docs/architecture", "evaluation/conditions",
+    "docs/softwarex", "docs/architecture", "evaluation/analysis", "evaluation/conditions",
     "evaluation/metrics", "evaluation/runners", "evaluation/statistics",
     "evaluation/error_analysis", "evaluation/reporting", "evaluation/configs",
     "experiments/softwarex_verification_120_v1",
     "experiments/softwarex_runtime_acceptance_720_v4",
     "experiments/softwarex_host_scope_robustness_240_v3", "paper/softwarex",
     "experiments/softwarex_human_review_120_v1",
+    "experiments/softwarex_revision_verification_120_v2", "training",
 )
 MANUSCRIPT_TREES = (
     "paper/softwarex/manuscript", "paper/softwarex/figures",
@@ -154,6 +156,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Export deterministic SoftwareX source and LaTeX submission archives.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "paper" / "softwarex" / "release")
     parser.add_argument(
+        "--artifact-label", default=VERSION,
+        help="Filename label for a local revision candidate; does not change the software version or DOI.",
+    )
+    parser.add_argument(
         "--preserve-existing-source",
         action="store_true",
         help=(
@@ -190,19 +196,26 @@ def preserved_source_manifest(output_dir: Path) -> dict[str, object]:
 
 def main() -> int:
     args = build_parser().parse_args()
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", args.artifact_label):
+        raise ValueError("artifact label must contain only letters, digits, dots, underscores and hyphens")
+    if args.preserve_existing_source and args.artifact_label != VERSION:
+        raise ValueError("preserving a published source requires its original version label")
     manuscript_files = collect(MANUSCRIPT_TREES, ("CITATION.cff", "LICENSE"))
     assert_safe(manuscript_files)
     if args.preserve_existing_source:
         source_manifest = preserved_source_manifest(args.output_dir)
     else:
+        source_path = args.output_dir / f"seraedit-{args.artifact_label}-source.zip"
+        if source_path.exists():
+            raise FileExistsError(f"Refusing to overwrite source archive: {source_path}")
         source_files = collect(SOURCE_TREES, ROOT_FILES)
         assert_safe(source_files)
         source_manifest = write_archive(
-            args.output_dir / f"seraedit-{VERSION}-source.zip",
+            source_path,
             source_files,
             "source_distribution",
         )
-    manuscript_manifest = write_archive(args.output_dir / f"seraedit-{VERSION}-softwarex-manuscript.zip", manuscript_files, "manuscript_sources")
+    manuscript_manifest = write_archive(args.output_dir / f"seraedit-{args.artifact_label}-softwarex-manuscript.zip", manuscript_files, "manuscript_sources")
     payload = {"source": source_manifest, "manuscript": manuscript_manifest}
     manifest_path = args.output_dir / "release_manifest.json"
     manifest_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

@@ -33,6 +33,12 @@ jobs:
         run: python scripts/run_reviewer_demo.py --output-dir artifacts/softwarex_reviewer_demo
       - name: Verify the SoftwareX draft package
         run: python scripts/verify_softwarex_package.py --profile draft
+      - name: Recompute frozen revision evidence and verify hashes
+        run: python scripts/verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts/revision_reproducibility
+      - name: Build a local source archive candidate
+        run: python scripts/export_softwarex_package.py --artifact-label ci-candidate --output-dir artifacts/source_candidate
+      - name: Verify the isolated source archive
+        run: python scripts/verify_softwarex_source_archive.py artifacts/source_candidate/seraedit-ci-candidate-source.zip --output-dir artifacts/source_archive_verification
       - name: Preserve reviewer-demo evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,6 +46,15 @@ jobs:
           name: softwarex-reviewer-demo
           path: artifacts/softwarex_reviewer_demo
           if-no-files-found: error
+      - name: Preserve revision reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwarex-revision-reproducibility
+          path: |
+            artifacts/revision_reproducibility
+            artifacts/source_archive_verification
+          if-no-files-found: warn
 
   frontend:
     runs-on: windows-latest

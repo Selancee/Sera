@@ -23,7 +23,7 @@ This guide maps the SoftwareX reviewer form to the smallest concrete SeraEdit ev
 | --- | --- |
 | Does the software run as described? | `scripts/run_reviewer_demo.py`; packaged smoke in `VERIFICATION_REPORT.md` |
 | Can the described behavior be reproduced? | `demo/README.md`; `REPRODUCIBILITY.md`; resumable raw/metric outputs |
-| Is source/executable behavior tested? | 408 Python tests, 120 frontend tests, GitHub Actions workflow, Windows package smoke |
+| Is source/executable behavior tested? | Revision audit with actual collected/passed test counts, frontend tests, GitHub Actions workflow, Windows package smoke |
 | Is the architecture understandable? | manuscript Figure 1; `docs/architecture/`; typed `ScorePatch` schema |
 | Are code and data documented? | `API_REFERENCE.md`, `USER_MANUAL.md`, benchmark card and schema files |
 | Is the environment specified? | `INSTALLATION.md`, lock files, experiment manifests and dependency hashes |
@@ -38,13 +38,19 @@ npm.cmd --prefix frontend test -- --run
 npm.cmd --prefix frontend run build
 .\.venv\Scripts\python.exe scripts\validate_benchmark.py --split core --write-report
 .\.venv\Scripts\python.exe scripts\verify_softwarex_package.py --profile draft
+.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts\revision_reproducibility
 ```
 
-The frozen publication evidence is stored in the four allowlisted
-`experiments/softwarex_*` directories. The 360-case fixture is explicitly non-formal;
+The original publication evidence and new revision fixture are stored in allowlisted
+`experiments/softwarex_*` directories. The original fixture has documented drift;
+use the new revision fixture for current reproducibility checks. Both 360-case fixtures are explicitly non-formal;
 the 720-run product replay is deterministic acceptance evidence, not remote-model
 accuracy. The 120-task human review used one pseudonymous reviewer for both passes and
 therefore does not establish inter-rater reliability.
+
+The rule generator was adjusted using benchmark feedback, including the Chinese
+preserve-pitch/tenuto correction. The 720-run replay is regression evidence on those
+development tasks. It does not establish performance on held-out tasks.
 
 ## Host and security boundary
 

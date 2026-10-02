@@ -2,7 +2,7 @@
 
 ## Claim classes
 
-SeraEdit separates three evidence classes:
+SeraEdit separates four evidence classes:
 
 1. **Automated software verification**: tests, schema checks, round trips, package
    health and deterministic fixtures. These results are reportable as engineering
@@ -26,18 +26,21 @@ Both passes use the same pseudonymous reviewer, so no inter-rater claim is made.
 
 ## Reproduction
 
+The original `v1.0.0` fixture is retained as historical evidence. The revision audit
+reproduced its benchmark/dependency hash mismatch and six metric-row differences.
+Use the separately generated `softwarex_revision_verification_120_v2` snapshot for
+the corrected offline protocol. Do not resume or regenerate the original experiment
+under its old identifier. See the revision's `P0_REPRODUCIBILITY_REPORT.md` for the
+diagnosis and the exact environment and source revision tested.
+
 Follow `INSTALLATION.md`, then run:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
 .\.venv\Scripts\python.exe scripts\validate_benchmark.py --split core --write-report
-.\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\core_mock.yaml --experiment-id softwarex_verification_120_v1
-.\.venv\Scripts\python.exe scripts\run_runtime_acceptance.py --split core --mode local --language en --language zh --repetitions 3 --host-scope-mode exact --experiment-id runtime_acceptance_core_bilingual_r3_v4_20260826 --fail-on-task-failure
-.\.venv\Scripts\python.exe scripts\export_runtime_acceptance_evidence.py --source experiments\runtime_acceptance_core_bilingual_r3_v4_20260826 --output experiments\softwarex_runtime_acceptance_720_v4
-.\.venv\Scripts\python.exe scripts\run_runtime_acceptance.py --split core --mode local --language en --language zh --host-scope-mode expanded_adjacent --experiment-id runtime_acceptance_host_roundtrip_scope_v2_20260826 --fail-on-task-failure
-.\.venv\Scripts\python.exe scripts\export_runtime_acceptance_evidence.py --source experiments\runtime_acceptance_host_roundtrip_scope_v2_20260826 --output experiments\softwarex_host_scope_robustness_240_v3
-.\.venv\Scripts\python.exe scripts\export_human_review_evidence.py --json <REVIEW_EXPORT.json> --csv <REVIEW_EXPORT.csv> --output experiments\softwarex_human_review_120_v1
-.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_verification_120_v1 --skip-tests
+.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts\revision_reproducibility
+.\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\softwarex_revision_mock.yaml --experiment-id local_reviewer_fixture
+.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment local_reviewer_fixture --skip-tests --output-dir artifacts\fresh_fixture_reproducibility
 ```
 
 The runner saves a manifest, config/prompt/benchmark hashes, JSONL runs, raw and
@@ -47,7 +50,32 @@ The verifier recomputes metrics and detects evidence drift.
 For first-pass review, `scripts/run_reviewer_demo.py` is the recommended entry point.
 It exercises pitch, dynamics, key signature, meter/deletion, voice movement and safe
 refusal through the actual local product path, then verifies host MusicXML round trips.
-The larger commands above reproduce the frozen publication evidence.
+The first verifier recomputes the frozen revision metrics without generating outputs.
+The second experiment generates fresh fixture outputs under a new identifier. Its
+latencies will differ; each run must reproduce its own saved metrics exactly.
+
+For POSIX shells, use `python` from the activated environment and forward slashes in
+the same commands. The current revision audit reports Windows execution only.
+
+New manifests include per-file input and raw/normalized-output SHA-256 hashes. The
+version 2 dependency digest also covers the tested dependency constraints and
+publication requirements. Resume refuses benchmark, dependency or evidence drift.
+`.gitattributes` preserves exact bytes of benchmark inputs, dependency files and
+published evidence, including the original human-review file hashes. The verifier
+reports differing metric fields and verifies the human-review evidence hashes.
+
+To validate the distributable rather than the development checkout:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\export_softwarex_package.py --artifact-label revision-candidate --output-dir artifacts\source_candidate
+.\.venv\Scripts\python.exe scripts\verify_softwarex_source_archive.py artifacts\source_candidate\seraedit-revision-candidate-source.zip --output-dir artifacts\source_archive_verification
+```
+
+The archive verifier checks every manifest entry, extracts to a separate temporary
+directory, clears `PYTHONPATH`, and executes the verifier, reviewer demo and test
+suite there. It uses the selected interpreter's installed dependencies; this is
+source-package isolation, not proof of a fresh dependency installation. CI runs the
+same archive check after installing the documented dependencies.
 
 ## Expected verified outcome for this release candidate
 
@@ -63,7 +91,12 @@ Latency from the deterministic fixture is machine/load dependent and is retained
 the raw summary for debugging; it is not a provider/model latency result.
 
 The separate product-runtime acceptance replay does not feed Gold patches to the
-generator. It passes each English and Chinese instruction through
+generator. The rule generator was developed using these benchmark instructions,
+including correction of the Chinese preserve-pitch/tenuto ambiguity after inspecting
+cross-language results. Accordingly, 720/720 is regression evidence on a development
+benchmark, not evidence of generalization to unseen instructions. The 720 executions
+are 120 tasks in two languages with three deterministic repetitions, not 720
+independent tasks. It passes each English and Chinese instruction through
 `generate_patch_with_runtime`, transaction preview, commit, protected-scope checks,
 deterministic task constraints, source-preserving patching of the original MusicXML, and
 host-output re-import. The release snapshot
@@ -95,3 +128,7 @@ available. Version DOI `10.5281/zenodo.22128976` resolves to the archived SeraEd
 Zenodo version. API-based experiments additionally require the reader's own provider
 key and may change with provider model versions. The mock verification path is offline
 and costs no tokens.
+
+The DOI above identifies the original deposit. Local revision candidates and their
+new verification snapshot are not covered by that deposit until a separate updated
+release is published. A local passing audit does not establish a passing hosted CI run.

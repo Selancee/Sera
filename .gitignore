@@ -31,6 +31,8 @@ experiments/*
 !experiments/softwarex_host_scope_robustness_240_v3/**
 !experiments/softwarex_human_review_120_v1/
 !experiments/softwarex_human_review_120_v1/**
+!experiments/softwarex_revision_verification_120_v2/
+!experiments/softwarex_revision_verification_120_v2/**
 training_runs/*
 checkpoints/*
 models/*

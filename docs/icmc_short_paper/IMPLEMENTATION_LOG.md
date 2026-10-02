@@ -2482,3 +2482,16 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No Core/World/Forge implementation, frontend, score, benchmark, experiment, or
   scientific claim changed. This is a Windows shortcut and documentation correction.
+
+## 2026-10-02 - SoftwareX revision reproducibility repair
+
+- Reproduced the original tag's benchmark/dependency/metric drift and ignored-data
+  test failure; independently confirmed missing evaluation modules in its source ZIP.
+- Implemented source-archive isolation checks, byte-preserving evidence attributes,
+  diagnostic hash/metric verification and resume drift checks. Initial focused
+  regression: 18 passed. Fresh fixture and final isolated audits follow next.
+- Detailed file changes, evidence and remaining work are recorded in
+  `paper/softwarex/revisions/2026-10_minor_r1/P0_REPRODUCIBILITY_REPORT.md`.
+- Existing application behavior is unchanged. Old evidence is retained; new mock
+  evidence remains ineligible for model-performance claims. API experiments are
+  explicitly deferred by the author.

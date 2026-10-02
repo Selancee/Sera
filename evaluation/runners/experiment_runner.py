@@ -54,9 +54,12 @@ def _git_metadata() -> dict[str, Any]:
         return {"commit": None, "dirty": None}
 
 
-def _dependency_hash() -> str:
+def _dependency_hash(version: int = 1) -> str:
     digest = hashlib.sha256()
-    for name in ("pyproject.toml", "requirements.txt", "frontend/package-lock.json"):
+    names = ["pyproject.toml", "requirements.txt", "frontend/package-lock.json"]
+    if version >= 2:
+        names.extend(["requirements-tested-windows.txt", "requirements-publication.txt"])
+    for name in names:
         path = ROOT / name
         if path.exists():
             digest.update(path.read_bytes())
@@ -88,6 +91,22 @@ def _benchmark_hash(benchmark_root: Path, split: dict[str, Any], split_name: str
 
 def _config_hash(config: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(config, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def _input_file_hashes(benchmark_root: Path, split: dict[str, Any], split_name: str) -> dict[str, str]:
+    """Record byte-level inputs so drift can be attributed to individual files."""
+
+    paths = {benchmark_root / "splits" / f"{split_name}.json"}
+    paths.update((benchmark_root / "schemas").glob("*.json"))
+    for task_id in split["task_ids"]:
+        task_path = resolve_task_path(benchmark_root, task_id, split_name)
+        task = _load_json(task_path)
+        paths.update([task_path, benchmark_root / "source_scores" / f"{task['score_id']}.score.json"])
+        paths.update(benchmark_root / task[field] for field in ("gold_patch_path", "expected_output_path") if task.get(field))
+    for name in ("pyproject.toml", "requirements.txt", "requirements-tested-windows.txt", "requirements-publication.txt", "frontend/package-lock.json"):
+        if (ROOT / name).is_file():
+            paths.add(ROOT / name)
+    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted(paths)}
 
 
 def _provider_configs(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -224,7 +243,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
     formal = bool(config.get("formal_results_allowed", False))
     result_class = "formal_live" if formal else ("mock_non_formal" if all(item.get("provider") == "mock" for item in provider_configs) else "live_non_formal")
     config_snapshot = experiment_dir / "config_snapshot.yaml"
-    if config_snapshot.exists() and config_snapshot.read_bytes() != config_path.read_bytes():
+    if config_snapshot.exists() and _config_hash(yaml.safe_load(config_snapshot.read_text(encoding="utf-8"))) != _config_hash(config):
         raise ValueError(f"experiment {actual_id} already exists with a different config snapshot")
     if not config_snapshot.exists():
         shutil.copyfile(config_path, config_snapshot)
@@ -258,12 +277,18 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
     manifest_path = experiment_dir / "manifest.json"
     if manifest_path.exists():
         manifest = _load_json(manifest_path)
+        for relative, expected_digest in manifest.get("evidence_file_hashes", {}).items():
+            evidence_path = ROOT / relative
+            if not evidence_path.is_file() or hashlib.sha256(evidence_path.read_bytes()).hexdigest() != expected_digest:
+                raise ValueError(f"experiment {actual_id} cannot resume after evidence drift: {relative}")
         if (
             manifest.get("config_hash") != _config_hash(config)
             or manifest.get("prompt_metadata") != prompt_info
             or manifest.get("benchmark_hash") != benchmark_hash
+            or manifest.get("dependency_lock_hash") != _dependency_hash(manifest.get("dependency_hash_version", 1))
+            or (manifest.get("input_file_hashes") is not None and manifest["input_file_hashes"] != _input_file_hashes(benchmark_root, split, config["split"]))
         ):
-            raise ValueError(f"experiment {actual_id} cannot resume after config, prompt, or benchmark drift")
+            raise ValueError(f"experiment {actual_id} cannot resume after config, prompt, benchmark, or dependency drift")
     else:
         manifest = {
             "experiment_id": actual_id,
@@ -284,7 +309,9 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             "git": _git_metadata(),
             "python_version": sys.version,
             "platform": platform.platform(),
-            "dependency_lock_hash": _dependency_hash(),
+            "dependency_hash_version": 2,
+            "dependency_lock_hash": _dependency_hash(2),
+            "input_file_hashes": _input_file_hashes(benchmark_root, split, config["split"]),
         }
         _write_json(manifest_path, manifest)
 
@@ -360,7 +387,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
                     "messages": messages,
                     "response_schema_hash": hashlib.sha256(json.dumps(response_schema, sort_keys=True).encode("utf-8")).hexdigest() if response_schema else None,
                     "temperature": config.get("temperature", 0.0),
-                    "seed": config.get("seed"),
+                    "seed": None if config.get("seed") is None else int(config["seed"]) + repetition - 1,
                     "max_tokens": config.get("max_tokens"),
                 },
                 "response": response,
@@ -407,6 +434,11 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         executor.shutdown(wait=not interrupted, cancel_futures=interrupted)
 
     all_rows = [*existing_rows, *new_rows]
+    manifest["evidence_file_hashes"] = {
+        row[field]: hashlib.sha256((ROOT / row[field]).read_bytes()).hexdigest()
+        for row in all_rows for field in ("raw_output_path", "normalized_output_path")
+    }
+    _write_json(manifest_path, manifest)
     metrics_rows = []
     for row in all_rows:
         metrics = dict(row["metrics"])

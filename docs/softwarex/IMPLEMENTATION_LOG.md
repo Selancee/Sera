@@ -677,3 +677,19 @@
   is still blank. Do not represent the earlier separate browser preview as the
   author's selected login session; continue only in the in-app Browser after its
   access is restored. This is an access blocker, not a retrieved reviewer report.
+
+## 2026-10-02 - P0 reproducibility diagnosis and repair
+
+- Received two reports directly from the author (pasted text and attachment).
+  Reproduced the original tag's three verifier failures, six changed metric rows,
+  and ignored-directory test failure. The archived source also omits evaluation
+  modules and cannot import its verifier. Detailed diagnosis is in the R1
+  `P0_REPRODUCIBILITY_REPORT.md`.
+- Added exact-byte Git attributes, complete source-package module selection,
+  evidence hashing and resume drift rejection, diagnostic/read-only auditing,
+  failed-row recomputation, and isolated source-archive validation in CI.
+- Focused initial regression passed 10 tests. Final source/ZIP checks and the
+  fresh 360-case fixture remain to be executed before marking repair complete.
+- Updated reproduction commands and disclosed that the 720-run replay followed
+  development feedback on the same benchmark. Original publication evidence is
+  preserved. Real API experiments are deferred at the author's request.
