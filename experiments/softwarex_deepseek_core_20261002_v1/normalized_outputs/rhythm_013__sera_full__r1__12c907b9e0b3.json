@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Unsupported instruction: merging rhythmic units is not expressible with the available operation types and condition_contract assertion formats.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Unsupported instruction: merging rhythmic units is not expressible with the available operation types and condition_contract assertion formats."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1826.2221000040881,
+    "input_tokens": 3483,
+    "output_tokens": 32,
+    "estimated_cost": 0.0010833,
+    "request_id": "0342bc94-cdfd-4bc7-ba5f-e8e138020b96",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "88a34f361d183b98f11c4fa7905537528c3088280d9977fd98dd6bead9091dce"
+  },
+  "processing_latency_ms": 0.002200016751885414,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

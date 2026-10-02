@@ -1,0 +1,4 @@
+﻿condition,editing_tasks,strict_edit_success,editing_outputs_produced,outputs_with_leakage,refusal_tasks,correct_refusals,estimated_cost_usd
+full_rewrite,110,72,105,17,10,10,0.6536934
+patch_only,110,65,92,18,10,10,0.1567527
+sera_full,110,63,73,0,10,10,0.2212566

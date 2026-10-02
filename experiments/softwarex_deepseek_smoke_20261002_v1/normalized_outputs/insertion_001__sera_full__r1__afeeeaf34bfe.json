@@ -1,0 +1,253 @@
+{
+  "condition": "sera_full",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_m2_staff1_final_note_to_Fsharp4",
+    "source_score_id": "score_001",
+    "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+    "instruction": "Replace the final note of measure 2 staff 1 with F-sharp 4 without changing the measure duration.",
+    "target_scope": {
+      "measures": [
+        2
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [
+      {
+        "type": "event_exists",
+        "event_id": "m2_rh_4",
+        "measure": 2,
+        "staff": 1,
+        "offset": "3",
+        "pitch": "G4",
+        "duration": "quarter"
+      },
+      {
+        "type": "measure_duration_unchanged",
+        "measure": 2,
+        "staff": 1,
+        "duration": "whole"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "op_set_pitch_m2_rh_4",
+        "type": "set_pitch",
+        "selector": {
+          "event_ids": [
+            "m2_rh_4"
+          ],
+          "measures": [
+            2
+          ],
+          "staffs": [
+            1
+          ]
+        },
+        "arguments": {
+          "pitch": "F#4"
+        },
+        "preconditions": [
+          {
+            "type": "event_exists",
+            "event_id": "m2_rh_4"
+          }
+        ],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "preserve_duration": true,
+        "event_id": "m2_rh_4"
+      },
+      {
+        "changed_element_count": {
+          "value": 1
+        }
+      },
+      {
+        "measure_duration_unchanged": {
+          "measure": 2,
+          "staff": 1
+        }
+      }
+    ],
+    "provenance": {
+      "source": "score_context",
+      "derived_from": "m2_rh_4",
+      "note": "Final note of measure 2 staff 1 identified as m2_rh_4 at offset 3; pitch changed from G4 to F#4, duration preserved."
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "unsupported",
+    "errors": [
+      {
+        "code": "E19",
+        "message": "unsupported precondition: measure_duration_unchanged",
+        "stage": "semantic",
+        "repairable": false,
+        "details": {}
+      }
+    ],
+    "warnings": [],
+    "checks": {
+      "schema_version": "1.0.0",
+      "operation_count": 1,
+      "structural": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "event_count": 16,
+          "measure_count": 2,
+          "operation_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "preconditions": {
+        "status": "unsupported",
+        "errors": [
+          {
+            "code": "E19",
+            "message": "unsupported precondition: measure_duration_unchanged",
+            "stage": "semantic",
+            "repairable": false,
+            "details": {}
+          }
+        ],
+        "warnings": [],
+        "checks": {
+          "precondition_count": 2
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      }
+    },
+    "repairable": false,
+    "suggested_repairs": []
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_m2_staff1_final_note_to_Fsharp4\",\"source_score_id\":\"score_001\",\"source_fingerprint\":\"sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b\",\"instruction\":\"Replace the final note of measure 2 staff 1 with F-sharp 4 without changing the measure duration.\",\"target_scope\":{\"measures\":[2],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[{\"type\":\"event_exists\",\"event_id\":\"m2_rh_4\",\"measure\":2,\"staff\":1,\"offset\":\"3\",\"pitch\":\"G4\",\"duration\":\"quarter\"},{\"type\":\"measure_duration_unchanged\",\"measure\":2,\"staff\":1,\"duration\":\"whole\"}],\"operations\":[{\"operation_id\":\"op_set_pitch_m2_rh_4\",\"type\":\"set_pitch\",\"selector\":{\"event_ids\":[\"m2_rh_4\"],\"measures\":[2],\"staffs\":[1]},\"arguments\":{\"pitch\":\"F#4\"},\"preconditions\":[{\"type\":\"event_exists\",\"event_id\":\"m2_rh_4\"}],\"expected_change_count\":1}],\"expected_effects\":[{\"preserve_duration\":true,\"event_id\":\"m2_rh_4\"},{\"changed_element_count\":{\"value\":1}},{\"measure_duration_unchanged\":{\"measure\":2,\"staff\":1}}],\"provenance\":{\"source\":\"score_context\",\"derived_from\":\"m2_rh_4\",\"note\":\"Final note of measure 2 staff 1 identified as m2_rh_4 at offset 3; pitch changed from G4 to F#4, duration preserved.\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_m2_staff1_final_note_to_Fsharp4",
+      "source_score_id": "score_001",
+      "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+      "instruction": "Replace the final note of measure 2 staff 1 with F-sharp 4 without changing the measure duration.",
+      "target_scope": {
+        "measures": [
+          2
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [
+        {
+          "type": "event_exists",
+          "event_id": "m2_rh_4",
+          "measure": 2,
+          "staff": 1,
+          "offset": "3",
+          "pitch": "G4",
+          "duration": "quarter"
+        },
+        {
+          "type": "measure_duration_unchanged",
+          "measure": 2,
+          "staff": 1,
+          "duration": "whole"
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "op_set_pitch_m2_rh_4",
+          "type": "set_pitch",
+          "selector": {
+            "event_ids": [
+              "m2_rh_4"
+            ],
+            "measures": [
+              2
+            ],
+            "staffs": [
+              1
+            ]
+          },
+          "arguments": {
+            "pitch": "F#4"
+          },
+          "preconditions": [
+            {
+              "type": "event_exists",
+              "event_id": "m2_rh_4"
+            }
+          ],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "preserve_duration": true,
+          "event_id": "m2_rh_4"
+        },
+        {
+          "changed_element_count": {
+            "value": 1
+          }
+        },
+        {
+          "measure_duration_unchanged": {
+            "measure": 2,
+            "staff": 1
+          }
+        }
+      ],
+      "provenance": {
+        "source": "score_context",
+        "derived_from": "m2_rh_4",
+        "note": "Final note of measure 2 staff 1 identified as m2_rh_4 at offset 3; pitch changed from G4 to F#4, duration preserved."
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2379.8509999760427,
+    "input_tokens": 2576,
+    "output_tokens": 384,
+    "estimated_cost": 0.0012335999999999998,
+    "request_id": "665a598d-595f-402a-a885-060cd4bc36b2",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "ececd2c3d31c66cd6f6347ddd2edf01f6923ad3b10c45d9d05465253b8e530b6"
+  },
+  "processing_latency_ms": 1.0420000180602074,
+  "error_codes": [
+    "E19"
+  ],
+  "error": "pre-apply validation failed",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

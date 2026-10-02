@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the existing events in measure 1 total 4 quarter-note beats (offsets 0-3, each a quarter note), which cannot fit into a 5/8 measure without altering durations, adding rests, or otherwise changing the specified content.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the existing events in measure 1 total 4 quarter-note beats (offsets 0-3, each a quarter note), which cannot fit into a 5/8 measure without altering durations, adding rests, or otherwise changing the specified content."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 4179.06509997556,
+    "input_tokens": 2570,
+    "output_tokens": 80,
+    "estimated_cost": 0.000867,
+    "request_id": "9c414d2d-422a-49c2-b177-47c1e13f3727",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "aafeff8a1c381b072696631b27d602ab75b1a69b43eb4365dffafae71332fc3c"
+  },
+  "processing_latency_ms": 0.003200024366378784,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

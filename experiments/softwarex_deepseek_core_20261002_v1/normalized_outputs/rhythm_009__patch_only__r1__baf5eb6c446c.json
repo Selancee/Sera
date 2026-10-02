@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'merge the first two rhythmic units' is not supported by the available operation types; no operation can combine or merge existing events while preserving the remaining events.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'merge the first two rhythmic units' is not supported by the available operation types; no operation can combine or merge existing events while preserving the remaining events."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1198.467599984724,
+    "input_tokens": 3490,
+    "output_tokens": 42,
+    "estimated_cost": 0.0010974000000000001,
+    "request_id": "bcd1f43d-0856-431f-915e-a32233562fdd",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "29f19955232ac0de313549be992449fa5721be0a56ca78ad4d4869241512687d"
+  },
+  "processing_latency_ms": 0.001400010660290718,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

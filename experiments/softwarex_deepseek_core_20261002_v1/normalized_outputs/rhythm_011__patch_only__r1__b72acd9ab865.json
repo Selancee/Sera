@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: no operation type in the schema performs merging of rhythmic units, and it is unclear whether the intended result is a single combined note, a chord, or a duration change. Additionally, the target_scope uses staffs:[1] while the score_context identifies staffs as 'left_hand'/'right_hand', so the target staff cannot be resolved unambiguously.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: no operation type in the schema performs merging of rhythmic units, and it is unclear whether the intended result is a single combined note, a chord, or a duration change. Additionally, the target_scope uses staffs:[1] while the score_context identifies staffs as 'left_hand'/'right_hand', so the target staff cannot be resolved unambiguously."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2366.3682999904267,
+    "input_tokens": 3734,
+    "output_tokens": 107,
+    "estimated_cost": 0.0012486,
+    "request_id": "69dbbb8f-94dd-4765-b863-03eeeda78eff",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "762305470854fb3a49ee4224d47098f0d81456678bb5bae70ce0950b3b02129a"
+  },
+  "processing_latency_ms": 0.001900014467537403,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Cannot change measure 1 to 5/8 while preserving all durations and adding no rests: the existing measure contains 12 divisions (6/8) of sounding notes in each staff, which exceeds a 5/8 measure (10 divisions at divisions=4). Reducing the time signature without altering durations or adding rests would leave the measure overfull.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Cannot change measure 1 to 5/8 while preserving all durations and adding no rests: the existing measure contains 12 divisions (6/8) of sounding notes in each staff, which exceeds a 5/8 measure (10 divisions at divisions=4). Reducing the time signature without altering durations or adding rests would leave the measure overfull."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1668.3384000207298,
+    "input_tokens": 6317,
+    "output_tokens": 80,
+    "estimated_cost": 0.0019911,
+    "request_id": "6b10a348-b038-4efc-a2ad-64e730a904d3",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "8790a58e5580f8468fb564fdb25a29cf88d0787c88a51c99d99278b6b8039089"
+  },
+  "processing_latency_ms": 0.002600019797682762,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Make the selected phrase sound mysteriously more beautiful without changing any notation' is subjective and cannot be implemented as a deterministic MusicXML modification. Any change to make music sound different would require altering notation (e.g., dynamics, articulations, tempo, or pitches), which the instruction explicitly forbids. No concrete, notational edit can be derived from this request.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Make the selected phrase sound mysteriously more beautiful without changing any notation' is subjective and cannot be implemented as a deterministic MusicXML modification. Any change to make music sound different would require altering notation (e.g., dynamics, articulations, tempo, or pitches), which the instruction explicitly forbids. No concrete, notational edit can be derived from this request."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2109.737299964763,
+    "input_tokens": 6836,
+    "output_tokens": 85,
+    "estimated_cost": 0.0021528,
+    "request_id": "411fac4a-47f0-4004-912a-539280f5c91d",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "1cbc96813452ccc4785da679553fc427ecea1839a0b1dc9e5d03d723d1abb9d7"
+  },
+  "processing_latency_ms": 0.001800013706088066,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

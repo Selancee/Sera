@@ -19,7 +19,11 @@ MusicXML round-trip fidelity inside an atomic transaction. A desktop interface a
 MuseScore bridge expose proposals, diffs, rejection reasons, and undo without silently
 overwriting the host score. The release includes 20 synthetic scores, 120 editing
 tasks, three evaluation conditions, resumable experiment tooling, and offline fixtures
-for reproducible software verification.
+for reproducible software verification. A real-provider demonstration on these 120
+development tasks completed 360 runs: strict editing success was 72/110 for Full
+Rewrite, 65/110 for Patch Only and 63/110 for Sera Full. Sera Full produced no measured
+non-target changes in its 73 output scores but erroneously refused 34 executable
+tasks, exposing a protection/coverage tradeoff rather than an overall success gain.
 
 Keywords: MusicXML; symbolic music; score editing; structured patches; validation; research software
 
@@ -185,10 +189,83 @@ the instruction did not name a specific measure, the source lacked an adjacent m
 or the operation was global. This regression set directly tests host-selection versus
 semantic-target resolution and remains deterministic product evidence, not model accuracy.
 
+### 3.1. Real-provider demonstration
+
+On 2 October 2026, we ran all three conditions once on each of the 120 development
+tasks using the DeepSeek API alias `deepseek-flash`. The API does not identify an
+immutable model snapshot. The frozen producer was commit `e3a34e1`, with temperature
+zero, thinking disabled, an 8,192-token output limit, no cache or transport retries,
+and at most two model repairs for Sera Full. The answer-blind protocol provides
+instruction, source and user scopes, excluding Gold patches, expected-status labels,
+scoring constraints and unsupported reasons. Both patch conditions receive identical
+initial messages and schemas, but generate separate responses. Only Sera Full receives
+repair, so this is a system comparison, not an equal-call-budget comparison.
+
+Two retained six-task pilots preceded the core run. The first revealed ambiguous
+public documentation of typed patch assertions; we clarified that documentation
+identically for both patch conditions before freezing the core run. Pilot tasks
+overlap the core benchmark. Neither this development benchmark nor the pilot-informed
+protocol establishes held-out generalization. No metric or producer implementation
+was changed after observing the core results.
+
+Strict editing success requires the frozen task constraints, valid MusicXML, complete
+non-target preservation, an actual score output and no refusal. The 110 executable
+tasks and 10 expected-refusal tasks have separate denominators. Leakage counts scores
+with any measured non-target change among produced editing scores; withheld outputs
+cannot establish successful editing.
+
+| Condition | Strict editing success | Produced scores | Scores with leakage | Correct refusal | Erroneous editing refusal |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Full Rewrite | 72/110 (65.5%) | 105 | 17/105 | 10/10 | 5/110 |
+| Patch Only | 65/110 (59.1%) | 92 | 18/92 | 10/10 | 10/110 |
+| Sera Full | 63/110 (57.3%) | 73 | 0/73 | 10/10 | 34/110 |
+
+These results do not demonstrate higher overall editing success for structured
+patches. Sera Full constrained measured leakage while reducing output coverage.
+An exploratory paired bootstrap over the 20 source-score clusters (5,000 resamples)
+gave a Sera Full minus Full Rewrite strict-success difference of -8.18 percentage
+points, with a 95% interval of [-21.10, 5.50]. This small development-set comparison
+does not establish superiority or population-wide equivalence. Scoring follows
+operational benchmark constraints: for example, the insertion task requires deletion
+and insertion even if an in-place pitch change might satisfy a musician's reading of
+“replace the final note.” We retain this limitation without changing scoring post hoc.
+
+All 360 initial generations and 43 repair responses were returned without provider
+failures or token-limit termination. Independent offline recomputation reproduced
+all 360 metric rows and passed 14 integrity checks. Replay of the same initial Sera
+Full responses with model repair disabled yielded 62/120 correct outcomes (strict
+edits plus correct refusals), compared with 73/120 after repair: 11 improvements and
+no regressions. However, 25 repaired editing tasks ended in erroneous refusal.
+Median recorded latency was 9.93, 2.05 and 2.27 seconds for Full Rewrite, Patch Only
+and Sera Full, respectively. Estimated main-run cost was USD 1.03 using configured
+peak/cache-miss rates; this is not a billing receipt. Raw outputs, repair requests,
+per-task metrics, costs and exploratory analyses accompany the revision evidence.
+
+### 3.2. Constructed-error detection
+
+We tested nine labeled mutation families on each of the 20 synthetic sources, plus
+one canonical-valid dynamic-edit control per source: 180 invalid cases and 20 controls.
+The families cover malformed schema, stale fingerprint, missing event, duration,
+orphan tie/slur, protected-scope change, pitch-preservation violation and incorrect
+declared dynamics. The study exposed an ignored `dynamic_equals` postcondition;
+after implementing its event/value check, targeted detection improved from 0/20 to
+20/20 on those same cases. All 180 invalid patches were rejected after the fix.
+Pre-fix outputs are retained, and this same-case result is regression evidence.
+
+Three of 20 canonical-valid controls were also rejected because grace-note dynamics
+changed during MusicXML export/re-import. This 15% end-to-end rejection rate measures
+an export/representation limitation, not isolated validator false positives. All 200
+caller inputs remained unchanged and all 183 rejected transactions retained their
+original fingerprints. Constructed mutations do not estimate real-model error
+prevalence or prove detection of arbitrary semantic errors. The final implementation
+passed 445 Python tests, extending the earlier 438-test reproducibility checkpoint.
+
 | Evidence layer | Scale | Verified result | Claim boundary |
 | --- | ---: | --- | --- |
 | Benchmark definition | 120 tasks / 20 scores | 120/120 valid | Schema, Gold application, constraints, round trip |
-| Automated regression | 438 Python tests | All passed | Revision checkout and documented Windows environment |
+| Automated regression | 445 Python tests | All passed | Final live-protocol revision checkout; earlier archive checkpoint had 438 |
+| Real-provider comparison | 360 runs / 120 tasks | Strict edits: 72, 65, 63 of 110; 14 integrity checks | One API alias and development benchmark; protection/coverage tradeoff |
+| Constructed-error detection | 180 mutations + 20 controls | 180 invalid rejected; 3 controls rejected | Regression after a detector fix; round-trip limitation retained |
 | Reviewer demo | 6 representative tasks | 6/6 passed; five host files | Offline product-path reproducibility |
 | Product replay | 720 bilingual runs | 720/720; 660 host exports | Deterministic local generator, not remote-LLM accuracy |
 | Wider host selection | 240 bilingual runs | 240/240; 174 widened | Semantic target remains narrower than authorization |
@@ -226,6 +303,10 @@ grace relations, complex cross-voice notation, or every notation application. Mu
 has an exercised bridge; Sibelius interoperability is not yet verified. Live-provider
 quality, latency, and cost can change with model versions and networks. Structural
 orchestration and unrestricted composition remain outside the host-safe contract.
+The real-provider demonstration shows reduced measured leakage at the cost of more
+refusals, not improved overall editing success. Results depend on the task scorer,
+small synthetic development set and optional repair budget. Deterministic validators
+check implemented properties, not unrestricted musical intent or aesthetic quality.
 
 ## 5. Conclusions
 
@@ -235,11 +316,15 @@ boundary: the model proposes, while canonical score state, deterministic validat
 protected-scope comparison, MusicXML round trips, and user review decide whether a
 revision exists. The open-source release includes a desktop demonstration,
 host bridge, benchmark, three evaluation conditions, automated metrics, tests, and
-reproducibility tooling. Future releases will prioritize formal model comparisons,
+reproducibility tooling. Future releases will prioritize held-out comparisons across models,
 cross-host testing, richer exact notation relations, and independent blinded musician
 evaluation rather than weakening transaction safeguards.
 
 ## Code metadata
+
+The following links identify the unchanged original public release. The new revision
+code and evidence are local candidates; final archival links must be supplied before
+submission. The original deposit does not contain the new live-model results.
 
 | Nr. | Code metadata description | Metadata |
 | --- | --- | --- |
@@ -287,6 +372,10 @@ Source code, synthetic benchmark data, test fixtures, evaluation configuration, 
 the non-formal verification run are available from the tagged public repository in
 C2 and the immutable Zenodo software deposit in C3 at
 `https://doi.org/10.5281/zenodo.22128976`. No API key is distributed.
+The separate revision evidence includes `softwarex_revision_verification_120_v2`,
+`softwarex_deepseek_core_20261002_v1`, both retained DeepSeek pilots and
+`softwarex_validator_detection_200_v1`. These local candidates include saved outputs
+and offline recomputation commands; publication of the revised archive is pending.
 
 ## Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
 

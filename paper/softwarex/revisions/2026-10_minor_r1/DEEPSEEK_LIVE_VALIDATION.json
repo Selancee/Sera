@@ -1,0 +1,23 @@
+{
+  "experiment_id": "softwarex_deepseek_core_20261002_v1",
+  "completed_at_utc": "2026-10-02T13:58:27.139550+00:00",
+  "initial_requests": 360,
+  "repair_requests": 43,
+  "returned_response_count": 403,
+  "reported_models": {
+    "deepseek-flash": 403
+  },
+  "finish_reasons": {
+    "stop": 403
+  },
+  "core_estimated_usd": 1.0317027,
+  "pilot_estimated_usd": [
+    0.0353778,
+    0.0373458
+  ],
+  "total_estimated_usd": 1.1044263,
+  "billing_basis": "Peak/cache-miss estimate; provider invoice not retrieved",
+  "live_integrity_checks_passed": 14,
+  "working_tree_tests": 445,
+  "source_archive_status": "pending_current_candidate"
+}

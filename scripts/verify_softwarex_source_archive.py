@@ -49,6 +49,12 @@ def verify_archive(archive_path: Path, output_dir: Path, *, skip_tests: bool = F
             "reviewer_demo": ["scripts/run_reviewer_demo.py", "--output-dir", str(root / "artifacts/reviewer_demo")],
             "pytest": ["-m", "pytest", "-q", f"--junitxml={output_dir / 'pytest.xml'}"],
         }
+        live_id = "softwarex_deepseek_core_20261002_v1"
+        if (root / "experiments" / live_id / "manifest.json").is_file():
+            commands["live_reproducibility"] = [
+                "scripts/verify_reproducibility.py", "--experiment", live_id,
+                "--skip-tests", "--output-dir", str(output_dir / "live_reproducibility"),
+            ]
         if skip_tests:
             commands["pytest"] = ["-m", "pytest", "--collect-only", "-q"]
         for name, command in commands.items():

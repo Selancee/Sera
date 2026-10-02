@@ -29,6 +29,9 @@ ROOT_FILES = (
     "evaluation/__init__.py", "evaluation/benchmark_io.py",
     "run_app.bat", "run_web_app.bat", "run_backend.bat", "run_frontend.bat", "stop_app.bat",
     "docs/brand-asset-provenance.md",
+    # Live manifests fingerprint Python producer files across evaluation.
+    # Include those source files without importing unrelated experiment data.
+    *(path.relative_to(ROOT).as_posix() for path in (ROOT / "evaluation").rglob("*.py")),
 )
 SOURCE_TREES = (
     ".github", "backend", "sera_edit", "frontend", "electron", "integrations/musescore",
@@ -43,6 +46,10 @@ SOURCE_TREES = (
     "experiments/softwarex_host_scope_robustness_240_v3", "paper/softwarex",
     "experiments/softwarex_human_review_120_v1",
     "experiments/softwarex_revision_verification_120_v2", "training",
+    "experiments/softwarex_validator_detection_200_v1",
+    "experiments/softwarex_deepseek_smoke_20261002_v1",
+    "experiments/softwarex_deepseek_smoke_20261002_v2",
+    "experiments/softwarex_deepseek_core_20261002_v1",
 )
 MANUSCRIPT_TREES = (
     "paper/softwarex/manuscript", "paper/softwarex/figures",

@@ -13,7 +13,8 @@ Thank you for reviewing our manuscript and inviting a minor revision.
 The following responses address completed local reproducibility and provenance
 corrections. They use working comment IDs because the author supplied the reports
 directly and platform reviewer numbering is not yet verified. The live-model
-comparison, validator-detection experiment and P1 responses remain incomplete.
+comparison and validator-detection study are now complete locally; final rendering,
+archival publication and P1 responses remain incomplete.
 
 ## P0-REPRO / P0-SOURCE / P0-COUNT
 
@@ -69,19 +70,45 @@ selection count from “66 tasks” to “66 runs.”
 
 **Location:** Section 3; reproducibility protocol and reviewer guide.
 
-## Pending responses
+## P0-LIVE
 
-- P0-LIVE: the author has selected DeepSeek and authorized testing. The answer-blind
-  protocol is implemented; the live run awaits environment-only credential setup.
-  No mock or rule-based result will be substituted for it.
-- Literature, platform support, UI evidence, terminology and other P1 points remain
-  to be completed before this response is ready for submission.
+**Comment:** The paper claims reliable language-guided editing but only demonstrates
+fixture/rule-based paths; the implemented three-condition comparison lacks real models.
 
-## P0-VALIDATORS — local evidence, manuscript integration pending
+**Response:** We agree and added a real-provider demonstration using `deepseek-flash`
+on 2 October 2026: 120 tasks in each of Full Rewrite, Patch Only and Sera Full,
+360 runs total. We freeze code, prompts, task inputs and scoring, retain all raw
+responses and repair requests, and reproduce all 360 metric rows offline with 14
+integrity checks. The API reports an alias rather than an immutable model snapshot.
+Gold patches, scoring constraints and expected-answer labels are excluded from
+generation. Both patch conditions receive identical initial prompts/schema; only
+Sera Full has bounded repair. Two overlapping development pilots are retained,
+including a public assertion-contract clarification made before the main run.
+
+The results qualify the original motivation. Strict editing success, requiring task
+constraints, valid MusicXML, complete preservation and an actual non-refused output,
+was 72/110 (65.5%), 65/110 (59.1%) and 63/110 (57.3%), respectively. Measured non-target
+changes occurred in 17/105, 18/92 and 0/73 produced scores. All conditions correctly
+refused the 10 expected-refusal tasks, but Sera Full also refused 34 executable tasks.
+We therefore do not claim generally improved editing success from structured patches.
+The observed result is a protection/coverage tradeoff; withheld outputs count against
+completion. A paired source-cluster analysis and all failures are included.
+
+The abstract, results and limitations now make this qualification explicit. This is
+one model alias on a small development benchmark, not a held-out generalization
+evaluation or a musical-quality study. Same-initial-response replay also separates
+successful repair from refusal: correct outcomes improved from 62/120 to 73/120,
+while 25 repaired editing tasks ended in erroneous refusal.
+
+**Location:** Abstract, Sections 3.1 and 4, evidence table;
+`DEEPSEEK_RESULTS.md`, `LIVE_EXPERIMENT_PROTOCOL.md` and
+`experiments/softwarex_deepseek_core_20261002_v1/`. Final rendered line numbers pending.
+
+## P0-VALIDATORS
 
 **Comment:** The ability of validators to detect errors is asserted but never measured.
 
-**Response draft:** We added a constructed-error study on 20 existing synthetic
+**Response:** We added a constructed-error study on 20 existing synthetic
 scores, with 180 labeled mutations and 20 canonical-valid controls. The study
 preserves the input patches, detector reports, source hashes and rollback checks.
 It exposed an ignored `dynamic_equals` postcondition, which we corrected. After
@@ -97,5 +124,12 @@ detection from rejection for an unrelated fault and do not infer real-model erro
 prevalence or generalization from these constructed cases.
 
 **Evidence:** `VALIDATOR_DETECTION_REPORT.md` and
-`experiments/softwarex_validator_detection_200_v1/`. Final manuscript location and
-rendered line numbers remain pending.
+`experiments/softwarex_validator_detection_200_v1/`. Manuscript Section 3.2 and the
+evidence table contain the results; final rendered line numbers remain pending.
+
+## Pending responses
+
+- Literature, platform support, UI evidence, terminology and other P1 points remain
+  to be completed before this response is ready for submission.
+- The original public release/DOI are unchanged. Revised publication links, final
+  page/line references and submission files remain pending.

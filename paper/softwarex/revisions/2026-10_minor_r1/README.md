@@ -10,14 +10,19 @@
 - [Revision plan](REVISION_PLAN.md).
 - [Response-to-reviewers working draft](RESPONSE_TO_REVIEWERS.md).
 - [P0 reproducibility diagnosis and validation](P0_REPRODUCIBILITY_REPORT.md).
+- [Real DeepSeek comparison and limitations](DEEPSEEK_RESULTS.md).
+- [Validator detection and retained failures](VALIDATOR_DETECTION_REPORT.md).
 - [Change log](CHANGELOG.md).
 - [Frozen submission-ready baseline](../../baselines/submission_2026-08-28/README.md).
 
 `manuscript/seraedit_softwarex.md` is the R1 working draft. It now distinguishes the
 corrected offline verification snapshot from the original artifact and discloses
 benchmark feedback used to develop the local rule generator. The full revision is
-incomplete: real-model comparison, validator detection evaluation and P1 requests
-remain pending. API experiments are deferred at the author's request.
+incomplete: P1 requests, final rendering and revised archival publication remain
+pending. The authorized DeepSeek comparison completed 360/360 runs with 14 integrity
+checks; the validator study completed 200 cases. Both are integrated into the working
+manuscript and response draft. Sera Full had no measured leakage among 73 outputs
+but only 63/110 strict editing successes; no overall accuracy improvement is claimed.
 
 The author supplied two reviewer texts on 2 October. Comment identifiers in
 `REVIEWER_COMMENT_MATRIX.csv` are local working identifiers; platform reviewer numbers

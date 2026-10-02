@@ -1,0 +1,28 @@
+experiment_id: softwarex_deepseek_smoke_20261002_v2
+benchmark_root: benchmark
+split: softwarex_live_smoke
+conditions:
+- full_rewrite
+- patch_only
+- sera_full
+prompt_protocol: answer_blind_v3
+provider:
+  provider: deepseek
+  model: deepseek-flash
+  base_url: https://api.deepseek.com
+  api_key_env: DEEPSEEK_API_KEY
+  timeout_seconds: 180
+  input_cost_per_million: 0.3
+  output_cost_per_million: 1.2
+  supports_structured_outputs: false
+repetitions: 1
+temperature: 0
+seed: null
+thinking: disabled
+max_tokens: 8192
+max_concurrency: 3
+max_retries: 0
+max_repair_attempts: 2
+budget_limit_usd: 0.95
+cache: false
+formal_results_allowed: false

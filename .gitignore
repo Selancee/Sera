@@ -35,6 +35,12 @@ experiments/*
 !experiments/softwarex_revision_verification_120_v2/**
 !experiments/softwarex_validator_detection_200_v1/
 !experiments/softwarex_validator_detection_200_v1/**
+!experiments/softwarex_deepseek_smoke_20261002_v1/
+!experiments/softwarex_deepseek_smoke_20261002_v1/**
+!experiments/softwarex_deepseek_smoke_20261002_v2/
+!experiments/softwarex_deepseek_smoke_20261002_v2/**
+!experiments/softwarex_deepseek_core_20261002_v1/
+!experiments/softwarex_deepseek_core_20261002_v1/**
 training_runs/*
 checkpoints/*
 models/*
