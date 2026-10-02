@@ -19,17 +19,17 @@ record are in `P0_REPRODUCIBILITY_REPORT.md`.
 | P0 | Verify original Editorial Manager upload | Waiting for login | Read original file list and assembled submission PDF; compare available files to frozen DOCX/PDF; record differences without replacing the baseline |
 | P1 | Read received reviewer reports | Received from author | Two supplied texts are available; platform numbering and completeness remain unverified |
 | P1 | Build the comment-by-comment plan | Reproducibility mapped | Scope follows the supplied comments; other P0 and P1 items remain listed below |
-| P2 | Make the requested minor edits | Pending mapped comments | Edit only the R1 working manuscript; record precise before/after text and associated comment ID; update figures/docs/code only where a real request requires it |
-| P2 | Prepare the response letter | Template created | Answer every sourced comment; cite the final section/page/line and completed evidence; explain any unimplemented request with a concrete reason |
-| P3 | Validate the revised deliverables | Baseline passed; revision checks pending | 25 frozen files and seven local archives verified; 28 focused tests and the original 41-file submission check passed; clean/marked revision checks follow actual edits |
+| P2 | Make the requested minor edits | Reproducibility and provenance corrected | R1 Section 3/Table 3 updated; remaining experiments and P1 edits pending |
+| P2 | Prepare the response letter | Partial responses written | Reproducibility and 720-run provenance responses have actual evidence; final pagination and other responses pending |
+| P3 | Validate the revised deliverables | Reproducibility passed; complete submission pending | Clean checkout and isolated ZIP each pass 438 tests; 13 integrity checks and six-task demo pass; see P0_VALIDATION.json |
 | P3 | Author review and resubmission preparation | Pending completed revision | Final response, clean DOCX/PDF, marked copy, declarations and change summary ready; author reviews assembled portal PDF before final submission |
 
 ## Remaining review work
 
 - Real-provider three-condition experiment: deferred by the author.
 - Validator mutation/detection evaluation: pending after reproducibility repair.
-- 720-run benchmark-feedback disclosure: documentation corrected; R1 manuscript
-  wording will be synchronized with the final verification results.
+- 720-run benchmark-feedback disclosure: documentation, R1 manuscript and partial
+  response corrected and synchronized with the completed reproducibility audit.
 - Literature, UI demonstrations, platform support and editorial consistency: P1.
 
 ## Review processing

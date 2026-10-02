@@ -2495,3 +2495,15 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Existing application behavior is unchanged. Old evidence is retained; new mock
   evidence remains ineligible for model-performance claims. API experiments are
   explicitly deferred by the author.
+
+### Reproducibility repair acceptance
+
+- Independent revision checks pass 13/13 and all 360 metric rows reproduce. Clean
+  checkout and isolated source archive each pass 438 Python tests in the freshly
+  installed documented environment. The archived reviewer demo passes 6/6.
+- Clean-source archive `3888dd3` has 3,407 verified entries. A separate completed
+  R1 audit records its SHA-256 and the earlier negative evidence. Original tag,
+  deposit and submission copies are retained; local commits have not been pushed.
+- R1 manuscript and response draft now disclose development feedback used for the
+  720-run deterministic benchmark replay. Live-provider and validator-detection
+  studies remain pending and are not represented by these offline checks.

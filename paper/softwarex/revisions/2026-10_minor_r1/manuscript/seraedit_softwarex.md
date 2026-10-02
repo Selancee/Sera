@@ -134,26 +134,31 @@ neither an API key nor a network connection. The included Windows CI workflow re
 the Python regression suite, benchmark validation, this reviewer demo, package audit,
 frontend tests, and production build on each push or pull request.
 
-On Windows 11 (build 10.0.26200), Python 3.12.5, Node.js 24.16.0, and npm 11.13.0,
-the 2026-08-27 verification produced the following results. Automatic benchmark
-validation accepted 120/120 task definitions. Human inspection then completed 120/120
+Automatic benchmark validation accepted 120/120 task definitions. The retained
+human inspection completed 120/120
 current primary decisions and a stratified 30/30 repeat check with zero stale records;
 all current decisions were compliant after the correction cycle. The append-only export
 retains 194 records, including superseded revision findings. Both passes used the same
 pseudonymous reviewer, so these data verify task instructions, scopes, Gold outputs,
-and host-visible notation but do not measure inter-rater reliability. The Python suite
-collected and passed 408 tests. Vitest passed 120 tests in 72 files, the Vite production
-build transformed 216 modules, and staged
-backend, compatibility launcher, and Electron desktop runtime smoke checks passed.
-The fresh `softwarex_verification_120_v1` fixture run completed all 360 expected
-task-condition cases with zero execution errors. Its verifier confirmed matching
-configuration, benchmark, prompt, dependency and metric evidence. These are software
+and host-visible notation but do not measure inter-rater reliability.
+
+Software verification was repeated on 2 October 2026 on Windows 11 (build
+10.0.26200) with Python 3.12.5 and a newly installed dependency environment. The
+clean revision checkout passed all 438 collected Python tests. The new
+`softwarex_revision_verification_120_v2` fixture completed 360 task-condition cases
+with zero execution errors. Independent recomputation matched all 360 saved metric
+rows, and all 13 integrity checks passed, including input, dependency, provider-output
+and human-review file hashes. The original fixture is retained as historical
+evidence: the revision audit identified stale benchmark/dependency hashes and six
+metric rows inconsistent with the released task definitions. The corrected snapshot
+has a separate identifier and does not amend the original deposited artifact.
+These are software
 verification results, not evidence that a language model achieves perfect edits; the
 experiment manifest explicitly sets `formal_results_allowed` to false.
 
 We additionally replayed every benchmark instruction through the interactive product
 entry point without supplying its Gold patch to generation. Across English and Chinese
-instructions and three independent repetitions, 720/720 runs completed generation or
+instructions and three deterministic repetitions, 720/720 runs completed generation or
 the expected refusal, transaction preview, atomic commit, protected-scope checking,
 deterministic constraints, and MusicXML export/re-import. All 660 executable runs
 produced valid MusicXML; 60 conflict runs refused safely; no unsafe execution occurred.
@@ -161,6 +166,11 @@ Patch and result fingerprints were identical in all 240 repeated task-language g
 After correcting a Chinese `preserve pitch`/tenuto ambiguity exposed by cross-language
 comparison, all 120 task groups also produced semantically equivalent patches and
 identical final score fingerprints across English and Chinese.
+The rule generator was therefore adjusted using feedback from these same benchmark
+instructions. These runs are regression evidence on a development benchmark, not a
+held-out generalization evaluation; withholding Gold patches during generation does
+not change that distinction. The 720 executions represent 120 tasks with language
+variants and repetitions, not 720 independent tasks.
 The compact publication snapshot retains all run metrics and hashes for all 1,380 raw
 and host evidence files, plus 220 host-openable outputs for complete task review. This
 establishes deterministic product-path acceptance,
@@ -170,7 +180,7 @@ We separately tested localization when the notation host supplied a wider select
 than the measure named in the instruction. The robustness runner added one adjacent
 measure to each eligible explicit-measure request. It passed 240/240 bilingual runs;
 expansion was applicable in 174 runs, and all 174 retained the intended task result,
-protected content, and valid MusicXML. The remaining 66 tasks were not widened because
+protected content, and valid MusicXML. The remaining 66 runs were not widened because
 the instruction did not name a specific measure, the source lacked an adjacent measure,
 or the operation was global. This regression set directly tests host-selection versus
 semantic-target resolution and remains deterministic product evidence, not model accuracy.
@@ -178,7 +188,7 @@ semantic-target resolution and remains deterministic product evidence, not model
 | Evidence layer | Scale | Verified result | Claim boundary |
 | --- | ---: | --- | --- |
 | Benchmark definition | 120 tasks / 20 scores | 120/120 valid | Schema, Gold application, constraints, round trip |
-| Automated regression | 408 Python; 120 frontend | All passed | Software behavior on the tested environment |
+| Automated regression | 438 Python tests | All passed | Revision checkout and documented Windows environment |
 | Reviewer demo | 6 representative tasks | 6/6 passed; five host files | Offline product-path reproducibility |
 | Product replay | 720 bilingual runs | 720/720; 660 host exports | Deterministic local generator, not remote-LLM accuracy |
 | Wider host selection | 240 bilingual runs | 240/240; 174 widened | Semantic target remains narrower than authorization |

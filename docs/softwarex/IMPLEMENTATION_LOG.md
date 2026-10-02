@@ -693,3 +693,22 @@
 - Updated reproduction commands and disclosed that the 720-run replay followed
   development feedback on the same benchmark. Original publication evidence is
   preserved. Real API experiments are deferred at the author's request.
+
+### Completed verification
+
+- Fresh fixture: 360/360, zero execution errors, all 360 metric rows independently
+  reproduced and all 13 integrity checks true. Exact manifest/input/output hashes
+  remain available in the separately named revision experiment.
+- The first isolated checks exposed Git LF/CRLF index differences and additional
+  missing source/test dependencies. Re-indexed 1,872 existing files with byte
+  conversion disabled; verified every difference was line endings only, without
+  modifying the working publication files. Extended archive selection accordingly.
+- Created a fresh Python 3.12.5 venv and installed the documented requirements and
+  tested constraints; `pip check` passed. Clean checkout `71a2ca3` and source archive
+  `3888dd3` each passed 438 tests with zero failures/errors/skips. The archive's 3,407
+  file digests passed, reviewer demo passed 6/6, and evidence checks passed 13/13.
+- Updated the R1 manuscript, partial response letter, sourced P0 matrix and repair
+  report. The final receipt is `P0_VALIDATION.json`; its inventory records 64 packages.
+- The complete API comparison, validator detection study, P1 changes and final
+  rendered submission remain pending. No hosted CI, public release or submission
+  is claimed; all Git commits and archive candidates are local.

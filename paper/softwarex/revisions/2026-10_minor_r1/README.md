@@ -8,16 +8,18 @@
 - Local branch: `codex/softwarex-minor-revision-20261002`; starting commit `a0702ec`.
 - [Decision evidence and access status](DECISION_RECORD.md).
 - [Revision plan](REVISION_PLAN.md).
-- [Response-to-reviewers working template](RESPONSE_TO_REVIEWERS.md).
+- [Response-to-reviewers working draft](RESPONSE_TO_REVIEWERS.md).
+- [P0 reproducibility diagnosis and validation](P0_REPRODUCIBILITY_REPORT.md).
 - [Change log](CHANGELOG.md).
 - [Frozen submission-ready baseline](../../baselines/submission_2026-08-28/README.md).
 
-`manuscript/seraedit_softwarex.md` starts as an unchanged copy of the submission-ready
-source. It is a working draft, not a completed revision. Reviewer-specific changes
-will be made after the full platform reports are available. No new scientific
-results, manuscript edits, formal reviewer responses, or journal submission are
-represented as completed by this workspace.
+`manuscript/seraedit_softwarex.md` is the R1 working draft. It now distinguishes the
+corrected offline verification snapshot from the original artifact and discloses
+benchmark feedback used to develop the local rule generator. The full revision is
+incomplete: real-model comparison, validator detection evaluation and P1 requests
+remain pending. API experiments are deferred at the author's request.
 
-`REVIEWER_COMMENT_MATRIX.csv` intentionally has no comment rows yet: the decision
-email contains no actual reviewer comments. Private email evidence is retained only
-in the ignored `artifacts/softwarex_revision_20261002/private_evidence/` directory.
+The author supplied two reviewer texts on 2 October. Comment identifiers in
+`REVIEWER_COMMENT_MATRIX.csv` are local working identifiers; platform reviewer numbers
+remain unverified. Private email evidence is retained only in the ignored
+`artifacts/softwarex_revision_20261002/private_evidence/` directory.

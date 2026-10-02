@@ -53,9 +53,35 @@ A later passing run does not retroactively make the original tag or deposit repr
 
 ## Revision validation
 
-Pending final clean-checkout and isolated-archive runs. Fresh snapshot:
-`experiments/softwarex_revision_verification_120_v2`. It is `mock_non_formal`, with
-`formal_results_allowed: false` and cache disabled. It is not model-performance evidence.
+Completed locally. Machine-readable evidence: `P0_VALIDATION.json`; complete observed
+dependency inventory: `P0_TEST_ENVIRONMENT.txt`. The environment was newly created,
+installed from the documented requirements/constraints, and passed `pip check`.
+
+| Check | Verified result |
+| --- | --- |
+| Fresh offline fixture | 360/360 executions, zero errors, cache disabled |
+| Independent metric recomputation | 360/360 rows identical; all 13 integrity checks true |
+| Clean Git checkout, `core.autocrlf=true` | Commit `71a2ca3`: 438 passed, zero failures/errors/skips |
+| Isolated source ZIP | Commit `3888dd3`, clean when exported: 438 passed, zero failures/errors/skips |
+| Source ZIP manifest | All 3,407 declared files verified by byte count and SHA-256 |
+| Reviewer demo inside source ZIP | 6/6 passed, including one expected refusal; five MusicXML outputs |
+| Human-review evidence | All four original file hashes match in checkout and ZIP |
+| Frozen submission baseline | 25 submitted-source files and seven local archive copies preserved |
+| Local draft package audit | Passed, including independent revision evidence verification |
+
+Audited source archive: `seraedit-revision-3888dd3-source.zip`, SHA-256
+`eb134c1e0fdd91ede44f1cd8630c6d379a8bac0fdc20fc42ce597dacf9013c06`.
+It is retained under
+`artifacts/softwarex_revision_20261002/source_candidate_3888dd3/`. Detailed execution
+logs are under `archive_verification_3888dd3/` in that same artifacts parent. The ZIP
+is a source snapshot taken before this completed audit was written; the completed
+audit and validation receipt accompany it separately. No new hosted CI run or public
+release is claimed.
+
+Fresh fixture: `experiments/softwarex_revision_verification_120_v2`. It remains
+`mock_non_formal`, with `formal_results_allowed: false`. No fixture result establishes
+model performance. The 1,872 re-indexed historical files differ from their previous
+Git blobs only in line endings; their working publication bytes were not changed.
 
 ## Other P0 status
 
