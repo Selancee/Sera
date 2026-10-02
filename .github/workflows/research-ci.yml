@@ -28,11 +28,11 @@ jobs:
       - name: Python regression
         run: python -m pytest -q
       - name: Validate the 120-task benchmark
-        run: python scripts/validate_benchmark.py --split core --write-report
+        run: python scripts/validate_benchmark.py --split core
       - name: Run the offline reviewer demo
         run: python scripts/run_reviewer_demo.py --output-dir artifacts/softwarex_reviewer_demo
       - name: Verify the SoftwareX draft package
-        run: python scripts/verify_softwarex_package.py --profile draft
+        run: python scripts/verify_softwarex_package.py --profile draft --output artifacts/softwarex_package_verification.json
       - name: Recompute frozen revision evidence and verify hashes
         run: python scripts/verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts/revision_reproducibility
       - name: Build a local source archive candidate
