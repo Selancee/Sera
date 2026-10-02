@@ -32,4 +32,5 @@ submission_status_last_confirmed: "2026-10-01"
 submission_status_evidence: "Gmail decision message 1a0f6ad167a06641, read 2026-10-02"
 revision_deadline: "2026-10-31"
 revision_portal_status_verified: false
-revision_reviewer_comments_retrieved: false
+revision_reviewer_comments_retrieved: true
+revision_reviewer_comments_source: "Two review texts supplied directly by the author on 2026-10-02; platform numbering unverified"

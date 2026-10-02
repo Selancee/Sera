@@ -34,6 +34,7 @@ SOURCE_TREES = (
     "docs/softwarex", "docs/architecture", "evaluation/analysis", "evaluation/conditions",
     "evaluation/metrics", "evaluation/runners", "evaluation/statistics",
     "evaluation/error_analysis", "evaluation/reporting", "evaluation/configs",
+    "evaluation/v0961_final_score_style_integration",
     "experiments/softwarex_verification_120_v1",
     "experiments/softwarex_runtime_acceptance_720_v4",
     "experiments/softwarex_host_scope_robustness_240_v3", "paper/softwarex",

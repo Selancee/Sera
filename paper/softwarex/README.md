@@ -34,7 +34,9 @@ source release. Identity, rights confirmation, public repository visibility, and
 The manuscript was submitted to SoftwareX on 28 August 2026 with manuscript number
 `SOFTX-D-26-01135`. The decision email dated 1 October 2026 invites **minor revision**,
 due **31 October 2026**. The email was read on 2 October; the authenticated portal
-status and individual reviewer comments still require access to Editorial Manager.
+status still requires access to Editorial Manager. The author supplied two reviewer
+texts directly on 2 October. Offline reproducibility repair is underway; see the
+[P0 repair audit](revisions/2026-10_minor_r1/P0_REPRODUCIBILITY_REPORT.md).
 See [the R1 workspace](revisions/2026-10_minor_r1/README.md) and
 [the frozen submission-ready baseline](baselines/submission_2026-08-28/README.md).
 Original manuscript files and deposited `v1.0.0` software remain unchanged.

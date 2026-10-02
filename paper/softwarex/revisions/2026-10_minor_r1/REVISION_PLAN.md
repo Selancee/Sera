@@ -6,24 +6,33 @@ Editorial Manager PDF workflow. This target is a planning choice, not a journal 
 
 ## Confirmed scope
 
-The editor requests a minor revision and a response to the platform reviews. The
-email provides no reviewer-specific requests. Consequently, the table below is the
-execution plan for receiving and handling those requests; it is not a fabricated
-summary of reviewer criticism. No new LLM experiments, human study, architectural
-refactor or musical-quality claim is automatically added to this revision.
+The editor requests a minor revision and a response to the platform reviews. On
+2 October the author supplied two review texts directly, one as an attachment and
+one pasted into chat. Their platform reviewer numbers have not been verified.
+The active scope is the P0 reproducibility repair. The author explicitly deferred
+API experiments while this work is completed. The detailed diagnosis and validation
+record are in `P0_REPRODUCIBILITY_REPORT.md`.
 
 | Priority | Work | Current status | Concrete deliverable / acceptance check |
 | --- | --- | --- | --- |
 | P0 | Preserve submission and software baselines | Completed locally | 25 submission-ready files with Git blob IDs/SHA-256; original public source package and both manuscript archive variants retained; independent revision branch |
 | P0 | Verify original Editorial Manager upload | Waiting for login | Read original file list and assembled submission PDF; compare available files to frozen DOCX/PDF; record differences without replacing the baseline |
-| P1 | Read all editor/reviewer reports | Waiting for login | Capture full text with reviewer and comment IDs, including separate reports; verify no report or page is omitted |
-| P1 | Build the comment-by-comment plan | Pending reports | One matrix row per actual comment: original wording, interpretation, proposed edit, affected files/sections, evidence needed, completion status |
+| P1 | Read received reviewer reports | Received from author | Two supplied texts are available; platform numbering and completeness remain unverified |
+| P1 | Build the comment-by-comment plan | Reproducibility mapped | Scope follows the supplied comments; other P0 and P1 items remain listed below |
 | P2 | Make the requested minor edits | Pending mapped comments | Edit only the R1 working manuscript; record precise before/after text and associated comment ID; update figures/docs/code only where a real request requires it |
 | P2 | Prepare the response letter | Template created | Answer every sourced comment; cite the final section/page/line and completed evidence; explain any unimplemented request with a concrete reason |
 | P3 | Validate the revised deliverables | Baseline passed; revision checks pending | 25 frozen files and seven local archives verified; 28 focused tests and the original 41-file submission check passed; clean/marked revision checks follow actual edits |
 | P3 | Author review and resubmission preparation | Pending completed revision | Final response, clean DOCX/PDF, marked copy, declarations and change summary ready; author reviews assembled portal PDF before final submission |
 
-## Once the reports are accessible
+## Remaining review work
+
+- Real-provider three-condition experiment: deferred by the author.
+- Validator mutation/detection evaluation: pending after reproducibility repair.
+- 720-run benchmark-feedback disclosure: documentation corrected; R1 manuscript
+  wording will be synchronized with the final verification results.
+- Literature, UI demonstrations, platform support and editorial consistency: P1.
+
+## Review processing
 
 1. Save the full reports locally and retain their provenance. Populate
    `REVIEWER_COMMENT_MATRIX.csv` with original comments, not guessed requirements.
@@ -42,8 +51,8 @@ refactor or musical-quality claim is automatically added to this revision.
 
 - Baseline: `paper/softwarex/baselines/submission_2026-08-28/` is frozen.
 - R1 Markdown authority: `paper/softwarex/revisions/2026-10_minor_r1/manuscript/seraedit_softwarex.md`.
-- The initial R1 Markdown is byte-identical to the original. No revised DOCX/PDF has
-  been generated yet because the actual comments are unavailable.
+- The R1 Markdown began byte-identical to the original. Changes follow the supplied
+  review texts; final DOCX/PDF generation follows completion of the evidence changes.
 - The release tag `v1.0.0`, public Release assets and Zenodo DOI are retained.
   The current checkout contains post-submission UI fixes and is not the deposited
   1.0.0 software snapshot. Decide whether a new software version is needed only
@@ -69,8 +78,6 @@ refactor or musical-quality claim is automatically added to this revision.
 - Frozen baseline and deposited version remain intact.
 - Final upload/submission follows the author's review of the concrete revision package.
 
-The author selected the Codex in-app Browser. Its visible tab could not navigate to
-Editorial Manager because the browser could not verify saved access permissions.
-Restore that browser's access first, then sign in and retrieve the reports. Do not
-substitute a different browser for the selected login session. Baseline preservation
-and workspace preparation have been completed independently of this access blocker.
+Browser retrieval was unsuccessful. The author subsequently supplied review text
+directly, enabling this repair independently of portal access. Original uploaded
+files and final portal reviewer numbering remain unverified.

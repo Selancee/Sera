@@ -29,10 +29,18 @@ A later passing run does not retroactively make the original tag or deposit repr
   regression tests, and revision evidence. Existing source ZIPs cannot be silently
   overwritten. Local candidates use an explicit label and record Git provenance.
 - `.gitattributes` preserves byte-hashed benchmark, dependency and publication
-  evidence files, including existing human-review hashes.
+  evidence files, including existing human-review hashes. The first clean-checkout
+  audit exposed older LF Git blobs behind CRLF working files. Those files were
+  re-indexed with conversion disabled, preserving the working publication bytes;
+  each difference was verified to be line endings only. Original tags are unchanged.
 - Fresh runs record individual input and raw/normalized-output hashes. Version 2
   dependency hashing includes tested constraints and publication requirements.
   Resume rejects changed inputs, dependencies or existing evidence.
+- Git provenance is captured before output creation. The v2 fixture's producer
+  commit is `0d6cb9e`; its existing `dirty: true` field is retained because creation
+  of its allowlisted output directory preceded that metadata capture. Its exact
+  inputs and raw/normalized outputs are hashed. Later clean checkouts and archive
+  manifests identify the complete committed snapshot used for verification.
 - The verifier reports per-field metric differences, rejects duplicate run IDs,
   checks human-review hashes and can write audit output outside frozen evidence.
 - Recomputation handles serialized execution failures and configured benchmark roots.

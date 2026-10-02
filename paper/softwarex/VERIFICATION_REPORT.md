@@ -1,5 +1,13 @@
 # SoftwareX verification report
 
+> Revision correction, 2 October 2026: this is the historical development report.
+> Clean reproduction of `v1.0.0` found benchmark/dependency drift, six differing
+> metric rows and a test depending on ignored data. Its source ZIP also omitted
+> required evaluation modules. The passing statements below do not establish
+> reproducibility of that immutable release. See
+> [the revision audit](revisions/2026-10_minor_r1/P0_REPRODUCIBILITY_REPORT.md)
+> and the separately generated revision fixture for corrected evidence.
+
 - Verification date: 2026-08-27
 - Software version: `1.0.0`
 - Baseline Git commit recorded by experiments: `b4eb13921bcbc48a95136cc744cabc094112a541`

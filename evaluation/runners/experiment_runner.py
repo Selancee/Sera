@@ -234,6 +234,9 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         raise ValueError("experiment config must be a YAML object")
     _validate_config(config)
     actual_id = experiment_id or str(config["experiment_id"])
+    # Capture the source state before creating allowlisted experiment outputs.
+    # Otherwise a clean source checkout is incorrectly marked dirty by this run.
+    starting_git = _git_metadata()
     experiment_dir = ROOT / "experiments" / actual_id
     experiment_dir.mkdir(parents=True, exist_ok=True)
     benchmark_root = (ROOT / config.get("benchmark_root", "benchmark")).resolve()
@@ -306,7 +309,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             "prompt_metadata": prompt_info,
             "config_hash": _config_hash(config),
             "benchmark_hash": benchmark_hash,
-            "git": _git_metadata(),
+            "git": starting_git,
             "python_version": sys.version,
             "platform": platform.platform(),
             "dependency_hash_version": 2,
