@@ -75,9 +75,10 @@ def verify(experiment_dir: Path, *, run_tests: bool = True, output_dir: Path | N
     split = _json(benchmark_root / "splits" / f"{manifest['split']}.json")
     output_dir = output_dir or experiment_dir
     output_dir.mkdir(parents=True, exist_ok=True)
-    current_prompts = {condition: prompt_metadata(condition) for condition in config["conditions"]}
+    protocol = config.get("prompt_protocol", "legacy_v1")
+    current_prompts = {condition: prompt_metadata(condition, protocol) for condition in config["conditions"]}
     if "sera_full" in config["conditions"]:
-        current_prompts["sera_repair"] = prompt_metadata("sera_repair")
+        current_prompts["sera_repair"] = prompt_metadata("sera_repair", protocol)
     checks: dict[str, Any] = {
         "config_hash": manifest.get("config_hash") == _config_hash(config),
         "benchmark_hash": manifest.get("benchmark_hash") == _benchmark_hash(benchmark_root, split, manifest["split"]),
@@ -90,7 +91,7 @@ def verify(experiment_dir: Path, *, run_tests: bool = True, output_dir: Path | N
         for run in runs
     )
     diagnostics: dict[str, Any] = {}
-    for key in ("input_file_hashes", "evidence_file_hashes"):
+    for key in ("input_file_hashes", "evidence_file_hashes", "implementation_hashes"):
         if key in manifest:
             diagnostics[key] = _hash_mismatches(manifest[key], ROOT)
             checks[key] = bool(manifest[key]) and not diagnostics[key]

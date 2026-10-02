@@ -12,12 +12,16 @@ from backend.services.score_document_service import musicxml_to_score_document, 
 from backend.validation.musicxml_validator import MusicXMLValidator
 from sera_edit.domain.operations import OperationApplicationError, apply_patch_operation
 from sera_edit.domain.score_patch import ScorePatch
+from sera_edit.domain.score_scope import ScoreScope
 from sera_edit.execution.patch_repair import deterministic_repair
 from sera_edit.execution.transaction import PatchTransaction
 from sera_edit.generation.prompts import build_condition_messages, build_repair_messages
 from sera_edit.generation.response_parser import extract_musicxml, parse_json_object
 from sera_edit.providers.base import LLMProvider, ProviderResponse
+from sera_edit.providers.base import ProviderRequestError
+from evaluation.runners.runtime_controls import BudgetExceeded
 from sera_edit.validation.schema_validator import validate_patch_schema
+from sera_edit.validation.validation_report import ValidationIssue
 
 
 @dataclass(slots=True)
@@ -64,17 +68,22 @@ def run_condition(
     seed: int | None = 42,
     max_tokens: int | None = None,
     max_repair_attempts: int = 2,
+    prompt_protocol: str = "legacy_v1",
+    thinking: str | None = None,
 ) -> ConditionOutcome:
     """Run exactly one condition without leaking Sera safeguards into baselines."""
 
-    messages, response_schema = build_condition_messages(condition, task, source_score)
+    messages, response_schema = build_condition_messages(condition, task, source_score, protocol=prompt_protocol)
+    provider_metadata = {"condition": condition, "thinking": thinking}
+    if getattr(provider, "provider", "") == "mock" or prompt_protocol == "legacy_v1":
+        provider_metadata["task"] = task
     response = provider.generate(
         messages,
         response_schema=response_schema,
         temperature=temperature,
         seed=seed,
         max_tokens=max_tokens,
-        metadata={"condition": condition, "task": task},
+        metadata=provider_metadata,
     )
     started = time.perf_counter()
     parsed = response.parsed_output
@@ -144,6 +153,11 @@ def run_condition(
                     }
                 )
                 schema = validate_patch_schema(candidate)
+        if not schema.errors and prompt_protocol == "answer_blind_v2":
+            # The model cannot authorize itself to expand scope or remove locks.
+            for field_name in ("target_scope", "protected_scope"):
+                if ScoreScope.from_dict(candidate[field_name]) != ScoreScope.from_dict(task[field_name]):
+                    schema.add_error(ValidationIssue("E11", f"{field_name} differs from the user-supplied scope", "scope_contract"))
         if not schema.errors:
             result = PatchTransaction().execute(source_score, candidate)
             final_report = result.report.as_dict()
@@ -172,15 +186,21 @@ def run_condition(
             candidate,
             list(final_report.get("errors") or []),
             attempt=attempt + 1,
+            protocol=prompt_protocol,
         )
-        repair_response = provider.generate(
-            repair_messages,
-            response_schema=repair_schema,
-            temperature=temperature,
-            seed=seed,
-            max_tokens=max_tokens,
-            metadata={"condition": "sera_full_repair", "task": task, "repair_attempt": attempt + 1},
-        )
+        try:
+            repair_response = provider.generate(
+                repair_messages, response_schema=repair_schema, temperature=temperature,
+                seed=seed, max_tokens=max_tokens,
+                metadata={**provider_metadata, "condition": "sera_full_repair", "repair_attempt": attempt + 1},
+            )
+        except (ProviderRequestError, BudgetExceeded) as exc:
+            # Preserve the initial paid response and any earlier repairs.
+            repair_trace.append({"kind": "provider_error", "attempt": attempt + 1,
+                                 "messages": repair_messages, "error": str(exc)})
+            final_codes = [*final_codes, "E20"]
+            final_error = str(exc)
+            break
         repair_responses.append(repair_response)
         candidate = repair_response.parsed_output
         if not isinstance(candidate, dict):
@@ -191,6 +211,8 @@ def run_condition(
                 "attempt": attempt + 1,
                 "request_id": repair_response.request_id,
                 "parsed": isinstance(candidate, dict),
+                "messages": repair_messages,
+                "validation_errors": list(final_report.get("errors") or []),
             }
         )
     return ConditionOutcome(

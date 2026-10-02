@@ -2507,3 +2507,12 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - R1 manuscript and response draft now disclose development feedback used for the
   720-run deterministic benchmark replay. Live-provider and validator-detection
   studies remain pending and are not represented by these offline checks.
+
+## 2026-10-02 — DeepSeek comparison preparation and validator measurement
+
+- Added answer_blind_v2: identical B/C initial requests, common A/B/C user scopes, no answer-side labels, and scope-contract enforcement for C. Frozen legacy prompts remain available.
+- Added credential-free DeepSeek smoke/core configurations, USD 1/9 persistent budgets, non-thinking mode, no seed/retry/cache, full repair-request evidence and failed-repair response preservation.
+- Added producer-code hash checks, explicit-denominator/source-cluster analysis, and sentinel tests over all 120 tasks.
+- Validator pilots retained: v1 controls exposed chord export representability; v2 has 3/20 grace-dynamic round-trip rejections and reveals an unchecked dynamic_equals effect. Added event/value validation with regression tests.
+- Tests at this stage: initial full suite 441 passed; subsequent focused suite 21 passed; six smoke task definitions validate. Final suite and frozen post-fix study follow.
+- Live API has not run: awaiting user-level DEEPSEEK_API_KEY setup. No public release, Git push or journal submission.

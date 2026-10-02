@@ -118,7 +118,19 @@ def _provider_configs(config: dict[str, Any]) -> list[dict[str, Any]]:
     return [dict(item) for item in providers]
 
 
+def _implementation_hashes() -> dict[str, str]:
+    """Freeze executable evidence producers, including prompt payload builders."""
+    paths = [path for directory in ("sera_edit", "evaluation", "backend")
+             for path in (ROOT / directory).rglob("*.py")]
+    paths += [ROOT / "scripts/validate_benchmark.py", ROOT / "scripts/recompute_metrics.py"]
+    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in sorted(paths)}
+
+
 def _validate_config(config: dict[str, Any]) -> None:
+    protocol = config.get("prompt_protocol", "legacy_v1")
+    if protocol not in {"legacy_v1", "answer_blind_v2"}:
+        raise ValueError("unknown prompt_protocol")
     conditions = config.get("conditions")
     if not isinstance(conditions, list) or not conditions or any(item not in VALID_CONDITIONS for item in conditions):
         raise ValueError(f"conditions must be a non-empty subset of {sorted(VALID_CONDITIONS)}")
@@ -138,6 +150,8 @@ def _validate_config(config: dict[str, Any]) -> None:
         if provider.get("provider") == "mock" and formal:
             raise ValueError("mock experiments must set formal_results_allowed=false")
         if provider.get("provider") != "mock" and formal:
+            if protocol != "answer_blind_v2":
+                raise ValueError("new formal live runs require answer_blind_v2")
             if provider.get("input_cost_per_million") is None or provider.get("output_cost_per_million") is None:
                 raise ValueError("formal live runs require configured input/output prices for cost accounting")
             if float(config.get("budget_limit_usd", 0)) <= 0:
@@ -262,7 +276,9 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             provider_config.get("input_cost_per_million"),
             provider_config.get("output_cost_per_million"),
         )
-        ledger = BudgetLedger(per_provider_budget, *costs)
+        ledger_id = hashlib.sha256(json.dumps(provider_config, sort_keys=True).encode()).hexdigest()[:16]
+        ledger = BudgetLedger(per_provider_budget, *costs,
+                              state_path=experiment_dir / "budget" / f"{ledger_id}.json")
         controlled = ControlledProvider(
             inner,
             cache_root=ROOT / "experiments" / "_cache",
@@ -274,9 +290,10 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         )
         providers.append((provider_config, controlled, ledger))
 
-    prompt_info = {condition: prompt_metadata(condition) for condition in config["conditions"]}
+    protocol = config.get("prompt_protocol", "legacy_v1")
+    prompt_info = {condition: prompt_metadata(condition, protocol) for condition in config["conditions"]}
     if "sera_full" in config["conditions"]:
-        prompt_info["sera_repair"] = prompt_metadata("sera_repair")
+        prompt_info["sera_repair"] = prompt_metadata("sera_repair", protocol)
     manifest_path = experiment_dir / "manifest.json"
     if manifest_path.exists():
         manifest = _load_json(manifest_path)
@@ -290,6 +307,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             or manifest.get("benchmark_hash") != benchmark_hash
             or manifest.get("dependency_lock_hash") != _dependency_hash(manifest.get("dependency_hash_version", 1))
             or (manifest.get("input_file_hashes") is not None and manifest["input_file_hashes"] != _input_file_hashes(benchmark_root, split, config["split"]))
+            or (manifest.get("implementation_hashes") is not None and manifest["implementation_hashes"] != _implementation_hashes())
         ):
             raise ValueError(f"experiment {actual_id} cannot resume after config, prompt, benchmark, or dependency drift")
     else:
@@ -316,6 +334,8 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             "dependency_lock_hash": _dependency_hash(2),
             "input_file_hashes": _input_file_hashes(benchmark_root, split, config["split"]),
         }
+        if protocol == "answer_blind_v2":
+            manifest["implementation_hashes"] = _implementation_hashes()
         _write_json(manifest_path, manifest)
 
     runs_path = experiment_dir / "runs.jsonl"
@@ -354,6 +374,8 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
                 seed=None if config.get("seed") is None else int(config["seed"]) + repetition - 1,
                 max_tokens=config.get("max_tokens"),
                 max_repair_attempts=int(config.get("max_repair_attempts", 2)),
+                prompt_protocol=protocol,
+                thinking=config.get("thinking"),
             )
             metrics = compute_task_metrics(task, source, outcome, expected)
             error = outcome.error
@@ -381,7 +403,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         output_slug = hashlib.sha256(run_id.encode("utf-8")).hexdigest()[:12]
         raw_path = experiment_dir / "raw_outputs" / f"{task['task_id']}__{condition}__r{repetition}__{output_slug}.json"
         normalized_path = experiment_dir / "normalized_outputs" / f"{task['task_id']}__{condition}__r{repetition}__{output_slug}.json"
-        messages, response_schema = build_condition_messages(condition, task, source)
+        messages, response_schema = build_condition_messages(condition, task, source, protocol=protocol)
         _write_json(
             raw_path,
             {
@@ -392,6 +414,8 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
                     "temperature": config.get("temperature", 0.0),
                     "seed": None if config.get("seed") is None else int(config["seed"]) + repetition - 1,
                     "max_tokens": config.get("max_tokens"),
+                    "thinking": config.get("thinking"),
+                    "prompt_protocol": protocol,
                 },
                 "response": response,
             },

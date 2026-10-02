@@ -33,9 +33,14 @@ PROMPTS = {
 }
 
 
-def prompt_metadata(condition: str) -> dict[str, str]:
+def prompt_metadata(condition: str, protocol: str = "legacy_v1") -> dict[str, str]:
     """Return prompt version, body, and stable hash for manifests."""
 
+    if protocol == "answer_blind_v2":
+        from sera_edit.generation.research_prompts import metadata
+        return metadata(condition)
+    if protocol != "legacy_v1":
+        raise ValueError(f"unknown prompt protocol: {protocol}")
     version, prompt = PROMPTS[condition]
     return {"prompt_version": version, "prompt": prompt, "prompt_hash": hashlib.sha256(prompt.encode("utf-8")).hexdigest()}
 
@@ -127,10 +132,14 @@ def build_condition_messages(
     condition: str,
     task: dict[str, Any],
     source_score: dict[str, Any],
+    *, protocol: str = "legacy_v1",
 ) -> tuple[list[dict[str, str]], dict[str, Any] | None]:
     """Build condition-specific messages while preserving experimental boundaries."""
 
-    prompt = prompt_metadata(condition)
+    if protocol == "answer_blind_v2":
+        from sera_edit.generation.research_prompts import messages
+        return messages(condition, task, source_score)
+    prompt = prompt_metadata(condition, protocol)
     if condition == "full_rewrite":
         user_payload = f"Instruction:\n{task['instruction_en']}\n\nOriginal MusicXML:\n{score_document_to_musicxml(source_score)}"
         return [
@@ -165,10 +174,15 @@ def build_repair_messages(
     validation_errors: list[dict[str, Any]],
     *,
     attempt: int,
+    protocol: str = "legacy_v1",
 ) -> tuple[list[dict[str, str]], dict[str, Any]]:
     """Build one bounded Condition C repair request with full safety context."""
 
-    prompt = prompt_metadata("sera_repair")
+    if protocol == "answer_blind_v2":
+        from sera_edit.generation.research_prompts import messages
+        return messages("sera_repair", task, source_score, repair={
+            "repair_attempt": attempt, "candidate": candidate, "validation_errors": validation_errors})
+    prompt = prompt_metadata("sera_repair", protocol)
     payload = {
         "repair_attempt": attempt,
         "instruction": task["instruction_en"],
