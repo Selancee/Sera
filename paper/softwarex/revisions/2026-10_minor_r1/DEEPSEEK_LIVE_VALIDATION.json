@@ -19,5 +19,20 @@
   "billing_basis": "Peak/cache-miss estimate; provider invoice not retrieved",
   "live_integrity_checks_passed": 14,
   "working_tree_tests": 445,
-  "source_archive_status": "pending_current_candidate"
+  "source_archive_status": "verified_isolated_candidate",
+  "source_archive": {
+    "name": "seraedit-revision-ff82c74-source.zip",
+    "source_commit": "ff82c7447f20ae33d8e09f54242b372341fec3bd",
+    "sha256": "65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb",
+    "files_verified": 4299,
+    "tests_passed": 445,
+    "test_failures": 0,
+    "test_errors": 0,
+    "test_skips": 0,
+    "reviewer_demo_passed": 6,
+    "fixture_integrity_checks_passed": 13,
+    "live_integrity_checks_passed": 14,
+    "dependency_environment": "Reuse of the documented clean Python 3.12.5 environment created during P0 repair; no reinstall for this check",
+    "full_receipt": "DEEPSEEK_SOURCE_ARCHIVE_VALIDATION.json"
+  }
 }

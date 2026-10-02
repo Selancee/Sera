@@ -104,3 +104,16 @@ These commands use saved outputs and require no API key. The release tag, origin
 deposit and submission baseline are unchanged. New data and revised manuscript
 remain local; release metadata, final rendering and remaining P1 review points
 must be completed before submission.
+
+## Isolated source-candidate verification
+
+The local source candidate `seraedit-revision-ff82c74-source.zip` contains 4,299
+verified files and was built from clean commit `ff82c7447f20ae33d8e09f54242b372341fec3bd`.
+SHA-256: `65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb`.
+An independent temporary extraction passed 445 tests (zero failures/errors/skips),
+the six-task reviewer demo, all 13 offline-fixture checks and all 14 live-evidence
+checks. It reused the documented clean Python 3.12.5 environment installed during
+P0 repair; dependencies were not reinstalled for this check. No API calls were made.
+The final receipts are `DEEPSEEK_LIVE_VALIDATION.json` and
+`DEEPSEEK_SOURCE_ARCHIVE_VALIDATION.json`. These post-verification receipts accompany
+that immutable candidate separately; they are not claimed to be inside the tested ZIP.

@@ -2545,3 +2545,9 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Full v3 Python suite: 445 passed, no failures/errors/skips. Packaging-focused tests: 8 passed. Main estimated cost USD 1.0317027, total including pilots USD 1.1044263, not an invoice.
 - Updated only the R1 manuscript/response/matrix and result report; original submission/release evidence retained. Added live evidence and all fingerprinted evaluation Python files to candidate source export and an offline live-evidence check to isolated ZIP verification.
 - New source-candidate verification follows. P1 revisions, final rendering and revised publication remain pending; no public push, release, DOI update or journal submission.
+
+### Final isolated source-candidate check
+
+- Clean source ff82c74: 4,299 file hashes verified; source ZIP SHA-256 65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb.
+- Independent temporary extraction using the documented P0 clean Python 3.12.5 environment: 445 passed, zero failures/errors/skips; reviewer demo 6/6 with five MusicXML files; fixture checks 13/13; saved real-model checks 14/14. No new API calls or dependency reinstall.
+- Final receipts accompany the tested immutable archive separately. Publication and remaining P1 work are still pending.

@@ -44,7 +44,11 @@ failures or skips. The ZIP also passes the six-task offline reviewer demo and
 independent evidence verification. The original tag collected 411 tests in our
 environment and had one failure caused by ignored local data; we have corrected the
 manuscript's test-count statement accordingly. Full provenance, environments and
-artifact digests are recorded in the revision audit.
+artifact digests are recorded in the revision audit. After the live-protocol and
+validator additions, the final source candidate at `ff82c74` passed all 445 tests
+in an independent extraction using the same documented Python 3.12.5 dependency
+environment. Its 4,299 file hashes, six-task demo, 13 fixture checks and 14 saved
+live-evidence checks also passed; the final receipt identifies this later checkpoint.
 
 The source ZIP tested here is a local revision candidate. Its publication metadata
 and final release links will be updated after the complete revision is ready; the

@@ -1,0 +1,78 @@
+{
+  "archive": "seraedit-revision-ff82c74-source.zip",
+  "archive_sha256": "65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb",
+  "manifest_files_verified": 4299,
+  "source_git": {
+    "commit": "ff82c7447f20ae33d8e09f54242b372341fec3bd",
+    "dirty": false
+  },
+  "isolated_source_extraction": true,
+  "dependency_environment": "existing interpreter; not a fresh dependency installation",
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "full_tests_executed": true,
+  "checks": {
+    "reproducibility": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "        \"    \\\"review_complete\\\": true,\",",
+        "        \"    \\\"primary_reviewed\\\": 120,\",",
+        "        \"    \\\"secondary_reviewed\\\": 30,\",",
+        "        \"    \\\"stale_records\\\": 0,\",",
+        "        \"    \\\"independent_secondary_reviewer\\\": false,\",",
+        "        \"    \\\"evidence_path\\\": \\\"experiments/softwarex_human_review_120_v1/summary.json\\\"\",",
+        "        \"  }\",",
+        "        \"}\"",
+        "      ]",
+        "    }",
+        "  },",
+        "  \"result_class\": \"mock_non_formal\",",
+        "  \"formal_results_allowed\": false,",
+        "  \"warning\": \"Reproducible mock evidence is still not formal model evidence.\"",
+        "}"
+      ]
+    },
+    "reviewer_demo": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "SoftwareX reviewer demo: 6/6 passed; host MusicXML outputs=5; report=C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_u4h5vfbw\\artifacts\\reviewer_demo\\reviewer_demo_report.json"
+      ]
+    },
+    "pytest": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "........................................................................ [ 16%]",
+        "........................................................................ [ 32%]",
+        "........................................................................ [ 48%]",
+        "........................................................................ [ 64%]",
+        "........................................................................ [ 80%]",
+        "........................................................................ [ 97%]",
+        ".............                                                            [100%]"
+      ]
+    },
+    "live_reproducibility": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "        \"    \\\"review_complete\\\": true,\",",
+        "        \"    \\\"primary_reviewed\\\": 120,\",",
+        "        \"    \\\"secondary_reviewed\\\": 30,\",",
+        "        \"    \\\"stale_records\\\": 0,\",",
+        "        \"    \\\"independent_secondary_reviewer\\\": false,\",",
+        "        \"    \\\"evidence_path\\\": \\\"experiments/softwarex_human_review_120_v1/summary.json\\\"\",",
+        "        \"  }\",",
+        "        \"}\"",
+        "      ]",
+        "    }",
+        "  },",
+        "  \"result_class\": \"formal_live\",",
+        "  \"formal_results_allowed\": true,",
+        "  \"warning\": null",
+        "}"
+      ]
+    }
+  },
+  "passed": true
+}
