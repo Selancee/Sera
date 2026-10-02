@@ -128,7 +128,9 @@ def verify(experiment_dir: Path, *, run_tests: bool = True, output_dir: Path | N
         "commands": command_checks,
         "result_class": manifest["result_class"],
         "formal_results_allowed": manifest.get("formal_results_allowed", False),
-        "warning": None if manifest["result_class"] == "formal_live" else "Reproducible mock evidence is still not formal model evidence.",
+        "warning": (None if manifest["result_class"] == "formal_live" else
+                    "Reproducible mock evidence is still not formal model evidence." if manifest["result_class"] == "mock_non_formal" else
+                    "This live pilot is non-formal and must not be pooled into the main comparison."),
     }
     (output_dir / "reproducibility_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     markdown = [

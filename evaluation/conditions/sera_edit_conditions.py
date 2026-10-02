@@ -153,7 +153,7 @@ def run_condition(
                     }
                 )
                 schema = validate_patch_schema(candidate)
-        if not schema.errors and prompt_protocol == "answer_blind_v2":
+        if not schema.errors and prompt_protocol in {"answer_blind_v2", "answer_blind_v3"}:
             # The model cannot authorize itself to expand scope or remove locks.
             for field_name in ("target_scope", "protected_scope"):
                 if ScoreScope.from_dict(candidate[field_name]) != ScoreScope.from_dict(task[field_name]):

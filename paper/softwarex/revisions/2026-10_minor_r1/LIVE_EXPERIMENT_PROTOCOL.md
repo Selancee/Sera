@@ -23,7 +23,7 @@ No credential belongs in this document, a configuration, Git or an experiment ar
 
 ## Information and scoring boundaries
 
-The `answer_blind_v2` protocol allowlists the English instruction, target scope,
+The answer-blind protocols allowlist the English instruction, target scope,
 protected scope and source score. No expected status, unsupported reason, Gold
 patch, expected output, scoring constraint or task ID enters a live request.
 Patch Only and Sera Full receive identical initial messages, schema and compact
@@ -34,9 +34,29 @@ The scope guard uses user inputs, never scoring answers.
 
 The model receives public operation argument documentation, not solved examples.
 Legacy prompt versions remain available for reproducing frozen fixture evidence;
-new formal live runs require v2. A sentinel test checks all 120 task inputs and
+new formal live runs require an answer-blind protocol. The core comparison uses
+`answer_blind_v3`, following the retained pilot described below. A sentinel test checks all 120 task inputs and
 the repair builder for answer leakage. Implementation hashes prevent resuming a
 v2 experiment after producer code changes.
+
+### Retained pilot intervention
+
+The first live pilot (`softwarex_deepseek_smoke_20261002_v1`, v2 prompts) completed
+18 initial requests and one repair, with a peak-rate estimate of USD 0.0353778.
+Its 14 integrity/recomputation checks passed before any code change. Inspection
+showed that the public prompt documentation did not specify the type-tagged JSON
+forms of preconditions/effects, and did not explain that operation change counts
+refer to event IDs rather than global attributes. Unsupported assertion formats
+caused rejection even when the proposed edit itself was plausible.
+
+The v3 protocol clarifies these public API forms identically for both patch arms.
+It does not supply task answers, change any validator or relax any scoring rule.
+The v2 prompts and negative pilot results are retained. A second pilot has a new
+ID (`softwarex_deepseek_smoke_20261002_v2`) and a USD 0.95 cap; together with the
+first pilot's actual estimate and the USD 9 core cap, the remaining plan stays
+below USD 10. These pilot tasks overlap core: the resulting demonstration is
+development-benchmark evidence, not held-out evaluation. No main core result was
+inspected before this protocol clarification.
 
 Report executable-task success separately from correct refusal. The strict editing
 criterion requires task constraints, XML validity, complete non-target preservation,
@@ -82,7 +102,7 @@ Set `DEEPSEEK_API_KEY` in the local environment; never paste it into these comma
 
 ```powershell
 $env:DEEPSEEK_API_KEY = [Environment]::GetEnvironmentVariable('DEEPSEEK_API_KEY','User')
-.\.venv\Scripts\python.exe scripts/run_smoke_experiment.py --config evaluation/configs/softwarex_deepseek_smoke.yaml
+.\.venv\Scripts\python.exe scripts/run_smoke_experiment.py --config evaluation/configs/softwarex_deepseek_smoke_v2.yaml
 .\.venv\Scripts\python.exe scripts/run_core_experiment.py --config evaluation/configs/softwarex_deepseek_core.yaml
 .\.venv\Scripts\python.exe scripts/verify_reproducibility.py --experiment softwarex_deepseek_core_20261002_v1 --skip-tests --output-dir artifacts/softwarex_revision_20261002/deepseek_core_audit
 .\.venv\Scripts\python.exe scripts/analyze_softwarex_live.py --experiment softwarex_deepseek_core_20261002_v1 --output artifacts/softwarex_revision_20261002/deepseek_core_analysis

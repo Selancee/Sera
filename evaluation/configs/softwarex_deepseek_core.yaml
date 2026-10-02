@@ -2,7 +2,7 @@ experiment_id: softwarex_deepseek_core_20261002_v1
 benchmark_root: benchmark
 split: core
 conditions: [full_rewrite, patch_only, sera_full]
-prompt_protocol: answer_blind_v2
+prompt_protocol: answer_blind_v3
 provider:
   provider: deepseek
   model: deepseek-flash

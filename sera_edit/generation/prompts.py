@@ -36,6 +36,9 @@ PROMPTS = {
 def prompt_metadata(condition: str, protocol: str = "legacy_v1") -> dict[str, str]:
     """Return prompt version, body, and stable hash for manifests."""
 
+    if protocol == "answer_blind_v3":
+        from sera_edit.generation.research_prompts_v3 import metadata
+        return metadata(condition)
     if protocol == "answer_blind_v2":
         from sera_edit.generation.research_prompts import metadata
         return metadata(condition)
@@ -136,6 +139,9 @@ def build_condition_messages(
 ) -> tuple[list[dict[str, str]], dict[str, Any] | None]:
     """Build condition-specific messages while preserving experimental boundaries."""
 
+    if protocol == "answer_blind_v3":
+        from sera_edit.generation.research_prompts_v3 import messages
+        return messages(condition, task, source_score)
     if protocol == "answer_blind_v2":
         from sera_edit.generation.research_prompts import messages
         return messages(condition, task, source_score)
@@ -178,6 +184,10 @@ def build_repair_messages(
 ) -> tuple[list[dict[str, str]], dict[str, Any]]:
     """Build one bounded Condition C repair request with full safety context."""
 
+    if protocol == "answer_blind_v3":
+        from sera_edit.generation.research_prompts_v3 import messages
+        return messages("sera_repair", task, source_score, repair={
+            "repair_attempt": attempt, "candidate": candidate, "validation_errors": validation_errors})
     if protocol == "answer_blind_v2":
         from sera_edit.generation.research_prompts import messages
         return messages("sera_repair", task, source_score, repair={

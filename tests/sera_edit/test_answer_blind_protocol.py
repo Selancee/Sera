@@ -17,7 +17,8 @@ from scripts.verify_reproducibility import _hash_mismatches
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_all_120_tasks_are_answer_blind_in_generation_and_repair():
+@pytest.mark.parametrize("protocol", ["answer_blind_v2", "answer_blind_v3"])
+def test_all_120_tasks_are_answer_blind_in_generation_and_repair(protocol):
     benchmark = ROOT / "benchmark"
     split = json.loads((benchmark / "splits/core.json").read_text())
     for task_id in split["task_ids"]:
@@ -28,12 +29,12 @@ def test_all_120_tasks_are_answer_blind_in_generation_and_repair():
             poisoned[field] = "ANSWER_SENTINEL"
         outputs = {}
         for condition in ("full_rewrite", "patch_only", "sera_full"):
-            actual = build_condition_messages(condition, task, score, protocol="answer_blind_v2")
-            assert actual == build_condition_messages(condition, poisoned, score, protocol="answer_blind_v2")
+            actual = build_condition_messages(condition, task, score, protocol=protocol)
+            assert actual == build_condition_messages(condition, poisoned, score, protocol=protocol)
             assert "ANSWER_SENTINEL" not in json.dumps(actual)
             outputs[condition] = actual
         assert outputs["patch_only"] == outputs["sera_full"]
-        assert build_repair_messages(task, score, {}, [], attempt=1, protocol="answer_blind_v2") == build_repair_messages(poisoned, score, {}, [], attempt=1, protocol="answer_blind_v2")
+        assert build_repair_messages(task, score, {}, [], attempt=1, protocol=protocol) == build_repair_messages(poisoned, score, {}, [], attempt=1, protocol=protocol)
 
 
 def test_model_cannot_remove_user_protected_scope():

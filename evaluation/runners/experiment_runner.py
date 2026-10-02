@@ -131,7 +131,7 @@ def _implementation_hashes() -> dict[str, str]:
 
 def _validate_config(config: dict[str, Any]) -> None:
     protocol = config.get("prompt_protocol", "legacy_v1")
-    if protocol not in {"legacy_v1", "answer_blind_v2"}:
+    if protocol not in {"legacy_v1", "answer_blind_v2", "answer_blind_v3"}:
         raise ValueError("unknown prompt_protocol")
     conditions = config.get("conditions")
     if not isinstance(conditions, list) or not conditions or any(item not in VALID_CONDITIONS for item in conditions):
@@ -152,8 +152,8 @@ def _validate_config(config: dict[str, Any]) -> None:
         if provider.get("provider") == "mock" and formal:
             raise ValueError("mock experiments must set formal_results_allowed=false")
         if provider.get("provider") != "mock" and formal:
-            if protocol != "answer_blind_v2":
-                raise ValueError("new formal live runs require answer_blind_v2")
+            if protocol not in {"answer_blind_v2", "answer_blind_v3"}:
+                raise ValueError("new formal live runs require an answer_blind protocol")
             if provider.get("input_cost_per_million") is None or provider.get("output_cost_per_million") is None:
                 raise ValueError("formal live runs require configured input/output prices for cost accounting")
             if float(config.get("budget_limit_usd", 0)) <= 0:
@@ -336,7 +336,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             "dependency_lock_hash": _dependency_hash(2),
             "input_file_hashes": _input_file_hashes(benchmark_root, split, config["split"]),
         }
-        if protocol == "answer_blind_v2":
+        if protocol in {"answer_blind_v2", "answer_blind_v3"}:
             manifest["implementation_hashes"] = _implementation_hashes()
         _write_json(manifest_path, manifest)
 

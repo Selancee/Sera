@@ -733,3 +733,10 @@
 
 - Commit b4a9718: 444 tests passed, zero failures/errors/skips. New answer-blind fixture completed 18/18 and passed 14 integrity/recomputation checks. All 200 saved detector cases replay with identical reports, commit decisions and fingerprints.
 - Receipt: paper/softwarex/revisions/2026-10_minor_r1/DEEPSEEK_PREFLIGHT_VALIDATION.json. No DeepSeek requests were made: the user environment credential is not configured yet.
+
+## 2026-10-02 — Live DeepSeek pilot and public-contract clarification
+
+- User environment credential authenticated successfully (HTTP 200); no credential values saved. First live pilot completed 18/18 initial requests plus one repair; estimated cost USD 0.0353778. All 14 evidence checks passed before code changes.
+- Pilot revealed ambiguous prompt documentation: precondition and expected-effect objects lacked explicit type-tagged forms; models invented unsupported assertions. Global operation expected_change_count also counts event IDs, not global attributes.
+- Retained v2 prompts and all pilot results. Added answer_blind_v3 public contract documentation, identically for B/C, without task answers or changes to scoring/validators. Formal core has not run and now freezes v3. New pilot uses a separate ID and USD 0.95 cap; prior actual spend plus this cap and USD 9 core stay below USD 10.
+- Pilot overlap with the existing development benchmark is disclosed; no held-out/generalization claim.
