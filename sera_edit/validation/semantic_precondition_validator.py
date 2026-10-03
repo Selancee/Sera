@@ -56,7 +56,19 @@ def validate_postconditions(
             offenders = [item["event_id"] for item in diff["changed"] if "pitch" in item["changed_fields"]]
             if offenders:
                 report.add_error(ValidationIssue("E12", "pitch changed despite preserve_pitch", "semantic", details={"event_ids": offenders}))
-        elif kind not in {"pitch_delta", "dynamic_equals", "meter_equals", "key_equals", "event_inserted", "event_deleted"}:
+        elif kind == "dynamic_equals":
+            event_id = effect.get("event_id")
+            value = effect.get("value")
+            if not isinstance(event_id, str) or not event_id or not isinstance(value, str) or not value:
+                report.unsupported = True
+                report.add_error(ValidationIssue("E19", "dynamic_equals requires event_id and value strings", "semantic"))
+                continue
+            matches = [event for measure in after.get("measures") or []
+                       for event in measure.get("events") or [] if event.get("event_id") == event_id]
+            if len(matches) != 1 or matches[0].get("dynamic") != value:
+                report.add_error(ValidationIssue("E15", "dynamic_equals postcondition failed", "semantic",
+                                                details={"event_id": event_id, "expected": value}))
+        elif kind not in {"pitch_delta", "meter_equals", "key_equals", "event_inserted", "event_deleted"}:
             report.unsupported = True
             report.add_error(ValidationIssue("E19", f"unsupported expected effect: {kind}", "semantic"))
     report.checks["expected_effect_count"] = len(expected_effects)

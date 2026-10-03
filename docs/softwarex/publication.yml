@@ -26,6 +26,11 @@ benchmark_human_review_complete: true
 journal: "SoftwareX"
 manuscript_number: "SOFTX-D-26-01135"
 submission_date: "2026-08-28"
-submission_status: "under_review"
-submission_status_label: "Under Review"
-submission_status_last_confirmed: "2026-09-03"
+submission_status: "minor_revision"
+submission_status_label: "Revise (authenticated Editorial Manager queue)"
+submission_status_last_confirmed: "2026-10-03"
+submission_status_evidence: "Authenticated Editorial Manager Submissions Needing Revision queue, read 2026-10-03; decision email dated 2026-10-01"
+revision_deadline: "2026-10-31"
+revision_portal_status_verified: true
+revision_reviewer_comments_retrieved: true
+revision_reviewer_comments_source: "Two review texts supplied directly by the author on 2026-10-02; platform numbering unverified"

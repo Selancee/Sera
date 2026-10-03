@@ -1,0 +1,8 @@
+{
+  "cases": 200,
+  "outcomes_identical": true,
+  "changed_json_paths": {
+    "/result/proposed_score_document/metadata/updated_at": 17,
+    "/result/score_document/metadata/updated_at": 200
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_017_m1_staff1_transpose_up2",
+    "source_score_id": "score_017",
+    "source_fingerprint": "sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570",
+    "instruction": "Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.",
+    "target_scope": {
+      "measures": [
+        1
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "op_017_m1_staff1_transpose_up2",
+        "type": "transpose",
+        "selector": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ],
+          "event_ids": [
+            "s017_m1_lh_1",
+            "s017_m1_lh_2",
+            "s017_m1_lh_3",
+            "s017_m1_lh_4"
+          ]
+        },
+        "arguments": {
+          "semitones": 2
+        },
+        "preconditions": [],
+        "expected_change_count": 4
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "changed_element_count",
+        "value": 4
+      }
+    ],
+    "provenance": {
+      "source": "score_017",
+      "source_fingerprint": "sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      }
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_017_m1_staff1_transpose_up2\",\"source_score_id\":\"score_017\",\"source_fingerprint\":\"sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570\",\"instruction\":\"Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_017_m1_staff1_transpose_up2\",\"type\":\"transpose\",\"selector\":{\"measures\":[1],\"staffs\":[1],\"event_ids\":[\"s017_m1_lh_1\",\"s017_m1_lh_2\",\"s017_m1_lh_3\",\"s017_m1_lh_4\"]},\"arguments\":{\"semitones\":2},\"preconditions\":[],\"expected_change_count\":4}],\"expected_effects\":[{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":4}],\"provenance\":{\"source\":\"score_017\",\"source_fingerprint\":\"sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]}}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_017_m1_staff1_transpose_up2",
+      "source_score_id": "score_017",
+      "source_fingerprint": "sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570",
+      "instruction": "Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_017_m1_staff1_transpose_up2",
+          "type": "transpose",
+          "selector": {
+            "measures": [
+              1
+            ],
+            "staffs": [
+              1
+            ],
+            "event_ids": [
+              "s017_m1_lh_1",
+              "s017_m1_lh_2",
+              "s017_m1_lh_3",
+              "s017_m1_lh_4"
+            ]
+          },
+          "arguments": {
+            "semitones": 2
+          },
+          "preconditions": [],
+          "expected_change_count": 4
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 4
+        }
+      ],
+      "provenance": {
+        "source": "score_017",
+        "source_fingerprint": "sha256:f36c806dfc82c2262167f2fba6129c22318927fcbb63e46afdd9011b92573570",
+        "target_scope": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ]
+        },
+        "protected_scope": {
+          "staffs": [
+            2
+          ]
+        }
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2049.5899000088684,
+    "input_tokens": 2841,
+    "output_tokens": 325,
+    "estimated_cost": 0.0012423,
+    "request_id": "f1eca77c-a047-441e-875c-a1ed3489441a",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "8f91242b997c1aae911239065a765daf4e13c900deacdd20907fb2b9922451d4"
+  },
+  "processing_latency_ms": 0.9758999804034829,
+  "error_codes": [
+    "E06"
+  ],
+  "error": "operation op_017_m1_staff1_transpose_up2 selected no events",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

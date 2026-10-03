@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Changing measure 1 to 5/8 requires changing the time signature, but change_time_signature requires a whole_score target; the requested target_scope is only measure 1. Also, preserving every note duration while fitting four quarter-note events into 5/8 would require rests or duration changes, which conflicts with the instruction.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Changing measure 1 to 5/8 requires changing the time signature, but change_time_signature requires a whole_score target; the requested target_scope is only measure 1. Also, preserving every note duration while fitting four quarter-note events into 5/8 would require rests or duration changes, which conflicts with the instruction."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1860.7747000060044,
+    "input_tokens": 2812,
+    "output_tokens": 77,
+    "estimated_cost": 0.000936,
+    "request_id": "6c3db125-5c24-4f20-8144-87ce072d8fd2",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "721892d108f7c676d3662a6429e1bb50a55f8f9fd20e14a140e9e09f91846352"
+  },
+  "processing_latency_ms": 0.001900014467537403,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

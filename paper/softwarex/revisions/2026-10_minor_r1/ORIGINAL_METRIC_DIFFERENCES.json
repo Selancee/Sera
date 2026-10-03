@@ -1,0 +1,104 @@
+[
+  {
+    "run_id": "dynamics_001:patch_only:r1",
+    "fields": {
+      "constraint_total": {
+        "recorded": "2",
+        "recomputed": "3"
+      },
+      "constraints_satisfied": {
+        "recorded": "2",
+        "recomputed": "3"
+      }
+    }
+  },
+  {
+    "run_id": "dynamics_001:sera_full:r1",
+    "fields": {
+      "constraint_total": {
+        "recorded": "2",
+        "recomputed": "3"
+      },
+      "constraints_satisfied": {
+        "recorded": "2",
+        "recomputed": "3"
+      }
+    }
+  },
+  {
+    "run_id": "dynamics_001:full_rewrite:r1",
+    "fields": {
+      "constraint_total": {
+        "recorded": "2",
+        "recomputed": "3"
+      },
+      "constraints_satisfied": {
+        "recorded": "2",
+        "recomputed": "3"
+      }
+    }
+  },
+  {
+    "run_id": "meter_001:full_rewrite:r1",
+    "fields": {
+      "constraint_satisfaction": {
+        "recorded": "1.0",
+        "recomputed": "0.2222222222222222"
+      },
+      "constraint_total": {
+        "recorded": "3",
+        "recomputed": "9"
+      },
+      "constraints_satisfied": {
+        "recorded": "3",
+        "recomputed": "2"
+      },
+      "task_success": {
+        "recorded": "1",
+        "recomputed": "0"
+      }
+    }
+  },
+  {
+    "run_id": "meter_001:patch_only:r1",
+    "fields": {
+      "constraint_satisfaction": {
+        "recorded": "1.0",
+        "recomputed": "0.2222222222222222"
+      },
+      "constraint_total": {
+        "recorded": "3",
+        "recomputed": "9"
+      },
+      "constraints_satisfied": {
+        "recorded": "3",
+        "recomputed": "2"
+      },
+      "task_success": {
+        "recorded": "1",
+        "recomputed": "0"
+      }
+    }
+  },
+  {
+    "run_id": "meter_001:sera_full:r1",
+    "fields": {
+      "constraint_satisfaction": {
+        "recorded": "1.0",
+        "recomputed": "0.2222222222222222"
+      },
+      "constraint_total": {
+        "recorded": "3",
+        "recomputed": "9"
+      },
+      "constraints_satisfied": {
+        "recorded": "3",
+        "recomputed": "2"
+      },
+      "task_success": {
+        "recorded": "1",
+        "recomputed": "0"
+      }
+    }
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "split_id": "softwarex_live_smoke",
+  "task_count": 6,
+  "task_ids": ["conflict_001", "dynamics_001", "insertion_001", "key_001", "meter_001", "pitch_001"]
+}

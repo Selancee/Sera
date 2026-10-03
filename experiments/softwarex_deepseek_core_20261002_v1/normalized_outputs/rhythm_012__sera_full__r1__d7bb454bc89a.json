@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'merge the first two rhythmic units' is ambiguous and unsupported: it does not map to a defined operation type, and the target scope (measure 2, staff 1) contains multiple voices and events whose intended merge result is unspecified.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'merge the first two rhythmic units' is ambiguous and unsupported: it does not map to a defined operation type, and the target scope (measure 2, staff 1) contains multiple voices and events whose intended merge result is unspecified."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1761.4733999944292,
+    "input_tokens": 3816,
+    "output_tokens": 60,
+    "estimated_cost": 0.0012167999999999999,
+    "request_id": "57d1f55e-f686-4598-8e67-aad2ee2355c2",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "8c17006299f236cba72e3e8523ef77d15751cf95463278271260f12bee67462d"
+  },
+  "processing_latency_ms": 0.002200016751885414,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

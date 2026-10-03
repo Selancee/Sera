@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Unsupported instruction: changing measure 1 to 5/8 requires a time-signature change, but change_time_signature requires whole_score target and cannot be applied to measure 1 only; preserving all durations and adding no rests is also incompatible with a 5/8 meter change.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Unsupported instruction: changing measure 1 to 5/8 requires a time-signature change, but change_time_signature requires whole_score target and cannot be applied to measure 1 only; preserving all durations and adding no rests is also incompatible with a 5/8 meter change."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1422.7823999826796,
+    "input_tokens": 3009,
+    "output_tokens": 67,
+    "estimated_cost": 0.0009831,
+    "request_id": "9d215280-7892-4214-90eb-3dc89a8b3ca2",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "b8d12ee3b35e256f85d5b7b0d3df2171dc0295546070b75ccca37d1c17d1bca0"
+  },
+  "processing_latency_ms": 0.0018999562598764896,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

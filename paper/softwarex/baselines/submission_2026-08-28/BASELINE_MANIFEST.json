@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "baseline_id": "softwarex_submission_2026-08-28",
+  "manuscript_number": "SOFTX-D-26-01135",
+  "frozen_on": "2026-10-02",
+  "timezone": "Asia/Shanghai",
+  "submission_candidate_commit": "a21acbea13d5a23f4aec9a438102e3dd25b8a5e4",
+  "pre_revision_head": "a0702ec910691eaad2d4da43377ed831b531657d",
+  "software_release_tag": "v1.0.0",
+  "software_release_commit": "b23afcf08c26c46625fc3f24d82882495de9348f",
+  "editorial_manager_original_files_verified": false,
+  "provenance_note": "Repository submission-ready files from 28 August; exact uploaded Editorial Manager files still require portal verification.",
+  "files": [
+    {
+      "path": "files/docs/softwarex/BASELINE_REPORT_2026-08-27.md",
+      "source_path": "docs/softwarex/BASELINE_REPORT_2026-08-27.md",
+      "source_git_blob": "67570282ce8c5c41ab75123270287232776002cb",
+      "bytes": 2633,
+      "sha256": "343536cef9ea31c4ad472732ec9e0776a4d04ea613d0c6e62f529dc90a872c5f",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/docs/softwarex/publication.yml",
+      "source_path": "docs/softwarex/publication.yml",
+      "source_git_blob": "40e08a10ffbaf9f8841f53d88f306128387de82c",
+      "bytes": 1122,
+      "sha256": "eae5c15cd2babd4de0732f6f335b0260795ac751fdc050a6cb5591742be2eec2",
+      "matches_pre_revision_worktree": false
+    },
+    {
+      "path": "files/paper/softwarex/SUBMISSION_PRIVACY_REPORT.md",
+      "source_path": "paper/softwarex/SUBMISSION_PRIVACY_REPORT.md",
+      "source_git_blob": "a3416d84dc181f8c6fcc2b238df8eff16fab42e8",
+      "bytes": 1977,
+      "sha256": "e883cd9d22b140d37641132d062e28b1929f3f294b20183ac3eb09caeee4606d",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/figures/figure1_architecture.mmd",
+      "source_path": "paper/softwarex/figures/figure1_architecture.mmd",
+      "source_git_blob": "71b54e62fb3503e1e3fa7a153bf692718f695549",
+      "bytes": 1279,
+      "sha256": "ab407f85e540252955902521aec99d043a0ccbf9eedbd84aa39eefa7a9a970b2",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/figures/figure1_architecture.pdf",
+      "source_path": "paper/softwarex/figures/figure1_architecture.pdf",
+      "source_git_blob": "65e794448b25f7a36afb5402fadc6ef238b1e03b",
+      "bytes": 64292,
+      "sha256": "d29710589ac7f6cd8fb33762c79df7f7806c219646bfdf80b68ba07dde0d67d5",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/figures/figure1_architecture.png",
+      "source_path": "paper/softwarex/figures/figure1_architecture.png",
+      "source_git_blob": "4d0527965f0b08ee94c34ac5bb50cfc14b6d108f",
+      "bytes": 54898,
+      "sha256": "672ec761ffbf5134c9de9905ef308c94962ea72872864cce2ff7b9d043c1241f",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/figures/figure1_architecture.svg",
+      "source_path": "paper/softwarex/figures/figure1_architecture.svg",
+      "source_git_blob": "a8e0e58724e5704ea50e0fd3c43070e41b00cef7",
+      "bytes": 27635,
+      "sha256": "de49b9caed87246e307622feddb08e49116d7851ae296bda4493f5ca0c32f098",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/manuscript/references.bib",
+      "source_path": "paper/softwarex/manuscript/references.bib",
+      "source_git_blob": "aa29a82ba851fd6d54fc75559a16da9848126df4",
+      "bytes": 2204,
+      "sha256": "33b5141ecda607941b31b26efd55dafda4672930f666e935e27e2aafb2be3412",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/manuscript/seraedit_softwarex.docx",
+      "source_path": "paper/softwarex/manuscript/seraedit_softwarex.docx",
+      "source_git_blob": "0690e8a62f43a9714b72c37d95dfe1ce2763ea38",
+      "bytes": 94360,
+      "sha256": "d31b5e5ef16ecaa9ac45221295686a68c2f78b04b5adcd4f8869710e1093be4c",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/manuscript/seraedit_softwarex.md",
+      "source_path": "paper/softwarex/manuscript/seraedit_softwarex.md",
+      "source_git_blob": "37b6685ae80be8a3bb1b2757aed3729dd47b0690",
+      "bytes": 19248,
+      "sha256": "b6506bb5dab42f7eda8762ecefeb5990eab81fa0835d940f54526c7fd30a94a7",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/manuscript/seraedit_softwarex.pdf",
+      "source_path": "paper/softwarex/manuscript/seraedit_softwarex.pdf",
+      "source_git_blob": "d55ddc53a22dd638b73269f0f92a92198c08aad3",
+      "bytes": 134165,
+      "sha256": "56ff44a7e29488a82ee55a1a799e368894eaa49d1f79d4cd669c179f03ff3e17",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/manuscript/seraedit_softwarex.tex",
+      "source_path": "paper/softwarex/manuscript/seraedit_softwarex.tex",
+      "source_git_blob": "efb6fe3daa1eb6fe963092cc18531b0fec263e0d",
+      "bytes": 18599,
+      "sha256": "df16fa9b60e614359bd52a434af671c612ac6c411c7e5404340ded41b3623668",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/COVER_LETTER.docx",
+      "source_path": "paper/softwarex/submission/COVER_LETTER.docx",
+      "source_git_blob": "164bbc0501a03855721457e9fde2f669e20e30db",
+      "bytes": 37479,
+      "sha256": "7f34f69e024552dcab740aa28e80c91de46a578b3e83a0102807d3889c7a4557",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/COVER_LETTER.md",
+      "source_path": "paper/softwarex/submission/COVER_LETTER.md",
+      "source_git_blob": "1e36643383170446b28ce31026ac218eed1df571",
+      "bytes": 2124,
+      "sha256": "e841d596b83f878f7a8171c0092628aff539e42c493e98d68c0ea9ed90777733",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.docx",
+      "source_path": "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.docx",
+      "source_git_blob": "cd559698e40522e8affd9b94a477d28201df9499",
+      "bytes": 36528,
+      "sha256": "6d6a2b279eaba24750104d328c8230032347883095c351767234b59434f41cea",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.md",
+      "source_path": "paper/softwarex/submission/CREDIT_AUTHOR_STATEMENT.md",
+      "source_git_blob": "2a447e7d031194dffe2ebb91540134fe085d36d5",
+      "bytes": 194,
+      "sha256": "07f2e529167d3dbe57e3dd9c83e80ba95af3739cc7628db0b2342ed4752e9e57",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.docx",
+      "source_path": "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.docx",
+      "source_git_blob": "4ad5825b3aca3de97028cbaa8f265f30739029b8",
+      "bytes": 36852,
+      "sha256": "137036da2749963b5a7f79be974fd82895b11c4387d78b257cf84e72290f5083",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.md",
+      "source_path": "paper/softwarex/submission/DATA_AND_CODE_AVAILABILITY.md",
+      "source_git_blob": "489bf22afb1cadb1c24e49b7e720682702fcda4b",
+      "bytes": 790,
+      "sha256": "553d1ca2512bd31c4f6db67c53488b5747398eb45f63bdfbd9f38b80b7dc1567",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/DECLARATION_OF_INTEREST.docx",
+      "source_path": "paper/softwarex/submission/DECLARATION_OF_INTEREST.docx",
+      "source_git_blob": "a7692f998c08503a2f7e33178c3a461e14298e66",
+      "bytes": 36520,
+      "sha256": "2288caf7a40494f88f24ac01ffca78acc8c0e17caba8cd2560ec682ca02e6927",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/DECLARATION_OF_INTEREST.md",
+      "source_path": "paper/softwarex/submission/DECLARATION_OF_INTEREST.md",
+      "source_git_blob": "1681dcb885370e0ac154dd00f4dd68068cf7671c",
+      "bytes": 208,
+      "sha256": "24c99a1be46edba7dc5abe211fa89e71f34cbc13316452bfc85e104f672c9855",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/EDITORIAL_MANAGER_FILL_IN.md",
+      "source_path": "paper/softwarex/submission/EDITORIAL_MANAGER_FILL_IN.md",
+      "source_git_blob": "b2635c3ef00d59fc72a13273050159d607ca5f49",
+      "bytes": 4927,
+      "sha256": "634dd507574c2b8d4e16c95ac3b92170408c11e94b0642df8814511677f1e905",
+      "matches_pre_revision_worktree": false
+    },
+    {
+      "path": "files/paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.docx",
+      "source_path": "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.docx",
+      "source_git_blob": "4bcf1717da254c1d143f0e0fed28e48c397e40ef",
+      "bytes": 36634,
+      "sha256": "d5c7cbb31400d3d3f5f59190050ab65013abfd23f5955c4d1a2bc6112efa55a4",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.md",
+      "source_path": "paper/softwarex/submission/GENERATIVE_AI_DISCLOSURE.md",
+      "source_git_blob": "e23aef334fb00958a7b71d93f5e54b149eee836f",
+      "bytes": 419,
+      "sha256": "89d289cb6fb30eed2b89aa7125071792c0fa0c387d8e0c5a1c932382660b4cbb",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission/HIGHLIGHTS.txt",
+      "source_path": "paper/softwarex/submission/HIGHLIGHTS.txt",
+      "source_git_blob": "eea2a34372c81da4c3cb43e62982ad18a02fe474",
+      "bytes": 410,
+      "sha256": "b6aac0cab3962cb13cde794d50a906d035ecd914daf9b51254e48377068eb6a2",
+      "matches_pre_revision_worktree": true
+    },
+    {
+      "path": "files/paper/softwarex/submission_verification.json",
+      "source_path": "paper/softwarex/submission_verification.json",
+      "source_git_blob": "6e086f6171cf2ef1db059f77c3e2decf2bc447a0",
+      "bytes": 3191,
+      "sha256": "3dfb880bc73ef15e101eee1d8832dbc253d56360d6260564b62508bc8595d8f9",
+      "matches_pre_revision_worktree": false
+    }
+  ],
+  "local_archives": [
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/local_pre_revision_seraedit-1.0.0-source.zip",
+      "kind": "local_pre_revision_copy",
+      "bytes": 5609579,
+      "sha256": "7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6",
+      "github_release_expected_sha256": "7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6",
+      "matches_public_release": true
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/local_pre_revision_seraedit-1.0.0-softwarex-manuscript.zip",
+      "kind": "local_pre_revision_copy",
+      "bytes": 591159,
+      "sha256": "19468783babeb110dadb6694df7be2ac48762138830f3ff4fc43ddc48cc747b3",
+      "github_release_expected_sha256": "f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444",
+      "matches_public_release": false
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/local_pre_revision_release_manifest.json",
+      "kind": "local_pre_revision_copy",
+      "bytes": 568686,
+      "sha256": "3ec009e4a104e95b7901dd3fd95765bebb8192e6583a2b524dd4949a11323655",
+      "github_release_expected_sha256": "64a9def337c0ff5e25858989e035cfc366a1502c4e9b92133b0a4ce20d4304bd",
+      "matches_public_release": false
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/local_pre_revision_SHA256SUMS.txt",
+      "kind": "local_pre_revision_copy",
+      "bytes": 283,
+      "sha256": "3c0ce2afa991486f2d3c706568854d0b677323d3802d133c033b46d7de806e10",
+      "github_release_expected_sha256": "3c0ce2afa991486f2d3c706568854d0b677323d3802d133c033b46d7de806e10",
+      "matches_public_release": true
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/submission_source_a21acbe.zip",
+      "kind": "git_archive",
+      "git_commit": "a21acbea13d5a23f4aec9a438102e3dd25b8a5e4",
+      "bytes": 8262181,
+      "sha256": "e0e60e5306b2b689bb0ced8203fc4fadfce8425df684d297a0f02d244d40d8a0"
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/pre_revision_source_a0702ec.zip",
+      "kind": "git_archive",
+      "git_commit": "a0702ec910691eaad2d4da43377ed831b531657d",
+      "bytes": 11126135,
+      "sha256": "d4d69e2b1b559e0934e19b410fd13272b74b4839fe0cc0b9eaa28dd52793b78d"
+    },
+    {
+      "path": "artifacts/softwarex_revision_20261002/baseline_archives/published_seraedit-1.0.0-softwarex-manuscript.zip",
+      "kind": "verified_published_release_asset",
+      "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-softwarex-manuscript.zip",
+      "bytes": 411927,
+      "sha256": "f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444"
+    }
+  ],
+  "published_manuscript_download": {
+    "status": "verified",
+    "manuscript_comparisons": [
+      {
+        "source_path": "paper/softwarex/manuscript/references.bib",
+        "matches_submission_candidate": true
+      },
+      {
+        "source_path": "paper/softwarex/manuscript/seraedit_softwarex.docx",
+        "matches_submission_candidate": false
+      },
+      {
+        "source_path": "paper/softwarex/manuscript/seraedit_softwarex.md",
+        "matches_submission_candidate": false
+      },
+      {
+        "source_path": "paper/softwarex/manuscript/seraedit_softwarex.pdf",
+        "matches_submission_candidate": false
+      },
+      {
+        "source_path": "paper/softwarex/manuscript/seraedit_softwarex.tex",
+        "matches_submission_candidate": false
+      }
+    ]
+  },
+  "github_release_evidence": {
+    "url": "https://github.com/Selancee/Sera/releases/tag/v1.0.0",
+    "id": 377791339,
+    "tag": "v1.0.0",
+    "published_at": "2026-08-27T12:08:13Z",
+    "updated_at": "2026-09-03T07:13:10Z",
+    "assets": [
+      {
+        "name": "release_manifest.json",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/release_manifest.json",
+        "bytes": 567415,
+        "digest": "sha256:64a9def337c0ff5e25858989e035cfc366a1502c4e9b92133b0a4ce20d4304bd"
+      },
+      {
+        "name": "Sera-1.0.0-x64.exe",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe",
+        "bytes": 234325156,
+        "digest": "sha256:66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756"
+      },
+      {
+        "name": "seraedit-1.0.0-softwarex-manuscript.zip",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-softwarex-manuscript.zip",
+        "bytes": 411927,
+        "digest": "sha256:f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444"
+      },
+      {
+        "name": "seraedit-1.0.0-source.zip",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-source.zip",
+        "bytes": 5609579,
+        "digest": "sha256:7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/SHA256SUMS.txt",
+        "bytes": 283,
+        "digest": "sha256:3c0ce2afa991486f2d3c706568854d0b677323d3802d133c033b46d7de806e10"
+      }
+    ]
+  }
+}

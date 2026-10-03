@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction is internally inconsistent: changing measure 1 to 5/8 while preserving every note duration and leaving no rests is impossible because the existing measure contains four quarter-note events (4/4 total duration), which cannot fit into a 5/8 measure without altering durations or inserting rests.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction is internally inconsistent: changing measure 1 to 5/8 while preserving every note duration and leaving no rests is impossible because the existing measure contains four quarter-note events (4/4 total duration), which cannot fit into a 5/8 measure without altering durations or inserting rests."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1692.1469999942929,
+    "input_tokens": 2814,
+    "output_tokens": 69,
+    "estimated_cost": 0.0009269999999999999,
+    "request_id": "9cb5a9da-d764-4dad-9a50-db3e9f3677bc",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "39b22b7d8f5a77b1819c72a746111771ae334f4572e0ff5621b9bf7a1f635bca"
+  },
+  "processing_latency_ms": 0.002100015990436077,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

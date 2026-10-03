@@ -1,0 +1,177 @@
+{
+  "condition": "sera_full",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_score_001_key_G",
+    "source_score_id": "score_001",
+    "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+    "instruction": "Change the score key signature to G major without transposing notes.",
+    "target_scope": {
+      "whole_score": true
+    },
+    "protected_scope": {},
+    "preconditions": [
+      {
+        "global_key": "C major"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "op_change_key",
+        "type": "change_key_signature",
+        "selector": {
+          "whole_score": true
+        },
+        "arguments": {
+          "key": "G major"
+        },
+        "preconditions": [
+          {
+            "global_key": "C major"
+          }
+        ],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "preserve_pitch": true
+      },
+      {
+        "changed_element_count": {
+          "value": 1
+        }
+      }
+    ],
+    "provenance": {
+      "source": "score_context",
+      "note": "Key signature changed to G major; note pitches unchanged."
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "unsupported",
+    "errors": [
+      {
+        "code": "E19",
+        "message": "unsupported precondition: ",
+        "stage": "semantic",
+        "repairable": false,
+        "details": {}
+      }
+    ],
+    "warnings": [],
+    "checks": {
+      "schema_version": "1.0.0",
+      "operation_count": 1,
+      "structural": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "event_count": 16,
+          "measure_count": 2,
+          "operation_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "preconditions": {
+        "status": "unsupported",
+        "errors": [
+          {
+            "code": "E19",
+            "message": "unsupported precondition: ",
+            "stage": "semantic",
+            "repairable": false,
+            "details": {}
+          }
+        ],
+        "warnings": [],
+        "checks": {
+          "precondition_count": 1
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      }
+    },
+    "repairable": false,
+    "suggested_repairs": []
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_score_001_key_G\",\"source_score_id\":\"score_001\",\"source_fingerprint\":\"sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b\",\"instruction\":\"Change the score key signature to G major without transposing notes.\",\"target_scope\":{\"whole_score\":true},\"protected_scope\":{},\"preconditions\":[{\"global_key\":\"C major\"}],\"operations\":[{\"operation_id\":\"op_change_key\",\"type\":\"change_key_signature\",\"selector\":{\"whole_score\":true},\"arguments\":{\"key\":\"G major\"},\"preconditions\":[{\"global_key\":\"C major\"}],\"expected_change_count\":1}],\"expected_effects\":[{\"preserve_pitch\":true},{\"changed_element_count\":{\"value\":1}}],\"provenance\":{\"source\":\"score_context\",\"note\":\"Key signature changed to G major; note pitches unchanged.\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_score_001_key_G",
+      "source_score_id": "score_001",
+      "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+      "instruction": "Change the score key signature to G major without transposing notes.",
+      "target_scope": {
+        "whole_score": true
+      },
+      "protected_scope": {},
+      "preconditions": [
+        {
+          "global_key": "C major"
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "op_change_key",
+          "type": "change_key_signature",
+          "selector": {
+            "whole_score": true
+          },
+          "arguments": {
+            "key": "G major"
+          },
+          "preconditions": [
+            {
+              "global_key": "C major"
+            }
+          ],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "preserve_pitch": true
+        },
+        {
+          "changed_element_count": {
+            "value": 1
+          }
+        }
+      ],
+      "provenance": {
+        "source": "score_context",
+        "note": "Key signature changed to G major; note pitches unchanged."
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1879.315200028941,
+    "input_tokens": 2556,
+    "output_tokens": 210,
+    "estimated_cost": 0.0010188,
+    "request_id": "993dd0af-5892-476f-b455-c16efad30a1c",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "85cfb448d6f70963e01279a3abe872ae996c2030583ebe93140fb8fdd4a6a44d"
+  },
+  "processing_latency_ms": 0.9341000113636255,
+  "error_codes": [
+    "E19"
+  ],
+  "error": "pre-apply validation failed",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

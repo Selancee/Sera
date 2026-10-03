@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is not supported by the available operation types; no merge operation exists in the schema, and the condition_contract does not define an assertion format for merging rhythmic units.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is not supported by the available operation types; no merge operation exists in the schema, and the condition_contract does not define an assertion format for merging rhythmic units."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1416.8213000521064,
+    "input_tokens": 4604,
+    "output_tokens": 59,
+    "estimated_cost": 0.001452,
+    "request_id": "68cb79e4-19f8-4ff4-82be-28f7f91aaacd",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "7b87f90f61ea56d5a0430f0169a9f487607ea5f68fa415108ee2abc4f886b270"
+  },
+  "processing_latency_ms": 0.0019999570213258266,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

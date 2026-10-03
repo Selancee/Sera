@@ -2443,3 +2443,166 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 
 - No benchmark, metric, experiment or scientific claim changed. The published
   `v1.0.0` and Zenodo archive remain unchanged.
+
+## 2026-09-10 - Phase 62: remove the command-window flash from desktop launch
+
+### Completed
+
+- Found the actual desktop `Sera.lnk` pointing to `run_app.bat`. Windows therefore
+  started a command interpreter before the existing Electron GUI. Electron already
+  hides its backend subprocess; changing backend packaging was unnecessary.
+- Updated `scripts/create_desktop_shortcut.ps1` to point directly to the existing
+  `dist_desktop/release/win-unpacked/Sera.exe`, clear obsolete arguments, and use its
+  icon. The script derives the project location instead of hardcoding a drive and
+  supports an explicit shortcut destination. If the package is missing, it fails
+  before changing an existing shortcut.
+- Backed up and corrected the user's desktop shortcut. Updated the Windows launch
+  instructions in `README.md`; the batch file remains a terminal/development entry.
+
+### Verification
+
+- Real shortcut creation checks passed from a relocated directory containing spaces,
+  including migration of an existing batch shortcut, removal of stale arguments,
+  direct GUI targeting, and byte-preservation of the shortcut when a package is missing.
+- Confirmed the executable uses the Windows GUI subsystem. Launched the corrected
+  shortcut with the user's existing Sera session running and observed no new visible
+  console windows over five seconds. The original backend PID stayed unchanged and
+  `/health` remained `ok`. Application EXE and `app.asar` hashes were unchanged.
+- Desktop-launcher and Windows-packaging regression tests: 13 passed.
+
+### Limits and next step
+
+- Cold start and shutdown were not repeated because Sera was already running with
+  the user's work. The existing session was preserved. Directly double-clicking the
+  development `.bat` still opens a command interpreter by Windows design; daily
+  startup should use the repaired Sera desktop icon or the GUI executable.
+- Record the fix in a local commit. No application rebuild is required.
+
+### Paper impact
+
+- No Core/World/Forge implementation, frontend, score, benchmark, experiment, or
+  scientific claim changed. This is a Windows shortcut and documentation correction.
+
+## 2026-10-02 - SoftwareX revision reproducibility repair
+
+- Reproduced the original tag's benchmark/dependency/metric drift and ignored-data
+  test failure; independently confirmed missing evaluation modules in its source ZIP.
+- Implemented source-archive isolation checks, byte-preserving evidence attributes,
+  diagnostic hash/metric verification and resume drift checks. Initial focused
+  regression: 18 passed. Fresh fixture and final isolated audits follow next.
+- Detailed file changes, evidence and remaining work are recorded in
+  `paper/softwarex/revisions/2026-10_minor_r1/P0_REPRODUCIBILITY_REPORT.md`.
+- Existing application behavior is unchanged. Old evidence is retained; new mock
+  evidence remains ineligible for model-performance claims. API experiments are
+  explicitly deferred by the author.
+
+### Reproducibility repair acceptance
+
+- Independent revision checks pass 13/13 and all 360 metric rows reproduce. Clean
+  checkout and isolated source archive each pass 438 Python tests in the freshly
+  installed documented environment. The archived reviewer demo passes 6/6.
+- Clean-source archive `3888dd3` has 3,407 verified entries. A separate completed
+  R1 audit records its SHA-256 and the earlier negative evidence. Original tag,
+  deposit and submission copies are retained; local commits have not been pushed.
+- R1 manuscript and response draft now disclose development feedback used for the
+  720-run deterministic benchmark replay. Live-provider and validator-detection
+  studies remain pending and are not represented by these offline checks.
+
+## 2026-10-02 — DeepSeek comparison preparation and validator measurement
+
+- Added answer_blind_v2: identical B/C initial requests, common A/B/C user scopes, no answer-side labels, and scope-contract enforcement for C. Frozen legacy prompts remain available.
+- Added credential-free DeepSeek smoke/core configurations, USD 1/9 persistent budgets, non-thinking mode, no seed/retry/cache, full repair-request evidence and failed-repair response preservation.
+- Added producer-code hash checks, explicit-denominator/source-cluster analysis, and sentinel tests over all 120 tasks.
+- Validator pilots retained: v1 controls exposed chord export representability; v2 has 3/20 grace-dynamic round-trip rejections and reveals an unchecked dynamic_equals effect. Added event/value validation with regression tests.
+- Tests at this stage: initial full suite 441 passed; subsequent focused suite 21 passed; six smoke task definitions validate. Final suite and frozen post-fix study follow.
+- Live API has not run: awaiting user-level DEEPSEEK_API_KEY setup. No public release, Git push or journal submission.
+
+### Local test evidence
+
+- Clean producer 230dbf7 generated 200 validator cases: 180/180 invalid patches rejected, 3/20 canonical-valid controls rejected on grace-note dynamic round-trip fidelity, all 200 caller inputs unchanged and all 183 rollbacks verified. Pre-fix semantic detections were 0/20; all pre-fix cases retained.
+- Full suite at 230dbf7: 443 passed, zero failures/errors/skips. A subsequent newline-portability regression test passes; producer hashes now normalize only Python line endings.
+- New answer-blind offline smoke: 18/18 fixture runs; analysis generation exercised. These are explicitly mock evidence. Frozen revision fixture still reproduces all 360 rows and passes 13 checks; baseline 25 files and 7 archives remain intact.
+- DeepSeek live testing is authorized but has made no calls pending local user environment credential configuration. See LIVE_EXPERIMENT_PROTOCOL.md and VALIDATOR_DETECTION_REPORT.md.
+
+### Final offline preflight
+
+- Commit b4a9718: 444 tests passed, zero failures/errors/skips. New answer-blind fixture completed 18/18 and passed 14 integrity/recomputation checks. All 200 saved detector cases replay with identical reports, commit decisions and fingerprints.
+- Receipt: paper/softwarex/revisions/2026-10_minor_r1/DEEPSEEK_PREFLIGHT_VALIDATION.json. No DeepSeek requests were made: the user environment credential is not configured yet.
+
+## 2026-10-02 — Live DeepSeek pilot and public-contract clarification
+
+- User environment credential authenticated successfully (HTTP 200); no credential values saved. First live pilot completed 18/18 initial requests plus one repair; estimated cost USD 0.0353778. All 14 evidence checks passed before code changes.
+- Pilot revealed ambiguous prompt documentation: precondition and expected-effect objects lacked explicit type-tagged forms; models invented unsupported assertions. Global operation expected_change_count also counts event IDs, not global attributes.
+- Retained v2 prompts and all pilot results. Added answer_blind_v3 public contract documentation, identically for B/C, without task answers or changes to scoring/validators. Formal core has not run and now freezes v3. New pilot uses a separate ID and USD 0.95 cap; prior actual spend plus this cap and USD 9 core stay below USD 10.
+- Pilot overlap with the existing development benchmark is disclosed; no held-out/generalization claim.
+
+## 2026-10-02 — Completed real-provider comparison and local revision evidence
+
+- User-level DEEPSEEK_API_KEY authenticated; values remain environment-only. Retained both live pilots and froze answer_blind_v3 at clean producer e3a34e1 before core.
+- Core completed 360/360 initial runs plus 43 repair calls, all deepseek-flash / stop, without provider failures. All 360 metrics recompute exactly and all 14 integrity checks pass.
+- Strict editing success: Full Rewrite 72/110, Patch Only 65/110, Sera Full 63/110. Measured leakage: 17/105, 18/92, 0/73 produced scores. Sera Full erroneously refused 34 executable tasks; results do not establish overall accuracy improvement.
+- Offline same-response repair replay: correct outcomes 62/120 to 73/120; 11 improvements, zero regressions, 25 repaired editing tasks ending in erroneous refusal. Added analyze_softwarex_repairs.py so legacy valid-or-refused repair_success is not misreported as editing success.
+- Full v3 Python suite: 445 passed, no failures/errors/skips. Packaging-focused tests: 8 passed. Main estimated cost USD 1.0317027, total including pilots USD 1.1044263, not an invoice.
+- Updated only the R1 manuscript/response/matrix and result report; original submission/release evidence retained. Added live evidence and all fingerprinted evaluation Python files to candidate source export and an offline live-evidence check to isolated ZIP verification.
+- New source-candidate verification follows. P1 revisions, final rendering and revised publication remain pending; no public push, release, DOI update or journal submission.
+
+### Final isolated source-candidate check
+
+- Clean source ff82c74: 4,299 file hashes verified; source ZIP SHA-256 65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb.
+- Independent temporary extraction using the documented P0 clean Python 3.12.5 environment: 445 passed, zero failures/errors/skips; reviewer demo 6/6 with five MusicXML files; fixture checks 13/13; saved real-model checks 14/14. No new API calls or dependency reinstall.
+- Final receipts accompany the tested immutable archive separately. Publication and remaining P1 work are still pending.
+
+## 2026-10-03 — Contribution clarification and bounded P1 acceptance
+
+- R1 now identifies the scoped ScorePatch contract, reversible validated execution and reusable evaluation infrastructure as the three software contributions. The lower strict-success result, 34 erroneous refusals, round-trip control failures and benchmark feedback remain explicit. No overall success or musical-quality superiority is asserted.
+- Added primary related-work references, platform/source-installation boundaries, exact environment versions and synchronized submission fields. Updated the stale requirements/reproducibility documents.
+- Captured six actual local-rule UI states and embedded two screenshots. Native MuseScore bridge send/open visual verification remains open after file-picker control failure/user-input interruption. Manual import is not labeled as plugin proof.
+- Added a 645-file SPDX/hash sidecar rather than modifying frozen producer bytes; response explicitly identifies this as an alternative to requested inline headers.
+- Generated editable manuscript, response and cover-letter DOCX files; corrected title borders, separate reference paragraphs and metadata table widths. Rendered and visually inspected 10 + 4 + 1 pages.
+- P1 document verifier: 23/23; saved real-model evidence recheck: 14/14 with all 360 metric rows matching; original baseline: 25 files + 7 archives preserved. This turn also passed 31 packaging/submission tests, 133 frontend tests and the frontend production build.
+- P1 status: five items locally completed, one reasoned license alternative, two with open gates (bridge visual evidence and publication/hosted CI). No new paid API call, push, release, DOI update or journal submission. See R1 P1_ACCEPTANCE.md and P1_ACCEPTANCE.json.
+
+## 2026-10-03 — Reviewer audit and actual native bridge acceptance
+
+- Replayed 200 validator cases: all outcomes identical, only update timestamps differ. Replayed 120 saved initial model responses: 11 repair improvements, zero regressions, 25 repaired edit refusals. Real-model evidence again passes 14 integrity checks and 360-row recomputation; no producer or scoring change and no API call.
+- Completed actual MuseScore 4.5.2 / plugin 0.3.3 / Electron development-shell workflow from saved MSCZ through CLI conversion, review/apply, plugin-triggered separate host window and visible revised notation. Sera undo produces revision 2. Eight original native screenshots and source/revision artifacts are included; independent XML checks verify exactly four target pitch changes and restored notes after undo.
+- Corrected bridge version/path/support docs, unsupported local-parser wording, native versus plain-MusicXML import descriptions and reply page/line pointers. Manuscript has four figures and 2,979 body words; 10 manuscript pages and four response pages rendered and visually checked.
+- Added named revision selection to the manuscript ZIP exporter after finding its default only selected the old submission. Two regression tests cover R1 evidence inclusion and invalid directory selection; 33 focused packaging/submission tests pass.
+- P1 verifier: 24/24; bridge visual gate closed for this single local-rule demonstration. Original 25 submission files and seven archives unchanged. License sidecar has CRLF/LF-normalized hashes without changing frozen producer bytes; reviewer acceptance of the inline-header alternative remains open.
+- Public release/DOI/hosted CI and author/Editorial Manager final checks remain pending. Preparing an immutable local candidate for isolated verification; this does not publish anything.
+
+
+### 2026-10-03 — Final R1 archive acceptance
+
+- Built clean b9589ee source/manuscript candidates; 4,345 source members verified, 81 manuscript members matched the revision worktree.
+- Isolated ZIP extraction: 447 Python tests passed, 0 failures/errors/skips; fixture verification, reviewer demo 6/6 and saved live-result recomputation passed using the existing Python 3.12.5 environment.
+- Added post-build receipts and JUnit evidence under the R1 directory; these receipts deliberately postdate and are not inside the immutable local ZIPs. Original baseline/release bytes remain unchanged.
+- Public archive/DOI, hosted CI, author review and Editorial Manager assembly remain open. No network model calls, push or submission.
+
+
+### 2026-10-03 — Submission preparation and authenticated portal check
+
+- Verified the manuscript in the authenticated Editorial Manager revision queue (Revise; due 31 October). New review site still reports authentication issue; original file inventory and reviewer numbering remain unverified.
+- Prepared a 10-page highlighted manuscript and complete text comparison against the preserved baseline; clean text/images unchanged. Updated the 4-page response and prepared four one-page Word statements; all 18 pages visually inspected.
+- Prepared a concrete public-branch/draft-PR proposal to run hosted CI. No push, publication, portal upload or submission. No experimental code, metrics or paid-model calls changed.
+
+
+### 2026-10-03 — Approved public revision branch and hosted R1 verification
+
+- Author explicitly approved pushing the revision branch and creating a draft PR for CI; published branch 27e0b4e and opened https://github.com/Selancee/Sera/pull/1. No merge, formal release or journal submission authorized by this step.
+- Updated Research CI to verify R1 consistency, select the named R1 manuscript tree and retain the tested archive artifacts. Syntax and selection checks passed; hosted result pending.
+
+
+### 2026-10-03 — Hosted test timing correction
+
+- First hosted frontend job exposed a race in the language-switch test: it entered a new note before the loaded review draft had settled. Seeded a distinguishable saved note and wait for that value before editing/switching language; preserved the original note-retention and no-write assertions. Production UI and frozen producer code are unchanged.
+- The earlier Python interruption was cancellation by the newer push, not a verification failure. Subsequent run 37095136952 passed both jobs for 253263c. A new hosted run is required for this test-only correction.
+- Focused review-workspace tests: 9/9 passed. License inventory hashes updated for the changed test file.
+
+
+### 2026-10-03 — Reproducible melody integration fixture
+
+- Hosted run 37095716172 passed the frontend but failed the romantic grammar assertion in an unseeded style-integration test. The generator intentionally mixes time and UUID into unspecified seeds, so successive CI runs exercised different musical examples. The hosted failure remains visible; its exact seed was not recorded in the assertion.
+- Set explicit run_seed=42 through the public pipeline controls in the two melody integration fixtures, retaining vocabulary, contour and grammar-validity assertions and adding the full report to failure diagnostics. The first preselected seed passed; no seed search or production-generator change was made. This is bounded regression coverage, not proof of grammar validity over arbitrary seeds; that generation-quality limitation remains open outside the patch-editing paper scope.
+- Eight focused melodic-grammar, integration, cross-measure and generation tests passed locally. Updated the changed test's license-sidecar hashes. Frozen model outputs, producer, scoring, manuscript results and original submission/release evidence are unchanged.
+- Push and draft-PR CI remain covered by the author's explicit authorization. No merge, tag, formal release or journal submission.

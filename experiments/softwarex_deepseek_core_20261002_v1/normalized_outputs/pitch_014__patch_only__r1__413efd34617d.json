@@ -1,0 +1,187 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_018_transpose_m1_staff1_-2",
+    "source_score_id": "score_018",
+    "source_fingerprint": "sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af",
+    "instruction": "Transpose measure 1 of staff 1 by -2 semitones while preserving rhythm.",
+    "target_scope": {
+      "measures": [
+        1
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "op_018_transpose_m1_staff1",
+        "type": "transpose",
+        "selector": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ],
+          "event_ids": [
+            "s018_m1_lh_1",
+            "s018_m1_lh_v2_1",
+            "s018_m1_lh_2",
+            "s018_m1_lh_3",
+            "s018_m1_lh_4",
+            "s018_m1_lh_5",
+            "s018_m1_lh_6"
+          ]
+        },
+        "arguments": {
+          "semitones": -2
+        },
+        "preconditions": [],
+        "expected_change_count": 7
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "changed_element_count",
+        "value": 7
+      }
+    ],
+    "provenance": {
+      "source": "score_018",
+      "source_fingerprint": "sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "derivation": "transpose selected staff 1 events in measure 1 by -2 semitones"
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_018_transpose_m1_staff1_-2\",\"source_score_id\":\"score_018\",\"source_fingerprint\":\"sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af\",\"instruction\":\"Transpose measure 1 of staff 1 by -2 semitones while preserving rhythm.\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_018_transpose_m1_staff1\",\"type\":\"transpose\",\"selector\":{\"measures\":[1],\"staffs\":[1],\"event_ids\":[\"s018_m1_lh_1\",\"s018_m1_lh_v2_1\",\"s018_m1_lh_2\",\"s018_m1_lh_3\",\"s018_m1_lh_4\",\"s018_m1_lh_5\",\"s018_m1_lh_6\"]},\"arguments\":{\"semitones\":-2},\"preconditions\":[],\"expected_change_count\":7}],\"expected_effects\":[{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":7}],\"provenance\":{\"source\":\"score_018\",\"source_fingerprint\":\"sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"derivation\":\"transpose selected staff 1 events in measure 1 by -2 semitones\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_018_transpose_m1_staff1_-2",
+      "source_score_id": "score_018",
+      "source_fingerprint": "sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af",
+      "instruction": "Transpose measure 1 of staff 1 by -2 semitones while preserving rhythm.",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_018_transpose_m1_staff1",
+          "type": "transpose",
+          "selector": {
+            "measures": [
+              1
+            ],
+            "staffs": [
+              1
+            ],
+            "event_ids": [
+              "s018_m1_lh_1",
+              "s018_m1_lh_v2_1",
+              "s018_m1_lh_2",
+              "s018_m1_lh_3",
+              "s018_m1_lh_4",
+              "s018_m1_lh_5",
+              "s018_m1_lh_6"
+            ]
+          },
+          "arguments": {
+            "semitones": -2
+          },
+          "preconditions": [],
+          "expected_change_count": 7
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 7
+        }
+      ],
+      "provenance": {
+        "source": "score_018",
+        "source_fingerprint": "sha256:9437d56d87da5cf9e376ba673452106f3405f0c764e2fc051d56e67e1cf5f7af",
+        "target_scope": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ]
+        },
+        "protected_scope": {
+          "staffs": [
+            2
+          ]
+        },
+        "derivation": "transpose selected staff 1 events in measure 1 by -2 semitones"
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2802.982199995313,
+    "input_tokens": 3792,
+    "output_tokens": 385,
+    "estimated_cost": 0.0015995999999999999,
+    "request_id": "39b7b7b4-5922-49b0-9570-56cbbca8ccc9",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "7a8604f91623aa996a0791e81dfa29cbcbed73c5034582e8a062474a447744e8"
+  },
+  "processing_latency_ms": 1.1629000073298812,
+  "error_codes": [
+    "E06"
+  ],
+  "error": "operation op_018_transpose_m1_staff1 selected no events",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

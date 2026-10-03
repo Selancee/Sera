@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction to change measure 1 to 5/8 conflicts with preserving every note duration and leaving no rests: the existing measure 1 contains four quarter-note events per staff (4/4 total), and changing the meter to 5/8 would require altering durations or inserting rests to fill the measure.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction to change measure 1 to 5/8 conflicts with preserving every note duration and leaving no rests: the existing measure 1 contains four quarter-note events per staff (4/4 total), and changing the meter to 5/8 would require altering durations or inserting rests to fill the measure."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2840.256800001953,
+    "input_tokens": 2811,
+    "output_tokens": 72,
+    "estimated_cost": 0.0009296999999999999,
+    "request_id": "051ae856-425d-4180-8beb-94dfc86cc1ba",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "ae9fcd419950b04251375858230dfc572c3f8c575a762f7cd24ee62d71816bf4"
+  },
+  "processing_latency_ms": 0.0030999653972685337,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

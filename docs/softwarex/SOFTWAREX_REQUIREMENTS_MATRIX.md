@@ -1,34 +1,26 @@
-# SoftwareX requirements matrix
+# SoftwareX revision requirements matrix
 
-This matrix maps the SoftwareX journal page, v4 article structure, and reviewer form
-rechecked on 2026-08-27 to auditable project artifacts. `Prepared` means locally
-complete; it does not imply a public release.
+Updated 3 October 2026. The active draft is
+`paper/softwarex/revisions/2026-10_minor_r1/`; August submission files are historical.
+Local verification is distinct from public release, hosted CI and journal submission.
+The current journal guide returned HTTP 403; see R1 LITERATURE_VERIFICATION.md for
+the retained guide limits and conservative local targets, not a new live confirmation.
 
-| Requirement | Evidence | Status |
+| Requirement | Revision evidence | Status |
 | --- | --- | --- |
-| Original Software Publication structure | `paper/softwarex/manuscript/seraedit_softwarex.*` | Prepared |
-| Main text no more than 3000 words | `scripts/verify_softwarex_package.py` | Automated |
-| Abstract about 100 words, no more than six keywords | Manuscript + verifier | Prepared |
-| C1-C9 code metadata | Manuscript metadata table | Prepared; C2/C9 final and C3 contains the public version DOI |
-| Open-source license | Root `LICENSE`, `THIRD_PARTY_NOTICES.md` | MIT confirmed by the owner |
-| Public inspectable source | `https://github.com/Selancee/Sera` | Public and anonymously verified |
-| Permanent archived release | C3 / `publication.yml` | Public Zenodo software deposit: `10.5281/zenodo.22128976` |
-| Build and operating environment | `docs/softwarex/INSTALLATION.md`, `requirements-tested-windows.txt` | Prepared and pinned to the verified Windows direct dependencies |
-| User manual and illustrative example | `docs/softwarex/USER_MANUAL.md` | Prepared |
-| Developer/API documentation | `docs/softwarex/API_REFERENCE.md` | Prepared |
-| Automated tests | Python + Vitest suites; `.github/workflows/research-ci.yml` | Passed locally on 2026-08-27; CI definition prepared |
-| Reviewer reproduction path | `scripts/run_reviewer_demo.py`, `demo/README.md`, `docs/softwarex/REVIEWER_GUIDE.md` | Offline 6-task product-path demo prepared |
-| Reproducible evaluation | `experiments/softwarex_verification_120_v1` | Passed; mock/non-formal |
-| Product runtime acceptance | `experiments/softwarex_runtime_acceptance_720_v4` | 720/720; bilingual x3; source-preserving host round-trip with staff-safe MusicXML voice mapping; non-formal |
-| Host-selection localization robustness | `experiments/softwarex_host_scope_robustness_240_v3` | 240/240; source-preserving host round-trip with staff-safe MusicXML voice mapping; 174 widened-selection runs passed |
-| Human task/Gold review | `experiments/softwarex_human_review_120_v1` | 120/120 primary reviews and 30/30 stratified repeat checks; zero stale records; same pseudonymous reviewer, so no inter-rater claim |
-| End-user review screen | Not required by the SoftwareX article structure | Kept as optional source-level research tooling; hidden in ordinary builds unless `VITE_SERA_ENABLE_RESEARCH_REVIEW=true` |
-| Component diagram | `paper/softwarex/figures/figure1_architecture.*` | Prepared |
-| Review manuscript rendering | `paper/softwarex/manuscript/seraedit_softwarex.pdf` and `.docx` | Final nine-page PDF compiled with Tectonic; DOCX structurally checked; final PDF visual check remains author-controlled |
-| Experimental setting and limitations | Manuscript Sections 3-5 | Prepared |
-| Dependency/license inventory | `paper/softwarex/dependency_licenses.*` | Prepared after generator run |
-| Citation metadata | `CITATION.cff`, `codemeta.json` | Author, ORCID, email, release and public DOI integrated |
-| Cover letter and declarations | `paper/softwarex/submission/` | Identity and author declarations completed; public DOI integrated |
-| Submission-file privacy | `paper/softwarex/SUBMISSION_PRIVACY_REPORT.md`, `scripts/submission_metadata.py` | Hidden DOCX/PDF authoring metadata and local paths removed; required visible identity and AI disclosure retained |
-| Reviewer-oriented final audit | `scripts/verify_softwarex_package.py --profile submission` | Technical, human-review and public-archive gates pass |
-| Journal submission | SoftwareX Editorial Manager | Submitted 28 August 2026 as `SOFTX-D-26-01135`; last confirmed **Under Review** on 3 September 2026 |
+| Software contribution and claim boundaries | R1 Abstract, Sections 1, 4, 5 | Scoped transactions and evaluation infrastructure; no overall accuracy superiority |
+| Main text / abstract / keywords | R1 manuscript and fill-in sheet; P1 verifier | Target <=3000 / <=250 / six; exact synchronized fields |
+| Permanent release identity | publication.yml; R1 availability statement | Original v1.0.0/DOI retained; revised deposit pending |
+| Reproducibility | ff82c74 source archive receipt | 4299 files; 445 tests; reviewer demo 6/6; fixture 13/13; live 14/14 |
+| Original evidence failures | P0_REPRODUCIBILITY_REPORT.md | Three original checks failed; separately corrected fixture, original retained |
+| Real comparison | DEEPSEEK_RESULTS.md; 360 saved runs | Strict edits 72/65/63 of 110; refusals and coverage disclosed |
+| Validator measurement | VALIDATOR_DETECTION_REPORT.md | 180/180 invalid rejected after fix; 3/20 valid-control round-trip rejections |
+| Deterministic replay provenance | R1 Section 3 | 720 runs are development regression; 240 host-scope runs include 174 widened and 66 not widened |
+| Human review | softwarex_human_review_120_v1 | 120 primary +30 repeat; same reviewer, no independent/aesthetic claim |
+| Platform and environment | INSTALLATION.md; R1 Section 2.3 and C7 | Windows versions explicit; POSIX source commands, no verified non-Windows desktop/bridge |
+| Literature | LITERATURE_VERIFICATION.md | Code editing, instruction-driven symbolic editing and MuseScore cited; no cross-system performance ranking |
+| UI evidence | R1 Figures 2–4, UI_EVIDENCE.md and BRIDGE_VISUAL_ACCEPTANCE.json | Actual local-rule UI; native MSCZ/CLI/Desktop/MuseScore sequence verified on 3 October; manual-import rejection kept separate |
+| Source license attribution | R1 SOURCE_LICENSE_INVENTORY.json | File-level SPDX identifiers and hashes in sidecar; dependency licenses unchanged |
+| Final manuscript rendering | R1 manuscript DOCX and render audit | Must pass visual QA; original render not reused as revision proof |
+| Hosted CI | .github/workflows/research-ci.yml | Defined; new revision hosted run not claimed until published |
+| Journal status | Decision record | Minor revision; deadline 31 October 2026; final submission pending author review |

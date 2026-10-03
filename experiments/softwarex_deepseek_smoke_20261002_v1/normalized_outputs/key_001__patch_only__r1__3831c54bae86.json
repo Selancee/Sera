@@ -1,0 +1,141 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_score_001_key_G_major",
+    "source_score_id": "score_001",
+    "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+    "instruction": "Change the score key signature to G major without transposing notes.",
+    "target_scope": {
+      "whole_score": true
+    },
+    "protected_scope": {},
+    "preconditions": [
+      {
+        "type": "global_key_equals",
+        "value": "C major"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "op_change_key_signature",
+        "type": "change_key_signature",
+        "selector": {
+          "whole_score": true
+        },
+        "arguments": {
+          "key": "G major"
+        },
+        "preconditions": [
+          {
+            "type": "global_key_equals",
+            "value": "C major"
+          }
+        ],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "preserve_pitch": {}
+      },
+      {
+        "preserve_duration": {}
+      },
+      {
+        "changed_element_count": {
+          "value": 1
+        }
+      }
+    ],
+    "provenance": {
+      "source": "score_context",
+      "note": "Only the global key signature is changed; all note events remain unaltered."
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_score_001_key_G_major\",\"source_score_id\":\"score_001\",\"source_fingerprint\":\"sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b\",\"instruction\":\"Change the score key signature to G major without transposing notes.\",\"target_scope\":{\"whole_score\":true},\"protected_scope\":{},\"preconditions\":[{\"type\":\"global_key_equals\",\"value\":\"C major\"}],\"operations\":[{\"operation_id\":\"op_change_key_signature\",\"type\":\"change_key_signature\",\"selector\":{\"whole_score\":true},\"arguments\":{\"key\":\"G major\"},\"preconditions\":[{\"type\":\"global_key_equals\",\"value\":\"C major\"}],\"expected_change_count\":1}],\"expected_effects\":[{\"preserve_pitch\":{}},{\"preserve_duration\":{}},{\"changed_element_count\":{\"value\":1}}],\"provenance\":{\"source\":\"score_context\",\"note\":\"Only the global key signature is changed; all note events remain unaltered.\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_score_001_key_G_major",
+      "source_score_id": "score_001",
+      "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+      "instruction": "Change the score key signature to G major without transposing notes.",
+      "target_scope": {
+        "whole_score": true
+      },
+      "protected_scope": {},
+      "preconditions": [
+        {
+          "type": "global_key_equals",
+          "value": "C major"
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "op_change_key_signature",
+          "type": "change_key_signature",
+          "selector": {
+            "whole_score": true
+          },
+          "arguments": {
+            "key": "G major"
+          },
+          "preconditions": [
+            {
+              "type": "global_key_equals",
+              "value": "C major"
+            }
+          ],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "preserve_pitch": {}
+        },
+        {
+          "preserve_duration": {}
+        },
+        {
+          "changed_element_count": {
+            "value": 1
+          }
+        }
+      ],
+      "provenance": {
+        "source": "score_context",
+        "note": "Only the global key signature is changed; all note events remain unaltered."
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2185.3287999983877,
+    "input_tokens": 2556,
+    "output_tokens": 240,
+    "estimated_cost": 0.0010548,
+    "request_id": "5181c82a-9b90-40d5-bfc0-0dd895be23e4",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "85cfb448d6f70963e01279a3abe872ae996c2030583ebe93140fb8fdd4a6a44d"
+  },
+  "processing_latency_ms": 0.674000009894371,
+  "error_codes": [
+    "E15"
+  ],
+  "error": "operation op_change_key_signature changed 0 elements; expected 1",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

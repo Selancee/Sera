@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: no merge operation type exists in the schema, and it is unclear whether the two units are simultaneous voices or sequential events, or what merged result is intended.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: no merge operation type exists in the schema, and it is unclear whether the two units are simultaneous voices or sequential events, or what merged result is intended."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1589.5902999909595,
+    "input_tokens": 3734,
+    "output_tokens": 63,
+    "estimated_cost": 0.0011958,
+    "request_id": "7075e202-6f6c-4d49-b97c-fef8139ac23f",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "762305470854fb3a49ee4224d47098f0d81456678bb5bae70ce0950b3b02129a"
+  },
+  "processing_latency_ms": 0.0033999676816165447,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

@@ -1,0 +1,155 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_014_m1_staff1_transpose_up2",
+    "source_score_id": "score_014",
+    "source_fingerprint": "sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a",
+    "instruction": "Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.",
+    "target_scope": {
+      "measures": [
+        1
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "op_001_transpose_m1_staff1",
+        "type": "transpose",
+        "selector": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ],
+          "event_ids": [
+            "s014_m1_lh_1",
+            "s014_m1_lh_v2_1",
+            "s014_m1_lh_2",
+            "s014_m1_lh_3",
+            "s014_m1_lh_4"
+          ]
+        },
+        "arguments": {
+          "semitones": 2
+        },
+        "preconditions": [],
+        "expected_change_count": 5
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "changed_element_count",
+        "value": 5
+      }
+    ],
+    "provenance": {
+      "source": "score_014",
+      "derivation": "transpose +2 semitones on measure 1 staff 1"
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_014_m1_staff1_transpose_up2\",\"source_score_id\":\"score_014\",\"source_fingerprint\":\"sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a\",\"instruction\":\"Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_001_transpose_m1_staff1\",\"type\":\"transpose\",\"selector\":{\"measures\":[1],\"staffs\":[1],\"event_ids\":[\"s014_m1_lh_1\",\"s014_m1_lh_v2_1\",\"s014_m1_lh_2\",\"s014_m1_lh_3\",\"s014_m1_lh_4\"]},\"arguments\":{\"semitones\":2},\"preconditions\":[],\"expected_change_count\":5}],\"expected_effects\":[{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":5}],\"provenance\":{\"source\":\"score_014\",\"derivation\":\"transpose +2 semitones on measure 1 staff 1\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_014_m1_staff1_transpose_up2",
+      "source_score_id": "score_014",
+      "source_fingerprint": "sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a",
+      "instruction": "Transpose measure 1 of staff 1 by +2 semitones while preserving rhythm.",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_001_transpose_m1_staff1",
+          "type": "transpose",
+          "selector": {
+            "measures": [
+              1
+            ],
+            "staffs": [
+              1
+            ],
+            "event_ids": [
+              "s014_m1_lh_1",
+              "s014_m1_lh_v2_1",
+              "s014_m1_lh_2",
+              "s014_m1_lh_3",
+              "s014_m1_lh_4"
+            ]
+          },
+          "arguments": {
+            "semitones": 2
+          },
+          "preconditions": [],
+          "expected_change_count": 5
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 5
+        }
+      ],
+      "provenance": {
+        "source": "score_014",
+        "derivation": "transpose +2 semitones on measure 1 staff 1"
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2088.212199974805,
+    "input_tokens": 3010,
+    "output_tokens": 290,
+    "estimated_cost": 0.001251,
+    "request_id": "99cca839-6c3f-44f7-9ebc-1f89d3c95c83",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "f1473dee421091386a0d6fed35ed68749090dd2295e3638841ae5b678f63b469"
+  },
+  "processing_latency_ms": 0.7264000014401972,
+  "error_codes": [
+    "E06"
+  ],
+  "error": "operation op_001_transpose_m1_staff1 selected no events",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

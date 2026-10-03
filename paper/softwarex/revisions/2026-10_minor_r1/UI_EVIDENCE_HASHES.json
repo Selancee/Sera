@@ -1,0 +1,26 @@
+{
+  "ui_applied.jpg": {
+    "sha256": "632bfc376c29b934f1b89914f838ffd15064515c819e0141ff47a91627bb405b",
+    "bytes": 54185
+  },
+  "ui_proposal.jpg": {
+    "sha256": "c3ba38510923ec2dbe6165acf970a522027f5dcb596dbe8e922f3be14acdc203",
+    "bytes": 73555
+  },
+  "ui_proposal_full.jpg": {
+    "sha256": "b37b64ed5e5eb218cf32d6aaec1468e5f9e98faca989783b7651273f0186fbde",
+    "bytes": 119842
+  },
+  "ui_rejection.jpg": {
+    "sha256": "2ff5a1112cff1eb94294ec6d58e8d9a03862ba6154a436861c52800931bc9f72",
+    "bytes": 73510
+  },
+  "ui_rejection_full.jpg": {
+    "sha256": "514dd838cd12e04207350dbb1164664cc616a6590a014af22bf3696b0a5be030",
+    "bytes": 119947
+  },
+  "ui_undo.jpg": {
+    "sha256": "42e30bbc9b5cf7235a00e1823e7fb2ec3c47bf9c1a3c969eb7b0b49ff5c0a8ee",
+    "bytes": 68261
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "experiment_id": "softwarex_deepseek_core_20261002_v1",
+  "passed": true,
+  "checks": {
+    "config_hash": true,
+    "benchmark_hash": true,
+    "prompt_hashes": true,
+    "dependency_lock_hash": true,
+    "all_evidence_files_exist": true,
+    "input_file_hashes": true,
+    "evidence_file_hashes": true,
+    "implementation_hashes": true,
+    "evidence_hash_coverage": true,
+    "human_review_file_hashes": true,
+    "metric_rows_equal": true,
+    "unique_run_ids": true,
+    "metric_run_ids": true,
+    "expected_run_count": true
+  },
+  "diagnostics": {
+    "input_file_hashes": [],
+    "evidence_file_hashes": [],
+    "implementation_hashes": [],
+    "human_review_file_hashes": [],
+    "metric_differences": []
+  },
+  "commands": {
+    "benchmark": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "  \"human_review_pending\": 0,",
+        "  \"task_metadata_review_status_pending\": 120,",
+        "  \"external_human_review\": {",
+        "    \"available\": true,",
+        "    \"review_complete\": true,",
+        "    \"primary_reviewed\": 120,",
+        "    \"secondary_reviewed\": 30,",
+        "    \"stale_records\": 0,",
+        "    \"independent_secondary_reviewer\": false,",
+        "    \"evidence_path\": \"experiments/softwarex_human_review_120_v1/summary.json\"",
+        "  }",
+        "}"
+      ]
+    }
+  },
+  "result_class": "formal_live",
+  "formal_results_allowed": true,
+  "warning": null
+}

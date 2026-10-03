@@ -55,6 +55,7 @@ class BudgetLedger:
         limit_usd: float | None,
         input_cost_per_million: float | None,
         output_cost_per_million: float | None,
+        *, state_path: Path | None = None,
     ) -> None:
         self.limit_usd = None if limit_usd is None else float(limit_usd)
         self.input_cost = input_cost_per_million
@@ -62,13 +63,29 @@ class BudgetLedger:
         self.spent_usd = 0.0
         self.reserved_usd = 0.0
         self._lock = threading.Lock()
+        self.state_path = state_path
+        if state_path is not None and state_path.exists():
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            # An interrupted in-flight request may have been billed: retain
+            # its reservation as spent instead of resetting the budget.
+            self.spent_usd = float(state["spent_usd"]) + float(state["reserved_usd"])
+
+    def _persist(self) -> None:
+        if self.state_path is not None:
+            self.state_path.parent.mkdir(parents=True, exist_ok=True)
+            temporary = self.state_path.with_suffix(".tmp")
+            temporary.write_text(json.dumps({"spent_usd": self.spent_usd,
+                                             "reserved_usd": self.reserved_usd}), encoding="utf-8")
+            temporary.replace(self.state_path)
 
     def estimate(self, messages: list[dict[str, str]], max_tokens: int | None) -> float:
         """Estimate cost conservatively from UTF-8 text size and the output cap."""
 
         if self.input_cost is None or self.output_cost is None:
             return 0.0
-        approximate_input_tokens = max(1, sum(len(item.get("content", "")) for item in messages) // 4)
+        # One token per UTF-8 byte plus envelope allowance is deliberately
+        # conservative for XML, JSON and non-ASCII content; chars/4 is not.
+        approximate_input_tokens = max(1, len(json.dumps(messages, ensure_ascii=False).encode("utf-8")) + 1024)
         output_tokens = max_tokens if max_tokens is not None else 4096
         return (
             approximate_input_tokens * float(self.input_cost)
@@ -86,6 +103,7 @@ class BudgetLedger:
                     f"next=${amount:.6f}, limit=${self.limit_usd:.6f}"
                 )
             self.reserved_usd += amount
+            self._persist()
         return amount
 
     def settle(self, reservation_usd: float, actual_usd: float | None) -> None:
@@ -95,6 +113,7 @@ class BudgetLedger:
         with self._lock:
             self.reserved_usd = max(0.0, self.reserved_usd - reservation_usd)
             self.spent_usd += actual
+            self._persist()
 
 
 class ControlledProvider:

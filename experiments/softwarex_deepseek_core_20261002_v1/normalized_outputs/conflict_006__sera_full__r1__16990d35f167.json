@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction requests an aesthetic/subjective change ('sound mysteriously more beautiful') without changing notation, which is not expressible by any supported operation in the condition_contract; no notation-preserving operation can alter perceived beauty.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction requests an aesthetic/subjective change ('sound mysteriously more beautiful') without changing notation, which is not expressible by any supported operation in the condition_contract; no notation-preserving operation can alter perceived beauty."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1733.9436000329442,
+    "input_tokens": 2927,
+    "output_tokens": 54,
+    "estimated_cost": 0.0009429,
+    "request_id": "749a8c49-3b1b-4fe7-979c-635ac6b4cf99",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "e4437c78eb83034b6378bf55bdc476e5e08c9b06944336899f2b5c59af9ae581"
+  },
+  "processing_latency_ms": 0.002800021320581436,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

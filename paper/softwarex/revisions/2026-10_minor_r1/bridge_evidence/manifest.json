@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.1",
+  "session_id": "bridge_20261003_023845_006da98a",
+  "host_id": "musescore",
+  "host_capabilities": {
+    "host_id": "musescore",
+    "display_name": "MuseScore Studio",
+    "exchange_mode": "qml_saved_file_cli_bridge_versioned_musicxml",
+    "import_formats": [
+      ".musicxml",
+      ".xml",
+      ".mxl"
+    ],
+    "export_formats": [
+      ".musicxml"
+    ],
+    "executable_available": true,
+    "executable_path": "D:\\MuseScore 4\\bin\\MuseScore4.exe",
+    "direct_roundtrip_available": false,
+    "bridge_status": "musescore_4_5_cli_fallback_ready",
+    "handoff_steps": [
+      "Save the score, run Sera Score Bridge, and choose that saved score file once.",
+      "Send the saved file plus the current selection context to Sera Agent Console.",
+      "Review and accept the patch, then ask the bridge to open the latest revision in a new MuseScore tab."
+    ],
+    "limitations": [
+      "MuseScore 4.5.2 does not implement QML writeScore/readScore, so the bridge uses a saved-file picker and MuseScore CLI.",
+      "Save current edits before sending; unsaved in-memory changes cannot be exported through the 4.5.2 plugin API.",
+      "Reviewed output opens in a new tab; in-place apply and single-step host undo are not implemented.",
+      "Sera never overwrites the original MSCZ or MusicXML file."
+    ]
+  },
+  "host_context": {
+    "bridge": "sera_musescore_qml_cli",
+    "plugin_version": "0.3.3",
+    "host_version": "4.5.2",
+    "score_name": "bridge_fixture",
+    "selection": {
+      "is_range": false,
+      "start_measure": null,
+      "end_measure": null,
+      "start_tick": null,
+      "end_tick": null,
+      "start_staff": null,
+      "end_staff": null,
+      "selected_element_count": 0
+    },
+    "source_path": "F:\\Sera\\artifacts\\softwarex_revision_20261003_review\\bridge_fixture.mscz",
+    "conversion_mode": "musescore_cli"
+  },
+  "source_name": "bridge_fixture.mscz",
+  "source_artifact": "F:\\Sera\\data\\notation_bridge\\bridge_20261003_023845_006da98a\\source.musicxml",
+  "score_document_artifact": "F:\\Sera\\data\\notation_bridge\\bridge_20261003_023845_006da98a\\score_document.json",
+  "source_sha256": "f4451222f49ad30ce6264e3ce1da1149ad626d2e109fa42538c643cdfd0053aa",
+  "current_sha256": "d203b9bef8e2a447aeb1cf6fba632e535792a7cd356951922e579e4efbd27c1f",
+  "revision": 2,
+  "created_at": "2026-10-03T02:38:45.536315+00:00",
+  "updated_at": "2026-10-03T02:49:12.881537+00:00",
+  "artifacts": [
+    {
+      "revision": 0,
+      "kind": "source",
+      "path": "F:\\Sera\\data\\notation_bridge\\bridge_20261003_023845_006da98a\\source.musicxml",
+      "sha256": "f4451222f49ad30ce6264e3ce1da1149ad626d2e109fa42538c643cdfd0053aa"
+    },
+    {
+      "revision": 1,
+      "kind": "edited_musicxml",
+      "path": "F:\\Sera\\data\\notation_bridge\\bridge_20261003_023845_006da98a\\bridge_20261003_023845_006da98a_r0001.musicxml",
+      "sha256": "93f17c65e06b9781d9f0f6ac5f1b2b92c84df5e2fe0361b6bc107fbca7441e4b",
+      "export_mode": "source_preserving_patch",
+      "changed_event_count": 4,
+      "changed_fields": [
+        "pitch"
+      ],
+      "changed_global_fields": []
+    },
+    {
+      "revision": 2,
+      "kind": "edited_musicxml",
+      "path": "F:\\Sera\\data\\notation_bridge\\bridge_20261003_023845_006da98a\\bridge_20261003_023845_006da98a_r0002.musicxml",
+      "sha256": "d203b9bef8e2a447aeb1cf6fba632e535792a7cd356951922e579e4efbd27c1f",
+      "export_mode": "source_preserving_patch",
+      "changed_event_count": 4,
+      "changed_fields": [
+        "pitch"
+      ],
+      "changed_global_fields": []
+    }
+  ]
+}

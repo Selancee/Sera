@@ -160,9 +160,21 @@ describe("BenchmarkReviewWorkspace", () => {
   });
 
   it("switches review labels and existing bilingual evidence without changing notes, task, or review data", async () => {
-    const original = JSON.stringify(detail);
+    const loadedDetail = {
+      ...detail,
+      primary_review: {
+        decision: "compliant",
+        notes: "Existing review notes",
+        issue_codes: [],
+        dimensions: { instruction_clarity: 3, scope_correctness: 3, gold_correctness: 3, musical_validity: 3 }
+      }
+    };
+    api.getBenchmarkReviewTask.mockResolvedValueOnce(loadedDetail);
+    const original = JSON.stringify(loadedDetail);
     render(<I18nProvider><BenchmarkReviewWorkspace onClose={vi.fn()} /></I18nProvider>);
     await screen.findByText("Event diff");
+    // Evidence and the saved review draft settle in separate renders.
+    await screen.findByDisplayValue("Existing review notes");
     fireEvent.change(screen.getByLabelText("Review notes"), { target: { value: "保留我的复核记录 Apply" } });
     fireEvent.change(screen.getByLabelText("Language"), { target: { value: "zh-CN" } });
     expect(screen.getByText("事件级差异")).toBeInTheDocument();
@@ -174,7 +186,7 @@ describe("BenchmarkReviewWorkspace", () => {
     expect((screen.getByLabelText("Review notes") as HTMLTextAreaElement).value).toBe("保留我的复核记录 Apply");
     expect(api.getBenchmarkReviewTask).toHaveBeenCalledOnce();
     expect(api.submitBenchmarkReview).not.toHaveBeenCalled();
-    expect(JSON.stringify(detail)).toBe(original);
+    expect(JSON.stringify(loadedDetail)).toBe(original);
   });
 
   it("shows task evidence without rendering or manually editing notation", async () => {

@@ -23,9 +23,10 @@ It should report `6/6 passed` and retain five reviewed MusicXML outputs under
 2. Open the Agent view and import a MusicXML file, or use a local demo fixture.
 3. Select a narrow scope, preferably one or two measures and a specific staff/voice.
 4. Enter an executable instruction, for example:
-   `Transpose measures 1-2 of staff 1 up two semitones and preserve rhythm.`
+   `Transpose measure 1 of staff 1 up by a major second while preserving rhythm.`
 5. Choose **Generate proposal**. With no API key, the supported deterministic path
    still produces locally validated edits for the operation families it recognizes.
+   The local parser supports limited wording; equivalent paraphrases can be rejected.
 6. Inspect the human-readable operations, changed/protected element counts, source
    fingerprint and validation report.
 7. Apply only a proposal marked valid. Rejecting leaves the score unchanged.
@@ -42,13 +43,20 @@ authorization.
 
 1. Install `integrations/musescore/SeraBridge` as a MuseScore Studio 4 plugin.
 2. Start Sera Desktop and wait until its backend health check reports ready.
-3. In MuseScore, open a score and select a region when a narrow target is desired.
-4. Run **Sera Score Bridge**, then choose **Send score / selection to Sera**.
+3. In MuseScore, open and save a score, then select a region when a narrow target is desired.
+4. Run **Sera Score Bridge**, choose the saved score file, then send the score/selection.
+   On the tested MuseScore 4.5.2 installation, QML score export is unavailable.
+   Native `.mscz`/`.mscx` and compressed `.mxl` inputs use local CLI conversion;
+   `.musicxml`/`.xml` inputs are read directly.
+   Save first: unsaved in-memory edits cannot be included.
 5. In Sera, request and review a patch. Sera writes a separate reviewed revision.
 6. In the bridge, choose **Refresh and open applied revision**. The original open score
    is not overwritten; use MuseScore to compare and save the revision deliberately.
 
-The bridge exchanges a temporary MusicXML snapshot. It is not a claim of direct,
+The bridge exchanges a temporary MusicXML snapshot of the selected saved file.
+Choose the file that matches the open score: the plugin does not automatically
+verify that correspondence. With no range selected, Sera defaults to measure 1.
+Core undo does not provide single-step undo inside the notation host. It is not a claim of direct,
 in-place manipulation of MuseScore's internal document model.
 
 ## Operation families

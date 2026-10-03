@@ -54,9 +54,12 @@ def _git_metadata() -> dict[str, Any]:
         return {"commit": None, "dirty": None}
 
 
-def _dependency_hash() -> str:
+def _dependency_hash(version: int = 1) -> str:
     digest = hashlib.sha256()
-    for name in ("pyproject.toml", "requirements.txt", "frontend/package-lock.json"):
+    names = ["pyproject.toml", "requirements.txt", "frontend/package-lock.json"]
+    if version >= 2:
+        names.extend(["requirements-tested-windows.txt", "requirements-publication.txt"])
+    for name in names:
         path = ROOT / name
         if path.exists():
             digest.update(path.read_bytes())
@@ -90,6 +93,22 @@ def _config_hash(config: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(config, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
 
 
+def _input_file_hashes(benchmark_root: Path, split: dict[str, Any], split_name: str) -> dict[str, str]:
+    """Record byte-level inputs so drift can be attributed to individual files."""
+
+    paths = {benchmark_root / "splits" / f"{split_name}.json"}
+    paths.update((benchmark_root / "schemas").glob("*.json"))
+    for task_id in split["task_ids"]:
+        task_path = resolve_task_path(benchmark_root, task_id, split_name)
+        task = _load_json(task_path)
+        paths.update([task_path, benchmark_root / "source_scores" / f"{task['score_id']}.score.json"])
+        paths.update(benchmark_root / task[field] for field in ("gold_patch_path", "expected_output_path") if task.get(field))
+    for name in ("pyproject.toml", "requirements.txt", "requirements-tested-windows.txt", "requirements-publication.txt", "frontend/package-lock.json"):
+        if (ROOT / name).is_file():
+            paths.add(ROOT / name)
+    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted(paths)}
+
+
 def _provider_configs(config: dict[str, Any]) -> list[dict[str, Any]]:
     providers = config.get("providers")
     if providers is None:
@@ -99,7 +118,21 @@ def _provider_configs(config: dict[str, Any]) -> list[dict[str, Any]]:
     return [dict(item) for item in providers]
 
 
+def _implementation_hashes() -> dict[str, str]:
+    """Freeze executable evidence producers, including prompt payload builders."""
+    paths = [path for directory in ("sera_edit", "evaluation", "backend")
+             for path in (ROOT / directory).rglob("*.py")]
+    paths += [ROOT / "scripts/validate_benchmark.py", ROOT / "scripts/recompute_metrics.py"]
+    # Python's universal-newline text hashing permits LF/CRLF checkouts without
+    # weakening detection of executable text changes.
+    return {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+            for path in sorted(paths)}
+
+
 def _validate_config(config: dict[str, Any]) -> None:
+    protocol = config.get("prompt_protocol", "legacy_v1")
+    if protocol not in {"legacy_v1", "answer_blind_v2", "answer_blind_v3"}:
+        raise ValueError("unknown prompt_protocol")
     conditions = config.get("conditions")
     if not isinstance(conditions, list) or not conditions or any(item not in VALID_CONDITIONS for item in conditions):
         raise ValueError(f"conditions must be a non-empty subset of {sorted(VALID_CONDITIONS)}")
@@ -119,6 +152,8 @@ def _validate_config(config: dict[str, Any]) -> None:
         if provider.get("provider") == "mock" and formal:
             raise ValueError("mock experiments must set formal_results_allowed=false")
         if provider.get("provider") != "mock" and formal:
+            if protocol not in {"answer_blind_v2", "answer_blind_v3"}:
+                raise ValueError("new formal live runs require an answer_blind protocol")
             if provider.get("input_cost_per_million") is None or provider.get("output_cost_per_million") is None:
                 raise ValueError("formal live runs require configured input/output prices for cost accounting")
             if float(config.get("budget_limit_usd", 0)) <= 0:
@@ -215,6 +250,9 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         raise ValueError("experiment config must be a YAML object")
     _validate_config(config)
     actual_id = experiment_id or str(config["experiment_id"])
+    # Capture the source state before creating allowlisted experiment outputs.
+    # Otherwise a clean source checkout is incorrectly marked dirty by this run.
+    starting_git = _git_metadata()
     experiment_dir = ROOT / "experiments" / actual_id
     experiment_dir.mkdir(parents=True, exist_ok=True)
     benchmark_root = (ROOT / config.get("benchmark_root", "benchmark")).resolve()
@@ -224,7 +262,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
     formal = bool(config.get("formal_results_allowed", False))
     result_class = "formal_live" if formal else ("mock_non_formal" if all(item.get("provider") == "mock" for item in provider_configs) else "live_non_formal")
     config_snapshot = experiment_dir / "config_snapshot.yaml"
-    if config_snapshot.exists() and config_snapshot.read_bytes() != config_path.read_bytes():
+    if config_snapshot.exists() and _config_hash(yaml.safe_load(config_snapshot.read_text(encoding="utf-8"))) != _config_hash(config):
         raise ValueError(f"experiment {actual_id} already exists with a different config snapshot")
     if not config_snapshot.exists():
         shutil.copyfile(config_path, config_snapshot)
@@ -240,7 +278,9 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             provider_config.get("input_cost_per_million"),
             provider_config.get("output_cost_per_million"),
         )
-        ledger = BudgetLedger(per_provider_budget, *costs)
+        ledger_id = hashlib.sha256(json.dumps(provider_config, sort_keys=True).encode()).hexdigest()[:16]
+        ledger = BudgetLedger(per_provider_budget, *costs,
+                              state_path=experiment_dir / "budget" / f"{ledger_id}.json")
         controlled = ControlledProvider(
             inner,
             cache_root=ROOT / "experiments" / "_cache",
@@ -252,18 +292,26 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         )
         providers.append((provider_config, controlled, ledger))
 
-    prompt_info = {condition: prompt_metadata(condition) for condition in config["conditions"]}
+    protocol = config.get("prompt_protocol", "legacy_v1")
+    prompt_info = {condition: prompt_metadata(condition, protocol) for condition in config["conditions"]}
     if "sera_full" in config["conditions"]:
-        prompt_info["sera_repair"] = prompt_metadata("sera_repair")
+        prompt_info["sera_repair"] = prompt_metadata("sera_repair", protocol)
     manifest_path = experiment_dir / "manifest.json"
     if manifest_path.exists():
         manifest = _load_json(manifest_path)
+        for relative, expected_digest in manifest.get("evidence_file_hashes", {}).items():
+            evidence_path = ROOT / relative
+            if not evidence_path.is_file() or hashlib.sha256(evidence_path.read_bytes()).hexdigest() != expected_digest:
+                raise ValueError(f"experiment {actual_id} cannot resume after evidence drift: {relative}")
         if (
             manifest.get("config_hash") != _config_hash(config)
             or manifest.get("prompt_metadata") != prompt_info
             or manifest.get("benchmark_hash") != benchmark_hash
+            or manifest.get("dependency_lock_hash") != _dependency_hash(manifest.get("dependency_hash_version", 1))
+            or (manifest.get("input_file_hashes") is not None and manifest["input_file_hashes"] != _input_file_hashes(benchmark_root, split, config["split"]))
+            or (manifest.get("implementation_hashes") is not None and manifest["implementation_hashes"] != _implementation_hashes())
         ):
-            raise ValueError(f"experiment {actual_id} cannot resume after config, prompt, or benchmark drift")
+            raise ValueError(f"experiment {actual_id} cannot resume after config, prompt, benchmark, or dependency drift")
     else:
         manifest = {
             "experiment_id": actual_id,
@@ -281,11 +329,15 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
             "prompt_metadata": prompt_info,
             "config_hash": _config_hash(config),
             "benchmark_hash": benchmark_hash,
-            "git": _git_metadata(),
+            "git": starting_git,
             "python_version": sys.version,
             "platform": platform.platform(),
-            "dependency_lock_hash": _dependency_hash(),
+            "dependency_hash_version": 2,
+            "dependency_lock_hash": _dependency_hash(2),
+            "input_file_hashes": _input_file_hashes(benchmark_root, split, config["split"]),
         }
+        if protocol in {"answer_blind_v2", "answer_blind_v3"}:
+            manifest["implementation_hashes"] = _implementation_hashes()
         _write_json(manifest_path, manifest)
 
     runs_path = experiment_dir / "runs.jsonl"
@@ -324,6 +376,8 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
                 seed=None if config.get("seed") is None else int(config["seed"]) + repetition - 1,
                 max_tokens=config.get("max_tokens"),
                 max_repair_attempts=int(config.get("max_repair_attempts", 2)),
+                prompt_protocol=protocol,
+                thinking=config.get("thinking"),
             )
             metrics = compute_task_metrics(task, source, outcome, expected)
             error = outcome.error
@@ -351,7 +405,7 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         output_slug = hashlib.sha256(run_id.encode("utf-8")).hexdigest()[:12]
         raw_path = experiment_dir / "raw_outputs" / f"{task['task_id']}__{condition}__r{repetition}__{output_slug}.json"
         normalized_path = experiment_dir / "normalized_outputs" / f"{task['task_id']}__{condition}__r{repetition}__{output_slug}.json"
-        messages, response_schema = build_condition_messages(condition, task, source)
+        messages, response_schema = build_condition_messages(condition, task, source, protocol=protocol)
         _write_json(
             raw_path,
             {
@@ -360,8 +414,10 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
                     "messages": messages,
                     "response_schema_hash": hashlib.sha256(json.dumps(response_schema, sort_keys=True).encode("utf-8")).hexdigest() if response_schema else None,
                     "temperature": config.get("temperature", 0.0),
-                    "seed": config.get("seed"),
+                    "seed": None if config.get("seed") is None else int(config["seed"]) + repetition - 1,
                     "max_tokens": config.get("max_tokens"),
+                    "thinking": config.get("thinking"),
+                    "prompt_protocol": protocol,
                 },
                 "response": response,
             },
@@ -407,6 +463,11 @@ def run_experiment(config_path: Path, *, experiment_id: str | None = None) -> di
         executor.shutdown(wait=not interrupted, cancel_futures=interrupted)
 
     all_rows = [*existing_rows, *new_rows]
+    manifest["evidence_file_hashes"] = {
+        row[field]: hashlib.sha256((ROOT / row[field]).read_bytes()).hexdigest()
+        for row in all_rows for field in ("raw_output_path", "normalized_output_path")
+    }
+    _write_json(manifest_path, manifest)
     metrics_rows = []
     for row in all_rows:
         metrics = dict(row["metrics"])

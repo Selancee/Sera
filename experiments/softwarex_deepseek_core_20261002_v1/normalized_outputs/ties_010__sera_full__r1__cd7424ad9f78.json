@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction is ambiguous: 'Add one slur from the first to the last note of measure 3 staff 1' does not specify whether the slur should be applied as a start on the first note and stop on the last note, nor does it identify the exact event IDs or voice. The condition_contract does not define a supported assertion format for slur operations, and the target_scope uses staff 1 while the score_context uses staff labels 'right_hand' and 'left_hand', making the target staff ambiguous.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction is ambiguous: 'Add one slur from the first to the last note of measure 3 staff 1' does not specify whether the slur should be applied as a start on the first note and stop on the last note, nor does it identify the exact event IDs or voice. The condition_contract does not define a supported assertion format for slur operations, and the target_scope uses staff 1 while the score_context uses staff labels 'right_hand' and 'left_hand', making the target staff ambiguous."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2015.972699970007,
+    "input_tokens": 2844,
+    "output_tokens": 115,
+    "estimated_cost": 0.0009912,
+    "request_id": "c789b327-0b21-41a6-89ab-232625fd5dbe",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "1719cd5ccae4cdd856e85e8cb2b8455b3b7f9416828245b818546321585731c4"
+  },
+  "processing_latency_ms": 0.00200001522898674,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

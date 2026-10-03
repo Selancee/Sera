@@ -1,0 +1,233 @@
+{
+  "condition": "sera_full",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_m1_rh_3_forte",
+    "source_score_id": "score_001",
+    "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+    "instruction": "Change only the third note in measure 1 to forte, preserving pitch and duration.",
+    "target_scope": {
+      "measures": [
+        1
+      ],
+      "staffs": [
+        1
+      ],
+      "event_ids": [
+        "m1_rh_3"
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [
+      {
+        "event_id": "m1_rh_3",
+        "exists": true,
+        "measure": 1,
+        "staff": "right_hand",
+        "type": "note"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "op_set_dynamic_m1_rh_3",
+        "type": "set_dynamic",
+        "selector": {
+          "event_ids": [
+            "m1_rh_3"
+          ]
+        },
+        "arguments": {
+          "dynamic": "f"
+        },
+        "preconditions": [
+          {
+            "event_id": "m1_rh_3",
+            "exists": true
+          }
+        ],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "preserve_pitch": {}
+      },
+      {
+        "preserve_duration": {}
+      },
+      {
+        "changed_element_count": {
+          "value": 1
+        }
+      },
+      {
+        "dynamic_equals": {
+          "event_id": "m1_rh_3",
+          "value": "f"
+        }
+      }
+    ],
+    "provenance": {
+      "source": "score_context",
+      "derived_from": "instruction"
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "unsupported",
+    "errors": [
+      {
+        "code": "E19",
+        "message": "unsupported precondition: note",
+        "stage": "semantic",
+        "repairable": false,
+        "details": {}
+      }
+    ],
+    "warnings": [],
+    "checks": {
+      "schema_version": "1.0.0",
+      "operation_count": 1,
+      "structural": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "event_count": 16,
+          "measure_count": 2,
+          "operation_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "preconditions": {
+        "status": "unsupported",
+        "errors": [
+          {
+            "code": "E19",
+            "message": "unsupported precondition: note",
+            "stage": "semantic",
+            "repairable": false,
+            "details": {}
+          }
+        ],
+        "warnings": [],
+        "checks": {
+          "precondition_count": 1
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      }
+    },
+    "repairable": false,
+    "suggested_repairs": []
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_m1_rh_3_forte\",\"source_score_id\":\"score_001\",\"source_fingerprint\":\"sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b\",\"instruction\":\"Change only the third note in measure 1 to forte, preserving pitch and duration.\",\"target_scope\":{\"measures\":[1],\"staffs\":[1],\"event_ids\":[\"m1_rh_3\"]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[{\"event_id\":\"m1_rh_3\",\"exists\":true,\"measure\":1,\"staff\":\"right_hand\",\"type\":\"note\"}],\"operations\":[{\"operation_id\":\"op_set_dynamic_m1_rh_3\",\"type\":\"set_dynamic\",\"selector\":{\"event_ids\":[\"m1_rh_3\"]},\"arguments\":{\"dynamic\":\"f\"},\"preconditions\":[{\"event_id\":\"m1_rh_3\",\"exists\":true}],\"expected_change_count\":1}],\"expected_effects\":[{\"preserve_pitch\":{}},{\"preserve_duration\":{}},{\"changed_element_count\":{\"value\":1}},{\"dynamic_equals\":{\"event_id\":\"m1_rh_3\",\"value\":\"f\"}}],\"provenance\":{\"source\":\"score_context\",\"derived_from\":\"instruction\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_m1_rh_3_forte",
+      "source_score_id": "score_001",
+      "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+      "instruction": "Change only the third note in measure 1 to forte, preserving pitch and duration.",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ],
+        "event_ids": [
+          "m1_rh_3"
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [
+        {
+          "event_id": "m1_rh_3",
+          "exists": true,
+          "measure": 1,
+          "staff": "right_hand",
+          "type": "note"
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "op_set_dynamic_m1_rh_3",
+          "type": "set_dynamic",
+          "selector": {
+            "event_ids": [
+              "m1_rh_3"
+            ]
+          },
+          "arguments": {
+            "dynamic": "f"
+          },
+          "preconditions": [
+            {
+              "event_id": "m1_rh_3",
+              "exists": true
+            }
+          ],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "preserve_pitch": {}
+        },
+        {
+          "preserve_duration": {}
+        },
+        {
+          "changed_element_count": {
+            "value": 1
+          }
+        },
+        {
+          "dynamic_equals": {
+            "event_id": "m1_rh_3",
+            "value": "f"
+          }
+        }
+      ],
+      "provenance": {
+        "source": "score_context",
+        "derived_from": "instruction"
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2815.9057999728248,
+    "input_tokens": 2580,
+    "output_tokens": 301,
+    "estimated_cost": 0.0011352,
+    "request_id": "1ee4052a-37ce-408e-88d7-5d72625bc850",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "a6b866089b3c279dc504ae34d464302d6d13d493796ae8ecde15480e90229f91"
+  },
+  "processing_latency_ms": 1.4831000007689,
+  "error_codes": [
+    "E19"
+  ],
+  "error": "pre-apply validation failed",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

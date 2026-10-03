@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Merging the first two rhythmic units of measure 2 staff 1 would require combining two distinct pitched notes (A4 and B4) into a single event, which is not a supported operation without specifying how to reconcile the conflicting pitches and event identifiers.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Merging the first two rhythmic units of measure 2 staff 1 would require combining two distinct pitched notes (A4 and B4) into a single event, which is not a supported operation without specifying how to reconcile the conflicting pitches and event identifiers."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1966.5529999765567,
+    "input_tokens": 4685,
+    "output_tokens": 61,
+    "estimated_cost": 0.0014787000000000001,
+    "request_id": "fb459208-d304-47a3-a2e8-ee86a60779a1",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "f18abe5d417ece93d7439822a1079d9b2fcd37c85ef1157240f3baabd8450047"
+  },
+  "processing_latency_ms": 0.00200001522898674,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}
