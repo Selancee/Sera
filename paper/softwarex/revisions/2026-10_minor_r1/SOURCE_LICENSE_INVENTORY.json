@@ -1433,8 +1433,8 @@
     {
       "path": "frontend/src/review/__tests__/BenchmarkReviewWorkspace.test.tsx",
       "SPDX-License-Identifier": "MIT",
-      "sha256": "c75b79096dfe84da6829c8beb0ffaa04730cd74de93227f08ace84d949800599",
-      "sha256_lf": "c75b79096dfe84da6829c8beb0ffaa04730cd74de93227f08ace84d949800599"
+      "sha256": "ac754d8ff2c6322a05c8cac81767c35a54c15722003b3f85e7b6e5c0af326dae",
+      "sha256_lf": "ac754d8ff2c6322a05c8cac81767c35a54c15722003b3f85e7b6e5c0af326dae"
     },
     {
       "path": "frontend/src/review/__tests__/researchReviewMode.test.ts",

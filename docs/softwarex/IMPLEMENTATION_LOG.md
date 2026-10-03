@@ -796,3 +796,10 @@
 
 - Author explicitly approved pushing the revision branch and creating a draft PR for CI; published branch 27e0b4e and opened https://github.com/Selancee/Sera/pull/1. No merge, formal release or journal submission authorized by this step.
 - Updated Research CI to verify R1 consistency, select the named R1 manuscript tree and retain the tested archive artifacts. Syntax and selection checks passed; hosted result pending.
+
+
+### 2026-10-03 — Hosted test timing correction
+
+- First hosted frontend job exposed a race in the language-switch test: it entered a new note before the loaded review draft had settled. Seeded a distinguishable saved note and wait for that value before editing/switching language; preserved the original note-retention and no-write assertions. Production UI and frozen producer code are unchanged.
+- The earlier Python interruption was cancellation by the newer push, not a verification failure. Subsequent run 37095136952 passed both jobs for 253263c. A new hosted run is required for this test-only correction.
+- Focused review-workspace tests: 9/9 passed. License inventory hashes updated for the changed test file.
