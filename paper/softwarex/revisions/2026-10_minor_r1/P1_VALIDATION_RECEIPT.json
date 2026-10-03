@@ -19,15 +19,18 @@
       "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_clean"
     },
     "RESPONSE_TO_REVIEWERS.docx": {
-      "sha256": "5f6cea5d8eb878080e5faffbd53b0378365ed8585a503c5babf954ff9ec27fd6",
-      "rendered_pages": 4,
+      "sha256": "5d0f99326e177679bbc935a8aa75d85deeb5123beff08e80f47ef9f8e9224e88",
+      "rendered_pages": 7,
       "visually_inspected_pages": [
         1,
         2,
         3,
-        4
+        4,
+        5,
+        6,
+        7
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_response"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/reviewer_mapping/render_response_final"
     },
     "submission/COVER_LETTER.docx": {
       "sha256": "acfa769763ce46cdd0d7fb4f93dc38a64583cdc3d2cc0ddac7b0c4509e978d2e",
@@ -87,7 +90,7 @@
       "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_availability"
     }
   },
-  "visual_findings": "All 26 pages of the five updated documents inspected after citation updates; clean manuscript page 7 rechecked after synchronizing the final test count to 447. No visible clipping or overlap. The three unchanged declarations retain their preceding hash-bound visual review.",
+  "visual_findings": "Reviewer-mapped response: all 7 pages inspected, no visible clipping or overlap. Other seven documents retain their preceding hash-bound visual review; their bytes are unchanged.",
   "focused_python_tests": 33,
   "frontend_tests": 133,
   "frontend_test_files": 74,
@@ -104,5 +107,7 @@
   "publication_receipt": "PUBLICATION_VERIFICATION.json",
   "local_document_checks_passed": 26,
   "hosted_ci_scope": "447 Python tests, 133 frontend tests, production build and 14 saved-live-evidence checks apply to immutable archive head 0d319bc. Post-publication document and receipt edits were validated locally, not by that hosted run.",
-  "journal_submitted": false
+  "journal_submitted": false,
+  "reviewer_mapping_receipt": "REVIEWER_PLATFORM_MAPPING.json",
+  "online_responses_sent": false
 }

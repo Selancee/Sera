@@ -39,3 +39,9 @@ Updated the R1 clean/highlighted manuscript, response, cover letter, availabilit
 Validation: 26/26 local checks; baseline 25/25 files and 7/7 archives; all 26 pages of five updated documents visually inspected. The three unchanged declarations retain earlier hash-bound review. Hosted 447 Python/133 frontend/build/14 saved-evidence results belong to immutable 0d319bc, not these later document edits. No new model calls or production changes.
 
 Next: verify platform reviewer numbering/original uploads, upload the new post-publication submission bundle, review the assembled PDF and obtain author final submission confirmation. No journal submission, merge, or formal GitHub release occurred.
+
+## 2026-10-03 — Reviewer numbering and online response preparation
+
+Mapped the author's supplied peer-review page to Reviewer 1 (23 September: six weaknesses, five questions and five suggestions) and Reviewer 2 (28 September: three unnumbered concerns). Preserved the raw supplied text privately in ignored artifacts; the mapping receipt records its SHA-256 and does not claim an independent browser read. Replaced internal P0/P1 response headings with reviewer-specific replies and created two plain-text copies for the platform. The formal response now has seven visually inspected pages, including a separate Reviewer 2 opening page. Research results and public archive bytes are unchanged.
+
+Validation: document/evidence checks and preserved-baseline verification are recorded in the current receipts. No new model calls, production edits, online responses, Git push, journal submission, merge, or formal GitHub release. Next: paste and verify both platform replies, send responses, check original portal attachments, upload current revision files, and inspect the assembled PDF before author approval.

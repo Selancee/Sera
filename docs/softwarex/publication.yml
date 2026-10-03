@@ -33,7 +33,7 @@ submission_status_evidence: "Authenticated Editorial Manager Submissions Needing
 revision_deadline: "2026-10-31"
 revision_portal_status_verified: true
 revision_reviewer_comments_retrieved: true
-revision_reviewer_comments_source: "Two review texts supplied directly by the author on 2026-10-02; platform numbering unverified"
+revision_reviewer_comments_source: "Author-supplied full peer-review page on 2026-10-03: Reviewer 1 September 23; Reviewer 2 September 28. No independent browser read claimed."
 
 revision_source_version: "softwarex-r1-20261003"
 revision_source_commit: "0d319bc381cfc21687adaeff06dcb1f7797b8f18"
@@ -45,3 +45,6 @@ revision_archive_status: "published_public_downloads_verified"
 revision_archive_publication_date: "2026-10-03"
 revision_hosted_ci_url: "https://github.com/Selancee/Sera/actions/runs/37096317165"
 revision_hosted_ci_status: "success"
+
+revision_reviewer_labels_confirmed_from_supplied_page: true
+revision_online_responses_sent: false

@@ -33,3 +33,7 @@ MusicXML; symbolic music; score editing; structured patches; validation; researc
 Use this R1 sheet rather than the historical August sheet. Author approval and
 portal-assembled PDF review remain required. The original DOI identifies historical
 evidence; cite the new version DOI above for the revised source and experiments.
+
+## Peer-review platform replies
+
+The decision letter requires responses in the peer-review platform before revision submission. Author-supplied page text confirms Reviewer 1 (23 September) and Reviewer 2 (28 September). Use REVIEWER_1_ONLINE_REPLY.txt and REVIEWER_2_ONLINE_REPLY.txt under their corresponding reports. These files are prepared locally; posting and sending have not been verified. Original portal attachments and the assembled revision PDF still require checking.
