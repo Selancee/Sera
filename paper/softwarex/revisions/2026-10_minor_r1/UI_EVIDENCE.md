@@ -69,3 +69,7 @@ Single-step host undo, in-place editing, broader host/platform coverage and musi
 acceptance remain outside this evidence. Native/compressed files use CLI conversion;
 plain MusicXML/XML files are read directly. The user must choose the file matching
 the open score and save edits before sending.
+
+## Author-supplied screenshot refresh on 3 October 2026
+
+Figures 2 and 4 in the final portal manuscript now use the unmodified PNG files bridge_proposal_author_20261003.png and bridge_revision_author_20261003.png. These replace captures containing a cursor overlay. Figure 3 is unchanged. The refreshed UI shows Synthetic Fixture 1, Local rules, host selection M1-M2, revision 0 and a validated four-event transposition. The supplied MuseScore image shows revision 1 of bridge_20261003_123629_4ee5fa3c, with D4/E4/F#4/A4 in measure 1, staff 1. These are author-supplied repeat-demonstration screenshots, not captures from the original bridge_20261003_023845_006da98a session. Its original images, saved XML, and BRIDGE_VISUAL_ACCEPTANCE.json are retained unchanged. No additional benchmark, full-session verification, or undo validation is inferred from these images. See SCREENSHOT_REPLACEMENT_RECEIPT.json for source hashes.

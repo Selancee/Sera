@@ -152,7 +152,7 @@ verified this complete path and four pitch changes (Figures 2 and 4;
 BRIDGE_VISUAL_ACCEPTANCE.json). Final visual review and saving remain user actions.
 Sera undo creates another revision; single-step host undo is not implemented.
 
-![Actual desktop bridge proposal with change counts and protected-scope status.](../figures/bridge_proposal.jpg)
+![Actual desktop bridge proposal with change counts and protected-scope status.](../figures/bridge_proposal_author_20261003.png)
 
 **Figure 2.** Actual Electron development shell after MuseScore plugin handoff of a
 saved synthetic score. Local rules propose four pitch changes with validation,
@@ -164,7 +164,7 @@ protection and apply/reject controls. This demonstrates the workflow, not live-m
 score is unchanged. This is an observed wording limitation, not a simulated error.
 Additional applied/undo states and reproduction steps accompany the revision.
 
-![Reviewed revision actually opened by the MuseScore plugin.](../figures/bridge_revision.jpg)
+![Reviewed revision actually opened by the MuseScore plugin.](../figures/bridge_revision_author_20261003.png)
 
 **Figure 4.** MuseScore 4.5.2 displaying revision 1 opened by the plugin. Measure 1,
 staff 1 changes C–D–E–G to D–E–F♯–A; other notes remain unchanged.
