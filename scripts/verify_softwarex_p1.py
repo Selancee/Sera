@@ -74,6 +74,12 @@ def main() -> int:
 
     hashes = json.loads((R1 / "UI_EVIDENCE_HASHES.json").read_text(encoding="utf-8"))
     checks["six_actual_screenshot_hashes"] = len(hashes) == 6 and all(digest(R1 / "figures" / name) == item["sha256"] for name, item in hashes.items())
+    bridge = json.loads((R1 / "BRIDGE_VISUAL_ACCEPTANCE.json").read_text(encoding="utf-8"))
+    checks["native_bridge_evidence_integrity"] = (
+        len(bridge["screenshots"]) == 8 and all(bridge["checks"].values())
+        and all(digest(R1 / "figures" / name) == item["sha256"] for name, item in bridge["screenshots"].items())
+        and all(digest(R1 / "bridge_evidence" / name) == item["sha256"] for name, item in bridge["artifacts"].items())
+    )
     for relative in ("manuscript/seraedit_softwarex.docx", "RESPONSE_TO_REVIEWERS.docx", "submission/COVER_LETTER.docx"):
         with zipfile.ZipFile(R1 / relative) as package:
             document = ET.fromstring(package.read("word/document.xml"))
@@ -82,14 +88,20 @@ def main() -> int:
             if relative.startswith("manuscript"):
                 paragraphs = ["".join(p.itertext()) for p in document.findall(".//w:p", NS)]
                 checks["eleven_separate_reference_paragraphs"] = sum(bool(re.match(r"^\[\d+\] ", p)) for p in paragraphs) == 11
-                checks["three_embedded_figures"] = len([p for p in package.namelist() if p.startswith("word/media/")]) == 3
+                checks["four_embedded_figures"] = len([p for p in package.namelist() if p.startswith("word/media/")]) == 4
 
     inventory = json.loads((R1 / "SOURCE_LICENSE_INVENTORY.json").read_text(encoding="utf-8"))
     tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).decode().split("\0")
     extensions = {".py", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs"}
     expected = {p for p in tracked if Path(p).suffix in extensions}
     checks["license_sidecar_coverage"] = {x["path"] for x in inventory["files"]} == expected
-    checks["license_sidecar_hashes"] = all(x["SPDX-License-Identifier"] == "MIT" and digest(ROOT / x["path"]) == x["sha256"] for x in inventory["files"])
+    # Git checkout line endings vary across Windows/POSIX; keep recorded raw hashes
+    # as provenance, but compare license coverage using only CRLF-to-LF normalization.
+    checks["license_sidecar_hashes"] = all(
+        x["SPDX-License-Identifier"] == "MIT"
+        and hashlib.sha256((ROOT / x["path"]).read_bytes().replace(b"\r\n", b"\n")).hexdigest() == x["sha256_lf"]
+        for x in inventory["files"]
+    )
 
     with (R1 / "REVIEWER_COMMENT_MATRIX.csv").open(encoding="utf-8", newline="") as handle:
         matrix = list(csv.DictReader(handle))
@@ -98,7 +110,7 @@ def main() -> int:
     report = {"local_checks_passed": all(checks.values()), "overall_p1_status": "partial_open_gates",
               "scope": "Local document consistency and artifact integrity; no new API call, hosted CI or publication.",
               "counts": counts, "saved_metrics": observed, "checks": checks,
-              "open_gates": ["Actual MuseScore plugin send/open-revision visual evidence", "Revised public archive/DOI and hosted CI"],
+              "open_gates": ["Revised public archive/DOI and hosted CI"],
               "reasoned_alternative": "File-level SPDX sidecar supplied; reviewer acceptance of this alternative to inline headers is not established.",
               "submission_gates": ["Author review and marked manuscript", "Editorial Manager original-upload and assembled-PDF verification"]}
     (R1 / "P1_ACCEPTANCE.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

@@ -5,6 +5,7 @@ paper/softwarex/revisions/**/manuscript/*.md -text whitespace=-blank-at-eol
 # Publication evidence is hashed as bytes. Git must not rewrite line endings.
 benchmark/** -text
 experiments/softwarex_*/** -text
+paper/softwarex/revisions/**/bridge_evidence/** -text
 pyproject.toml -text
 requirements*.txt -text
 frontend/package-lock.json -text

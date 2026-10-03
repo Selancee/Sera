@@ -4,9 +4,9 @@
   "scope": "Local document consistency and artifact integrity; no new API call, hosted CI or publication.",
   "counts": {
     "abstract_words": 145,
-    "main_words": 2995,
+    "main_words": 2979,
     "keywords": 6,
-    "figures": 3
+    "figures": 4
   },
   "saved_metrics": {
     "full_rewrite": {
@@ -47,9 +47,10 @@
     "sera_full_table_matches_saved_metrics": true,
     "negative_evidence_and_scope_explicit": true,
     "six_actual_screenshot_hashes": true,
+    "native_bridge_evidence_integrity": true,
     "manuscript/seraedit_softwarex.docx_no_paragraph_border": true,
     "eleven_separate_reference_paragraphs": true,
-    "three_embedded_figures": true,
+    "four_embedded_figures": true,
     "RESPONSE_TO_REVIEWERS.docx_no_paragraph_border": true,
     "submission/COVER_LETTER.docx_no_paragraph_border": true,
     "license_sidecar_coverage": true,
@@ -57,7 +58,6 @@
     "eight_p1_items_mapped": true
   },
   "open_gates": [
-    "Actual MuseScore plugin send/open-revision visual evidence",
     "Revised public archive/DOI and hosted CI"
   ],
   "reasoned_alternative": "File-level SPDX sidecar supplied; reviewer acceptance of this alternative to inline headers is not established.",

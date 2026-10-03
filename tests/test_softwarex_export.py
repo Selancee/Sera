@@ -15,6 +15,7 @@ from scripts.export_softwarex_package import (
     collect,
     eligible,
     preserved_source_manifest,
+    manuscript_trees,
 )
 
 
@@ -51,6 +52,23 @@ def test_manuscript_package_includes_frozen_human_review_evidence():
     relative_paths = {path.relative_to(ROOT).as_posix() for path in files}
     assert "experiments/softwarex_human_review_120_v1/summary.json" in relative_paths
     assert "experiments/softwarex_human_review_120_v1/evidence_manifest.json" in relative_paths
+
+
+def test_revision_manuscript_package_selects_current_text_and_bridge_evidence():
+    paths = {p.relative_to(ROOT).as_posix() for p in collect(manuscript_trees("2026-10_minor_r1"))}
+    prefix = "paper/softwarex/revisions/2026-10_minor_r1/"
+    assert prefix + "manuscript/seraedit_softwarex.docx" in paths
+    assert prefix + "RESPONSE_TO_REVIEWERS.docx" in paths
+    assert prefix + "figures/bridge_revision.jpg" in paths
+    assert prefix + "BRIDGE_VISUAL_ACCEPTANCE.json" in paths
+    assert not any(p.startswith("paper/softwarex/manuscript/") or p.startswith("paper/softwarex/submission/") for p in paths)
+
+
+def test_revision_selection_rejects_directory_escape_and_missing_revision():
+    with pytest.raises(ValueError, match="directory name"):
+        manuscript_trees("../baselines")
+    with pytest.raises(FileNotFoundError, match="not found"):
+        manuscript_trees("revision-that-does-not-exist")
 
 
 def test_preserved_source_manifest_requires_matching_published_archive(tmp_path):

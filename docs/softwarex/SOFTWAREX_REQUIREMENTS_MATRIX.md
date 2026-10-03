@@ -19,7 +19,7 @@ the retained guide limits and conservative local targets, not a new live confirm
 | Human review | softwarex_human_review_120_v1 | 120 primary +30 repeat; same reviewer, no independent/aesthetic claim |
 | Platform and environment | INSTALLATION.md; R1 Section 2.3 and C7 | Windows versions explicit; POSIX source commands, no verified non-Windows desktop/bridge |
 | Literature | LITERATURE_VERIFICATION.md | Code editing, instruction-driven symbolic editing and MuseScore cited; no cross-system performance ranking |
-| UI evidence | R1 figures and UI_EVIDENCE.md | Actual local-rule UI states; bridge evidence classified separately |
+| UI evidence | R1 Figures 2–4, UI_EVIDENCE.md and BRIDGE_VISUAL_ACCEPTANCE.json | Actual local-rule UI; native MSCZ/CLI/Desktop/MuseScore sequence verified on 3 October; manual-import rejection kept separate |
 | Source license attribution | R1 SOURCE_LICENSE_INVENTORY.json | File-level SPDX identifiers and hashes in sidecar; dependency licenses unchanged |
 | Final manuscript rendering | R1 manuscript DOCX and render audit | Must pass visual QA; original render not reused as revision proof |
 | Hosted CI | .github/workflows/research-ci.yml | Defined; new revision hosted run not claimed until published |

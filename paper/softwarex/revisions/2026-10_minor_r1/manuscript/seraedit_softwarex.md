@@ -143,29 +143,31 @@ import, export, and parse again. A valid preview reports the exact changed event
 a stale fingerprint, missing event, duration change, or protected-scope difference rejects
 and rolls back the whole patch.
 
-The same workflow is available through the desktop interface or an optional MuseScore
-Studio 4 bridge. In the tested MuseScore 4.5.2 path, the plugin sends selection
-context and a user-selected saved score to the local Sera process; a CLI conversion
-produces the MusicXML snapshot because QML writeScore/readScore are unavailable.
-Users must save first: unsaved in-memory changes are not included. After proposal
-review, the bridge opens a separate reviewed revision in MuseScore. This is deliberately not described as in-place control of MuseScore's
-internal document: the original open score is not overwritten, and final visual review
-and saving remain user actions. Core snapshot undo does not implement single-step
-host undo. Figures 2 and 3 show actual interface states; their captions distinguish
-manual import from bridge operation.
+The optional MuseScore bridge sends selection context and a user-selected saved
+score to Sera Desktop. On MuseScore 4.5.2, native files use CLI conversion because
+QML export is unavailable; MusicXML files are read directly. Users must save first:
+unsaved in-memory changes are excluded. Review and apply creates a separate revision
+opened in MuseScore, preserving the original. A captured local-rule demonstration
+verified this complete path and four pitch changes (Figures 2 and 4;
+BRIDGE_VISUAL_ACCEPTANCE.json). Final visual review and saving remain user actions.
+Sera undo creates another revision; single-step host undo is not implemented.
 
-![Actual local-rule proposal with change counts and protected-scope status.](../figures/ui_proposal_full.jpg)
+![Actual desktop bridge proposal with change counts and protected-scope status.](../figures/bridge_proposal.jpg)
 
-**Figure 2.** Actual source UI on Windows, using manually imported synthetic MusicXML
-and local rules. The proposal changes four events and exposes validation, protection,
-apply/reject and patch details. The host label reflects the selected import mode;
-this screenshot alone does not prove a MuseScore plugin handoff.
+**Figure 2.** Actual Electron development shell after MuseScore plugin handoff of a
+saved synthetic score. Local rules propose four pitch changes with validation,
+protection and apply/reject controls. This demonstrates the workflow, not live-model accuracy.
 
 ![Actual rejected instruction with disabled apply control.](../figures/ui_rejection_full.jpg)
 
-**Figure 3.** Actual unsupported local-rule instruction. Apply is disabled and the
+**Figure 3.** Source-browser UI after manual MusicXML import: an unsupported local-rule instruction. Apply is disabled and the
 score is unchanged. This is an observed wording limitation, not a simulated error.
 Additional applied/undo states and reproduction steps accompany the revision.
+
+![Reviewed revision actually opened by the MuseScore plugin.](../figures/bridge_revision.jpg)
+
+**Figure 4.** MuseScore 4.5.2 displaying revision 1 opened by the plugin. Measure 1,
+staff 1 changes C–D–E–G to D–E–F♯–A; other notes remain unchanged.
 
 For offline verification, the repository contains 20 short CC0 synthetic scores and
 120 tasks spanning transposition, rhythm, harmony/key, voice/texture, dynamics,

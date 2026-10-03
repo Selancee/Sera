@@ -163,9 +163,22 @@ def write_archive(path: Path, files: list[Path], kind: str) -> dict[str, object]
     return manifest
 
 
+def manuscript_trees(revision: str | None = None) -> tuple[str, ...]:
+    """Select a named revision without silently including the August manuscript."""
+    if revision is None:
+        return MANUSCRIPT_TREES
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", revision):
+        raise ValueError("manuscript revision must be a directory name under paper/softwarex/revisions")
+    relative = f"paper/softwarex/revisions/{revision}"
+    if not (ROOT / relative / "manuscript/seraedit_softwarex.docx").is_file():
+        raise FileNotFoundError(f"Revision manuscript not found: {relative}")
+    return (relative, "docs/softwarex", "experiments/softwarex_human_review_120_v1")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Export deterministic SoftwareX source and LaTeX submission archives.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "paper" / "softwarex" / "release")
+    parser.add_argument("--manuscript-revision", help="Named revision under paper/softwarex/revisions; omit for the original manuscript selection.")
     parser.add_argument(
         "--artifact-label", default=VERSION,
         help="Filename label for a local revision candidate; does not change the software version or DOI.",
@@ -211,7 +224,9 @@ def main() -> int:
         raise ValueError("artifact label must contain only letters, digits, dots, underscores and hyphens")
     if args.preserve_existing_source and args.artifact_label != VERSION:
         raise ValueError("preserving a published source requires its original version label")
-    manuscript_files = collect(MANUSCRIPT_TREES, ("CITATION.cff", "LICENSE"))
+    if args.preserve_existing_source and args.manuscript_revision:
+        raise ValueError("A revision manuscript must use a new candidate archive, not the original published source")
+    manuscript_files = collect(manuscript_trees(args.manuscript_revision), ("CITATION.cff", "LICENSE"))
     assert_safe(manuscript_files)
     if args.preserve_existing_source:
         source_manifest = preserved_source_manifest(args.output_dir)

@@ -14,7 +14,7 @@ The following responses address completed local reproducibility and provenance
 corrections. They use working comment IDs because the author supplied the reports
 directly and platform reviewer numbering is not yet verified. The live-model
 comparison and validator-detection study are now complete locally;
-archival publication and the bridge visual check remain incomplete. Local P1
+the native bridge visual check is complete, while archival publication remains pending. Local P1
 responses and acceptance status are recorded below.
 
 ## P0-REPRO / P0-SOURCE / P0-COUNT
@@ -106,8 +106,8 @@ while 25 repaired editing tasks ended in erroneous refusal.
 
 **Location:** Abstract, Sections 3.1 and 4, evidence table;
 `DEEPSEEK_RESULTS.md`, `LIVE_EXPERIMENT_PROTOCOL.md` and
-`experiments/softwarex_deepseek_core_20261002_v1/`. Rendered page 6, lines 27–44 and the
-results table; page 7, lines 1–16.
+`experiments/softwarex_deepseek_core_20261002_v1/`. Rendered page 6, lines 21–45 and the
+results table; page 7, lines 1–8.
 
 ## P0-VALIDATORS
 
@@ -130,7 +130,7 @@ prevalence or generalization from these constructed cases.
 
 **Evidence:** `VALIDATOR_DETECTION_REPORT.md` and
 `experiments/softwarex_validator_detection_200_v1/`. Manuscript Section 3.2 and the
-evidence table contain the results on rendered page 7, lines 17–30 and the table below.
+evidence table contain the results on rendered page 7, lines 9–22 and the table below.
 
 ## P1-CONTRIBUTION / P1-LITERATURE
 
@@ -199,17 +199,22 @@ SOFTWAREX_REQUIREMENTS_MATRIX.md and REPRODUCIBILITY.md.
 **Comment:** Add screenshots or a screencast showing the claimed interface, diffs,
 rejection reasons, undo and bridge operation.
 
-**Response:** Figures 2–3 are genuine local source-UI captures showing a valid
-proposal with element-change counts/protected-scope status and a rejected instruction
-with disabled apply. Additional captured states show an applied revision, an undo
-control and an undo revision. The screenshots use local rules and manual MusicXML
-import; they are not attributed to the real-model experiment or packaged Electron.
-UI_EVIDENCE.md records exact reproduction and the observed wording failure.
+**Response:** Figures 2–4 now show the actual desktop proposal, rejected source-UI
+instruction, and MuseScore rendering the reviewed revision. On 3 October 2026 we
+completed the native plugin sequence: save a synthetic score as MSCZ, choose/send
+it through Sera Score Bridge 0.3.3, receive it in the Electron development shell,
+review/apply a local-rule proposal, and use the plugin to open revision 1 in a
+separate MuseScore 4.5.2 window. Eight native captures preserve this
+sequence and the Sera undo result. BRIDGE_VISUAL_ACCEPTANCE.json records hashes
+and independent XML checks: exactly four target pitches change, all 16 notes retain
+duration/voice, and revision 2 restores the original notes.
 
-**Open item:** The native MuseScore file-picker could not be reliably controlled,
-so the full plugin send/open-revision sequence is not visually verified here.
-Manual-import screenshots and automated bridge tests do not close this request.
-The bridge panel and opened revised score still need a genuine visual capture.
+UI_EVIDENCE.md distinguishes this bridge run from the earlier manual-import browser
+captures and retains the observed wording failure. The interface reports operation
+summaries and element-change counts; it is not a graphical note-diff viewer.
+The before/after host screenshots and saved XML make the demonstrated musical
+difference inspectable. This local-rule demonstration does not establish live-model
+accuracy, packaged-installer acceptance, musical preference or in-place host undo.
 
 ## P1-LICENSE / P1-PUBLICATION
 
@@ -231,7 +236,6 @@ publication gates. No hosted green result or public release is asserted for this
 
 ## Remaining submission gates
 
-- Obtain genuine bridge send/open-revision visual evidence.
 - Publish the reviewed revision source/data and verify its hosted CI; insert the
   new immutable links without overwriting the original deposit.
 - Complete author review and the Editorial Manager assembled-PDF check. Platform
