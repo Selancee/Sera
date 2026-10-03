@@ -2570,3 +2570,11 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Added named revision selection to the manuscript ZIP exporter after finding its default only selected the old submission. Two regression tests cover R1 evidence inclusion and invalid directory selection; 33 focused packaging/submission tests pass.
 - P1 verifier: 24/24; bridge visual gate closed for this single local-rule demonstration. Original 25 submission files and seven archives unchanged. License sidecar has CRLF/LF-normalized hashes without changing frozen producer bytes; reviewer acceptance of the inline-header alternative remains open.
 - Public release/DOI/hosted CI and author/Editorial Manager final checks remain pending. Preparing an immutable local candidate for isolated verification; this does not publish anything.
+
+
+### 2026-10-03 — Final R1 archive acceptance
+
+- Built clean b9589ee source/manuscript candidates; 4,345 source members verified, 81 manuscript members matched the revision worktree.
+- Isolated ZIP extraction: 447 Python tests passed, 0 failures/errors/skips; fixture verification, reviewer demo 6/6 and saved live-result recomputation passed using the existing Python 3.12.5 environment.
+- Added post-build receipts and JUnit evidence under the R1 directory; these receipts deliberately postdate and are not inside the immutable local ZIPs. Original baseline/release bytes remain unchanged.
+- Public archive/DOI, hosted CI, author review and Editorial Manager assembly remain open. No network model calls, push or submission.
