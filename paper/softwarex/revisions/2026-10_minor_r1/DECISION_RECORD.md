@@ -43,3 +43,7 @@ authorship-change request for any change at this stage; no such change is reques
 Local private source evidence is retained under
 `artifacts/softwarex_revision_20261002/private_evidence/`. Do not add that email HTML
 or connector dump to a public release or supplementary package.
+
+## Authenticated portal update on 3 October 2026
+
+The author logged in in the designated in-app Browser. The Submissions Needing Revision queue confirms SOFTX-D-26-01135, status Revise, due 31 October 2026. This supersedes the earlier unverified portal-status observation only. File Inventory did not expose an accessible popup; the new review site still reports an authentication issue after login. Reviewer numbering, original file identities and assembled PDF remain unverified. No revision was initiated or submitted.

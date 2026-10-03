@@ -1,0 +1,27 @@
+{
+  "baseline": "paper/softwarex/baselines/submission_2026-08-28/files/paper/softwarex/manuscript/seraedit_softwarex.docx",
+  "baseline_sha256": "d31b5e5ef16ecaa9ac45221295686a68c2f78b04b5adcd4f8869710e1093be4c",
+  "clean_sha256": "a83bcc0f03b9fb5c7e7f6df02019c7c34b1e43d4cf647d949d0e44172d7b7ac0",
+  "marked_sha256": "0bff1bda6cb6e04902a78ff9b9271c27c62e97765457d16a6067eb304b75e1a8",
+  "method": "Yellow highlight on added or changed paragraph and table-cell text; no change to the clean manuscript text or images. Full text comparison separately shows removals. This is not Word Track Changes.",
+  "new_paragraphs": 199,
+  "marked_paragraphs": 84,
+  "removed_or_replaced_baseline_paragraphs": 21,
+  "clean_text_preserved": true,
+  "clean_media_preserved": true,
+  "portal_original_upload_identity_verified": false,
+  "visual_review_complete": true,
+  "rendered_pages": 10,
+  "visually_inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ]
+}

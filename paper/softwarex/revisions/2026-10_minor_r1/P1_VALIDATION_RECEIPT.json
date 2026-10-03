@@ -19,7 +19,7 @@
       "render_directory": "artifacts/softwarex_revision_20261003_review/render_manuscript"
     },
     "RESPONSE_TO_REVIEWERS.docx": {
-      "sha256": "e83b4dbc2b606c3e524657c762a0448b2e124f90cbb7a9074c2d69b119caa835",
+      "sha256": "d14fcf2d74635c40852fc9c4a199d2c55c919144d516c436e0bdeb7651e9052e",
       "rendered_pages": 4,
       "visually_inspected_pages": [
         1,
@@ -27,7 +27,7 @@
         3,
         4
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_review/render_response_final"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_response"
     },
     "submission/COVER_LETTER.docx": {
       "sha256": "2d0b6b284618005fe479b28ff53e1243c4b2dc599d90657452a2d470df53a651",
@@ -36,10 +36,59 @@
         1
       ],
       "render_directory": "artifacts\\softwarex_revision_20261002\\p1_render_final\\cover"
+    },
+    "manuscript/seraedit_softwarex_marked.docx": {
+      "sha256": "0bff1bda6cb6e04902a78ff9b9271c27c62e97765457d16a6067eb304b75e1a8",
+      "rendered_pages": 10,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_marked"
+    },
+    "submission/DECLARATION_OF_INTEREST.docx": {
+      "sha256": "9e7658308ff7dda72934a55c63111c762fccc79a9b155dd8a73c428d7965f5a3",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_DECLARATION_OF_INTEREST"
+    },
+    "submission/CREDIT_AUTHOR_STATEMENT.docx": {
+      "sha256": "c5d19e961e4e0cc9f57913a62d804231462d0c7be7fba5e8726600be90e3d143",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_CREDIT_AUTHOR_STATEMENT"
+    },
+    "submission/GENERATIVE_AI_DISCLOSURE.docx": {
+      "sha256": "df1371e1bbef5222db74fe7784dd3aba6016cb4c3195023a5e4c4cb7ac87ff0c",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_GENERATIVE_AI_DISCLOSURE"
+    },
+    "submission/DATA_AND_CODE_AVAILABILITY.docx": {
+      "sha256": "1693a19906306af48a8daa829425a2216435d3430404ccbdd25a1f4aa85cc3c3",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_DATA_AND_CODE_AVAILABILITY"
     }
   },
   "visual_findings": "All pages inspected. Removed title paragraph borders; references separate; table headers repeat and metadata widths corrected; no visible clipping.",
-  "focused_python_tests": 31,
+  "focused_python_tests": 33,
   "frontend_tests": 133,
   "frontend_test_files": 74,
   "frontend_build_passed": true,
@@ -49,5 +98,6 @@
   "new_paid_model_calls": 0,
   "published": false,
   "reviewer_audit": "REVIEWER_AUDIT.md",
-  "bridge_visual_acceptance": "BRIDGE_VISUAL_ACCEPTANCE.json"
+  "bridge_visual_acceptance": "BRIDGE_VISUAL_ACCEPTANCE.json",
+  "submission_preparation": "SUBMISSION_PROGRESS_20261003.md"
 }

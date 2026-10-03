@@ -783,3 +783,10 @@
 - Isolated ZIP extraction: 447 Python tests passed, 0 failures/errors/skips; fixture verification, reviewer demo 6/6 and saved live-result recomputation passed using the existing Python 3.12.5 environment.
 - Added post-build receipts and JUnit evidence under the R1 directory; these receipts deliberately postdate and are not inside the immutable local ZIPs. Original baseline/release bytes remain unchanged.
 - Public archive/DOI, hosted CI, author review and Editorial Manager assembly remain open. No network model calls, push or submission.
+
+
+### 2026-10-03 — Submission preparation and authenticated portal check
+
+- Verified the manuscript in the authenticated Editorial Manager revision queue (Revise; due 31 October). New review site still reports authentication issue; original file inventory and reviewer numbering remain unverified.
+- Prepared a 10-page highlighted manuscript and complete text comparison against the preserved baseline; clean text/images unchanged. Updated the 4-page response and prepared four one-page Word statements; all 18 pages visually inspected.
+- Prepared a concrete public-branch/draft-PR proposal to run hosted CI. No push, publication, portal upload or submission. No experimental code, metrics or paid-model calls changed.

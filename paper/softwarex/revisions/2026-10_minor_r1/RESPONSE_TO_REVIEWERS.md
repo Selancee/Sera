@@ -49,7 +49,10 @@ artifact digests are recorded in the revision audit. After the live-protocol and
 validator additions, the final source candidate at `ff82c74` passed all 445 tests
 in an independent extraction using the same documented Python 3.12.5 dependency
 environment. Its 4,299 file hashes, six-task demo, 13 fixture checks and 14 saved
-live-evidence checks also passed; the final receipt identifies this later checkpoint.
+live-evidence checks also passed. The subsequent submission candidate at `b9589ee`
+adds two revision-packaging checks and passes 447/447 tests in an independent
+extraction, with 4,345 source-file hashes verified. Separate receipts identify
+each checkpoint; the original archived results remain unchanged.
 
 The source ZIP tested here is a local revision candidate. Its publication metadata
 and final release links will be updated after the complete revision is ready; the
