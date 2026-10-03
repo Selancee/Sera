@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Check the local R1 document bundle without treating publication gates as passed."""
+"""Check the local R1 bundle and any dated public-archive verification receipt."""
 
 from __future__ import annotations
 
@@ -107,10 +107,30 @@ def main() -> int:
         matrix = list(csv.DictReader(handle))
     p1 = [row for row in matrix if next(iter(row.values())).startswith("P1-")]
     checks["eight_p1_items_mapped"] = len(p1) == 8
-    report = {"local_checks_passed": all(checks.values()), "overall_p1_status": "partial_open_gates",
-              "scope": "Local document consistency and artifact integrity; no new API call, hosted CI or publication.",
+    publication_path = R1 / "PUBLICATION_VERIFICATION.json"
+    publication = json.loads(publication_path.read_text(encoding="utf-8")) if publication_path.exists() else {}
+    public_files = publication.get("files", [])
+    ci = publication.get("hosted_ci", {})
+    publication_verified = (
+        publication.get("published") is True
+        and publication.get("doi_resolves_to_record") is True
+        and publication.get("doi") == "10.5281/zenodo.23117392"
+        and len(public_files) == 4
+        and len({item.get("name") for item in public_files}) == 4
+        and all(item.get("matches_local") is True and item.get("http_status") == 200
+                and re.fullmatch(r"[0-9a-f]{64}", item.get("sha256", "")) for item in public_files)
+        and ci.get("head_commit") == "0d319bc381cfc21687adaeff06dcb1f7797b8f18"
+        and ci.get("jobs") == {"python-benchmark": "success", "frontend": "success"}
+    )
+    if publication_verified:
+        checks["published_revision_citation"] = "https://doi.org/10.5281/zenodo.23117392" in manuscript
+        checks["historical_executable_citation"] = "https://doi.org/10.5281/zenodo.22128976" in manuscript
+    report = {"local_checks_passed": all(checks.values()), "overall_p1_status": "publication_verified_submission_gates_open" if publication_verified else "partial_open_gates",
+              "scope": "Local document checks plus a dated publication receipt when present; this command does not access the network or rerun hosted CI.",
               "counts": counts, "saved_metrics": observed, "checks": checks,
-              "open_gates": ["Revised public archive/DOI and hosted CI"],
+              "open_gates": [] if publication_verified else ["Revised public archive/DOI and hosted CI"],
+              "publication_verified_as_recorded": publication_verified,
+              "publication_verification_date": publication.get("verified_date"),
               "reasoned_alternative": "File-level SPDX sidecar supplied; reviewer acceptance of this alternative to inline headers is not established.",
               "submission_gates": ["Author review and marked manuscript", "Editorial Manager original-upload and assembled-PDF verification"]}
     (R1 / "P1_ACCEPTANCE.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

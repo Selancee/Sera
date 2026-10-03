@@ -302,13 +302,13 @@ changed during MusicXML export/re-import. This 15% end-to-end rejection rate mea
 an export/representation limitation, not isolated validator false positives. All 200
 caller inputs remained unchanged and all 183 rejected transactions retained their
 original fingerprints. Constructed mutations do not estimate real-model error
-prevalence or prove detection of arbitrary semantic errors. The final implementation
-passed 445 Python tests, extending the earlier 438-test reproducibility checkpoint.
+prevalence or prove detection of arbitrary semantic errors. The archived implementation
+passed 447 Python tests, extending the earlier 438-test reproducibility checkpoint.
 
 | Evidence layer | Scale | Verified result | Claim boundary |
 | --- | ---: | --- | --- |
 | Benchmark definition | 120 tasks / 20 scores | 120/120 valid | Schema, Gold application, constraints, round trip |
-| Automated regression | 445 Python tests | All passed | Final live-protocol revision checkout; earlier archive checkpoint had 438 |
+| Automated regression | 447 Python tests | All passed | Hosted CI and isolated R1 archive; earlier checkpoints had 438 and 445 |
 | Real-provider comparison | 360 runs / 120 tasks | Strict edits: 72, 65, 63 of 110; 14 integrity checks | One API alias and development benchmark; protection/coverage tradeoff |
 | Constructed-error detection | 180 mutations + 20 controls | 180 invalid rejected; 3 controls rejected | Regression after a detector fix; round-trip limitation retained |
 | Reviewer demo | 6 representative tasks | 6/6 passed; five host files | Offline product-path reproducibility |
@@ -368,15 +368,15 @@ evaluation rather than weakening transaction safeguards.
 
 ## Code metadata
 
-The following links identify the unchanged original public release. The new revision
-code and evidence are local candidates; final archival links must be supplied before
-submission. The original deposit does not contain the new live-model results.
+C1-C3 identify the archived R1 source and evidence snapshot at commit `0d319bc`.
+The original executable remains identified separately in S1-S3; no new installer
+was built. The original deposit does not contain the new live-model results.
 
 | Nr. | Code metadata description | Metadata |
 | --- | --- | --- |
-| C1 | Current code version | `1.0.0` |
-| C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera/releases/tag/v1.0.0` |
-| C3 | Permanent link to reproducible capsule | `https://doi.org/10.5281/zenodo.22128976` |
+| C1 | Current code version | `softwarex-r1-20261003` (source revision) |
+| C2 | Permanent link to code/repository used for this code version | `https://github.com/Selancee/Sera/tree/0d319bc381cfc21687adaeff06dcb1f7797b8f18` |
+| C3 | Permanent link to reproducible capsule | `https://doi.org/10.5281/zenodo.23117392` |
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
 | C5 | Code versioning system used | Git |
 | C6 | Software code languages, tools and services used | Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML |
@@ -414,14 +414,14 @@ relationships that could have appeared to influence the work reported in this pa
 
 ## Data and code availability
 
-Source code, synthetic benchmark data, test fixtures, evaluation configuration, and
-the non-formal verification run are available from the tagged public repository in
-C2 and the immutable Zenodo software deposit in C3 at
-`https://doi.org/10.5281/zenodo.22128976`. No API key is distributed.
-The separate revision evidence includes `softwarex_revision_verification_120_v2`,
-`softwarex_deepseek_core_20261002_v1`, both retained DeepSeek pilots and
-`softwarex_validator_detection_200_v1`. These local candidates include saved outputs
-and offline recomputation commands; publication of the revised archive is pending.
+The R1 source and evidence snapshot is publicly archived at
+`https://doi.org/10.5281/zenodo.23117392` and linked to the commit in C2. It includes
+the synthetic benchmark, corrected fixture `softwarex_revision_verification_120_v2`,
+saved outputs for `softwarex_deepseek_core_20261002_v1`, both retained DeepSeek pilots,
+`softwarex_validator_detection_200_v1`, and offline recomputation commands. No API key
+is distributed. The archived manuscript snapshot precedes these final citation updates.
+The original executable and historical evidence remain at
+`https://doi.org/10.5281/zenodo.22128976` (S1-S3).
 
 ## Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
 

@@ -29,3 +29,13 @@ File Inventory 点击后未出现可访问的文件窗口，不能据此认定�
 4. 生成并逐页核对平台组装 PDF；作者确认后才执行最终修回提交。
 
 许可 sidecar 的替代回应保持透明，审稿人是否接受仍未知。本文结论和失败案例保持不变。
+
+## 2026-10-03 — Published R1 archive and final citation preparation
+
+The author published Zenodo record 23117392, version softwarex-r1-20261003. Anonymous public API, DOI redirect and all four downloads were verified; MD5 and SHA-256 match the unchanged CI artifacts. PUBLICATION_VERIFICATION.json records the evidence. Source and manuscript snapshot remain byte-identical to hosted CI head 0d319bc; original v1.0.0 and producer e3a34e1 were preserved.
+
+Updated the R1 clean/highlighted manuscript, response, cover letter, availability statement, portal fill-in sheet and publication metadata with the new DOI. C1-C3 identify R1 source/evidence, while S1-S3 retain the historical installer. Synchronized the final regression count to 447 without changing research metrics. Updated the offline P1 checker to consume a dated publication receipt, refreshed its license-sidecar hash, and retained explicit journal-submission gates.
+
+Validation: 26/26 local checks; baseline 25/25 files and 7/7 archives; all 26 pages of five updated documents visually inspected. The three unchanged declarations retain earlier hash-bound review. Hosted 447 Python/133 frontend/build/14 saved-evidence results belong to immutable 0d319bc, not these later document edits. No new model calls or production changes.
+
+Next: verify platform reviewer numbering/original uploads, upload the new post-publication submission bundle, review the assembled PDF and obtain author final submission confirmation. No journal submission, merge, or formal GitHub release occurred.

@@ -1,12 +1,12 @@
 {
   "baseline": "paper/softwarex/baselines/submission_2026-08-28/files/paper/softwarex/manuscript/seraedit_softwarex.docx",
   "baseline_sha256": "d31b5e5ef16ecaa9ac45221295686a68c2f78b04b5adcd4f8869710e1093be4c",
-  "clean_sha256": "a83bcc0f03b9fb5c7e7f6df02019c7c34b1e43d4cf647d949d0e44172d7b7ac0",
-  "marked_sha256": "0bff1bda6cb6e04902a78ff9b9271c27c62e97765457d16a6067eb304b75e1a8",
+  "clean_sha256": "6b2bb56a08d3deb6de700403b3cd9e9eed6db62e21e51cac6cb07435beef16e4",
+  "marked_sha256": "fb86e0712860cb89ec1b5c23f2c73ea990f5fe67615f18cc835508a42dc54185",
   "method": "Yellow highlight on added or changed paragraph and table-cell text; no change to the clean manuscript text or images. Full text comparison separately shows removals. This is not Word Track Changes.",
   "new_paragraphs": 199,
-  "marked_paragraphs": 84,
-  "removed_or_replaced_baseline_paragraphs": 21,
+  "marked_paragraphs": 87,
+  "removed_or_replaced_baseline_paragraphs": 24,
   "clean_text_preserved": true,
   "clean_media_preserved": true,
   "portal_original_upload_identity_verified": false,
@@ -23,5 +23,6 @@
     8,
     9,
     10
-  ]
+  ],
+  "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_marked"
 }

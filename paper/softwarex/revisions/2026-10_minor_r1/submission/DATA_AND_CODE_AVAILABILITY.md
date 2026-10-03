@@ -1,8 +1,13 @@
 # Data and code availability
 
-Original software v1.0.0 is identified by the public release tag and version DOI
-https://doi.org/10.5281/zenodo.22128976. The new revision data, source and manuscript
-are local candidates; their public revision archive is not yet deposited. The
-original DOI must not be cited as containing the new real-model or mutation results.
-All candidate experiment outputs are saved for offline recomputation. No credential
-is included. Final revised archival links must be inserted before submission.
+The SoftwareX R1 source and research-evidence snapshot is publicly archived at
+https://doi.org/10.5281/zenodo.23117392 (version softwarex-r1-20261003). It includes
+the corrected verification fixture, saved DeepSeek outputs, constructed-error study,
+synthetic benchmark and offline recomputation commands. The source corresponds to
+Git commit 0d319bc381cfc21687adaeff06dcb1f7797b8f18; all four public downloads match
+their verified local SHA-256 values. No API credential is distributed.
+
+The archived manuscript snapshot captures the tested preparation stage and precedes
+these final citation updates. The original software v1.0.0 and historical evidence
+remain at https://doi.org/10.5281/zenodo.22128976. The original Windows installer
+is unchanged; it is not the executable build of the R1 source revision.

@@ -1,7 +1,8 @@
 # R1 Editorial Manager working fields
 
 Manuscript: SOFTX-D-26-01135. Local revision, not submitted. Deadline 31 October 2026.
-Original public v1.0.0 and DOI remain historical; new archival publication is pending.
+R1 source and evidence: https://doi.org/10.5281/zenodo.23117392 (published and verified).
+Original public v1.0.0 and its DOI remain historical.
 
 ## Title
 
@@ -29,6 +30,6 @@ MusicXML; symbolic music; score editing; structured patches; validation; researc
 
 ## Submission boundary
 
-Use this R1 sheet rather than the historical August sheet. Final public revision
-links, author approval and portal-assembled PDF review remain required. Do not
-represent a local ZIP or the original DOI as publication of the new evidence.
+Use this R1 sheet rather than the historical August sheet. Author approval and
+portal-assembled PDF review remain required. The original DOI identifies historical
+evidence; cite the new version DOI above for the revised source and experiments.

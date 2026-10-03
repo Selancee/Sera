@@ -1,10 +1,10 @@
 {
   "local_checks_passed": true,
-  "overall_p1_status": "partial_open_gates",
-  "scope": "Local document consistency and artifact integrity; no new API call, hosted CI or publication.",
+  "overall_p1_status": "publication_verified_submission_gates_open",
+  "scope": "Local document checks plus a dated publication receipt when present; this command does not access the network or rerun hosted CI.",
   "counts": {
     "abstract_words": 145,
-    "main_words": 2979,
+    "main_words": 2982,
     "keywords": 6,
     "figures": 4
   },
@@ -55,11 +55,13 @@
     "submission/COVER_LETTER.docx_no_paragraph_border": true,
     "license_sidecar_coverage": true,
     "license_sidecar_hashes": true,
-    "eight_p1_items_mapped": true
+    "eight_p1_items_mapped": true,
+    "published_revision_citation": true,
+    "historical_executable_citation": true
   },
-  "open_gates": [
-    "Revised public archive/DOI and hosted CI"
-  ],
+  "open_gates": [],
+  "publication_verified_as_recorded": true,
+  "publication_verification_date": "2026-10-03",
   "reasoned_alternative": "File-level SPDX sidecar supplied; reviewer acceptance of this alternative to inline headers is not established.",
   "submission_gates": [
     "Author review and marked manuscript",

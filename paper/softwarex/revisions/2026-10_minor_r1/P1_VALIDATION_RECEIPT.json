@@ -2,7 +2,7 @@
   "date": "2026-10-03",
   "artifacts": {
     "manuscript/seraedit_softwarex.docx": {
-      "sha256": "a83bcc0f03b9fb5c7e7f6df02019c7c34b1e43d4cf647d949d0e44172d7b7ac0",
+      "sha256": "6b2bb56a08d3deb6de700403b3cd9e9eed6db62e21e51cac6cb07435beef16e4",
       "rendered_pages": 10,
       "visually_inspected_pages": [
         1,
@@ -16,10 +16,10 @@
         9,
         10
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_review/render_manuscript"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_clean"
     },
     "RESPONSE_TO_REVIEWERS.docx": {
-      "sha256": "d14fcf2d74635c40852fc9c4a199d2c55c919144d516c436e0bdeb7651e9052e",
+      "sha256": "5f6cea5d8eb878080e5faffbd53b0378365ed8585a503c5babf954ff9ec27fd6",
       "rendered_pages": 4,
       "visually_inspected_pages": [
         1,
@@ -27,18 +27,18 @@
         3,
         4
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_response"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_response"
     },
     "submission/COVER_LETTER.docx": {
-      "sha256": "2d0b6b284618005fe479b28ff53e1243c4b2dc599d90657452a2d470df53a651",
+      "sha256": "acfa769763ce46cdd0d7fb4f93dc38a64583cdc3d2cc0ddac7b0c4509e978d2e",
       "rendered_pages": 1,
       "visually_inspected_pages": [
         1
       ],
-      "render_directory": "artifacts\\softwarex_revision_20261002\\p1_render_final\\cover"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_cover"
     },
     "manuscript/seraedit_softwarex_marked.docx": {
-      "sha256": "0bff1bda6cb6e04902a78ff9b9271c27c62e97765457d16a6067eb304b75e1a8",
+      "sha256": "fb86e0712860cb89ec1b5c23f2c73ea990f5fe67615f18cc835508a42dc54185",
       "rendered_pages": 10,
       "visually_inspected_pages": [
         1,
@@ -52,7 +52,7 @@
         9,
         10
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_marked"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_marked"
     },
     "submission/DECLARATION_OF_INTEREST.docx": {
       "sha256": "9e7658308ff7dda72934a55c63111c762fccc79a9b155dd8a73c428d7965f5a3",
@@ -79,15 +79,15 @@
       "render_directory": "artifacts/softwarex_revision_20261003_submission/render_GENERATIVE_AI_DISCLOSURE"
     },
     "submission/DATA_AND_CODE_AVAILABILITY.docx": {
-      "sha256": "1693a19906306af48a8daa829425a2216435d3430404ccbdd25a1f4aa85cc3c3",
+      "sha256": "05c5f21803c99d8f7960a37f14c04a827b77f2b17ca1b7fe22f3c460840f28e1",
       "rendered_pages": 1,
       "visually_inspected_pages": [
         1
       ],
-      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_DATA_AND_CODE_AVAILABILITY"
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_availability"
     }
   },
-  "visual_findings": "All pages inspected. Removed title paragraph borders; references separate; table headers repeat and metadata widths corrected; no visible clipping.",
+  "visual_findings": "All 26 pages of the five updated documents inspected after citation updates; clean manuscript page 7 rechecked after synchronizing the final test count to 447. No visible clipping or overlap. The three unchanged declarations retain their preceding hash-bound visual review.",
   "focused_python_tests": 33,
   "frontend_tests": 133,
   "frontend_test_files": 74,
@@ -96,8 +96,13 @@
   "baseline_archives_verified": 7,
   "saved_live_integrity_checks": 14,
   "new_paid_model_calls": 0,
-  "published": false,
+  "published": true,
   "reviewer_audit": "REVIEWER_AUDIT.md",
   "bridge_visual_acceptance": "BRIDGE_VISUAL_ACCEPTANCE.json",
-  "submission_preparation": "SUBMISSION_PROGRESS_20261003.md"
+  "submission_preparation": "SUBMISSION_PROGRESS_20261003.md",
+  "publication_doi": "10.5281/zenodo.23117392",
+  "publication_receipt": "PUBLICATION_VERIFICATION.json",
+  "local_document_checks_passed": 26,
+  "hosted_ci_scope": "447 Python tests, 133 frontend tests, production build and 14 saved-live-evidence checks apply to immutable archive head 0d319bc. Post-publication document and receipt edits were validated locally, not by that hosted run.",
+  "journal_submitted": false
 }

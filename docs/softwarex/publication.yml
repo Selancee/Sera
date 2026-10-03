@@ -34,3 +34,14 @@ revision_deadline: "2026-10-31"
 revision_portal_status_verified: true
 revision_reviewer_comments_retrieved: true
 revision_reviewer_comments_source: "Two review texts supplied directly by the author on 2026-10-02; platform numbering unverified"
+
+revision_source_version: "softwarex-r1-20261003"
+revision_source_commit: "0d319bc381cfc21687adaeff06dcb1f7797b8f18"
+revision_source_url: "https://github.com/Selancee/Sera/tree/0d319bc381cfc21687adaeff06dcb1f7797b8f18"
+revision_archive_doi: "10.5281/zenodo.23117392"
+revision_archive_url: "https://doi.org/10.5281/zenodo.23117392"
+revision_archive_record_id: "23117392"
+revision_archive_status: "published_public_downloads_verified"
+revision_archive_publication_date: "2026-10-03"
+revision_hosted_ci_url: "https://github.com/Selancee/Sera/actions/runs/37096317165"
+revision_hosted_ci_status: "success"

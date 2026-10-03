@@ -1,4 +1,4 @@
-# Response to reviewers — R1 working draft
+# Response to reviewers — R1
 
 Manuscript number: SOFTX-D-26-01135
 
@@ -14,8 +14,9 @@ The following responses address completed local reproducibility and provenance
 corrections. They use working comment IDs because the author supplied the reports
 directly and platform reviewer numbering is not yet verified. The live-model
 comparison and validator-detection study are now complete locally;
-the native bridge visual check is complete, while archival publication remains pending. Local P1
-responses and acceptance status are recorded below.
+the native bridge visual check, hosted CI and revised archival publication are complete.
+The R1 deposit is https://doi.org/10.5281/zenodo.23117392. Responses and evidence
+boundaries are recorded below.
 
 ## P0-REPRO / P0-SOURCE / P0-COUNT
 
@@ -54,10 +55,12 @@ adds two revision-packaging checks and passes 447/447 tests in an independent
 extraction, with 4,345 source-file hashes verified. Separate receipts identify
 each checkpoint; the original archived results remain unchanged.
 
-The source ZIP tested here is a local revision candidate. Its publication metadata
-and final release links will be updated after the complete revision is ready; the
-original DOI continues to identify the original deposit. Hosted CI has been extended
-to check the actual source archive, but no new hosted run is claimed in this draft.
+The published R1 source ZIP at https://doi.org/10.5281/zenodo.23117392 is the exact
+archive tested by hosted CI run 37096317165 (revision head `0d319bc`): 447 Python
+tests passed after independent extraction, with 4,359 file hashes verified. The
+133 frontend tests, production build and 14 saved-live-evidence checks passed.
+All four public downloads were verified against local SHA-256 values on 3 October
+2026. The original DOI continues to identify the original deposit.
 
 **Location:** Section 3, rendered pages 5–6; the evidence table on page 7;
 `docs/softwarex/REPRODUCIBILITY.md`; `P0_REPRODUCIBILITY_REPORT.md`; `P0_VALIDATION.json`.
@@ -231,15 +234,16 @@ would invalidate the recorded experiment implementation hashes. This is a reason
 alternative to the requested inline headers, not a claim that every source has a
 new header. Installed dependencies retain their own licenses and are excluded.
 
-publication.yml already identifies the original v1.0.0 version DOI. The revision
-explicitly distinguishes the original tag/deposit from the local corrected candidate;
-that DOI is not represented as containing new experiments. Local isolated-archive
-validation is recorded, while a new hosted CI run and revised public deposit remain
-publication gates. No hosted green result or public release is asserted for this branch.
+publication.yml now records the R1 DOI https://doi.org/10.5281/zenodo.23117392
+separately from the original v1.0.0 DOI. C1-C3 identify the revised source and
+evidence; S1-S3 retain the historical executable boundary. Hosted CI run
+37096317165 passed at head `0d319bc`. Its synthetic PR merge has the same tree
+as that head, and the public ZIP bytes match the checked artifacts. The deposit
+contains a preparation-stage manuscript snapshot; this submitted document updates
+the final citations without altering the frozen archive. Publication and download
+verification are recorded in PUBLICATION_VERIFICATION.json.
 
 ## Remaining submission gates
 
-- Publish the reviewed revision source/data and verify its hosted CI; insert the
-  new immutable links without overwriting the original deposit.
 - Complete author review and the Editorial Manager assembled-PDF check. Platform
   reviewer numbering and originally uploaded files remain unverified.
