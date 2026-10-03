@@ -2358,7 +2358,7 @@
       "path": "scripts/verify_softwarex_p1.py",
       "SPDX-License-Identifier": "MIT",
       "sha256": "8b4ef2d8defded95c3677ff5396636169160c54eb3db8deb5108ec7ac45acb2c",
-      "sha256_lf": "8b4ef2d8defded95c3677ff5396636169160c54eb3db8deb5108ec7ac45acb2c"
+      "sha256_lf": "aef0f08199d746eb06eabcda1ff4deae9436f7fdd38c00bbed2a95d95f2fd8df"
     },
     {
       "path": "scripts/verify_softwarex_package.py",

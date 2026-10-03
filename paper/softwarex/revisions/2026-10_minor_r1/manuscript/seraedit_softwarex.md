@@ -24,7 +24,7 @@ a documented detector fix, while round-trip limitations rejected 3/20 valid cont
 The software makes this protection/completion tradeoff inspectable and reproducible;
 the results do not establish higher overall editing success or held-out generalization.
 
-Keywords: MusicXML; symbolic music; score editing; structured patches; validation; research software
+Keywords: MusicXML; symbolic music; score editing; structured patches
 
 ## 1. Motivation and significance
 

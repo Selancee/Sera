@@ -13,3 +13,5 @@ with the older requirements matrix: August submission sheet records 4,000 main w
 This revision targets the stricter 3,000 main-word threshold, <=250 abstract words,
 six keywords and <=6 figures. Portal requirements must be checked before submission;
 this file does not claim current guide access or acceptance guarantees.
+
+Final upload correction, 3 October 2026: the author-supplied Editorial Manager screenshot shows a maximum of four keywords. Final submission files now use four, superseding the earlier six-keyword internal target. This does not establish access to the current web guide.

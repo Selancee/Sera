@@ -8,6 +8,8 @@ Decision date: 1 October 2026
 
 Dear Editor and Reviewers,
 
+Final upload clarification: Editorial Manager limits this submission to four keywords. The final manuscript and submission fields therefore use MusicXML; symbolic music; score editing; structured patches. This supersedes the six-keyword wording in our earlier online response to Reviewer 1; the scientific responses and results are unchanged.
+
 Thank you for reviewing the manuscript and inviting a minor revision. We have
 corrected the reproducibility problems, added real-provider and constructed-error
 experiments, documented interface and bridge operation, and narrowed the claims
@@ -151,7 +153,7 @@ LITERATURE_VERIFICATION.md. Primary records were checked on 3 October 2026.
 
 Comment summary: Abstracts, keyword counts, validator membership, condition names and runs/tasks units disagree.
 
-Response: The R1 fill-in sheet takes the exact manuscript abstract and six
+Response: The R1 fill-in sheet takes the exact manuscript abstract and four
 keywords. Original August files remain immutable historical records. The eight
 checks are named once in Section 2.2; the abstract and cover letter refer to that
 contract without competing lists. The condition names Full Rewrite, Patch Only and
@@ -300,7 +302,7 @@ cross-platform validation, which we have not performed.
 
 Comment summary: Unify abstracts, keywords, validators and condition labels; fix units and declaration headings; add screenshots and update requirements.
 
-Response: The revised manuscript and portal fill-in sheet contain the same abstract and six
+Response: The revised manuscript and portal fill-in sheet contain the same abstract and four
 keywords. Section 2.2 defines the eight checks and maps condition names; the wider
 selection result consistently reports 240 runs, with 174 widened and 66 not widened.
 Figures 2–4 and the archived UI evidence document actual operation. The requirements

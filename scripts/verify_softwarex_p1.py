@@ -48,7 +48,7 @@ def main() -> int:
     checks["title_synchronized"] = manuscript.splitlines()[0][2:] == section(fields, "## Title")
     checks["abstract_synchronized"] = normalized(abstract) == normalized(section(fields, "## Abstract"))
     checks["keywords_synchronized"] = normalized(keywords) == normalized(section(fields, "## Keywords"))
-    checks["conservative_length_targets"] = counts["abstract_words"] <= 250 and counts["main_words"] <= 3000 and counts["keywords"] == 6 and counts["figures"] <= 6
+    checks["conservative_length_targets"] = counts["abstract_words"] <= 250 and counts["main_words"] <= 3000 and counts["keywords"] == 4 and counts["figures"] <= 6
     checks["primary_references_present"] = all(x in manuscript for x in ("2310.06770", "2312.12450", "2505.08203v1", "handbook.musescore.org/customization/plugins"))
     checks["canonical_eight_checks_present"] = normalized("source binding, schema, structure and addressing, measure duration, notation relations, declared semantic conditions, protected scope, and MusicXML round-trip fidelity") in normalized(manuscript)
     checks["platform_versions_and_boundary"] = all(x in manuscript for x in ("3.12.5", "24.16.0", "11.13.0", "Windows", "POSIX", "unsaved in-memory changes"))

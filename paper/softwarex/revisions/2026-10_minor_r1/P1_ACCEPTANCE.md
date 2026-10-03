@@ -25,7 +25,7 @@
 
 ## 验证结果
 
-- 本轮文档与证据检查 26/26 通过；正文计数 2,982 词、摘要 145 词、6 个关键词、4 张图。计数目标属于保守内部检查，不冒称本轮确认了期刊指南。
+- 本轮文档与证据检查 26/26 通过；正文计数 2,982 词、摘要 145 词、4 个关键词（按实际投稿页面上限更正）、4 张图。计数目标属于保守内部检查，不冒称本轮确认了期刊指南。
 - 五份更新文档逐页检查：清洁稿 10 页、标记稿 10 页、回复信 7 页（按实际审稿人编号重新编排并逐页复核）、Cover letter 1 页、数据声明 1 页。标记稿文字与图片同清洁稿；另有删除内容的完整 HTML 对照。
 - 原投稿基线 25/25 文件、7/7 本地归档保持一致。平台原上传文件身份仍未核对。
 - 托管 CI run 37096317165 对应修回提交 0d319bc381cfc21687adaeff06dcb1f7797b8f18；其 PR 合并树与该提交相同。独立源码 ZIP 的 447 项 Python 测试、133 项前端测试、生产构建和 14 项保存模型证据检查通过。
@@ -37,3 +37,15 @@
 已依据作者提供的平台完整文本确认 Reviewer 1（9 月 23 日）和 Reviewer 2（9 月 28 日）的编号，并整理 19 个回应小节。下一步在同行评审平台分别粘贴、核对并发送两份回复；核对原上传附件，上传修回附件，生成并逐页核对平台 PDF，最后由作者确认提交。线上回复尚未发送。许可替代方案是否被接受只能由审稿决定。
 
 GitHub PR 仍为草稿，未合并 main；GitHub release 仍为草稿。公开 Zenodo 版本由作者手动发布，本轮仅验证公开状态并更新本地文档。没有向期刊提交。
+
+## 最终上传字段更正
+
+实际 Editorial Manager 页面限制最多 4 个关键词。已同步清洁稿、标记稿、最终附件回复信和填写表；保留先前线上回复原文，并在最终回复信开头解释六词到四词的更正。待作者替换 01、02、03 三份上传附件；平台字段与最终 PDF 尚未确认。
+
+## 2026-10-03 — Actual portal keyword limit and submitted online responses
+
+Author-supplied screenshots show successful sending of the two peer-review responses and nine revision attachments uploaded. These are screenshot observations, not fresh browser reads or final journal submission. Manuscript Data still shows the original title/abstract and explicitly limits keywords to four.
+
+Aligned clean and marked manuscripts, formal response, fill-in sheet and local checker to MusicXML; symbolic music; score editing; structured patches. The formal response explicitly supersedes the earlier six-keyword wording. Original posted TXT replies and immutable public archives remain unchanged. Rendered 10+10+7 pages: directly inspected all 11 changed pages; the remaining 16 are pixel-identical to previously inspected pages. Local checks passed 26/26; original baseline verification passed 25 files and 7 archives. No new model calls. Hosted CI remains scoped to immutable archive head 0d319bc.
+
+Pending: replace uploaded attachments 01/02/03, update title/short title/abstract and response-field clarification, inspect the portal-assembled PDF, and obtain the author's final submission approval. No journal submission, Git push, merge, or formal GitHub release in this step.

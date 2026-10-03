@@ -18,13 +18,13 @@
     }
   ],
   "reviewer_labels_confirmed_from_supplied_page": true,
-  "online_replies_posted": false,
-  "online_responses_sent": false,
+  "online_replies_posted": true,
+  "online_responses_sent": true,
   "journal_revision_submitted": false,
   "remaining": [
+    "Replace clean manuscript, marked manuscript and formal response with four-keyword versions",
+    "Update portal title, short title and abstract; retain four keywords",
     "Verify original portal manuscript files",
-    "Post and send replies in peer-review platform",
-    "Upload revision files",
     "Inspect assembled PDF and obtain author final approval"
   ],
   "prepared_artifacts_sha256": {
@@ -36,7 +36,28 @@
   "response_sections": 19,
   "response_visual_review": {
     "pages": 7,
-    "all_pages_inspected": true,
+    "directly_inspected_pages": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "pixel_identical_to_previously_inspected_pages": [
+      6,
+      7
+    ],
     "result": "No visible clipping or overlap; Reviewer 2 starts on page 6."
-  }
+  },
+  "online_response_evidence": {
+    "basis": "Author-supplied success screenshot; no independent live browser verification",
+    "date": "2026-10-03",
+    "screenshot": "codex-clipboard-a7b9b763-01f2-44f3-a765-1f6da6203ba4.png",
+    "visible_message": "You have submitted your responses"
+  },
+  "final_artifacts_sha256": {
+    "RESPONSE_TO_REVIEWERS.md": "9621fb79ec9cec40f72f1a33ab88d3b0b8f3b144891eeb4b951b9012c12615e9",
+    "RESPONSE_TO_REVIEWERS.docx": "fb234cea50422668ce15109c52e9d017b74629ecb7286e2823dca49289de2407"
+  },
+  "keyword_correction_receipt": "PORTAL_KEYWORD_CORRECTION.json"
 }

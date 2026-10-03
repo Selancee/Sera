@@ -47,4 +47,8 @@ revision_hosted_ci_url: "https://github.com/Selancee/Sera/actions/runs/370963171
 revision_hosted_ci_status: "success"
 
 revision_reviewer_labels_confirmed_from_supplied_page: true
-revision_online_responses_sent: false
+revision_online_responses_sent: true
+revision_online_response_evidence: "Author-supplied success screenshot on 2026-10-03; no independent browser read claimed."
+revision_final_keyword_limit: 4
+revision_four_keyword_replacements_uploaded: false
+revision_journal_submitted: false

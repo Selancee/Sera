@@ -8,6 +8,10 @@ Original public v1.0.0 and its DOI remain historical.
 
 SeraEdit: Scoped and Validated Language-Guided MusicXML Editing
 
+## Short Title
+
+Scoped and Validated MusicXML Editing
+
 ## Abstract
 
 SeraEdit represents language-guided MusicXML edits as source-bound, scoped ScorePatch
@@ -26,7 +30,7 @@ the results do not establish higher overall editing success or held-out generali
 
 ## Keywords
 
-MusicXML; symbolic music; score editing; structured patches; validation; research software
+MusicXML; symbolic music; score editing; structured patches
 
 ## Submission boundary
 
@@ -36,4 +40,14 @@ evidence; cite the new version DOI above for the revised source and experiments.
 
 ## Peer-review platform replies
 
-The decision letter requires responses in the peer-review platform before revision submission. Author-supplied page text confirms Reviewer 1 (23 September) and Reviewer 2 (28 September). Use REVIEWER_1_ONLINE_REPLY.txt and REVIEWER_2_ONLINE_REPLY.txt under their corresponding reports. These files are prepared locally; posting and sending have not been verified. Original portal attachments and the assembled revision PDF still require checking.
+The author-supplied success screenshot confirms that online responses were sent on 3 October 2026. This is screenshot evidence, not an independent browser read. The two online reply TXT files preserve the original posted wording; the final formal response adds the four-keyword clarification below. Replace attachments 01, 02 and 03 before building the revision PDF. Original portal file identity and the assembled revision PDF remain unverified.
+
+## Final keyword correction for the publication office
+
+Final upload clarification: Editorial Manager limits this submission to four keywords. The final manuscript and submission fields therefore use MusicXML; symbolic music; score editing; structured patches. This supersedes the six-keyword wording in our earlier online response to Reviewer 1; the scientific responses and results are unchanged.
+
+## Respond to Reviewers field (updated)
+
+Detailed point-by-point responses to both reviewers were submitted through the Elsevier Peer Review platform. The attached file 03_Response_to_reviewers.docx includes a final clarification aligning the manuscript and submission fields with Editorial Manager's four-keyword limit. The scientific responses and results are unchanged.
+
+The revised manuscript and marked-up version address the reviewers' comments. Revised source code and research evidence are available at https://doi.org/10.5281/zenodo.23117392.
