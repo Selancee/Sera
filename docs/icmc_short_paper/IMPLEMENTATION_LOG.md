@@ -2551,3 +2551,13 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Clean source ff82c74: 4,299 file hashes verified; source ZIP SHA-256 65e7ac9b8c82c48c81d4dbc4da703cbd433ec15b63e7d310e97fc773bf1160cb.
 - Independent temporary extraction using the documented P0 clean Python 3.12.5 environment: 445 passed, zero failures/errors/skips; reviewer demo 6/6 with five MusicXML files; fixture checks 13/13; saved real-model checks 14/14. No new API calls or dependency reinstall.
 - Final receipts accompany the tested immutable archive separately. Publication and remaining P1 work are still pending.
+
+## 2026-10-03 — Contribution clarification and bounded P1 acceptance
+
+- R1 now identifies the scoped ScorePatch contract, reversible validated execution and reusable evaluation infrastructure as the three software contributions. The lower strict-success result, 34 erroneous refusals, round-trip control failures and benchmark feedback remain explicit. No overall success or musical-quality superiority is asserted.
+- Added primary related-work references, platform/source-installation boundaries, exact environment versions and synchronized submission fields. Updated the stale requirements/reproducibility documents.
+- Captured six actual local-rule UI states and embedded two screenshots. Native MuseScore bridge send/open visual verification remains open after file-picker control failure/user-input interruption. Manual import is not labeled as plugin proof.
+- Added a 645-file SPDX/hash sidecar rather than modifying frozen producer bytes; response explicitly identifies this as an alternative to requested inline headers.
+- Generated editable manuscript, response and cover-letter DOCX files; corrected title borders, separate reference paragraphs and metadata table widths. Rendered and visually inspected 10 + 4 + 1 pages.
+- P1 document verifier: 23/23; saved real-model evidence recheck: 14/14 with all 360 metric rows matching; original baseline: 25 files + 7 archives preserved. This turn also passed 31 packaging/submission tests, 133 frontend tests and the frontend production build.
+- P1 status: five items locally completed, one reasoned license alternative, two with open gates (bridge visual evidence and publication/hosted CI). No new paid API call, push, release, DOI update or journal submission. See R1 P1_ACCEPTANCE.md and P1_ACCEPTANCE.json.

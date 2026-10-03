@@ -42,13 +42,16 @@ authorization.
 
 1. Install `integrations/musescore/SeraBridge` as a MuseScore Studio 4 plugin.
 2. Start Sera Desktop and wait until its backend health check reports ready.
-3. In MuseScore, open a score and select a region when a narrow target is desired.
-4. Run **Sera Score Bridge**, then choose **Send score / selection to Sera**.
+3. In MuseScore, open and save a score, then select a region when a narrow target is desired.
+4. Run **Sera Score Bridge**, choose the saved score file, then send the score/selection.
+   MuseScore 4.5.2 lacks QML writeScore/readScore; this path uses local CLI conversion.
+   Save first: unsaved in-memory edits cannot be included.
 5. In Sera, request and review a patch. Sera writes a separate reviewed revision.
 6. In the bridge, choose **Refresh and open applied revision**. The original open score
    is not overwritten; use MuseScore to compare and save the revision deliberately.
 
-The bridge exchanges a temporary MusicXML snapshot. It is not a claim of direct,
+The bridge exchanges a temporary MusicXML snapshot of the selected saved file.
+Core undo does not provide single-step undo inside the notation host. It is not a claim of direct,
 in-place manipulation of MuseScore's internal document model.
 
 ## Operation families

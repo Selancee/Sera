@@ -1,0 +1,68 @@
+{
+  "local_checks_passed": true,
+  "overall_p1_status": "partial_open_gates",
+  "scope": "Local document consistency and artifact integrity; no new API call, hosted CI or publication.",
+  "counts": {
+    "abstract_words": 145,
+    "main_words": 2995,
+    "keywords": 6,
+    "figures": 3
+  },
+  "saved_metrics": {
+    "full_rewrite": {
+      "strict_success": 72,
+      "executable": 110,
+      "outputs": 105,
+      "leaked_outputs": 17,
+      "erroneous_refusals": 5
+    },
+    "patch_only": {
+      "strict_success": 65,
+      "executable": 110,
+      "outputs": 92,
+      "leaked_outputs": 18,
+      "erroneous_refusals": 10
+    },
+    "sera_full": {
+      "strict_success": 63,
+      "executable": 110,
+      "outputs": 73,
+      "leaked_outputs": 0,
+      "erroneous_refusals": 34
+    }
+  },
+  "checks": {
+    "title_synchronized": true,
+    "abstract_synchronized": true,
+    "keywords_synchronized": true,
+    "conservative_length_targets": true,
+    "primary_references_present": true,
+    "canonical_eight_checks_present": true,
+    "platform_versions_and_boundary": true,
+    "run_task_distinction": true,
+    "interest_heading_matches": true,
+    "highlights_limits": true,
+    "full_rewrite_table_matches_saved_metrics": true,
+    "patch_only_table_matches_saved_metrics": true,
+    "sera_full_table_matches_saved_metrics": true,
+    "negative_evidence_and_scope_explicit": true,
+    "six_actual_screenshot_hashes": true,
+    "manuscript/seraedit_softwarex.docx_no_paragraph_border": true,
+    "eleven_separate_reference_paragraphs": true,
+    "three_embedded_figures": true,
+    "RESPONSE_TO_REVIEWERS.docx_no_paragraph_border": true,
+    "submission/COVER_LETTER.docx_no_paragraph_border": true,
+    "license_sidecar_coverage": true,
+    "license_sidecar_hashes": true,
+    "eight_p1_items_mapped": true
+  },
+  "open_gates": [
+    "Actual MuseScore plugin send/open-revision visual evidence",
+    "Revised public archive/DOI and hosted CI"
+  ],
+  "reasoned_alternative": "File-level SPDX sidecar supplied; reviewer acceptance of this alternative to inline headers is not established.",
+  "submission_gates": [
+    "Author review and marked manuscript",
+    "Editorial Manager original-upload and assembled-PDF verification"
+  ]
+}

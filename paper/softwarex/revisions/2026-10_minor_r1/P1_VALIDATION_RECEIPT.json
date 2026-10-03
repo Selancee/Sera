@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-03",
+  "artifacts": {
+    "manuscript/seraedit_softwarex.docx": {
+      "sha256": "56b43d734f6125afa5a8390ead1a555ebb6429234cea5ae4728a8d6e595e17ca",
+      "rendered_pages": 10,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "render_directory": "artifacts\\softwarex_revision_20261002\\p1_render_accepted\\manuscript"
+    },
+    "RESPONSE_TO_REVIEWERS.docx": {
+      "sha256": "6aff656238d41a0dd941d7249d1de1cb627c7690c754514b56c9cf44dbc3650a",
+      "rendered_pages": 4,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "render_directory": "artifacts\\softwarex_revision_20261002\\p1_render_accepted\\response_final"
+    },
+    "submission/COVER_LETTER.docx": {
+      "sha256": "2d0b6b284618005fe479b28ff53e1243c4b2dc599d90657452a2d470df53a651",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts\\softwarex_revision_20261002\\p1_render_final\\cover"
+    }
+  },
+  "visual_findings": "All pages inspected. Removed title paragraph borders; references separate; table headers repeat and metadata widths corrected; no visible clipping.",
+  "focused_python_tests": 31,
+  "frontend_tests": 133,
+  "frontend_test_files": 74,
+  "frontend_build_passed": true,
+  "baseline_files_verified": 25,
+  "baseline_archives_verified": 7,
+  "saved_live_integrity_checks": 14,
+  "new_paid_model_calls": 0,
+  "published": false
+}

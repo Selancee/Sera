@@ -77,7 +77,7 @@ suite there. It uses the selected interpreter's installed dependencies; this is
 source-package isolation, not proof of a fresh dependency installation. CI runs the
 same archive check after installing the documented dependencies.
 
-## Expected verified outcome for this release candidate
+## Expected outcome of the corrected offline fixture
 
 - benchmark: 120 valid, 0 invalid;
 - human review: 120/120 primary, 30/30 stratified repeat check, 0 stale records;
@@ -132,3 +132,19 @@ and costs no tokens.
 The DOI above identifies the original deposit. Local revision candidates and their
 new verification snapshot are not covered by that deposit until a separate updated
 release is published. A local passing audit does not establish a passing hosted CI run.
+
+## Real-provider revision evidence
+
+`softwarex_deepseek_core_20261002_v1` is separate from the mock and rule replays.
+It contains 360 completed task-condition runs, dated 2 October 2026, reporting the
+API alias deepseek-flash. All 14 checks passed in clean source ff82c74 and its isolated
+ZIP; 445 Python tests and the six-task reviewer demo also passed. Strict editing
+success was 72/110, 65/110 and 63/110 for Full Rewrite, Patch Only and Sera Full.
+Sera Full had 0/73 output scores with measured leakage and 34 erroneous refusals.
+These results do not show improved overall success or held-out generalization.
+
+The standalone validator study has 180 rejected invalid mutations and 3/20 valid
+controls rejected because of grace-dynamic round-trip limitations. Same-case fixes
+are regression evidence. All pilot failures and pre-fix cases are retained. Consult
+`paper/softwarex/revisions/2026-10_minor_r1/DEEPSEEK_RESULTS.md` and
+`VALIDATOR_DETECTION_REPORT.md` before interpreting aggregate metrics.

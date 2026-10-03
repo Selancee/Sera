@@ -12,7 +12,7 @@ from docx.enum.section import WD_SECTION
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Inches, Pt
+from docx.shared import Cm, Inches, Pt, RGBColor
 
 try:
     from scripts.submission_metadata import sanitize_docx_metadata
@@ -62,12 +62,31 @@ def style_document(document: Document) -> None:
         style.font.name = "Arial"
         style.font.size = Pt(size)
         style.font.bold = True
+        style.font.color.rgb = RGBColor(0, 0, 0)
+    for border in document.styles.element.xpath(".//w:pBdr"):
+        border.getparent().remove(border)
 
 
 def add_table(document: Document, rows: list[list[str]]) -> None:
     width = max(len(row) for row in rows)
     table = document.add_table(rows=len(rows), cols=width)
     table.style = "Table Grid"
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        border = OxmlElement(f"w:{edge}")
+        border.set(qn("w:val"), "single")
+        border.set(qn("w:sz"), "4")
+        border.set(qn("w:color"), "D9D9D9")
+        borders.append(border)
+    table._tbl.tblPr.append(borders)
+    if width == 3 and rows[0][0] == "Nr.":
+        table.autofit = False
+        for column, inches in zip(table.columns, (0.4, 2.0, 4.0)):
+            column.width = Inches(inches)
+            for cell in column.cells:
+                cell.width = Inches(inches)
+    header = OxmlElement("w:tblHeader")
+    table.rows[0]._tr.get_or_add_trPr().append(header)
     for row_index, row in enumerate(rows):
         for column_index in range(width):
             value = clean_inline(row[column_index]) if column_index < len(row) else ""
@@ -79,6 +98,10 @@ def add_table(document: Document, rows: list[list[str]]) -> None:
                     run.font.size = Pt(8.5)
                     if row_index == 0:
                         run.bold = True
+            if row_index == 0:
+                shading = OxmlElement("w:shd")
+                shading.set(qn("w:fill"), "E7E6E6")
+                cell._tc.get_or_add_tcPr().append(shading)
 
 
 def build_document(source: Path, output: Path) -> None:
@@ -120,12 +143,17 @@ def build_document(source: Path, output: Path) -> None:
                     paragraph.add_run().add_picture(str(image_path), width=Inches(6.1))
         elif line.startswith("- "):
             document.add_paragraph(clean_inline(line[2:]), style="List Bullet")
+        elif re.match(r"^\[\d+\] ", line):
+            paragraph = document.add_paragraph(clean_inline(line))
+            paragraph.paragraph_format.space_after = Pt(4)
+            for run in paragraph.runs:
+                run.font.size = Pt(9.5)
         else:
             paragraph_lines = [line]
             index += 1
             while index < len(lines):
                 next_line = lines[index].rstrip()
-                if not next_line or next_line.startswith(("#", "|", "![", "- ")):
+                if not next_line or next_line.startswith(("#", "|", "![", "- ")) or re.match(r"^\[\d+\] ", next_line):
                     break
                 paragraph_lines.append(next_line)
                 index += 1
@@ -137,7 +165,7 @@ def build_document(source: Path, output: Path) -> None:
 
     enable_line_numbers(document)
     properties = document.core_properties
-    properties.title = "SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches"
+    properties.title = next((clean_inline(line[2:]) for line in lines if line.startswith("# ")), source.stem)
     properties.subject = "SoftwareX Original Software Publication"
     properties.keywords = "MusicXML, symbolic music, score editing, structured patches, validation, research software"
     properties.author = None

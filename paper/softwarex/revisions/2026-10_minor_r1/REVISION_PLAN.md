@@ -9,8 +9,9 @@ Editorial Manager PDF workflow. This target is a planning choice, not a journal 
 The editor requests a minor revision and a response to the platform reviews. On
 2 October the author supplied two review texts directly, one as an attachment and
 one pasted into chat. Their platform reviewer numbers have not been verified.
-The active scope is the P0 reproducibility repair. The author explicitly deferred
-API experiments while this work is completed. The detailed diagnosis and validation
+The P0 reproducibility repair, authorized DeepSeek comparison and validator study
+are complete locally. The author authorized contribution clarification and P1
+acceptance work on 3 October 2026. The detailed diagnosis and validation
 record are in `P0_REPRODUCIBILITY_REPORT.md`.
 
 | Priority | Work | Current status | Concrete deliverable / acceptance check |
@@ -18,19 +19,21 @@ record are in `P0_REPRODUCIBILITY_REPORT.md`.
 | P0 | Preserve submission and software baselines | Completed locally | 25 submission-ready files with Git blob IDs/SHA-256; original public source package and both manuscript archive variants retained; independent revision branch |
 | P0 | Verify original Editorial Manager upload | Waiting for login | Read original file list and assembled submission PDF; compare available files to frozen DOCX/PDF; record differences without replacing the baseline |
 | P1 | Read received reviewer reports | Received from author | Two supplied texts are available; platform numbering and completeness remain unverified |
-| P1 | Build the comment-by-comment plan | Reproducibility mapped | Scope follows the supplied comments; other P0 and P1 items remain listed below |
-| P2 | Make the requested minor edits | Reproducibility and provenance corrected | R1 Section 3/Table 3 updated; remaining experiments and P1 edits pending |
-| P2 | Prepare the response letter | Partial responses written | Reproducibility and 720-run provenance responses have actual evidence; final pagination and other responses pending |
-| P3 | Validate the revised deliverables | Reproducibility passed; complete submission pending | Clean checkout and isolated ZIP each pass 438 tests; 13 integrity checks and six-task demo pass; see P0_VALIDATION.json |
+| P1 | Build the comment-by-comment plan | P0/P1 mapped | Eight P1 items distinguish completed local work, a license-sidecar alternative, bridge visual evidence and public publication gates |
+| P2 | Make the requested minor edits | Local prose and evidence updated | Contributions, real-model tradeoff, literature, Windows boundaries, screenshots and metadata synchronized; see P1_ACCEPTANCE.md |
+| P2 | Prepare the response letter | Local working reply generated | Responses cite retained evidence and explicitly identify incomplete bridge/publication work |
+| P3 | Validate the revised deliverables | Reproducibility passed; complete submission pending | Latest isolated ZIP passes 445 tests; 13 fixture and 14 live checks; six-task demo; see DEEPSEEK_SOURCE_ARCHIVE_VALIDATION.json |
 | P3 | Author review and resubmission preparation | Pending completed revision | Final response, clean DOCX/PDF, marked copy, declarations and change summary ready; author reviews assembled portal PDF before final submission |
 
 ## Remaining review work
 
-- Real-provider three-condition experiment: deferred by the author.
-- Validator mutation/detection evaluation: pending after reproducibility repair.
+- Real-provider three-condition experiment: completed, 360 runs with retained failures.
+- Validator mutation/detection evaluation: completed, 200 constructed cases.
 - 720-run benchmark-feedback disclosure: documentation, R1 manuscript and partial
   response corrected and synchronized with the completed reproducibility audit.
-- Literature, UI demonstrations, platform support and editorial consistency: P1.
+- Literature, contribution, platform and editorial consistency: locally addressed in P1.
+- Actual UI proposal, apply, undo and rejected wording captured; native bridge send/open visual sequence remains unverified.
+- Revised public archive/DOI/hosted CI, author review, marked manuscript and portal PDF remain submission gates.
 
 ## Review processing
 

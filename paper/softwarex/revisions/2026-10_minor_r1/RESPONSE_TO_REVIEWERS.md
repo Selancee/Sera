@@ -1,8 +1,8 @@
-# Response to reviewers — partial working draft, not ready for submission
+# Response to reviewers — R1 working draft
 
 Manuscript number: SOFTX-D-26-01135
 
-Title: SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches
+Revised title: SeraEdit: Scoped and Validated Language-Guided MusicXML Editing
 
 Decision date: 1 October 2026
 
@@ -13,8 +13,9 @@ Thank you for reviewing our manuscript and inviting a minor revision.
 The following responses address completed local reproducibility and provenance
 corrections. They use working comment IDs because the author supplied the reports
 directly and platform reviewer numbering is not yet verified. The live-model
-comparison and validator-detection study are now complete locally; final rendering,
-archival publication and P1 responses remain incomplete.
+comparison and validator-detection study are now complete locally;
+archival publication and the bridge visual check remain incomplete. Local P1
+responses and acceptance status are recorded below.
 
 ## P0-REPRO / P0-SOURCE / P0-COUNT
 
@@ -55,9 +56,8 @@ and final release links will be updated after the complete revision is ready; th
 original DOI continues to identify the original deposit. Hosted CI has been extended
 to check the actual source archive, but no new hosted run is claimed in this draft.
 
-**Location:** Section 3 and Table 3; `docs/softwarex/REPRODUCIBILITY.md`;
-`P0_REPRODUCIBILITY_REPORT.md`; `P0_VALIDATION.json`. Final rendered page/line numbers
-remain pending.
+**Location:** Section 3, rendered pages 5–6; the evidence table on page 7;
+`docs/softwarex/REPRODUCIBILITY.md`; `P0_REPRODUCIBILITY_REPORT.md`; `P0_VALIDATION.json`.
 
 ## P0-REGRESSION
 
@@ -106,7 +106,8 @@ while 25 repaired editing tasks ended in erroneous refusal.
 
 **Location:** Abstract, Sections 3.1 and 4, evidence table;
 `DEEPSEEK_RESULTS.md`, `LIVE_EXPERIMENT_PROTOCOL.md` and
-`experiments/softwarex_deepseek_core_20261002_v1/`. Final rendered line numbers pending.
+`experiments/softwarex_deepseek_core_20261002_v1/`. Rendered page 6, lines 27–44 and the
+results table; page 7, lines 1–16.
 
 ## P0-VALIDATORS
 
@@ -129,11 +130,109 @@ prevalence or generalization from these constructed cases.
 
 **Evidence:** `VALIDATOR_DETECTION_REPORT.md` and
 `experiments/softwarex_validator_detection_200_v1/`. Manuscript Section 3.2 and the
-evidence table contain the results; final rendered line numbers remain pending.
+evidence table contain the results on rendered page 7, lines 17–30 and the table below.
 
-## Pending responses
+## P1-CONTRIBUTION / P1-LITERATURE
 
-- Literature, platform support, UI evidence, terminology and other P1 points remain
-  to be completed before this response is ready for submission.
-- The original public release/DOI are unchanged. Revised publication links, final
-  page/line references and submission files remain pending.
+**Comments:** The novelty/impact positioning lacks the code-domain patch-and-test
+and instruction-editing lines, the closest symbolic-editing work and MuseScore.
+No external editing tool is used as a measured reference.
+
+**Response:** We narrowed the title and explicitly identify three software
+contributions: the source-bound scoped ScorePatch contract, an executable reversible
+validation workflow, and licensed tasks with reproducible comparison tooling. We
+cite SWE-bench (Jimenez et al.), Can It Edit? (Cassano et al.), Not that Groove
+(Zhang, 2025 version) and the official MuseScore plugin documentation. We do not
+claim to introduce instruction-driven symbolic editing or execution-based evaluation.
+The MusicXML-specific integration concerns stable event addresses, fingerprints,
+protected scopes, notation invariants and round-trip acceptance. We explicitly state
+that these references provide context; no measured performance ranking against
+external tools is claimed. The present evidence compares internal system conditions,
+with different task/representation contracts preventing a direct cross-paper ranking.
+
+The protection/completion tradeoff is now central to the Abstract and Sections 3–5.
+The infrastructure makes failed edits and rejection costs inspectable; it does not
+establish musical quality, universal safety, long-horizon agency or a superior model.
+
+**Location:** Revised title, Abstract, Sections 1 and 4–5; references [8–11];
+LITERATURE_VERIFICATION.md. Primary records were checked on 3 October 2026.
+
+## P1-PLATFORM
+
+**Comments:** Explain the Windows-only desktop/host boundary, provide POSIX source
+installation commands and exact Python/Node/npm environment versions.
+
+**Response:** Section 2.3 and the abstract distinguish Windows desktop/automatic host
+integration from the Python reviewer path. INSTALLATION.md now provides POSIX venv,
+installation, demo, benchmark and FastAPI commands, with manual MusicXML handoff.
+The reviewer reports macOS core execution; we have not independently revalidated
+macOS/Linux and do not claim their desktop or automated bridge support. Provider
+credentials can be supplied through environment variables rather than the Windows
+credential-store UI. C7 records Windows 11 build 10.0.26200, Python 3.12.5, Node.js
+24.16.0 and npm 11.13.0. Local-first is defined explicitly; optional remote inference
+transmits score context. The tested MuseScore 4.5.2 path uses a saved file and CLI
+conversion; it does not export unsaved in-memory changes or implement host undo.
+
+**Location:** Abstract, Sections 2.3 and 3, code metadata entry C7, INSTALLATION.md, USER_MANUAL.md.
+
+## P1-CONSISTENCY / P1-REQUIREMENTS
+
+**Comments:** Unify abstract/keywords, validator membership, condition names,
+runs/tasks units and declaration headings; update stale requirements and boundaries.
+
+**Response:** The R1 fill-in sheet takes the exact manuscript abstract and six
+keywords. Original August files remain immutable historical records. The eight
+checks are named once in Section 2.2; the abstract and cover letter refer to that
+contract without competing lists. The condition names Full Rewrite, Patch Only and
+Sera Full are mapped to code IDs and former labels. The host-scope result consistently
+reports 240 runs, 174 widened and 66 not widened. The declaration heading is
+“Declaration of competing interest” in the manuscript and separate statement.
+The requirements matrix now identifies the current draft, corrected fixture and
+real-provider evidence rather than treating the old failed artifact as passing.
+
+**Location:** R1 manuscript, submission/EDITORIAL_MANAGER_FILL_IN.md,
+submission/COVER_LETTER.md, submission/DECLARATION_OF_INTEREST.md,
+SOFTWAREX_REQUIREMENTS_MATRIX.md and REPRODUCIBILITY.md.
+
+## P1-UI
+
+**Comment:** Add screenshots or a screencast showing the claimed interface, diffs,
+rejection reasons, undo and bridge operation.
+
+**Response:** Figures 2–3 are genuine local source-UI captures showing a valid
+proposal with element-change counts/protected-scope status and a rejected instruction
+with disabled apply. Additional captured states show an applied revision, an undo
+control and an undo revision. The screenshots use local rules and manual MusicXML
+import; they are not attributed to the real-model experiment or packaged Electron.
+UI_EVIDENCE.md records exact reproduction and the observed wording failure.
+
+**Open item:** The native MuseScore file-picker could not be reliably controlled,
+so the full plugin send/open-revision sequence is not visually verified here.
+Manual-import screenshots and automated bridge tests do not close this request.
+The bridge panel and opened revised score still need a genuine visual capture.
+
+## P1-LICENSE / P1-PUBLICATION
+
+**Comments:** Add SPDX source identifiers, synchronize DOI metadata and rerun hosted CI.
+
+**Response:** The existing root MIT license and dependency notices are retained.
+SOURCE_LICENSE_INVENTORY.json gives a file-level SPDX-License-Identifier and SHA-256
+for tracked first-party Python/JavaScript/TypeScript sources. We use this sidecar
+instead of adding comments to every frozen producer file: modifying those bytes
+would invalidate the recorded experiment implementation hashes. This is a reasoned
+alternative to the requested inline headers, not a claim that every source has a
+new header. Installed dependencies retain their own licenses and are excluded.
+
+publication.yml already identifies the original v1.0.0 version DOI. The revision
+explicitly distinguishes the original tag/deposit from the local corrected candidate;
+that DOI is not represented as containing new experiments. Local isolated-archive
+validation is recorded, while a new hosted CI run and revised public deposit remain
+publication gates. No hosted green result or public release is asserted for this branch.
+
+## Remaining submission gates
+
+- Obtain genuine bridge send/open-revision visual evidence.
+- Publish the reviewed revision source/data and verify its hosted CI; insert the
+  new immutable links without overwriting the original deposit.
+- Complete author review and the Editorial Manager assembled-PDF check. Platform
+  reviewer numbering and originally uploaded files remain unverified.

@@ -1,4 +1,4 @@
-# SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches
+# SeraEdit: Scoped and Validated Language-Guided MusicXML Editing
 
 **Yuan Gao**
 
@@ -10,33 +10,29 @@
 
 ## Abstract
 
-SeraEdit is local-first research software for reliable language-guided editing of
-symbolic scores. Rather than asking a language model to rewrite an entire MusicXML
-document, it represents a request as a versioned ScorePatch bound to stable event
-identifiers, target and protected scopes, and a source fingerprint. Layered validators
-check schema, score structure, duration, notation relations, protected content, and
-MusicXML round-trip fidelity inside an atomic transaction. A desktop interface and
-MuseScore bridge expose proposals, diffs, rejection reasons, and undo without silently
-overwriting the host score. The release includes 20 synthetic scores, 120 editing
-tasks, three evaluation conditions, resumable experiment tooling, and offline fixtures
-for reproducible software verification. A real-provider demonstration on these 120
-development tasks completed 360 runs: strict editing success was 72/110 for Full
-Rewrite, 65/110 for Patch Only and 63/110 for Sera Full. Sera Full produced no measured
-non-target changes in its 73 output scores but erroneously refused 34 executable
-tasks, exposing a protection/coverage tradeoff rather than an overall success gain.
+SeraEdit represents language-guided MusicXML edits as source-bound, scoped ScorePatch
+transactions with deterministic validation, rollback and user review. Its contribution
+is reusable editing and evaluation software, not a new music model or guaranteed
+accuracy improvement. Local processing supports offline use; optional remote models
+receive score context. The packaged desktop and automated notation-host integration
+target Windows; the Python reviewer path is documented separately. On 120 development
+tasks, a DeepSeek demonstration completed 360 runs. Strict editing success was 72/110
+for Full Rewrite, 65/110 for Patch Only and 63/110 for Sera Full. Sera Full had no
+measured non-target changes among 73 output scores but erroneously refused 34
+executable tasks. A constructed-error study rejected 180/180 invalid patches after
+a documented detector fix, while round-trip limitations rejected 3/20 valid controls.
+The software makes this protection/completion tradeoff inspectable and reproducible;
+the results do not establish higher overall editing success or held-out generalization.
 
 Keywords: MusicXML; symbolic music; score editing; structured patches; validation; research software
 
 ## 1. Motivation and significance
 
-MusicXML is a widely used interchange representation for common Western music
-notation, allowing scores to move among notation, analysis, engraving, and archival
-systems [1]. Natural-language interfaces could reduce the mechanical cost of local
-edits such as transposition, dynamics, articulation, or voice assignment. However,
-the obvious implementation—send a complete MusicXML document to a generative model
-and accept a complete rewrite—mixes the intended change with thousands of unrelated
-elements. A syntactically well-formed response can still alter an unselected staff,
-break a tie, change measure duration, or drift from the source that the user reviewed.
+MusicXML exchanges common Western music notation among applications [1].
+Natural-language interfaces could simplify transposition, dynamics or articulation
+edits. Full-document model rewriting, however, exposes unrelated elements to change.
+A well-formed response can alter an unselected staff, break a tie, change measure
+duration, or drift from the reviewed source.
 
 Existing symbolic-music toolkits provide rich programmatic analysis and generation
 facilities [2,3], while recent work investigates music reasoning and generation with
@@ -50,10 +46,27 @@ of editing agents, error taxonomies, repair policies, and human-in-the-loop nota
 workflows. Stable task fixtures and three separately implemented experimental conditions
 allow investigators to compare full-document rewriting, unprotected structured patches,
 and a fully validated transaction without changing the source score or metric code.
-This separation is analogous to structured editing evaluations in programming-language
-research [6], but the invariants include exact musical time, voices, and notation
-relations. Citation and archival metadata follow established software-citation
-principles [7].
+Executed tests already define acceptance in code-editing research: SWE-bench evaluates
+repository issue resolution [8], Can It Edit? evaluates instruction-following code
+changes [9], and CodeEditorBench covers multiple editing scenarios [6]. In music,
+Not that Groove studies instruction-driven drum-groove editing with a textual symbolic
+representation and annotated tests [10]. SeraEdit does not introduce language-guided
+symbolic editing or test-based evaluation. Its narrower contribution is their
+integration with pitched, multi-staff MusicXML: stable event addressing, source
+fingerprints, explicit protected scopes, and a reversible transaction checked against
+notation and export invariants. MuseScore Studio provides the notation-host context
+through its plugin mechanism [11]. Citation metadata follows software-citation
+principles [7]. These are contextual comparisons, not measured performance comparisons
+against those external systems; different representations and task contracts prevent
+a direct ranking from the present experiment.
+
+The software contributes (1) a reusable ScorePatch contract for version-bound,
+scoped MusicXML changes; (2) an executable validation, preview and rollback workflow
+that makes acceptance independent of model confidence; and (3) licensed development
+tasks, separate comparison conditions and saved-output recomputation tools. The live
+comparison and fault-injection study demonstrate this infrastructure's research use,
+including failures and rejection costs. They are bounded demonstrations rather than
+claims of a superior model, universal correctness or improved musical quality.
 
 ## 2. Software description
 
@@ -82,14 +95,15 @@ and transactional batches. The product interface enables only operations whose h
 round-trip contract is established; unknown operations fail as unsupported rather than
 becoming silent no-ops.
 
-Applying a patch is a transaction: validate the source fingerprint and schema; resolve
-selectors and preconditions; clone the score; apply operations; validate structure,
-exact measure duration, notation relations, semantic constraints, and protected scope;
-export/re-import MusicXML; then commit or roll back. The result includes machine-readable
-errors, a human-readable diff, fingerprints, and before/after snapshots for undo/redo.
-Deterministic repair is limited to transparent formatting or enum normalization. An
-optional model repair is bounded by a configurable attempt count and receives the
-validation errors and immutable scopes; it cannot bypass the transaction.
+The validation terminology is fixed to eight checks: source binding, schema,
+structure and addressing, measure duration, notation relations, declared semantic
+conditions, protected scope, and MusicXML round-trip fidelity. Source binding and
+pre-apply checks precede cloning and operation application; post-apply checks precede
+commit. Only implemented properties are checked: a valid transaction is not proof
+that unrestricted musical intent was satisfied. Section 3.2 measures specific faults.
+The result includes errors, a human-readable diff, fingerprints and snapshots for
+undo/redo. Deterministic repair normalizes formatting or enums. Bounded model repair
+receives errors and immutable scopes; it cannot bypass the transaction.
 
 Provider adapters share a response contract recording model, latency, token use,
 estimated cost, request ID, finish reason, raw output, parsed output, and normalized
@@ -98,31 +112,60 @@ respond locally first and refine a high-level plan asynchronously with an option
 so provider latency does not block access to local safe candidates. Neither response is
 auto-applied.
 
-The evaluation subsystem implements three conditions. `full_rewrite` accepts a complete
-MusicXML response without protected-scope repair. `patch_only` parses and basically
-applies a structured patch without the full safety pipeline. `sera_full` enables source
-fingerprints, scopes, layered validation, bounded repair/refusal, atomic apply, undo, and
-round-trip checks. Runs have immutable IDs, configuration and prompt hashes, retry and
-cost limits, caching, resumability, raw outputs, normalized outputs, and deterministic
-metric recomputation.
+The three condition names are used consistently throughout: Full Rewrite
+(`full_rewrite`, formerly Full-Score Rewrite) accepts complete MusicXML without the
+patch validation/repair pipeline; Patch Only (`patch_only`, formerly ScorePatch Only)
+parses and basically applies a patch; Sera Full (`sera_full`, formerly Sera Full
+Pipeline) adds the eight checks, bounded repair/refusal, atomic execution and undo.
+Immutable run IDs, hashes, saved responses and deterministic metric recomputation
+support auditing. Section 3.1 defines the comparison and scoring denominators.
+
+### 2.3. Platform and local-processing boundary
+
+The packaged Electron desktop, automatic host discovery and stored-credential UI
+currently target Windows. Source-level Python reviewer commands do not require the
+desktop or MuseScore. POSIX installation and API commands are provided in the guide;
+this revision was tested on Windows, so it does not claim independently verified
+macOS/Linux desktop or bridge support. Non-Windows users can use the source-level
+reviewer path and manually open exported MusicXML in their notation application;
+that is not the automated bridge. Optional providers use environment variables off
+Windows. Local-first means local score state, files and deterministic execution;
+remote-model mode transmits instruction and score context to the chosen provider.
 
 ## 3. Illustrative examples
 
-Consider the instruction: “Transpose measures 1–2 of staff 1 up two semitones and
-preserve rhythm; leave staff 2 unchanged.” SeraEdit binds the candidate to the imported
-fingerprint and resolves only pitched events in measures 1–2, staff 1. Preview applies
-the transposition to a clone. Duration equality is checked with rational values, staff
-2 is compared event-by-event as protected content, and the exported MusicXML must parse,
+The local-rule demonstration uses: “Transpose measure 1 of staff 1 up by a major
+second while preserving rhythm.” SeraEdit binds the candidate to the imported
+fingerprint and resolves only pitched events in measure 1, staff 1. Preview applies
+the transposition to a clone. Duration equality is checked with rational values,
+protected content is compared event-by-event, and the exported MusicXML must parse,
 import, export, and parse again. A valid preview reports the exact changed event count;
-a stale fingerprint, missing event, duration change, or difference on staff 2 rejects
+a stale fingerprint, missing event, duration change, or protected-scope difference rejects
 and rolls back the whole patch.
 
 The same workflow is available through the desktop interface or an optional MuseScore
-Studio 4 bridge. The bridge exports a temporary snapshot and selection context to the
-local Sera process. After proposal review, the bridge opens a separate reviewed revision
-in MuseScore. This is deliberately not described as in-place control of MuseScore's
+Studio 4 bridge. In the tested MuseScore 4.5.2 path, the plugin sends selection
+context and a user-selected saved score to the local Sera process; a CLI conversion
+produces the MusicXML snapshot because QML writeScore/readScore are unavailable.
+Users must save first: unsaved in-memory changes are not included. After proposal
+review, the bridge opens a separate reviewed revision in MuseScore. This is deliberately not described as in-place control of MuseScore's
 internal document: the original open score is not overwritten, and final visual review
-and saving remain user actions.
+and saving remain user actions. Core snapshot undo does not implement single-step
+host undo. Figures 2 and 3 show actual interface states; their captions distinguish
+manual import from bridge operation.
+
+![Actual local-rule proposal with change counts and protected-scope status.](../figures/ui_proposal_full.jpg)
+
+**Figure 2.** Actual source UI on Windows, using manually imported synthetic MusicXML
+and local rules. The proposal changes four events and exposes validation, protection,
+apply/reject and patch details. The host label reflects the selected import mode;
+this screenshot alone does not prove a MuseScore plugin handoff.
+
+![Actual rejected instruction with disabled apply control.](../figures/ui_rejection_full.jpg)
+
+**Figure 3.** Actual unsupported local-rule instruction. Apply is disabled and the
+score is unchanged. This is an observed wording limitation, not a simulated error.
+Additional applied/undo states and reproduction steps accompany the revision.
 
 For offline verification, the repository contains 20 short CC0 synthetic scores and
 120 tasks spanning transposition, rhythm, harmony/key, voice/texture, dynamics,
@@ -268,7 +311,7 @@ passed 445 Python tests, extending the earlier 438-test reproducibility checkpoi
 | Constructed-error detection | 180 mutations + 20 controls | 180 invalid rejected; 3 controls rejected | Regression after a detector fix; round-trip limitation retained |
 | Reviewer demo | 6 representative tasks | 6/6 passed; five host files | Offline product-path reproducibility |
 | Product replay | 720 bilingual runs | 720/720; 660 host exports | Deterministic local generator, not remote-LLM accuracy |
-| Wider host selection | 240 bilingual runs | 240/240; 174 widened | Semantic target remains narrower than authorization |
+| Wider host selection | 240 bilingual runs | 240/240; 174 widened, 66 not widened | Semantic target remains narrower than authorization |
 | Human task review | 120 primary + 30 repeat | Complete; zero stale | Same reviewer; no inter-rater or aesthetic claim |
 
 ## 4. Impact
@@ -281,18 +324,21 @@ error. Raw outputs and post-hoc deterministic metrics support studies of which s
 contribute to validity, task completion, non-target preservation, minimality, repair,
 and refusal behavior.
 
-The software also lowers the cost of building controlled symbolic-editing experiments.
-Researchers can add public-domain fixtures and task constraints without creating a new
-front end, provider wrapper, transaction engine, or reporting pipeline. The mock path
-supports continuous integration, classrooms, and reproducibility checks, while API-backed
-runs remain clearly separated. A local desktop and MusicXML bridge make the same research
-contracts inspectable by composers and notation users rather than only by programmers.
+Researchers can reuse the front end, provider adapters, transaction engine and
+reporting pipeline with additional licensed fixtures. Mock runs support continuous
+integration and teaching; API-backed runs remain separate. The interface exposes
+these contracts to notation users.
 
-Potential reuse extends beyond music: source fingerprinting, explicit editable/protected
-regions, typed operations, deterministic validators, and atomic rollback are applicable
-to language-guided editing of other structured scientific documents. Within music, the
-architecture provides a foundation for more rigorous human studies of interaction and
-musical quality without treating a model's output as ground truth.
+The main empirical implication is that constrained acceptance and task completion
+can diverge. The preserved failures support separate investigation of proposal
+quality, repair, score representability and operational scoring. Improving completion
+while retaining protection requires new evaluation; neither current results nor the
+architecture alone guarantee that improvement. These components can support later
+agent research, but this paper does not establish long-horizon composition or learned
+musical intelligence.
+
+The architecture also supports future interaction studies, with musical acceptance
+remaining a human judgment.
 
 Current evidence supports reliability engineering, human-checked benchmark semantics,
 and reproducible experiment execution, not universal musical correctness or aesthetic
@@ -314,9 +360,7 @@ SeraEdit packages language-guided MusicXML editing as a source-bound, scoped, va
 and reversible transaction. Its principal contribution is an executable reliability
 boundary: the model proposes, while canonical score state, deterministic validators,
 protected-scope comparison, MusicXML round trips, and user review decide whether a
-revision exists. The open-source release includes a desktop demonstration,
-host bridge, benchmark, three evaluation conditions, automated metrics, tests, and
-reproducibility tooling. Future releases will prioritize held-out comparisons across models,
+revision exists. Future releases will prioritize held-out comparisons across models,
 cross-host testing, richer exact notation relations, and independent blinded musician
 evaluation rather than weakening transaction safeguards.
 
@@ -334,7 +378,7 @@ submission. The original deposit does not contain the new live-model results.
 | C4 | Legal code license | MIT; benchmark data CC0-1.0 |
 | C5 | Code versioning system used | Git |
 | C6 | Software code languages, tools and services used | Python, TypeScript/JavaScript, React, FastAPI, Electron, QML, PowerShell, MusicXML |
-| C7 | Compilation requirements, operating environments and dependencies | Python >=3.10; Node.js/npm for interface development; Windows 10/11 desktop; requirements, tested Windows constraints, and npm lock files |
+| C7 | Compilation requirements, operating environments and dependencies | Python >=3.10; Node.js/npm for interface development; verified Windows 11 build 10.0.26200, Python 3.12.5, Node.js 24.16.0, npm 11.13.0; Windows desktop package; POSIX source instructions with no independent platform validation; tested constraints and npm lock files |
 | C8 | Developer documentation/manual | `docs/softwarex/API_REFERENCE.md`, `INSTALLATION.md`, `USER_MANUAL.md`, `REVIEWER_GUIDE.md`, and generated OpenAPI `/docs` |
 | C9 | Support email for questions | `selanceg@gmail.com` |
 
@@ -393,3 +437,8 @@ the content of the publication. No AI system is listed as an author.
 [5] Z. Zhou et al., Can LLMs “reason” in music? An evaluation of LLMs' capability of music understanding and generation, ISMIR, 2024.  
 [6] J. Guo et al., CodeEditorBench: Evaluating code editing capability of large language models, arXiv:2404.03543, 2024.  
 [7] A. M. Smith, D. S. Katz, K. E. Niemeyer, FORCE11 Software Citation Working Group, Software citation principles, PeerJ Computer Science 2 (2016) e86. https://doi.org/10.7717/peerj-cs.86.
+
+[8] C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, K. Narasimhan, SWE-bench: Can Language Models Resolve Real-World GitHub Issues?, ICLR, 2024; preprint 2023. https://arxiv.org/abs/2310.06770.
+[9] F. Cassano et al., Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions, arXiv:2312.12450, 2023, revised 2024. https://arxiv.org/abs/2312.12450.
+[10] L. Zhang, Not that Groove: Zero-Shot Symbolic Music Editing, arXiv:2505.08203v1, 2025. https://arxiv.org/abs/2505.08203v1.
+[11] MuseScore, MuseScore Studio Handbook: Plugins, https://handbook.musescore.org/customization/plugins (accessed 3 October 2026).
