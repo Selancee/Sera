@@ -2585,3 +2585,9 @@ This file is append-oriented. Experimental claims must point to persisted raw ou
 - Verified the manuscript in the authenticated Editorial Manager revision queue (Revise; due 31 October). New review site still reports authentication issue; original file inventory and reviewer numbering remain unverified.
 - Prepared a 10-page highlighted manuscript and complete text comparison against the preserved baseline; clean text/images unchanged. Updated the 4-page response and prepared four one-page Word statements; all 18 pages visually inspected.
 - Prepared a concrete public-branch/draft-PR proposal to run hosted CI. No push, publication, portal upload or submission. No experimental code, metrics or paid-model calls changed.
+
+
+### 2026-10-03 — Approved public revision branch and hosted R1 verification
+
+- Author explicitly approved pushing the revision branch and creating a draft PR for CI; published branch 27e0b4e and opened https://github.com/Selancee/Sera/pull/1. No merge, formal release or journal submission authorized by this step.
+- Updated Research CI to verify R1 consistency, select the named R1 manuscript tree and retain the tested archive artifacts. Syntax and selection checks passed; hosted result pending.

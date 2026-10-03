@@ -35,10 +35,18 @@ jobs:
         run: python scripts/verify_softwarex_package.py --profile draft --output artifacts/softwarex_package_verification.json
       - name: Recompute frozen revision evidence and verify hashes
         run: python scripts/verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts/revision_reproducibility
+      - name: Verify R1 manuscript consistency and evidence
+        run: python scripts/verify_softwarex_p1.py
       - name: Build a local source archive candidate
-        run: python scripts/export_softwarex_package.py --artifact-label ci-candidate --output-dir artifacts/source_candidate
+        run: python scripts/export_softwarex_package.py --artifact-label ci-candidate --manuscript-revision 2026-10_minor_r1 --output-dir artifacts/source_candidate
       - name: Verify the isolated source archive
         run: python scripts/verify_softwarex_source_archive.py artifacts/source_candidate/seraedit-ci-candidate-source.zip --output-dir artifacts/source_archive_verification
+      - name: Preserve the checked R1 archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwarex-r1-candidate
+          path: artifacts/source_candidate
+          if-no-files-found: error
       - name: Preserve reviewer-demo evidence
         if: always()
         uses: actions/upload-artifact@v4
