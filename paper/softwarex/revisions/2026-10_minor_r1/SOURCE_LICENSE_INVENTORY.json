@@ -3173,8 +3173,8 @@
     {
       "path": "tests/test_melodic_grammar_integration.py",
       "SPDX-License-Identifier": "MIT",
-      "sha256": "eef1486dab1572cd4638c124c32c99b1960aeab7683e8b62885db777eeb8f438",
-      "sha256_lf": "eef1486dab1572cd4638c124c32c99b1960aeab7683e8b62885db777eeb8f438"
+      "sha256": "99169991619ceca2fe010821605e49938804c9266a80c6b6b06db3931aac75a5",
+      "sha256_lf": "99169991619ceca2fe010821605e49938804c9266a80c6b6b06db3931aac75a5"
     },
     {
       "path": "tests/test_melodic_style_engine.py",
