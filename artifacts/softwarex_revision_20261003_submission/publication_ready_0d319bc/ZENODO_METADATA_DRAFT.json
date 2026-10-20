@@ -1,0 +1,33 @@
+{
+  "title": "SeraEdit: Scoped and Validated Language-Guided MusicXML Editing (SoftwareX R1 source and evidence)",
+  "version": "softwarex-r1-20261003",
+  "resource_type": "software",
+  "creators": [
+    {
+      "name": "Gao, Yuan",
+      "affiliation": "Zhejiang Conservatory of Music",
+      "orcid": "0009-0005-0394-3623"
+    }
+  ],
+  "license": "mit",
+  "benchmark_license": "cc0-1.0",
+  "language": "eng",
+  "keywords": [
+    "MusicXML",
+    "symbolic music",
+    "score editing",
+    "large language models",
+    "research software"
+  ],
+  "existing_version_record": "https://zenodo.org/records/22128976",
+  "existing_concept_doi": "10.5281/zenodo.22128975",
+  "new_version_doi": "10.5281/zenodo.23117392",
+  "status": "published_public_downloads_verified",
+  "description_source": "RELEASE_NOTES.md",
+  "versioning_instruction": "Create a new version of the existing record; retain the published 1.0.0 version unchanged.",
+  "new_version_record_id": "23117392",
+  "draft_url": "https://zenodo.org/uploads/23117392",
+  "doi_evidence": "Author supplied screenshot codex-clipboard-10c78df2-2a71-4a79-ae61-f4c7a8420483.png on 2026-10-03",
+  "publication_verified": true,
+  "publication_date": "2026-10-03"
+}

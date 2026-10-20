@@ -1,0 +1,7 @@
+﻿expected_status,final_error_codes,final_refused,final_success,initial_error_codes,initial_refused,initial_response_available,initial_success,repair_added_cost,repair_calls_returned,task_id
+refuse,,True,True,,True,True,True,0,0,conflict_001
+success,,False,True,,False,True,True,0,0,dynamics_001
+success,,False,False,,False,True,False,0,0,insertion_001
+success,E15,False,False,E15,False,True,False,0.0023057999999999998,2,key_001
+success,,False,True,,False,True,True,0,0,pitch_001
+success,E15,False,False,E15,False,True,False,0.0038405999999999996,2,meter_001

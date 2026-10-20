@@ -1,0 +1,48 @@
+{
+  "record_id": 23117392,
+  "doi": "10.5281/zenodo.23117392",
+  "version": "softwarex-r1-20261003",
+  "published": true,
+  "doi_resolves_to_record": true,
+  "verified_date": "2026-10-03",
+  "access": "unauthenticated public API and downloads",
+  "record_url": "https://zenodo.org/records/23117392",
+  "files": [
+    {
+      "name": "seraedit-softwarex-r1-20261003-verification.zip",
+      "bytes": 16576,
+      "sha256": "ac459909aa174a13fb7252df74bc2860b3a232326bd3b897320cf2f7cda963a5",
+      "md5": "c73c53b74a6d2b1615873282d4b4f60e",
+      "http_status": 200,
+      "download_url": "https://zenodo.org/api/records/23117392/files/seraedit-softwarex-r1-20261003-verification.zip/content",
+      "matches_local": true
+    },
+    {
+      "name": "seraedit-softwarex-r1-20261003-source.zip",
+      "bytes": 17225942,
+      "sha256": "c20fde8c679c0e073aae0c9ec6613943a1904e75c3546d1fd8cb1f52915edd4a",
+      "md5": "ab243d744b4e1b2cbfbeef36ab3865b3",
+      "http_status": 200,
+      "download_url": "https://zenodo.org/api/records/23117392/files/seraedit-softwarex-r1-20261003-source.zip/content",
+      "matches_local": true
+    },
+    {
+      "name": "seraedit-softwarex-r1-20261003-manuscript-snapshot.zip",
+      "bytes": 2285218,
+      "sha256": "1b5b12054c23a1d95a93a61a1d229b34733947d81dfea334964f6a7a8da2f391",
+      "md5": "22c97df553e9db3b1a97c5c2d1a18d97",
+      "http_status": 200,
+      "download_url": "https://zenodo.org/api/records/23117392/files/seraedit-softwarex-r1-20261003-manuscript-snapshot.zip/content",
+      "matches_local": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 346,
+      "sha256": "93ab6ce0d09d754f9f9f352818f2a0c952d9cba8ddc1bbf5e67ed2c3f12c4f81",
+      "md5": "7b5cfe8fbb35bcbbb101ffea2068a3a6",
+      "http_status": 200,
+      "download_url": "https://zenodo.org/api/records/23117392/files/SHA256SUMS.txt/content",
+      "matches_local": true
+    }
+  ]
+}

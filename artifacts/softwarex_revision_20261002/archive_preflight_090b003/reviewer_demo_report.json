@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "passed": true,
+  "evidence_class": "offline_reviewer_demonstration",
+  "network_used": false,
+  "gold_used_for_generation": false,
+  "gold_used_for_deterministic_evaluation_only": true,
+  "tasks": [
+    "pitch_001",
+    "dynamics_001",
+    "key_001",
+    "meter_001",
+    "voice_010",
+    "conflict_001"
+  ],
+  "languages": [
+    "en"
+  ],
+  "results": {
+    "tasks": 6,
+    "passed": 6,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "constraint_satisfaction": 1.0,
+    "complete_preservation_rate": 1.0,
+    "musicxml_validity": 1.0,
+    "correct_refusals": 1,
+    "unsafe_executions": 0,
+    "source_preserving_host_export": {
+      "expected": 5,
+      "succeeded": 5,
+      "failed": 0,
+      "rate": 1.0
+    },
+    "median_latency_ms": 51.7581999883987,
+    "p95_latency_ms": 212.83624999341555,
+    "generation_statuses": {
+      "generated": 5,
+      "refused": 1
+    },
+    "reproducibility": {
+      "repeated_task_language_groups": 0,
+      "identical_patch_and_output_groups": 0,
+      "rate": null
+    },
+    "cross_language_equivalence": {
+      "task_groups": 0,
+      "semantic_patch_equivalent_groups": 0,
+      "output_equivalent_groups": 0,
+      "semantic_patch_rate": null,
+      "output_rate": null
+    },
+    "categories": {
+      "conflicting_or_unsupported": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "dynamics_articulation": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "key_harmony": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "meter_measure_structure": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "pitch_transposition": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "voice_texture": {
+        "tasks": 1,
+        "passed": 1,
+        "failed": 0,
+        "pass_rate": 1.0
+      }
+    },
+    "unique_tasks": 6,
+    "scope_stress": {
+      "mode": "exact",
+      "runs_applied": 0,
+      "runs_passed": 0
+    }
+  },
+  "host_openable_output_count": 5,
+  "host_openable_outputs": [
+    "host_outputs/dynamics_001__en__r1.musicxml",
+    "host_outputs/key_001__en__r1.musicxml",
+    "host_outputs/meter_001__en__r1.musicxml",
+    "host_outputs/pitch_001__en__r1.musicxml",
+    "host_outputs/voice_010__en__r1.musicxml"
+  ],
+  "artifacts": {
+    "manifest": "manifest.json",
+    "runs": "runs.jsonl",
+    "metrics": "metrics.csv",
+    "failures": "failures.csv",
+    "summary": "summary.json",
+    "raw_outputs": "raw_outputs/",
+    "host_outputs": "host_outputs/"
+  },
+  "claim_boundary": "This demonstration verifies offline product-path behavior and MusicXML round trips; it is not a remote-LLM accuracy or musical-aesthetics experiment."
+}

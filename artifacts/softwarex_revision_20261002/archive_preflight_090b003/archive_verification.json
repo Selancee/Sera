@@ -1,0 +1,65 @@
+{
+  "archive": "seraedit-revision-090b003-source.zip",
+  "archive_sha256": "4c4a23b2ba054cd952fa04542e53964253cbeb38ebdef38ee2dd7219e0e57303",
+  "manifest_files_verified": 3378,
+  "source_git": {
+    "commit": "090b003dab7e3272aaff655a7574aba28df8593a",
+    "dirty": false
+  },
+  "isolated_source_extraction": true,
+  "dependency_environment": "existing interpreter; not a fresh dependency installation",
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "full_tests_executed": false,
+  "checks": {
+    "reproducibility": {
+      "passed": false,
+      "return_code": 1,
+      "output_tail": [
+        "        \"    \\\"review_complete\\\": true,\",",
+        "        \"    \\\"primary_reviewed\\\": 120,\",",
+        "        \"    \\\"secondary_reviewed\\\": 30,\",",
+        "        \"    \\\"stale_records\\\": 0,\",",
+        "        \"    \\\"independent_secondary_reviewer\\\": false,\",",
+        "        \"    \\\"evidence_path\\\": \\\"experiments/softwarex_human_review_120_v1/summary.json\\\"\",",
+        "        \"  }\",",
+        "        \"}\"",
+        "      ]",
+        "    }",
+        "  },",
+        "  \"result_class\": \"mock_non_formal\",",
+        "  \"formal_results_allowed\": false,",
+        "  \"warning\": \"Reproducible mock evidence is still not formal model evidence.\"",
+        "}"
+      ]
+    },
+    "reviewer_demo": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "SoftwareX reviewer demo: 6/6 passed; host MusicXML outputs=5; report=C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_ia1s0j4u\\artifacts\\reviewer_demo\\reviewer_demo_report.json"
+      ]
+    },
+    "pytest": {
+      "passed": false,
+      "return_code": 2,
+      "output_tail": [
+        "",
+        "=================================== ERRORS ====================================",
+        "_____ ERROR collecting tests/test_v0961_final_scoredocument_style_eval.py _____",
+        "ImportError while importing test module 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_ia1s0j4u\\tests\\test_v0961_final_scoredocument_style_eval.py'.",
+        "Hint: make sure your test modules/packages have valid Python names.",
+        "Traceback:",
+        "..\\..\\Programs\\Python\\Python312\\Lib\\importlib\\__init__.py:90: in import_module",
+        "    return _bootstrap._gcd_import(name[level:], package, level)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "tests\\test_v0961_final_scoredocument_style_eval.py:3: in <module>",
+        "    from evaluation.v0961_final_score_style_integration.run_v0961_eval import run",
+        "E   ModuleNotFoundError: No module named 'evaluation.v0961_final_score_style_integration'",
+        "=========================== short test summary info ===========================",
+        "ERROR tests/test_v0961_final_scoredocument_style_eval.py",
+        "!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!"
+      ]
+    }
+  },
+  "passed": false
+}

@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-03",
+  "artifacts": {
+    "manuscript/seraedit_softwarex.docx": {
+      "sha256": "6b2bb56a08d3deb6de700403b3cd9e9eed6db62e21e51cac6cb07435beef16e4",
+      "rendered_pages": 10,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_clean"
+    },
+    "RESPONSE_TO_REVIEWERS.docx": {
+      "sha256": "5d0f99326e177679bbc935a8aa75d85deeb5123beff08e80f47ef9f8e9224e88",
+      "rendered_pages": 7,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/reviewer_mapping/render_response_final"
+    },
+    "submission/COVER_LETTER.docx": {
+      "sha256": "acfa769763ce46cdd0d7fb4f93dc38a64583cdc3d2cc0ddac7b0c4509e978d2e",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_cover"
+    },
+    "manuscript/seraedit_softwarex_marked.docx": {
+      "sha256": "fb86e0712860cb89ec1b5c23f2c73ea990f5fe67615f18cc835508a42dc54185",
+      "rendered_pages": 10,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_marked"
+    },
+    "submission/DECLARATION_OF_INTEREST.docx": {
+      "sha256": "9e7658308ff7dda72934a55c63111c762fccc79a9b155dd8a73c428d7965f5a3",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_DECLARATION_OF_INTEREST"
+    },
+    "submission/CREDIT_AUTHOR_STATEMENT.docx": {
+      "sha256": "c5d19e961e4e0cc9f57913a62d804231462d0c7be7fba5e8726600be90e3d143",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_CREDIT_AUTHOR_STATEMENT"
+    },
+    "submission/GENERATIVE_AI_DISCLOSURE.docx": {
+      "sha256": "df1371e1bbef5222db74fe7784dd3aba6016cb4c3195023a5e4c4cb7ac87ff0c",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/render_GENERATIVE_AI_DISCLOSURE"
+    },
+    "submission/DATA_AND_CODE_AVAILABILITY.docx": {
+      "sha256": "05c5f21803c99d8f7960a37f14c04a827b77f2b17ca1b7fe22f3c460840f28e1",
+      "rendered_pages": 1,
+      "visually_inspected_pages": [
+        1
+      ],
+      "render_directory": "artifacts/softwarex_revision_20261003_submission/post_publication_23117392/render_availability"
+    }
+  },
+  "visual_findings": "Reviewer-mapped response: all 7 pages inspected, no visible clipping or overlap. Other seven documents retain their preceding hash-bound visual review; their bytes are unchanged.",
+  "focused_python_tests": 33,
+  "frontend_tests": 133,
+  "frontend_test_files": 74,
+  "frontend_build_passed": true,
+  "baseline_files_verified": 25,
+  "baseline_archives_verified": 7,
+  "saved_live_integrity_checks": 14,
+  "new_paid_model_calls": 0,
+  "published": true,
+  "reviewer_audit": "REVIEWER_AUDIT.md",
+  "bridge_visual_acceptance": "BRIDGE_VISUAL_ACCEPTANCE.json",
+  "submission_preparation": "SUBMISSION_PROGRESS_20261003.md",
+  "publication_doi": "10.5281/zenodo.23117392",
+  "publication_receipt": "PUBLICATION_VERIFICATION.json",
+  "local_document_checks_passed": 26,
+  "hosted_ci_scope": "447 Python tests, 133 frontend tests, production build and 14 saved-live-evidence checks apply to immutable archive head 0d319bc. Post-publication document and receipt edits were validated locally, not by that hosted run.",
+  "journal_submitted": false,
+  "reviewer_mapping_receipt": "REVIEWER_PLATFORM_MAPPING.json",
+  "online_responses_sent": false
+}

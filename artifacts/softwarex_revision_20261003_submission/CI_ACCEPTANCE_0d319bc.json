@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-03",
+  "status": "hosted_ci_passed_archive_bytes_verified",
+  "pr": "https://github.com/Selancee/Sera/pull/1",
+  "draft": true,
+  "head_commit": "0d319bc381cfc21687adaeff06dcb1f7797b8f18",
+  "ci_url": "https://github.com/Selancee/Sera/actions/runs/37096317165",
+  "ci_checkout_commit": "a8535862f537ac91ea1331b94a29202908a3ca84",
+  "ci_checkout_note": "GitHub pull-request test merge; its tree equals the revision head. This is not a merge into main.",
+  "shared_tree": "fb25ef220e28652f257c083f6f6473381e88ce48",
+  "main_unchanged": "58d6905840a8f23d3806a2621fdfccfa7ad62ef9",
+  "jobs": {
+    "python-benchmark": "success",
+    "frontend": "success"
+  },
+  "validation": {
+    "python_tests_in_isolated_archive": 447,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "frontend_tests": 133,
+    "frontend_test_files": 74,
+    "frontend_production_build": "passed",
+    "source_member_hashes": 4359,
+    "manuscript_member_hashes": 95,
+    "live_evidence_checks": 14,
+    "original_submission_files_preserved": 25,
+    "original_archives_preserved": 7
+  },
+  "archives": [
+    {
+      "name": "seraedit-ci-candidate-softwarex-manuscript.zip",
+      "path": "F:\\Sera\\artifacts\\softwarex_revision_20261003_submission\\ci_37096317165\\softwarex-r1-candidate\\seraedit-ci-candidate-softwarex-manuscript.zip",
+      "sha256": "1b5b12054c23a1d95a93a61a1d229b34733947d81dfea334964f6a7a8da2f391",
+      "bytes": 2285218
+    },
+    {
+      "name": "seraedit-ci-candidate-source.zip",
+      "path": "F:\\Sera\\artifacts\\softwarex_revision_20261003_submission\\ci_37096317165\\softwarex-r1-candidate\\seraedit-ci-candidate-source.zip",
+      "sha256": "c20fde8c679c0e073aae0c9ec6613943a1904e75c3546d1fd8cb1f52915edd4a",
+      "bytes": 17225942
+    }
+  ],
+  "prior_runs": [
+    {
+      "id": 37094919640,
+      "status": "cancelled",
+      "note": "Frontend timing failure; Python interrupted by newer push."
+    },
+    {
+      "id": 37095136952,
+      "status": "success",
+      "note": "Earlier head; not substituted for latest head."
+    },
+    {
+      "id": 37095716172,
+      "status": "failure",
+      "note": "Unseeded romantic melody fixture grammar failure; generation validity across arbitrary seeds remains an open limitation."
+    }
+  ],
+  "remaining": [
+    "New permanent revision archive and DOI",
+    "Author approval of final manuscript and declarations",
+    "Editorial Manager original files/reviewer numbering and assembled PDF verification"
+  ],
+  "not_performed": [
+    "merge into main",
+    "new release or tag",
+    "Zenodo publication",
+    "journal upload or final submission"
+  ],
+  "evidence_reports": [
+    "F:\\Sera\\artifacts\\softwarex_revision_20261003_submission\\ci_37096317165\\softwarex-revision-reproducibility\\source_archive_verification\\archive_verification.json",
+    "F:\\Sera\\artifacts\\softwarex_revision_20261003_submission\\ci_37096317165\\softwarex-revision-reproducibility\\source_archive_verification\\pytest.xml",
+    "F:\\Sera\\artifacts\\softwarex_revision_20261003_submission\\ci_37096317165\\softwarex-revision-reproducibility\\source_archive_verification\\live_reproducibility\\reproducibility_report.json"
+  ]
+}

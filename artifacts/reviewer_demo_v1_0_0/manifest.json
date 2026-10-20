@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "evidence_class": "product_runtime_acceptance_non_formal",
+  "paper_model_result_eligible": false,
+  "gold_used_for_generation": false,
+  "gold_used_for_deterministic_evaluation_only": true,
+  "split": "core",
+  "task_ids": [
+    "pitch_001",
+    "dynamics_001",
+    "key_001",
+    "meter_001",
+    "voice_010",
+    "conflict_001"
+  ],
+  "task_count": 6,
+  "languages": [
+    "en"
+  ],
+  "repetitions": 1,
+  "run_count": 6,
+  "mode": "local",
+  "host_scope_mode": "exact",
+  "benchmark_hash": "sha256:767364e3add310f143b7a0973316ae5b88a52a9fd0c139f120bfb19b21f447e1",
+  "runtime_settings": {
+    "provider": "local_rule",
+    "model": "seraedit_rule_v1",
+    "base_url": "",
+    "configured": false,
+    "available": false,
+    "transport": "local",
+    "fallback_local": true,
+    "timeout_seconds": 90.0,
+    "max_output_tokens": 4000,
+    "reasoning_effort": "low",
+    "store": false,
+    "supports_structured_outputs": false,
+    "input_cost_per_million": null,
+    "output_cost_per_million": null,
+    "reason": "Explicit offline runtime acceptance mode."
+  },
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "created_at": "2026-08-27T11:21:46.824745+00:00"
+}

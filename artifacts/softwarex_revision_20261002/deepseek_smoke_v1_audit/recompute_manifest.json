@@ -1,0 +1,8 @@
+{
+  "experiment_id": "softwarex_deepseek_smoke_20261002_v1",
+  "source": "experiments/softwarex_deepseek_smoke_20261002_v1/runs.jsonl",
+  "output": "metrics_recomputed.csv",
+  "rows": 18,
+  "provider_calls": 0,
+  "note": "Metrics were deterministically recomputed from saved normalized outputs."
+}

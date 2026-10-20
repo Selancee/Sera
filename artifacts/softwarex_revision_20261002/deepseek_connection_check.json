@@ -1,0 +1,8 @@
+{
+  "http_status": 200,
+  "authenticated": true,
+  "models": [
+    "deepseek-flash",
+    "deepseek-v4-pro"
+  ]
+}

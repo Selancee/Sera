@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "file_count": 81,
+  "archive_sha256": "21c7e49a933f0f60e8da8df149dc97147abb8180705fa143722d0ae817cb2182",
+  "git": {
+    "commit": "b9589ee7a0aee4a8bfeccf11bab65f53c04bcc9f",
+    "dirty": false
+  },
+  "all_members_equal_worktree_at_verification": true,
+  "required_members": [
+    "manuscript/seraedit_softwarex.docx",
+    "RESPONSE_TO_REVIEWERS.docx",
+    "submission/COVER_LETTER.docx",
+    "BRIDGE_VISUAL_ACCEPTANCE.json",
+    "figures/bridge_revision.jpg",
+    "figures/bridge_proposal.jpg"
+  ],
+  "original_manuscript_excluded": true
+}

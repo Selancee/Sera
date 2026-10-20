@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-03",
+  "basis": "Author-supplied pasted peer-review page; no independent browser read claimed.",
+  "source_sha256": "2e10425199ab4ace195b0559ab43d456d0c705e4997a4e0799a5b8869e3a6c14",
+  "source_local_copy": "artifacts/softwarex_revision_20261003_submission/reviewer_mapping/author_supplied_peer_review_page.txt",
+  "reviewers": [
+    {
+      "label": "Reviewer 1",
+      "report_date_label": "September 23",
+      "weaknesses": 6,
+      "questions": 5,
+      "suggestions": 5
+    },
+    {
+      "label": "Reviewer 2",
+      "report_date_label": "September 28",
+      "unnumbered_concerns_mapped": 3
+    }
+  ],
+  "reviewer_labels_confirmed_from_supplied_page": true,
+  "online_replies_posted": false,
+  "online_responses_sent": false,
+  "journal_revision_submitted": false,
+  "remaining": [
+    "Verify original portal manuscript files",
+    "Post and send replies in peer-review platform",
+    "Upload revision files",
+    "Inspect assembled PDF and obtain author final approval"
+  ],
+  "prepared_artifacts_sha256": {
+    "RESPONSE_TO_REVIEWERS.md": "4feab4c66c04ec2a4ea47b6524459d022eb317ee2a7d81127383ab6c486424b5",
+    "RESPONSE_TO_REVIEWERS.docx": "5d0f99326e177679bbc935a8aa75d85deeb5123beff08e80f47ef9f8e9224e88",
+    "submission/REVIEWER_1_ONLINE_REPLY.txt": "920895f8b951df34c089b59d36ad42477a01505f0a3547d61de688236ace5f5b",
+    "submission/REVIEWER_2_ONLINE_REPLY.txt": "d7dc53cb531edbf2685e75d03aef27ecc329f5faded18d51d39d8bee8af60858"
+  },
+  "response_sections": 19,
+  "response_visual_review": {
+    "pages": 7,
+    "all_pages_inspected": true,
+    "result": "No visible clipping or overlap; Reviewer 2 starts on page 6."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "experiment_id": "softwarex_verification_120_v1",
+  "passed": false,
+  "checks": {
+    "config_hash": true,
+    "benchmark_hash": false,
+    "prompt_hashes": true,
+    "dependency_lock_hash": false,
+    "all_evidence_files_exist": true,
+    "metric_rows_equal": false,
+    "expected_run_count": true
+  },
+  "commands": {
+    "benchmark": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "  \"human_review_pending\": 0,",
+        "  \"task_metadata_review_status_pending\": 120,",
+        "  \"external_human_review\": {",
+        "    \"available\": true,",
+        "    \"review_complete\": true,",
+        "    \"primary_reviewed\": 120,",
+        "    \"secondary_reviewed\": 30,",
+        "    \"stale_records\": 0,",
+        "    \"independent_secondary_reviewer\": false,",
+        "    \"evidence_path\": \"experiments/softwarex_human_review_120_v1/summary.json\"",
+        "  }",
+        "}"
+      ]
+    }
+  },
+  "result_class": "mock_non_formal",
+  "formal_results_allowed": false,
+  "warning": "Reproducible mock evidence is still not formal model evidence."
+}

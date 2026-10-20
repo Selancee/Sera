@@ -1,0 +1,15 @@
+{
+  "experiment_id": "softwarex_deepseek_core_20261002_v1",
+  "network_calls": 0,
+  "definition": "Same saved initial Sera Full output replayed with zero LLM repairs; deterministic normalization remains enabled. Success requires strict editing or correct refusal, not just transaction acceptance.",
+  "initial_responses_available": 120,
+  "initial_responses_missing": 0,
+  "initial_success": 62,
+  "final_success": 73,
+  "tasks_with_returned_model_repairs": 39,
+  "model_repair_calls_returned": 43,
+  "repair_improved_to_success": 11,
+  "repair_regressed_from_success": 0,
+  "repaired_edit_task_refusals": 25,
+  "repair_added_cost_usd": 0.06426749999999999
+}

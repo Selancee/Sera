@@ -1,0 +1,267 @@
+........................................................................ [ 16%]
+........................................................................ [ 32%]
+................................................FFF....................F [ 49%]
+FF.....F................................................................ [ 65%]
+........................................................................ [ 82%]
+........................................................................ [ 98%]
+..FF..                                                                   [100%]
+================================== FAILURES ===================================
+________________ test_find_available_port_skips_occupied_port _________________
+
+    def test_find_available_port_skips_occupied_port() -> None:
+>       module = load_packaged_backend_module()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_backend_port_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_backend_port_selection.py:14: in load_packaged_backend_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000026108DA5280>
+path = 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+________________________ test_write_runtime_port_file _________________________
+
+tmp_path = WindowsPath('C:/Users/asus/AppData/Local/Temp/pytest-of-asus/pytest-1046/test_write_runtime_port_file0')
+
+    def test_write_runtime_port_file(tmp_path) -> None:
+>       module = load_packaged_backend_module()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_backend_port_selection.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_backend_port_selection.py:14: in load_packaged_backend_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000026108DA5BB0>
+path = 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+__________ test_desktop_mode_refuses_to_silently_change_plugin_port ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000026108DA40B0>
+
+    def test_desktop_mode_refuses_to_silently_change_plugin_port(monkeypatch: pytest.MonkeyPatch) -> None:
+>       module = load_packaged_backend_module()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_backend_port_selection.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_backend_port_selection.py:14: in load_packaged_backend_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000026108DA56A0>
+path = 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\run_backend_packaged.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_____________ test_desktop_launcher_port_file_and_port_selection ______________
+
+tmp_path = WindowsPath('C:/Users/asus/AppData/Local/Temp/pytest-of-asus/pytest-1046/test_desktop_launcher_port_fil0')
+
+    def test_desktop_launcher_port_file_and_port_selection(tmp_path) -> None:
+>       module = load_desktop_launcher_module()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_desktop_launcher.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_desktop_launcher.py:18: in load_desktop_launcher_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002610909DE20>
+path = 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\run_desktop_app.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\run_desktop_app.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+_________________ test_desktop_launcher_serves_frontend_index _________________
+
+tmp_path = WindowsPath('C:/Users/asus/AppData/Local/Temp/pytest-of-asus/pytest-1046/test_desktop_launcher_serves_f0')
+
+    def test_desktop_launcher_serves_frontend_index(tmp_path) -> None:
+>       module = load_desktop_launcher_module()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_desktop_launcher.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_desktop_launcher.py:18: in load_desktop_launcher_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:991: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1128: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002610909D9D0>
+path = 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\run_desktop_app.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\run_desktop_app.py'
+
+<frozen importlib._bootstrap_external>:1186: FileNotFoundError
+__________ test_desktop_launcher_disables_uvicorn_console_log_config __________
+
+    def test_desktop_launcher_disables_uvicorn_console_log_config() -> None:
+>       source = (ROOT / "packaging" / "desktop" / "run_desktop_app.py").read_text(encoding="utf-8")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_desktop_launcher.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\Programs\Python\Python312\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/asus/AppData/Local/Temp/seraedit_source_archive_tc2koik8/packaging/desktop/run_desktop_app.py')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\run_desktop_app.py'
+
+..\..\Programs\Python\Python312\Lib\pathlib.py:1013: FileNotFoundError
+_ test_default_launcher_uses_electron_desktop_and_preserves_web_compatibility _
+
+    def test_default_launcher_uses_electron_desktop_and_preserves_web_compatibility() -> None:
+>       default_launcher = (ROOT / "run_app.bat").read_text(encoding="utf-8")
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_desktop_launcher.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\Programs\Python\Python312\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/asus/AppData/Local/Temp/seraedit_source_archive_tc2koik8/run_app.bat')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\run_app.bat'
+
+..\..\Programs\Python\Python312\Lib\pathlib.py:1013: FileNotFoundError
+_______ test_pyinstaller_entrypoints_use_onedir_without_temp_extraction _______
+
+    def test_pyinstaller_entrypoints_use_onedir_without_temp_extraction() -> None:
+>       backend_spec = (ROOT / "packaging" / "backend" / "backend.spec").read_text(encoding="utf-8")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_windows_packaging_config.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\Programs\Python\Python312\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/asus/AppData/Local/Temp/seraedit_source_archive_tc2koik8/packaging/backend/backend.spec')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\backend\\backend.spec'
+
+..\..\Programs\Python\Python312\Lib\pathlib.py:1013: FileNotFoundError
+_________ test_sera_brand_assets_are_wired_into_desktop_and_frontend __________
+
+    def test_sera_brand_assets_are_wired_into_desktop_and_frontend() -> None:
+        master = ROOT / "assets" / "branding" / "sera-icon-master.png"
+        github_mark = ROOT / "assets" / "branding" / "sera-icon-256.png"
+        social_preview = ROOT / "assets" / "branding" / "sera-github-social-preview.png"
+        brand_ico = ROOT / "assets" / "branding" / "sera-icon.ico"
+        electron_png = ROOT / "electron" / "icon.png"
+        electron_ico = ROOT / "electron" / "icon.ico"
+        favicon = ROOT / "frontend" / "public" / "favicon.ico"
+        frontend_html = (ROOT / "frontend" / "index.html").read_text(encoding="utf-8")
+        electron_main = (ROOT / "electron" / "main.js").read_text(encoding="utf-8")
+>       desktop_spec = (ROOT / "packaging" / "desktop" / "desktop.spec").read_text(encoding="utf-8")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_windows_packaging_config.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\Programs\Python\Python312\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/asus/AppData/Local/Temp/seraedit_source_archive_tc2koik8/packaging/desktop/desktop.spec')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\packaging\\desktop\\desktop.spec'
+
+..\..\Programs\Python\Python312\Lib\pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_backend_port_selection.py::test_find_available_port_skips_occupied_port
+FAILED tests/test_backend_port_selection.py::test_write_runtime_port_file - F...
+FAILED tests/test_backend_port_selection.py::test_desktop_mode_refuses_to_silently_change_plugin_port
+FAILED tests/test_desktop_launcher.py::test_desktop_launcher_port_file_and_port_selection
+FAILED tests/test_desktop_launcher.py::test_desktop_launcher_serves_frontend_index
+FAILED tests/test_desktop_launcher.py::test_desktop_launcher_disables_uvicorn_console_log_config
+FAILED tests/test_desktop_launcher.py::test_default_launcher_uses_electron_desktop_and_preserves_web_compatibility
+FAILED tests/test_windows_packaging_config.py::test_pyinstaller_entrypoints_use_onedir_without_temp_extraction
+FAILED tests/test_windows_packaging_config.py::test_sera_brand_assets_are_wired_into_desktop_and_frontend
+

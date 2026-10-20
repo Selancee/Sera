@@ -1,0 +1,50 @@
+{
+  "experiment_id": "softwarex_deepseek_smoke_20261002_v2",
+  "passed": true,
+  "checks": {
+    "config_hash": true,
+    "benchmark_hash": true,
+    "prompt_hashes": true,
+    "dependency_lock_hash": true,
+    "all_evidence_files_exist": true,
+    "input_file_hashes": true,
+    "evidence_file_hashes": true,
+    "implementation_hashes": true,
+    "evidence_hash_coverage": true,
+    "human_review_file_hashes": true,
+    "metric_rows_equal": true,
+    "unique_run_ids": true,
+    "metric_run_ids": true,
+    "expected_run_count": true
+  },
+  "diagnostics": {
+    "input_file_hashes": [],
+    "evidence_file_hashes": [],
+    "implementation_hashes": [],
+    "human_review_file_hashes": [],
+    "metric_differences": []
+  },
+  "commands": {
+    "benchmark": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "  \"split_id\": \"softwarex_live_smoke\",",
+        "  \"task_count\": 6,",
+        "  \"valid_count\": 6,",
+        "  \"invalid_count\": 0,",
+        "  \"automatic_validation_passed\": true,",
+        "  \"human_review_pending\": 6,",
+        "  \"task_metadata_review_status_pending\": 6,",
+        "  \"external_human_review\": {",
+        "    \"available\": false,",
+        "    \"review_complete\": false",
+        "  }",
+        "}"
+      ]
+    }
+  },
+  "result_class": "live_non_formal",
+  "formal_results_allowed": false,
+  "warning": "This live pilot is non-formal and must not be pooled into the main comparison."
+}
