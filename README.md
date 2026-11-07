@@ -6,6 +6,33 @@
 
 [![Research CI](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml/badge.svg)](https://github.com/Selancee/Sera/actions/workflows/research-ci.yml)
 
+## 下载 / Download
+
+**首次使用请打开 [SeraEdit v1.0.0 Release](https://github.com/Selancee/Sera/releases/tag/v1.0.0)。无需登录 GitHub。**
+
+| 下载内容 | 文件与入口 |
+| --- | --- |
+| Windows 10/11 x64 便携版 | [Sera-1.0.0-x64.exe](https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe) |
+| v1.0.0 源码与示例 | [seraedit-1.0.0-source.zip](https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-source.zip) |
+| 文件完整性校验 | [SHA256SUMS.txt](https://github.com/Selancee/Sera/releases/download/v1.0.0/SHA256SUMS.txt) |
+
+Windows 用户下载 `Sera-1.0.0-x64.exe` 后直接打开。首次运行会先解压程序，再加载本地引擎；请等待 Agent Console 出现，不要重复打开。便携版自带 Electron 和本地后端，不需要先安装 Python、Node.js 或从源码构建。专业记谱软件另行安装；也可以先导入 MusicXML 使用编辑流程。默认可用本地规则完成基础编辑，使用外部模型时再配置相应服务。
+
+`Source code (zip)`、仓库的 `Code → Download ZIP` 和上述源码包均供源码开发或研究复现使用，不包含已经构建好的 `Sera.exe`。源码安装步骤见 [安装文档](docs/softwarex/INSTALLATION.md)，MuseScore 连接步骤见 [桥接说明](integrations/musescore/README.md)。
+
+Download the Windows portable application from the release above, then open the EXE and wait for the local engine to start. Source archives are for development and reproducibility; they do not contain a prebuilt desktop application.
+
+### 离线快速试用
+
+1. 下载并解压源码包，找到 `benchmark/source_scores/score_001.musicxml`（CC0 两小节示例）。
+2. 打开 Windows 便携版，导入这个 MusicXML，切换到“修改提案”。
+3. 输入已验证的本地规则指令：`Transpose measure 1 of staff 1 up by a major second while preserving rhythm.`
+4. 检查提案应为 4 个音符升高两个半音，再点击“应用并生成宿主修订”。“撤销上次 Agent 修订”会生成恢复原谱的新修订。
+
+**2026-11-07 Windows 11 x64 实测通过：** 匿名完整下载、官方 SHA256 校验、界面导入、上述四音转调、应用、撤回，以及关闭窗口后的后端退出和端口释放。其余音符与节奏保持不变，原始谱面未被覆盖。本次验收使用本地规则，没有调用外部模型。
+
+本地规则只支持部分编辑指令。已知限制：当选区为第 1 小节时，附加“Do not change staff 2 or measure 2”这类否定复合语句会被误判为涉及未选中的第 2 小节，从而拒绝执行。可先用上面的单一编辑示例完成试用。
+
 ## SoftwareX release track
 
 SeraEdit is the research-software core of Sera: a local-first, structured-patch
@@ -60,7 +87,9 @@ immutable software release or its DOI.
 
 MuseScore v0.3 插件与安装说明见 [`integrations/musescore/README.md`](integrations/musescore/README.md)。发送前必须先保存乐谱；当前回传会在 MuseScore 中打开新乐谱，原位 patch 和单步宿主撤销尚未实现，不应当描述为已验证能力。
 
-Windows 日常启动请使用桌面的 **Sera** 快捷方式，或直接打开已构建的图形程序：
+Windows 首次使用请下载本页顶部的 [v1.0.0 便携版](https://github.com/Selancee/Sera/releases/tag/v1.0.0)。以下路径和构建命令仅适用于已经从源码构建桌面版的开发者，不是下载源码 ZIP 后就存在的文件。
+
+本地构建完成后，可使用桌面的 **Sera** 快捷方式，或打开：
 
 ```powershell
 .\dist_desktop\release\win-unpacked\Sera.exe
@@ -82,9 +111,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\create_desktop_sho
 .\dist_desktop\release\win-unpacked\Sera.exe
 ```
 
-当前验收覆盖：本地启动、宿主桥接会话读取、自然语言生成 C4→D4 严格提案、保护范围 0 意外变化、生成 revision，以及退出后的后端进程树和端口释放。portable 单文件安装器仍未完成稳定验收，因此优先使用上述 unpacked 目录版。
+本地 unpacked 构建的验收覆盖：本地启动、宿主桥接会话读取、自然语言生成 C4→D4 严格提案、保护范围 0 意外变化、生成 revision，以及退出后的后端进程树和端口释放。公开 v1.0.0 便携版已于 2026-11-07 在 Windows 11 x64 完成下载与基础编辑闭环验收，步骤和范围见本页顶部。
 
-日常使用请选择桌面 Sera 快捷方式或上述 `release\win-unpacked\Sera.exe`。`dist_desktop\Sera.exe` 是兼容性打包冒烟所需的旧启动器，不是当前推荐的桌面入口；不要同时启动两个入口。
+本地构建用户可使用桌面 Sera 快捷方式或上述 `release\win-unpacked\Sera.exe`。`dist_desktop\Sera.exe` 是兼容性打包冒烟所需的旧启动器，不是当前推荐的桌面入口；不要同时启动两个入口。
 
 重新构建主本地包：
 
@@ -93,7 +122,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\packaging\windows\build_wi
 powershell -NoProfile -ExecutionPolicy Bypass -File .\packaging\windows\smoke_test_packaged_app.ps1
 ```
 
-默认构建只生成已验证的 unpacked 应用；如确实需要单文件 portable，可在 `electron` 目录显式执行 `npm run dist:portable`，该可选目标目前未完成稳定验收。
+默认构建生成 unpacked 目录版；构建单文件 portable 可在 `electron` 目录执行 `npm run dist:portable`。直接使用软件请下载本页顶部的 v1.0.0 便携版。
 
 SeraEdit 研究资产入口：
 
@@ -126,7 +155,9 @@ User Prompt -> Prompt Understanding Agent -> Structured Music Intent -> Composit
 
 ## Quick Start
 
-For a console-free Windows launch, open the desktop **Sera** shortcut or the built application:
+For Windows, [download the v1.0.0 portable EXE from Releases](https://github.com/Selancee/Sera/releases/tag/v1.0.0) and open it. No source checkout is required.
+
+The commands below are for source development or an already-built local application. Run relative paths from your checkout directory:
 
 ```powershell
 .\dist_desktop\release\win-unpacked\Sera.exe
@@ -135,24 +166,25 @@ For a console-free Windows launch, open the desktop **Sera** shortcut or the bui
 `run_app.bat` remains available for terminal/source development. Double-clicking a
 batch file opens a command window; the desktop shortcut targets the GUI executable directly.
 
-The packaged application starts its bundled backend and opens the Electron desktop window. The batch launcher uses that package when available and otherwise prepares the source development runtime. Neither opens an external browser. Use `D:\Sera\run_web_app.bat` only when Vite hot reload is explicitly needed.
+The packaged application starts its bundled backend and opens the Electron desktop window. The batch launcher uses that package when available and otherwise prepares the source development runtime. Neither opens an external browser. Use `.\run_web_app.bat` only when Vite hot reload is explicitly needed.
 
 Optional desktop shortcut:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File D:\Sera\scripts\create_desktop_shortcut.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\create_desktop_shortcut.ps1
 ```
 
 Stop Sera processes started by the launcher:
 
 ```powershell
-D:\Sera\stop_app.bat
+.\stop_app.bat
 ```
 
 Advanced manual startup:
 
 ```powershell
-cd D:\Sera
+# From the repository root
+python -m venv .venv
 .\.venv\Scripts\activate
 python -m pip install -r requirements.txt
 python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000 --reload
@@ -161,7 +193,7 @@ python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000 --reload
 In another terminal:
 
 ```powershell
-cd D:\Sera\frontend
+cd frontend
 npm install
 npm run dev
 ```
