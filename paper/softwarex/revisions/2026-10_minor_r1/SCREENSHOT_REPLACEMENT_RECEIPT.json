@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-03",
+  "scope": "Replace only Figures 2 and 4 with unmodified author-supplied PNG screenshots; Figure 3 retained.",
+  "provenance": "Author-supplied new demonstration; screenshot shows Fixture 1, local rules, M1-M2 selection, four pitch changes and revision 1. Historical BRIDGE_VISUAL_ACCEPTANCE.json and its captures remain unchanged; no new benchmark or independent full-session verification claimed.",
+  "visible_revision_session": "bridge_20261003_123629_4ee5fa3c",
+  "screenshots": {
+    "2": {
+      "file": "bridge_proposal_author_20261003.png",
+      "source": "C:\\Users\\asus\\AppData\\Local\\Temp\\codex-clipboard-9f83529f-03bd-4293-857d-cdbf71a1fd80.png",
+      "sha256": "569e28f806ca2d74f07692decbfc2faa55e77d62226e76c604507354eb19d3e8"
+    },
+    "4": {
+      "file": "bridge_revision_author_20261003.png",
+      "source": "C:\\Users\\asus\\AppData\\Local\\Temp\\codex-clipboard-073065ee-a3fe-4bc2-bfbb-bdd3e25a66cd.png",
+      "sha256": "dd08fefea61e340202e29753e57c72260faab449f6f752857625649bcdd665af"
+    }
+  },
+  "documents": [
+    {
+      "file": "01_Manuscript_clean.docx",
+      "sha256": "5bbb6b72be5f4233468d4d6aeb1b97c940983e8bead6e42660e133a534558ee5",
+      "before_sha256": "36bbad42cd5f0cf6fedc79a90fc0157de97682defe25688b0956ae95e552554a",
+      "text_layout_highlights_and_other_parts_unchanged": true
+    },
+    {
+      "file": "02_Manuscript_highlighted.docx",
+      "sha256": "d370f0503ce011c19610f22d57474f3f8b0712f1202dcf6ef087e5f3829c5c08",
+      "before_sha256": "bd8449e857a467d4e336fdcdb6615c49aa09c861fd7b66dfc67777aa1e8151fd",
+      "text_layout_highlights_and_other_parts_unchanged": true
+    }
+  ],
+  "uploaded": false,
+  "verification": {
+    "clean_pages": 10,
+    "marked_pages": 10,
+    "visually_reviewed_pages": 20,
+    "figures_2_and_4_match_author_png_bytes": true,
+    "figure_3_unchanged": true,
+    "document_xml_unchanged": true,
+    "baseline_verified_files": 25,
+    "baseline_verified_archives": 7,
+    "renderer": "Microsoft Word read-only OpenAndRepair export; standard renderer unavailable because LibreOffice is absent",
+    "source_documents_not_resaved_by_renderer": true
+  }
+}

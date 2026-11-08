@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Make the selected phrase sound mysteriously more beautiful without changing any notation' is subjective and unsupported: it requests an aesthetic/expressive transformation while explicitly forbidding notation changes, and no supported operation can achieve it without altering notation.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Make the selected phrase sound mysteriously more beautiful without changing any notation' is subjective and unsupported: it requests an aesthetic/expressive transformation while explicitly forbidding notation changes, and no supported operation can achieve it without altering notation."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1751.605900004506,
+    "input_tokens": 3788,
+    "output_tokens": 59,
+    "estimated_cost": 0.0012071999999999999,
+    "request_id": "b4d43457-e959-48db-a767-99cf68bb3d00",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "7d95bed78ceb8733fdf1a5fe4d88cb94ebcd05acef1aa280597a3f96faf34176"
+  },
+  "processing_latency_ms": 0.0020999577827751637,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

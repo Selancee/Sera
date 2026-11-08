@@ -1,0 +1,22 @@
+benchmark_root: benchmark
+budget_limit_usd: 0
+cache: false
+conditions:
+- full_rewrite
+- patch_only
+- sera_full
+experiment_id: softwarex_answer_blind_offline_20261002_v2
+formal_results_allowed: false
+max_concurrency: 3
+max_repair_attempts: 2
+max_retries: 0
+max_tokens: 8192
+prompt_protocol: answer_blind_v2
+provider:
+  model: benchmark-fixture-v2-roundtrip
+  provider: mock
+repetitions: 1
+seed: null
+split: softwarex_live_smoke
+temperature: 0
+thinking: disabled

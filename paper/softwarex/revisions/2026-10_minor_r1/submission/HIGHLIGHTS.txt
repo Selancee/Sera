@@ -1,0 +1,4 @@
+Source-bound patches make MusicXML edits scoped, inspectable and reversible.
+Saved real-provider outputs support independent comparison and recomputation.
+Measured protection comes with lower completion and more erroneous refusals.
+Constructed faults expose detector and MusicXML round-trip limitations.

@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'make the selected phrase sound mysteriously more beautiful' is subjective and does not map to any supported operation or notation change; no concrete, verifiable edit can be applied without altering notation or inventing unsupported semantics.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'make the selected phrase sound mysteriously more beautiful' is subjective and does not map to any supported operation or notation change; no concrete, verifiable edit can be applied without altering notation or inventing unsupported semantics."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1947.7113999892026,
+    "input_tokens": 3788,
+    "output_tokens": 56,
+    "estimated_cost": 0.0012036,
+    "request_id": "de196efd-cc83-46b4-a77d-18953d7966c8",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "7d95bed78ceb8733fdf1a5fe4d88cb94ebcd05acef1aa280597a3f96faf34176"
+  },
+  "processing_latency_ms": 0.0022999593056738377,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

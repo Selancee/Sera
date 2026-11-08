@@ -1,0 +1,7 @@
+﻿run_id,task_id,condition,provider,model,error_codes,error
+dynamics_001:sera_full:r1,dynamics_001,sera_full,deepseek,deepseek-flash,E19,pre-apply validation failed
+insertion_001:sera_full:r1,insertion_001,sera_full,deepseek,deepseek-flash,E19,pre-apply validation failed
+key_001:patch_only:r1,key_001,patch_only,deepseek,deepseek-flash,E15,operation op_change_key_signature changed 0 elements; expected 1
+key_001:sera_full:r1,key_001,sera_full,deepseek,deepseek-flash,E19,pre-apply validation failed
+meter_001:patch_only:r1,meter_001,patch_only,deepseek,deepseek-flash,E15,operation op_change_meter_3_4 changed 0 elements; expected 1
+pitch_001:sera_full:r1,pitch_001,sera_full,deepseek,deepseek-flash,E19;E19,post-apply validation failed

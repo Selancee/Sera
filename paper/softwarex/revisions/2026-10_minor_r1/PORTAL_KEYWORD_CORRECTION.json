@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-03",
+  "basis": "Author-supplied Editorial Manager screenshot, not an independent browser read",
+  "screenshot": "codex-clipboard-56860982-9434-4d96-8a0e-081754625b26.png",
+  "portal_keyword_limit": 4,
+  "keywords": [
+    "MusicXML",
+    "symbolic music",
+    "score editing",
+    "structured patches"
+  ],
+  "clarification": "Final upload clarification: Editorial Manager limits this submission to four keywords. The final manuscript and submission fields therefore use MusicXML; symbolic music; score editing; structured patches. This supersedes the six-keyword wording in our earlier online response to Reviewer 1; the scientific responses and results are unchanged.",
+  "original_online_replies_preserved": true,
+  "replacement_attachments_uploaded": false,
+  "portal_fields_updated": false,
+  "journal_submitted": false,
+  "artifact_sha256": {
+    "manuscript/seraedit_softwarex.docx": "36bbad42cd5f0cf6fedc79a90fc0157de97682defe25688b0956ae95e552554a",
+    "manuscript/seraedit_softwarex_marked.docx": "bd8449e857a467d4e336fdcdb6615c49aa09c861fd7b66dfc67777aa1e8151fd",
+    "RESPONSE_TO_REVIEWERS.docx": "fb234cea50422668ce15109c52e9d017b74629ecb7286e2823dca49289de2407"
+  },
+  "local_document_checks_passed": 26,
+  "baseline_files_verified": 25,
+  "baseline_archives_verified": 7,
+  "visual_review_complete": true,
+  "online_response_evidence": {
+    "basis": "Author-supplied success screenshot; no independent live browser verification",
+    "date": "2026-10-03",
+    "screenshot": "codex-clipboard-a7b9b763-01f2-44f3-a765-1f6da6203ba4.png",
+    "visible_message": "You have submitted your responses"
+  }
+}

@@ -1,4 +1,4 @@
-# Sera MuseScore Studio Bridge v0.3.1
+# Sera MuseScore Studio Bridge v0.3.3
 
 这是 Sera 的本地 MuseScore 桥接插件。它只负责把当前宿主上下文交给 Sera Agent Console，并在审核完成后打开新的 MusicXML 修订；不会启动外部浏览器，也不会覆盖源乐谱。
 
@@ -18,7 +18,7 @@ MuseScore 官方文档也将命令行转换列为支持的批处理能力；桥�
 
 ## 现在如何使用
 
-1. 启动 `D:\Sera\dist_desktop\release\win-unpacked\Sera.exe`，等待 Agent Console 出现。
+1. 启动安装的 Sera Desktop；源码开发可在仓库根目录运行 `npm.cmd --prefix electron start`（先按 INSTALLATION.md 安装依赖并构建前端），等待 Agent Console 出现。
 2. 在 MuseScore 打开乐谱并按 `Ctrl+S`。每次发送前都要保存，否则 4.5.2 的插件无法看到尚未落盘的修改。
 3. 选择要编辑的小节或谱表；没有选区时，Sera 默认从第 1 小节开始聚焦。
 4. 打开 `Plugins -> Sera Score Bridge`。
@@ -29,7 +29,7 @@ MuseScore 官方文档也将命令行转换列为支持的批处理能力；桥�
 
 ## 安装或更新插件
 
-在 `D:\Sera` 中运行：
+在 Sera 仓库根目录运行：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_musescore_bridge.ps1 -UpdateExisting
@@ -57,24 +57,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_musescore_
 - 输出以新乐谱打开，不会原位修改当前标签页。
 - MuseScore 单步 Undo、原位事务和复杂宿主元素 ID 映射尚未实现。
 - Sibelius ManuScript 桥接尚未实现。
-- 本次真实联调完成了 MuseScore 到 Sera 的输入闭环；“打开最新修订”的 API 和进程调用已有自动测试，但本次没有在真实宿主中完成输出方向的可见验收。
+- 2026-10-03 已完成保存 MSCZ → CLI 转换 → Sera Desktop 审核应用 → 插件打开独立 MuseScore 修订窗口的真实视觉验收；见 `paper/softwarex/revisions/2026-10_minor_r1/UI_EVIDENCE.md`。该单次本地规则演示不代表所有操作、宿主或打包安装器均已验收。
 
 ## 官方参考
 
 - [MuseScore Plugin API `writeScore` / `readScore`](https://musescore.github.io/MuseScore_PluginAPI_Docs/plugins/html/class_ms_1_1_plugin_a_p_i_1_1_plugin_a_p_i.html)
 - [MuseScore command-line usage](https://handbook.musescore.org/appendix/command-line-usage)
 
-## v0.3.1 修订导出安全说明
+## 修订导出范围
 
 Sera 不再把精简的 `ScoreDocument` 重新生成为整份 MusicXML。修订导出会以宿主原始 MusicXML 为底稿，只修改目标 XML 节点，因此会保留 MuseScore 写入的页面尺寸、系统布局、分页、谱表间距、隐式休止符以及未修改区域的记谱信息。
 
-当前源文件保真路径支持以下局部修改：
+当前源文件保真路径处理音高、时值、声部、连线、力度、演奏法、连桁，以及已实现的调号、拍号和结构替换。支持范围由源节点映射和验证共同决定；遇到不支持的字段或不能保证源保真的结构时明确拒绝，不退回到整谱重建。字段实现不等于每种宿主写法均已验证。
 
-- 音高与移调；
-- 演奏法；
-- 力度（按实际变化位置写入一次 direction，不再给每个音符添加 `mf`）；
-- 标题与作曲者。
+2026-10-03 的实际宿主验收覆盖第一小节第一谱表的四音移调；撤销后 XML 恢复原音符。其他操作的支持应参考源码和对应自动测试，不据此单次演示推断全部通过。界面中的变化摘要不是图形化音符差异视图。
 
-插入、删除、改变时值、拍号等会重构乐谱结构的操作目前会被明确拒绝，不会退回到整谱重建。后续只有在对应的宿主保真补丁实现和测试完成后才会逐项开放。
-
-升级后必须重启 Sera 和 MuseScore，并从原始宿主文件重新发送，创建一个新会话。旧版本已经生成的 `*_r0001.musicxml` 修订不会被自动修复，请不要继续使用。
+请选择与当前打开乐谱对应的已保存文件；插件不会自动验证两者相同。没有选区时 Sera 默认聚焦第一小节。升级插件后重启 MuseScore；升级 Sera 后创建新会话，历史修订不会自动改写。

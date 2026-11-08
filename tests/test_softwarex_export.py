@@ -1,16 +1,21 @@
 import hashlib
 import json
 from pathlib import Path
+from zipfile import ZipFile
 
 import pytest
+from scripts.verify_softwarex_source_archive import extract_verified
 
 from scripts.export_softwarex_package import (
     MANUSCRIPT_TREES,
+    SOURCE_TREES,
+    ROOT_FILES,
     ROOT,
     assert_safe,
     collect,
     eligible,
     preserved_source_manifest,
+    manuscript_trees,
 )
 
 
@@ -27,11 +32,43 @@ def test_minimal_publication_selection_is_safe():
     assert_safe(files)
 
 
+def test_source_package_contains_required_evaluation_modules_and_hash_policy():
+    files = {path.relative_to(ROOT).as_posix() for path in collect(SOURCE_TREES, ROOT_FILES)}
+    assert {
+        ".gitattributes", "evaluation/benchmark_io.py",
+        "evaluation/analysis/music_statistics.py",
+        "evaluation/runners/experiment_runner.py",
+        "evaluation/configs/softwarex_revision_mock.yaml",
+        "tests/sera_edit/test_reproducibility_contract.py",
+        "evaluation/v0961_final_score_style_integration/run_v0961_eval.py",
+        "packaging/backend/run_backend_packaged.py", "packaging/backend/backend.spec",
+        "packaging/desktop/run_desktop_app.py", "packaging/desktop/desktop.spec",
+        "run_app.bat", "run_web_app.bat", "assets/branding/sera-icon.ico",
+    } <= files
+
+
 def test_manuscript_package_includes_frozen_human_review_evidence():
     files = collect(MANUSCRIPT_TREES, ("CITATION.cff", "LICENSE"))
     relative_paths = {path.relative_to(ROOT).as_posix() for path in files}
     assert "experiments/softwarex_human_review_120_v1/summary.json" in relative_paths
     assert "experiments/softwarex_human_review_120_v1/evidence_manifest.json" in relative_paths
+
+
+def test_revision_manuscript_package_selects_current_text_and_bridge_evidence():
+    paths = {p.relative_to(ROOT).as_posix() for p in collect(manuscript_trees("2026-10_minor_r1"))}
+    prefix = "paper/softwarex/revisions/2026-10_minor_r1/"
+    assert prefix + "manuscript/seraedit_softwarex.docx" in paths
+    assert prefix + "RESPONSE_TO_REVIEWERS.docx" in paths
+    assert prefix + "figures/bridge_revision.jpg" in paths
+    assert prefix + "BRIDGE_VISUAL_ACCEPTANCE.json" in paths
+    assert not any(p.startswith("paper/softwarex/manuscript/") or p.startswith("paper/softwarex/submission/") for p in paths)
+
+
+def test_revision_selection_rejects_directory_escape_and_missing_revision():
+    with pytest.raises(ValueError, match="directory name"):
+        manuscript_trees("../baselines")
+    with pytest.raises(FileNotFoundError, match="not found"):
+        manuscript_trees("revision-that-does-not-exist")
 
 
 def test_preserved_source_manifest_requires_matching_published_archive(tmp_path):
@@ -60,3 +97,21 @@ def test_preserved_source_manifest_refuses_digest_drift(tmp_path):
 
     with pytest.raises(ValueError, match="does not match"):
         preserved_source_manifest(tmp_path)
+
+
+def test_source_archive_verification_rejects_changed_member_bytes(tmp_path):
+    archive = tmp_path / "source.zip"
+    manifest = {"files": [{"path": "a.py", "bytes": 4, "sha256": hashlib.sha256(b"good").hexdigest()}]}
+    with ZipFile(archive, "w") as output:
+        output.writestr("SOFTWAREX_ARCHIVE_MANIFEST.json", json.dumps(manifest))
+        output.writestr("a.py", b"evil")
+    with pytest.raises(ValueError, match="integrity failure"):
+        extract_verified(archive, tmp_path / "extract")
+
+
+def test_source_archive_verification_rejects_path_escape(tmp_path):
+    archive = tmp_path / "source.zip"
+    with ZipFile(archive, "w") as output:
+        output.writestr("../outside.py", b"data")
+    with pytest.raises(ValueError, match="escapes destination"):
+        extract_verified(archive, tmp_path / "extract")

@@ -1,0 +1,8 @@
+{
+  "experiment_id": "softwarex_answer_blind_offline_20261002_v2",
+  "source": "experiments/softwarex_answer_blind_offline_20261002_v2/runs.jsonl",
+  "output": "metrics_recomputed.csv",
+  "rows": 18,
+  "provider_calls": 0,
+  "note": "Metrics were deterministically recomputed from saved normalized outputs."
+}

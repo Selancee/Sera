@@ -1,0 +1,57 @@
+{
+  "archive": "seraedit-revision-3888dd3-source.zip",
+  "archive_sha256": "eb134c1e0fdd91ede44f1cd8630c6d379a8bac0fdc20fc42ce597dacf9013c06",
+  "manifest_files_verified": 3407,
+  "source_git": {
+    "commit": "3888dd314d389b046efb467635c9a280271f3b82",
+    "dirty": false
+  },
+  "isolated_source_extraction": true,
+  "dependency_environment": "existing interpreter; not a fresh dependency installation",
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "full_tests_executed": true,
+  "checks": {
+    "reproducibility": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "        \"    \\\"review_complete\\\": true,\",",
+        "        \"    \\\"primary_reviewed\\\": 120,\",",
+        "        \"    \\\"secondary_reviewed\\\": 30,\",",
+        "        \"    \\\"stale_records\\\": 0,\",",
+        "        \"    \\\"independent_secondary_reviewer\\\": false,\",",
+        "        \"    \\\"evidence_path\\\": \\\"experiments/softwarex_human_review_120_v1/summary.json\\\"\",",
+        "        \"  }\",",
+        "        \"}\"",
+        "      ]",
+        "    }",
+        "  },",
+        "  \"result_class\": \"mock_non_formal\",",
+        "  \"formal_results_allowed\": false,",
+        "  \"warning\": \"Reproducible mock evidence is still not formal model evidence.\"",
+        "}"
+      ]
+    },
+    "reviewer_demo": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "SoftwareX reviewer demo: 6/6 passed; host MusicXML outputs=5; report=C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_oqo20o_z\\artifacts\\reviewer_demo\\reviewer_demo_report.json"
+      ]
+    },
+    "pytest": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "........................................................................ [ 16%]",
+        "........................................................................ [ 32%]",
+        "........................................................................ [ 49%]",
+        "........................................................................ [ 65%]",
+        "........................................................................ [ 82%]",
+        "........................................................................ [ 98%]",
+        "......                                                                   [100%]"
+      ]
+    }
+  },
+  "passed": true
+}

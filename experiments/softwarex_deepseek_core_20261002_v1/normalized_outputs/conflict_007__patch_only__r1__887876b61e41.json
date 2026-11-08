@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Changing measure 1 to 5/8 would alter the meter of a single measure while preserving all durations and adding no rests, which is not supported: the score is in 6/8 and the requested change would require a time-signature change (which requires whole_score target) and would leave the measure content inconsistent with the new meter.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Changing measure 1 to 5/8 would alter the meter of a single measure while preserving all durations and adding no rests, which is not supported: the score is in 6/8 and the requested change would require a time-signature change (which requires whole_score target) and would leave the measure content inconsistent with the new meter."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2115.4177999706008,
+    "input_tokens": 3617,
+    "output_tokens": 78,
+    "estimated_cost": 0.0011786999999999998,
+    "request_id": "cefbe878-544b-4d9b-a12f-b857247c159a",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "d6643df1420c98f47a4f08908282dd612dd6e14719ae38f11b74c937d19ad2eb"
+  },
+  "processing_latency_ms": 0.001800013706088066,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

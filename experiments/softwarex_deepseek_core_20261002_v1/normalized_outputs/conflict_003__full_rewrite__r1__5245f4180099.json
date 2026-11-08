@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the existing notes in measure 1 total 4/4 (16 divisions per staff), which exceeds a 5/8 measure (10 divisions at divisions=4). Preserving all durations would require removing or altering notes, and the protected staff 2 content must remain unchanged.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the existing notes in measure 1 total 4/4 (16 divisions per staff), which exceeds a 5/8 measure (10 divisions at divisions=4). Preserving all durations would require removing or altering notes, and the protected staff 2 content must remain unchanged."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1238.0776000209153,
+    "input_tokens": 2758,
+    "output_tokens": 85,
+    "estimated_cost": 0.0009293999999999999,
+    "request_id": "a2864458-c5f9-45a8-8ab2-dfeeb122310a",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "5e45c168501999e196c7e0101f3182931ccc4fbbf9ef3d123f7b5831ef26453b"
+  },
+  "processing_latency_ms": 0.001800013706088066,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

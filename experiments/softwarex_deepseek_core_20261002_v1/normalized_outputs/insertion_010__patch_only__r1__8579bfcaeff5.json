@@ -1,0 +1,153 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_s015_m2_s1_replace_first_note_cmaj",
+    "source_score_id": "score_015",
+    "source_fingerprint": "sha256:e3bb6e8879d85b2054da7d1daa0fedb7b92ad10de265ad1b4fdf12e0431c8491",
+    "instruction": "Replace the first note of measure 2 staff 1 with a C-major triad of the same duration.",
+    "target_scope": {
+      "measures": [
+        2
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [
+      {
+        "type": "event_exists",
+        "event_id": "s015_m2_rh_1"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": "op_replace_chord_m2_s1_first",
+        "type": "replace_chord",
+        "selector": {
+          "event_ids": [
+            "s015_m2_rh_1"
+          ]
+        },
+        "arguments": {
+          "pitches": [
+            "C4",
+            "E4",
+            "G4"
+          ]
+        },
+        "preconditions": [],
+        "expected_change_count": 1
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "changed_element_count",
+        "value": 1
+      }
+    ],
+    "provenance": {
+      "source": "score_015",
+      "derivation": "replace first note of measure 2 staff 1 with C-major triad"
+    }
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_s015_m2_s1_replace_first_note_cmaj\",\"source_score_id\":\"score_015\",\"source_fingerprint\":\"sha256:e3bb6e8879d85b2054da7d1daa0fedb7b92ad10de265ad1b4fdf12e0431c8491\",\"instruction\":\"Replace the first note of measure 2 staff 1 with a C-major triad of the same duration.\",\"target_scope\":{\"measures\":[2],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[{\"type\":\"event_exists\",\"event_id\":\"s015_m2_rh_1\"}],\"operations\":[{\"operation_id\":\"op_replace_chord_m2_s1_first\",\"type\":\"replace_chord\",\"selector\":{\"event_ids\":[\"s015_m2_rh_1\"]},\"arguments\":{\"pitches\":[\"C4\",\"E4\",\"G4\"]},\"preconditions\":[],\"expected_change_count\":1}],\"expected_effects\":[{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":1}],\"provenance\":{\"source\":\"score_015\",\"derivation\":\"replace first note of measure 2 staff 1 with C-major triad\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_s015_m2_s1_replace_first_note_cmaj",
+      "source_score_id": "score_015",
+      "source_fingerprint": "sha256:e3bb6e8879d85b2054da7d1daa0fedb7b92ad10de265ad1b4fdf12e0431c8491",
+      "instruction": "Replace the first note of measure 2 staff 1 with a C-major triad of the same duration.",
+      "target_scope": {
+        "measures": [
+          2
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [
+        {
+          "type": "event_exists",
+          "event_id": "s015_m2_rh_1"
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "op_replace_chord_m2_s1_first",
+          "type": "replace_chord",
+          "selector": {
+            "event_ids": [
+              "s015_m2_rh_1"
+            ]
+          },
+          "arguments": {
+            "pitches": [
+              "C4",
+              "E4",
+              "G4"
+            ]
+          },
+          "preconditions": [],
+          "expected_change_count": 1
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 1
+        }
+      ],
+      "provenance": {
+        "source": "score_015",
+        "derivation": "replace first note of measure 2 staff 1 with C-major triad"
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 2490.1717999600805,
+    "input_tokens": 4613,
+    "output_tokens": 278,
+    "estimated_cost": 0.0017174999999999998,
+    "request_id": "8f34a0be-987c-4bc0-94b7-08ea142f03d1",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "31d87c6f93c970cda4e127cbb1b8a4db49aaccbf283325c32f081468a641681c"
+  },
+  "processing_latency_ms": 1.4256999711506069,
+  "error_codes": [
+    "E15"
+  ],
+  "error": "operation op_replace_chord_m2_s1_first changed 4 elements; expected 1",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

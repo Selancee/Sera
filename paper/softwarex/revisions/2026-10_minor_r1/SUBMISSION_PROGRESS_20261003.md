@@ -1,0 +1,55 @@
+# SoftwareX 修回进度
+
+2026-10-03，SOFTX-D-26-01135。
+
+## 投稿平台实测
+
+作者在内置 Browser 重新登录后，Author Main Menu 显示 Submissions Needing Revision 为 1。该队列实际列出本稿，初次投稿日期 2026-08-28、状态日期 2026-10-01、Current Status 为 Revise，修回截止日期为 2026-10-31。尚未点击 Revise Submission，尚无新文件上传或提交。
+
+File Inventory 点击后未出现可访问的文件窗口，不能据此认定原上传文件已核验。View and reply to reviews 跳转到新审稿站点后显示 authentication issue；正式审稿人编号与原上传附件仍未核实。此故障发生在本次成功登录之后，不要求作者反复登录来代替问题解决。
+
+## 已补材料
+
+- 修改标记稿：相对保留的 2026-08-28 DOCX 对新增或修改段落及表格文字作黄色高亮；正文文字与四张图同清洁稿。不是 Word 原生 Track Changes。完整文字对照 HTML 另外保留被删除和替换的内容。平台原上传身份尚未核实。
+- 更新逐点回复，补入 b9589ee 源归档 447 项测试和 4,345 文件哈希记录，保留各历史实验检查点。
+- 新增可编辑 Word 附件：利益声明、CRediT、AI 使用声明、数据和代码可用性声明。后者仍明确新版公开归档待完成，发布后需更新。
+- 修改标记稿 10 页、回复 4 页、四份声明各 1 页全部渲染并逐页检查。
+
+## 公开验证的具体目标
+
+目标仓库 https://github.com/Selancee/Sera 当前是 public；本轮只读检查时远端仅有 main，尚无本地修回分支。拟推送 codex/softwarex-minor-revision-20261002 并创建指向 main 的草稿 PR，正文见 PUBLICATION_PR_DRAFT.md，触发 Research CI 的 pull_request 工作流。此步骤会公开分支内容，需作者对具体目标确认。
+
+本步骤不合并 main、不覆盖 v1.0.0、不发布 Zenodo、不提交期刊。托管 CI 完成后，才能将准确的运行结果写入回复和发布说明。后续正式发布需使用新的版本或修订标签及独立存档，旧 DOI 保持原义。
+
+## 上传顺序和缺口
+
+1. 新版公开源码和保存的实验数据形成可核验的不可变链接；将其更新至正文、标记稿、回复、Cover letter（如适用）和数据声明。
+2. 核对平台审稿人编号与原上传文件；用本次回复对应原意见。
+3. 上传清洁稿、标记稿、回复、Cover letter、Highlights 和平台要求的声明。附件类型及必填项以实际修回表单为准，当前未猜测已完成。
+4. 生成并逐页核对平台组装 PDF；作者确认后才执行最终修回提交。
+
+许可 sidecar 的替代回应保持透明，审稿人是否接受仍未知。本文结论和失败案例保持不变。
+
+## 2026-10-03 — Published R1 archive and final citation preparation
+
+The author published Zenodo record 23117392, version softwarex-r1-20261003. Anonymous public API, DOI redirect and all four downloads were verified; MD5 and SHA-256 match the unchanged CI artifacts. PUBLICATION_VERIFICATION.json records the evidence. Source and manuscript snapshot remain byte-identical to hosted CI head 0d319bc; original v1.0.0 and producer e3a34e1 were preserved.
+
+Updated the R1 clean/highlighted manuscript, response, cover letter, availability statement, portal fill-in sheet and publication metadata with the new DOI. C1-C3 identify R1 source/evidence, while S1-S3 retain the historical installer. Synchronized the final regression count to 447 without changing research metrics. Updated the offline P1 checker to consume a dated publication receipt, refreshed its license-sidecar hash, and retained explicit journal-submission gates.
+
+Validation: 26/26 local checks; baseline 25/25 files and 7/7 archives; all 26 pages of five updated documents visually inspected. The three unchanged declarations retain earlier hash-bound review. Hosted 447 Python/133 frontend/build/14 saved-evidence results belong to immutable 0d319bc, not these later document edits. No new model calls or production changes.
+
+Next: verify platform reviewer numbering/original uploads, upload the new post-publication submission bundle, review the assembled PDF and obtain author final submission confirmation. No journal submission, merge, or formal GitHub release occurred.
+
+## 2026-10-03 — Reviewer numbering and online response preparation
+
+Mapped the author's supplied peer-review page to Reviewer 1 (23 September: six weaknesses, five questions and five suggestions) and Reviewer 2 (28 September: three unnumbered concerns). Preserved the raw supplied text privately in ignored artifacts; the mapping receipt records its SHA-256 and does not claim an independent browser read. Replaced internal P0/P1 response headings with reviewer-specific replies and created two plain-text copies for the platform. The formal response now has seven visually inspected pages, including a separate Reviewer 2 opening page. Research results and public archive bytes are unchanged.
+
+Validation: document/evidence checks and preserved-baseline verification are recorded in the current receipts. No new model calls, production edits, online responses, Git push, journal submission, merge, or formal GitHub release. Next: paste and verify both platform replies, send responses, check original portal attachments, upload current revision files, and inspect the assembled PDF before author approval.
+
+## 2026-10-03 — Actual portal keyword limit and submitted online responses
+
+Author-supplied screenshots show successful sending of the two peer-review responses and nine revision attachments uploaded. These are screenshot observations, not fresh browser reads or final journal submission. Manuscript Data still shows the original title/abstract and explicitly limits keywords to four.
+
+Aligned clean and marked manuscripts, formal response, fill-in sheet and local checker to MusicXML; symbolic music; score editing; structured patches. The formal response explicitly supersedes the earlier six-keyword wording. Original posted TXT replies and immutable public archives remain unchanged. Rendered 10+10+7 pages: directly inspected all 11 changed pages; the remaining 16 are pixel-identical to previously inspected pages. Local checks passed 26/26; original baseline verification passed 25 files and 7 archives. No new model calls. Hosted CI remains scoped to immutable archive head 0d319bc.
+
+Pending: replace uploaded attachments 01/02/03, update title/short title/abstract and response-field clarification, inspect the portal-assembled PDF, and obtain the author's final submission approval. No journal submission, Git push, merge, or formal GitHub release in this step.

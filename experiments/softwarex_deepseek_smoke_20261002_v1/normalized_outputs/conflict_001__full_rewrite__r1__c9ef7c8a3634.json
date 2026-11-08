@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the specified staff 1 contains four quarter notes totaling 4/4 (16 divisions), which cannot fit into a 5/8 measure without altering durations or adding rests. Additionally, the protected staff 2 also contains four quarter notes totaling 4/4, so the measure content is incompatible with a 5/8 time signature under the stated constraints.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Cannot change measure 1 to 5/8 while preserving every note duration and leaving no rests: the specified staff 1 contains four quarter notes totaling 4/4 (16 divisions), which cannot fit into a 5/8 measure without altering durations or adding rests. Additionally, the protected staff 2 also contains four quarter notes totaling 4/4, so the measure content is incompatible with a 5/8 time signature under the stated constraints."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 4164.059699978679,
+    "input_tokens": 2758,
+    "output_tokens": 101,
+    "estimated_cost": 0.0009485999999999999,
+    "request_id": "fb705f74-0881-4090-a357-59115d60aac5",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "e625669c24b855b9f16f46c83a596a8c7785d86f50423d2ae890ac45c883c028"
+  },
+  "processing_latency_ms": 0.0022999593056738377,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

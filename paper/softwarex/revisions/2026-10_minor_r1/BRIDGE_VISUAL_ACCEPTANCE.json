@@ -1,0 +1,128 @@
+{
+  "session_id": "bridge_20261003_023845_006da98a",
+  "date": "2026-10-03",
+  "implementation_commit": "cad7e60e9f265a703b80b192e5693c851fb0429e",
+  "host_version": "4.5.2",
+  "plugin_version": "0.3.3",
+  "provider": "local_rule",
+  "shell": "Electron development shell with production frontend build",
+  "instruction": "Transpose measure 1 of staff 1 up by a major second while preserving rhythm.",
+  "selection": "No MuseScore range selected; Sera defaulted to M1; instruction named staff 1.",
+  "visual_observation": "Native plugin sent MSCZ, Sera received/applied revision 1, plugin opened it, and a separate MuseScore window rendered it. Sera Undo generated revision 2; revision 2 was checked as XML, not opened in MuseScore.",
+  "not_claimed": [
+    "Packaged installer validation",
+    "Live LLM operation",
+    "In-place host editing",
+    "Single-step MuseScore undo",
+    "New selection-range coverage",
+    "Musical preference"
+  ],
+  "checks": {
+    "sixteen_notes_retained": true,
+    "exactly_four_changed_notes": true,
+    "target_only": true,
+    "expected_transpose": true,
+    "rhythm_voice_unchanged": true,
+    "undo_restores_notes": true,
+    "real_cli_conversion": true,
+    "source_snapshot_hash_matches": true
+  },
+  "note_changes": [
+    {
+      "location": {
+        "part": "P1",
+        "measure": "1",
+        "staff": "1",
+        "index": 0
+      },
+      "before": "C4",
+      "after": "D4"
+    },
+    {
+      "location": {
+        "part": "P1",
+        "measure": "1",
+        "staff": "1",
+        "index": 1
+      },
+      "before": "D4",
+      "after": "E4"
+    },
+    {
+      "location": {
+        "part": "P1",
+        "measure": "1",
+        "staff": "1",
+        "index": 2
+      },
+      "before": "E4",
+      "after": "F#4"
+    },
+    {
+      "location": {
+        "part": "P1",
+        "measure": "1",
+        "staff": "1",
+        "index": 3
+      },
+      "before": "G4",
+      "after": "A4"
+    }
+  ],
+  "screenshots": {
+    "bridge_applied.jpg": {
+      "sha256": "c981654875f2046649c708f414b846d44668d9de5a8a21999328b7997556135d",
+      "bytes": 123157
+    },
+    "bridge_opened.jpg": {
+      "sha256": "a5396229375a8b40dda781126b7ae59e5c91c08b68e13c0f6130cf62d705183e",
+      "bytes": 68177
+    },
+    "bridge_proposal.jpg": {
+      "sha256": "672e7b4bd132242aababd63efd4da01a36cecd88bf8894df70f54685e9cdc5a5",
+      "bytes": 141655
+    },
+    "bridge_received.jpg": {
+      "sha256": "bdce2a7d88d1f66b4ddf7d7d1602cdbdd0b805884f87f547cca8f088a7b27294",
+      "bytes": 121494
+    },
+    "bridge_revision.jpg": {
+      "sha256": "b4d02cdd09d350839c642327488c8c001d9fd4df6c96d8d38bb1a5a717b319e6",
+      "bytes": 107999
+    },
+    "bridge_sent.jpg": {
+      "sha256": "9514cc588989eb5f4b17d9226ce57945dbb8e6aa3bac7f1a56b170ffac1173fc",
+      "bytes": 65532
+    },
+    "bridge_source.jpg": {
+      "sha256": "0bb15f2aa271dfd815805bf42b4b6d7337a2b5fdef60428940955b35ee756f73",
+      "bytes": 105275
+    },
+    "bridge_undo.jpg": {
+      "sha256": "841cf3b7917b23a9da28aa8d85c74ea555c44c2b401d19580176e2de1c383ac2",
+      "bytes": 105174
+    }
+  },
+  "artifacts": {
+    "bridge_20261003_023845_006da98a_r0001.musicxml": {
+      "sha256": "5561549f509174eac8659a16ca477a64050bb5defb44ad80a713aec70f453200",
+      "bytes": 11075
+    },
+    "bridge_20261003_023845_006da98a_r0002.musicxml": {
+      "sha256": "18afc42a96bcbe6838e09977a52725edbb4a06ec19e8f3e84d220eb059c16a16",
+      "bytes": 11059
+    },
+    "bridge_fixture.mscz": {
+      "sha256": "590606703c854da77de798033c09fbd029ba62f54c831305cccd852f86dbae82",
+      "bytes": 19539
+    },
+    "manifest.json": {
+      "sha256": "1b3b5a9d21272db4aca34c803e1de1dd20220152bc199eb71070218688a4eed4",
+      "bytes": 3699
+    },
+    "source.musicxml": {
+      "sha256": "4f9f491da96c12caaaa99ba9103eb06b973438ffd4ffb1259f4cfeb44b5930ce",
+      "bytes": 11074
+    }
+  }
+}

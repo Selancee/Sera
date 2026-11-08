@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Changing the key signature to E-flat major without transposing any note would alter the notated pitch content relative to the sounding pitches, which is not supported by the change_key_signature operation as defined; the operation requires whole_score target and would change the key signature, but preserving all note spellings while changing key signature is not a supported semantic transformation.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Changing the key signature to E-flat major without transposing any note would alter the notated pitch content relative to the sounding pitches, which is not supported by the change_key_signature operation as defined; the operation requires whole_score target and would change the key signature, but preserving all note spellings while changing key signature is not a supported semantic transformation."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1684.785399993416,
+    "input_tokens": 3478,
+    "output_tokens": 80,
+    "estimated_cost": 0.0011393999999999998,
+    "request_id": "0284ccaf-400c-4d77-8dc8-0ffdb6e1a40f",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "96bcdac8f06d80b579c63eb5c15d20a70eb66a956d2f14ebddd4e372b0d0dafe"
+  },
+  "processing_latency_ms": 0.001200009137392044,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

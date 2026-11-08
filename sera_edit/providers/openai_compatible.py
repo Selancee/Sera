@@ -68,7 +68,7 @@ class OpenAICompatibleProvider:
         """Generate one response and capture tokens, request ID, latency, and estimated cost."""
 
         payload: dict[str, Any] = {"model": self.model, "messages": messages, "temperature": temperature}
-        if seed is not None:
+        if seed is not None and self.provider != "deepseek":
             payload["seed"] = seed
         if max_tokens is not None:
             payload["max_tokens"] = max_tokens
@@ -99,7 +99,7 @@ class OpenAICompatibleProvider:
                 timeout=self.timeout_seconds,
             )
         except requests.RequestException as exc:
-            raise ProviderRequestError(f"{self.provider} request failed: {exc}", retryable=True) from exc
+            raise ProviderRequestError(f"{self.provider} request failed: {str(exc).replace(self._api_key, '[REDACTED]')}", retryable=True) from None
         latency_ms = (time.perf_counter() - started) * 1000
         if response.status_code >= 400:
             retryable = response.status_code in {408, 409, 425, 429} or response.status_code >= 500
@@ -108,7 +108,7 @@ class OpenAICompatibleProvider:
                 retry_after_seconds = float(retry_after) if retry_after is not None else None
             except ValueError:
                 retry_after_seconds = None
-            detail = response.text.strip().replace("\r", " ").replace("\n", " ")[:500]
+            detail = response.text.replace(self._api_key, "[REDACTED]").strip().replace("\r", " ").replace("\n", " ")[:500]
             raise ProviderRequestError(
                 f"{self.provider} returned HTTP {response.status_code}: {detail}",
                 retryable=retryable,

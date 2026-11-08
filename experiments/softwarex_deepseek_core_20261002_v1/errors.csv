@@ -1,0 +1,13 @@
+﻿run_id,task_id,condition,provider,model,error_codes,error
+meter_001:sera_full:r1,meter_001,sera_full,deepseek,deepseek-flash,E15,post-apply validation failed
+pitch_008:patch_only:r1,pitch_008,patch_only,deepseek,deepseek-flash,E06,operation op_transpose_m1_staff1_down2 selected no events
+key_008:sera_full:r1,key_008,sera_full,deepseek,deepseek-flash,E15,post-apply validation failed
+insertion_008:full_rewrite:r1,insertion_008,full_rewrite,deepseek,deepseek-flash,E02,full rewrite MusicXML invalid
+pitch_011:patch_only:r1,pitch_011,patch_only,deepseek,deepseek-flash,E06,operation op_001_transpose_m1_staff1 selected no events
+insertion_010:patch_only:r1,insertion_010,patch_only,deepseek,deepseek-flash,E15,operation op_replace_chord_m2_s1_first changed 4 elements; expected 1
+pitch_012:patch_only:r1,pitch_012,patch_only,deepseek,deepseek-flash,E06,operation op_016_transpose_m1_staff1 selected no events
+key_012:sera_full:r1,key_012,sera_full,deepseek,deepseek-flash,E15,post-apply validation failed
+voice_009:patch_only:r1,voice_009,patch_only,deepseek,deepseek-flash,E06,operation op_016_m3_s1_v1_to_v2 selected no events
+pitch_013:patch_only:r1,pitch_013,patch_only,deepseek,deepseek-flash,E06,operation op_017_m1_staff1_transpose_up2 selected no events
+pitch_014:patch_only:r1,pitch_014,patch_only,deepseek,deepseek-flash,E06,operation op_018_transpose_m1_staff1 selected no events
+pitch_015:patch_only:r1,pitch_015,patch_only,deepseek,deepseek-flash,E06,operation op_019_m1_staff1_transpose selected no events

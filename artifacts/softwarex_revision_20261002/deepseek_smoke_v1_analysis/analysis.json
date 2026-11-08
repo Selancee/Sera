@@ -1,0 +1,173 @@
+{
+  "experiment_id": "softwarex_deepseek_smoke_20261002_v1",
+  "result_class": "live_non_formal",
+  "claim_boundary": "Existing development benchmark; single model, one stochastic draw, no held-out generalization claim.",
+  "strict_success": "Task constraints AND valid MusicXML AND complete non-target preservation AND output produced without refusal.",
+  "cost_basis": "Configured peak cache-miss rates; conservative estimate, not a billing receipt.",
+  "conditions": {
+    "full_rewrite": {
+      "all_tasks": 6,
+      "editing_tasks": 5,
+      "refusal_tasks": 1,
+      "strict_edit_success": 3,
+      "constraint_only_edit_success": 4,
+      "editing_outputs_produced": 5,
+      "valid_edit_outputs": 5,
+      "outputs_with_leakage": 1,
+      "correct_refusals": 1,
+      "erroneous_edit_refusals": 0,
+      "repair_attempted": 0,
+      "repair_calls_returned": 0,
+      "repair_valid_or_refused": 0,
+      "estimated_cost_usd": 0.020090399999999998,
+      "input_tokens": 17984,
+      "output_tokens": 12246,
+      "error_codes": {}
+    },
+    "patch_only": {
+      "all_tasks": 6,
+      "editing_tasks": 5,
+      "refusal_tasks": 1,
+      "strict_edit_success": 2,
+      "constraint_only_edit_success": 2,
+      "editing_outputs_produced": 3,
+      "valid_edit_outputs": 3,
+      "outputs_with_leakage": 0,
+      "correct_refusals": 1,
+      "erroneous_edit_refusals": 0,
+      "repair_attempted": 0,
+      "repair_calls_returned": 0,
+      "repair_valid_or_refused": 0,
+      "estimated_cost_usd": 0.0070773,
+      "input_tokens": 16195,
+      "output_tokens": 1849,
+      "error_codes": {
+        "E15": 2
+      }
+    },
+    "sera_full": {
+      "all_tasks": 6,
+      "editing_tasks": 5,
+      "refusal_tasks": 1,
+      "strict_edit_success": 0,
+      "constraint_only_edit_success": 0,
+      "editing_outputs_produced": 0,
+      "valid_edit_outputs": 0,
+      "outputs_with_leakage": 0,
+      "correct_refusals": 1,
+      "erroneous_edit_refusals": 1,
+      "repair_attempted": 1,
+      "repair_calls_returned": 1,
+      "repair_valid_or_refused": 1,
+      "estimated_cost_usd": 0.0082101,
+      "input_tokens": 20163,
+      "output_tokens": 1801,
+      "error_codes": {
+        "E19": 5
+      }
+    }
+  },
+  "paired_source_bootstrap": {
+    "patch_only-minus-full_rewrite": {
+      "task_count": 5,
+      "source_clusters": 2,
+      "difference": -0.2,
+      "percentile_95_ci": [
+        -1,
+        0
+      ],
+      "replicates": 5000,
+      "seed": 42
+    },
+    "sera_full-minus-full_rewrite": {
+      "task_count": 5,
+      "source_clusters": 2,
+      "difference": -0.6,
+      "percentile_95_ci": [
+        -1,
+        -0.5
+      ],
+      "replicates": 5000,
+      "seed": 42
+    },
+    "sera_full-minus-patch_only": {
+      "task_count": 5,
+      "source_clusters": 2,
+      "difference": -0.4,
+      "percentile_95_ci": [
+        -0.5,
+        0
+      ],
+      "replicates": 5000,
+      "seed": 42
+    }
+  },
+  "categories": {
+    "full_rewrite": {
+      "dynamics_articulation": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "insertion_deletion": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "key_harmony": {
+        "n": 1,
+        "strict_edit_success": 1
+      },
+      "meter_measure_structure": {
+        "n": 1,
+        "strict_edit_success": 1
+      },
+      "pitch_transposition": {
+        "n": 1,
+        "strict_edit_success": 1
+      }
+    },
+    "patch_only": {
+      "dynamics_articulation": {
+        "n": 1,
+        "strict_edit_success": 1
+      },
+      "insertion_deletion": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "key_harmony": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "meter_measure_structure": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "pitch_transposition": {
+        "n": 1,
+        "strict_edit_success": 1
+      }
+    },
+    "sera_full": {
+      "dynamics_articulation": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "insertion_deletion": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "key_harmony": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "meter_measure_structure": {
+        "n": 1,
+        "strict_edit_success": 0
+      },
+      "pitch_transposition": {
+        "n": 1,
+        "strict_edit_success": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+1b5b12054c23a1d95a93a61a1d229b34733947d81dfea334964f6a7a8da2f391  seraedit-softwarex-r1-20261003-manuscript-snapshot.zip
+c20fde8c679c0e073aae0c9ec6613943a1904e75c3546d1fd8cb1f52915edd4a  seraedit-softwarex-r1-20261003-source.zip
+ac459909aa174a13fb7252df74bc2860b3a232326bd3b897320cf2f7cda963a5  seraedit-softwarex-r1-20261003-verification.zip

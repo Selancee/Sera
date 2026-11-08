@@ -13,6 +13,7 @@ import hashlib
 import json
 import re
 import sys
+import subprocess
 import tomllib
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -326,7 +327,9 @@ def verify(root: Path, profile: str) -> VerificationResult:
     if len(figures) > 6:
         result.fail("More than six numbered manuscript figures are present")
 
-    summary_path = root / "experiments" / "softwarex_verification_120_v1" / "summary.json"
+    revision_experiment = root / "experiments" / "softwarex_revision_verification_120_v2"
+    experiment_dir = revision_experiment if revision_experiment.is_dir() else root / "experiments" / "softwarex_verification_120_v1"
+    summary_path = experiment_dir / "summary.json"
     if summary_path.exists():
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
         experiment_ok = (
@@ -337,6 +340,7 @@ def verify(root: Path, profile: str) -> VerificationResult:
         )
         result.checks["software_verification_experiment"] = {
             "passed": experiment_ok,
+            "experiment_id": experiment_dir.name,
             "completed_runs": summary.get("completed_runs"),
             "expected_runs": summary.get("expected_runs"),
             "error_count": summary.get("error_count"),
@@ -345,6 +349,19 @@ def verify(root: Path, profile: str) -> VerificationResult:
         }
         if not experiment_ok:
             result.fail("SoftwareX verification experiment is incomplete or mislabeled")
+        if experiment_dir == revision_experiment:
+            completed = subprocess.run(
+                [sys.executable, str(root / "scripts/verify_reproducibility.py"),
+                 "--experiment", experiment_dir.name, "--skip-tests", "--output-dir",
+                 str(root / "artifacts/softwarex_package_reproducibility")],
+                cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180,
+            )
+            result.checks["revision_evidence_reproducibility"] = {
+                "passed": completed.returncode == 0, "return_code": completed.returncode,
+                "report": "artifacts/softwarex_package_reproducibility/reproducibility_report.json",
+            }
+            if completed.returncode:
+                result.fail("Revision experiment failed independent hash/metric verification")
     else:
         result.checks["software_verification_experiment"] = {"passed": False, "missing": str(summary_path)}
         result.fail("SoftwareX verification experiment summary is missing")

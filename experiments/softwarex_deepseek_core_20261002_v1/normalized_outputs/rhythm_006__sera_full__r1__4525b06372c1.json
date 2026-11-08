@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported by the available operation types. No operation in the schema can merge rhythmic units; the closest operations (set_duration, delete_event, replace_chord) cannot express a merge of two units while preserving the remaining events without inventing semantics not defined in the condition_contract.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported by the available operation types. No operation in the schema can merge rhythmic units; the closest operations (set_duration, delete_event, replace_chord) cannot express a merge of two units while preserving the remaining events without inventing semantics not defined in the condition_contract."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1748.2262999983504,
+    "input_tokens": 4860,
+    "output_tokens": 86,
+    "estimated_cost": 0.0015612,
+    "request_id": "f64198ed-92bf-4f36-aebb-66e97cf3a501",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "ee8ad552f3a5f8f7af4322ccab8a27756c260f5e5114108b8135068439a7fab7"
+  },
+  "processing_latency_ms": 0.00200001522898674,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

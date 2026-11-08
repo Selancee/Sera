@@ -1,0 +1,65 @@
+{
+  "archive": "seraedit-revision-71a2ca3-source.zip",
+  "archive_sha256": "f44a51640969188ad50788f721c3be99a09e558b83786935184c47b1524a5877",
+  "manifest_files_verified": 3386,
+  "source_git": {
+    "commit": "71a2ca3a7e36f974376aa14b85888bce74cf86f2",
+    "dirty": false
+  },
+  "isolated_source_extraction": true,
+  "dependency_environment": "existing interpreter; not a fresh dependency installation",
+  "python_version": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "full_tests_executed": true,
+  "checks": {
+    "reproducibility": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "        \"    \\\"review_complete\\\": true,\",",
+        "        \"    \\\"primary_reviewed\\\": 120,\",",
+        "        \"    \\\"secondary_reviewed\\\": 30,\",",
+        "        \"    \\\"stale_records\\\": 0,\",",
+        "        \"    \\\"independent_secondary_reviewer\\\": false,\",",
+        "        \"    \\\"evidence_path\\\": \\\"experiments/softwarex_human_review_120_v1/summary.json\\\"\",",
+        "        \"  }\",",
+        "        \"}\"",
+        "      ]",
+        "    }",
+        "  },",
+        "  \"result_class\": \"mock_non_formal\",",
+        "  \"formal_results_allowed\": false,",
+        "  \"warning\": \"Reproducible mock evidence is still not formal model evidence.\"",
+        "}"
+      ]
+    },
+    "reviewer_demo": {
+      "passed": true,
+      "return_code": 0,
+      "output_tail": [
+        "SoftwareX reviewer demo: 6/6 passed; host MusicXML outputs=5; report=C:\\Users\\asus\\AppData\\Local\\Temp\\seraedit_source_archive_tc2koik8\\artifacts\\reviewer_demo\\reviewer_demo_report.json"
+      ]
+    },
+    "pytest": {
+      "passed": false,
+      "return_code": 1,
+      "output_tail": [
+        ">       return io.open(self, mode, buffering, encoding, errors, newline)",
+        "               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\asus\\\\AppData\\\\Local\\\\Temp\\\\seraedit_source_archive_tc2koik8\\\\packaging\\\\desktop\\\\desktop.spec'",
+        "",
+        "..\\..\\Programs\\Python\\Python312\\Lib\\pathlib.py:1013: FileNotFoundError",
+        "=========================== short test summary info ===========================",
+        "FAILED tests/test_backend_port_selection.py::test_find_available_port_skips_occupied_port",
+        "FAILED tests/test_backend_port_selection.py::test_write_runtime_port_file - F...",
+        "FAILED tests/test_backend_port_selection.py::test_desktop_mode_refuses_to_silently_change_plugin_port",
+        "FAILED tests/test_desktop_launcher.py::test_desktop_launcher_port_file_and_port_selection",
+        "FAILED tests/test_desktop_launcher.py::test_desktop_launcher_serves_frontend_index",
+        "FAILED tests/test_desktop_launcher.py::test_desktop_launcher_disables_uvicorn_console_log_config",
+        "FAILED tests/test_desktop_launcher.py::test_default_launcher_uses_electron_desktop_and_preserves_web_compatibility",
+        "FAILED tests/test_windows_packaging_config.py::test_pyinstaller_entrypoints_use_onedir_without_temp_extraction",
+        "FAILED tests/test_windows_packaging_config.py::test_sera_brand_assets_are_wired_into_desktop_and_frontend"
+      ]
+    }
+  },
+  "passed": false
+}

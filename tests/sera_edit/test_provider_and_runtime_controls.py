@@ -336,6 +336,7 @@ def test_formal_config_rejects_mock_and_missing_prices() -> None:
         "max_concurrency": 1,
         "formal_results_allowed": True,
         "budget_limit_usd": 1,
+        "prompt_protocol": "answer_blind_v2",
     }
     with pytest.raises(ValueError, match="mock"):
         _validate_config({**base, "provider": {"provider": "mock"}})

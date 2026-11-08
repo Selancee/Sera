@@ -1,0 +1,96 @@
+{
+  "verified_at": "2026-10-02T12:20:52.216835+00:00",
+  "scope": "Offline reproducibility; live provider and validator mutation studies remain pending",
+  "original_tag": {
+    "name": "v1.0.0",
+    "commit": "b23afcf08c26c46625fc3f24d82882495de9348f",
+    "pytest": {
+      "tests": 411,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 139.887
+    },
+    "failed_integrity_checks": [
+      "benchmark_hash",
+      "dependency_lock_hash",
+      "metric_rows_equal"
+    ],
+    "differing_metric_rows": 6
+  },
+  "fixture": {
+    "experiment_id": "softwarex_revision_verification_120_v2",
+    "runs": 360,
+    "execution_errors": 0,
+    "formal_results_allowed": false,
+    "provider_calls_to_live_services": 0,
+    "checks": {
+      "config_hash": true,
+      "benchmark_hash": true,
+      "prompt_hashes": true,
+      "dependency_lock_hash": true,
+      "all_evidence_files_exist": true,
+      "input_file_hashes": true,
+      "evidence_file_hashes": true,
+      "evidence_hash_coverage": true,
+      "human_review_file_hashes": true,
+      "metric_rows_equal": true,
+      "unique_run_ids": true,
+      "metric_run_ids": true,
+      "expected_run_count": true
+    }
+  },
+  "clean_checkout": {
+    "commit": "71a2ca3a7e36f974376aa14b85888bce74cf86f2",
+    "core_autocrlf": true,
+    "pytest": {
+      "tests": 438,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 80.617
+    }
+  },
+  "source_archive": {
+    "archive": "seraedit-revision-3888dd3-source.zip",
+    "archive_sha256": "eb134c1e0fdd91ede44f1cd8630c6d379a8bac0fdc20fc42ce597dacf9013c06",
+    "manifest_files_verified": 3407,
+    "source_git": {
+      "commit": "3888dd314d389b046efb467635c9a280271f3b82",
+      "dirty": false
+    },
+    "isolated_source_extraction": true,
+    "full_tests_executed": true,
+    "passed": true
+  },
+  "source_archive_pytest": {
+    "tests": 438,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 78.795
+  },
+  "reviewer_demo": {
+    "passed": 6,
+    "total": 6,
+    "host_outputs": 5
+  },
+  "environment": {
+    "python": "3.12.5",
+    "platform": "Windows 11 build 10.0.26200",
+    "fresh_venv": true,
+    "install": "python -m pip install -r requirements.txt -r requirements-publication.txt -c requirements-tested-windows.txt",
+    "pip_check": "No broken requirements found",
+    "observed_packages": 64,
+    "inventory": "P0_TEST_ENVIRONMENT.txt",
+    "archive_verifier_note": "The verifier reuses its caller interpreter; here that interpreter was the freshly created venv, independently installed and checked."
+  },
+  "byte_preservation": {
+    "changed_files": 1872,
+    "musical_or_json_semantics_changed": false,
+    "working_files_modified": false
+  },
+  "hosted_ci_verified": false,
+  "original_release_replaced": false,
+  "new_release_published": false
+}

@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: 'merge' is not a defined operation type in the schema, and the target staff 1 is not clearly mapped to the score's staff labels (left_hand/right_hand). No valid operation can be constructed without inventing semantics.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'Merge the first two rhythmic units of measure 2 staff 1' is ambiguous and unsupported: 'merge' is not a defined operation type in the schema, and the target staff 1 is not clearly mapped to the score's staff labels (left_hand/right_hand). No valid operation can be constructed without inventing semantics."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1637.6738999970257,
+    "input_tokens": 4863,
+    "output_tokens": 81,
+    "estimated_cost": 0.0015561,
+    "request_id": "afbf7b09-2ab5-463e-b8e1-a8eac727b7b3",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "1592f4d2883921ea137447b67ec8357c0aca0ea5dda44c2540648ba4f23af651"
+  },
+  "processing_latency_ms": 0.001600012183189392,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

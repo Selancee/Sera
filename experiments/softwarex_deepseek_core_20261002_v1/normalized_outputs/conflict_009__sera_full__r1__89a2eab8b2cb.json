@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction is ambiguous: 'Change measure 1 to 5/8' most plausibly means changing the time signature of measure 1 to 5/8, but the provided operation contract only supports change_time_signature when the target is whole_score, and the target_scope is measure 1 only. It could also be interpreted as changing a duration to 5/8, but no event or duration is specified, and the contract does not support a 5/8 duration value. Therefore the requested edit cannot be implemented under the supplied schema and condition_contract.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction is ambiguous: 'Change measure 1 to 5/8' most plausibly means changing the time signature of measure 1 to 5/8, but the provided operation contract only supports change_time_signature when the target is whole_score, and the target_scope is measure 1 only. It could also be interpreted as changing a duration to 5/8, but no event or duration is specified, and the contract does not support a 5/8 duration value. Therefore the requested edit cannot be implemented under the supplied schema and condition_contract."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1777.1302000037394,
+    "input_tokens": 3009,
+    "output_tokens": 125,
+    "estimated_cost": 0.0010526999999999997,
+    "request_id": "b33e1e28-426c-42f8-ba25-66de527860e3",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "b8d12ee3b35e256f85d5b7b0d3df2171dc0295546070b75ccca37d1c17d1bca0"
+  },
+  "processing_latency_ms": 0.002100015990436077,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

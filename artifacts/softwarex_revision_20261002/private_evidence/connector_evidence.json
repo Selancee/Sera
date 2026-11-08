@@ -1,0 +1,55 @@
+{
+  "email": {
+    "message_id": "1a0f6ad167a06641",
+    "thread_id": "1a0f6ad167a06641",
+    "date_utc": "2026-10-01T08:55:33Z",
+    "subject": "Decision on submission to SoftwareX",
+    "from": "SoftwareX <em@editorialmanager.com>",
+    "body_html": "<html><body><p>Manuscript Number: <strong>SOFTX-D-26-01135</strong>&nbsp;<br /><br />SeraEdit: Reliable Language-Guided MusicXML Editing through Structured Score Patches&nbsp;<br /><br />Dear Mr. GAO,&nbsp; <br /><br />Thank you for submitting your manuscript to SoftwareX.&nbsp;<br /><br />I have completed my evaluation of your manuscript. The reviewers recommend reconsideration of your manuscript following minor revision and modification. I invite you to resubmit your manuscript after addressing the comments below. Please resubmit your revised manuscript by <strong>Oct 31, 2026</strong>.&nbsp;</p><p>To view your reviewer feedback, please log in as an author at https://www.editorialmanager.com/softx/ and navigate to your manuscript in the &quot; Submissions Needing Revision &quot; folder under the Author Main Menu.&nbsp;</p><p>When revising your manuscript, please consider all issues mentioned in the reviewers&#39; comments carefully. Read the reviewers&#39; comments in the\r\npeer review platform. Please note that your revised submission may need to be re-reviewed.</p><p>SoftwareX values your contribution and I look forward to receiving your revised manuscript.￼&nbsp;</p><p><strong>IMPORTANT: </strong>Change of authorship at this stage is only possible in rare and truly justified cases. If you have strong arguments for changing the list of authors, please contact the editor and fill the required details in the given form : <a href=\"https://track.editorialmanager.com/CL0/https:%2F%2Flegacyfileshare.elsevier.com%2Fgfa%2Fauthorship-change-request-form.pdf/1/010f01a0f6ad145b-4e07a0d3-cac9-4410-839b-766e69f045c1-000000/n1QoHWh4bEjro34hvP4ov8UImXhrYsFRJNamexIdn3s=258\">authorship-change-request-form.pdf</a>. Kindly ensure to upload this form under the Cover Letter category.&nbsp; Unless granted by the editor, do not submit a revised version of the manuscript with a changed author list. Non-respect may lead to a rejection of the paper that can&#39;t be appealed!<br /><br />Kind regards, &nbsp;<br /><br />Alba Amato&nbsp;<br /><br />Editor-in-Chief&nbsp;<br /><br />SoftwareX&nbsp;<br /><br />Editor and\r\nReviewer comments:&nbsp; <br /><br /><br /><br /><br /><br />Read your reviewers&rsquo; comments in our peer review platform.<br />Before you can submit your revision, you must respond to reviews in our peer review platform.<br />&nbsp; <br /><br /><br /><br />More information and support <br /><br />FAQ: How do I revise my submission in Editorial Manager?<br /><br />https://service.elsevier.com/app/answers/detail/a_id/28463/supporthub/publishing/<br /><br />FAQ: How can I reset a forgotten password? <br>https://service.elsevier.com/app/answers/detail/a_id/28452/supporthub/publishing/ <br>For further assistance, please visit our customer service site: https://service.elsevier.com/app/home/supporthub/publishing/<br>Here you can search for solutions on a range of topics, find answers to frequently asked questions, and learn more about Editorial Manager via interactive tutorials. You can also talk 24/7 to our customer support team by phone and 24/7 by live chat and email<br\r\n/><br />At Elsevier, we want to help all our authors to stay safe when publishing. Please be aware of fraudulent messages requesting money in return for the publication of your paper. If you are publishing open access with Elsevier, bear in mind that we will never request payment before the paper has been accepted. We have prepared some guidelines (https://www.elsevier.com/connect/authors-update/seven-top-tips-on-stopping-apc-scams ) that you may find helpful, including a short video on Identifying fake acceptance letters (https://www.youtube.com/watch?v=o5l8thD9XtE ). Please remember that you can contact Elsevier s Researcher Support team (https://service.elsevier.com/app/home/supporthub/publishing/) at any time if you have questions about your manuscript, and you can log into Editorial Manager to check the status of your manuscript (https://service.elsevier.com/app/answers/detail/a_id/29155/c/10530/supporthub/publishing/kw/status/).<br /><br />#AU_SOFTX#<br /><br />To\r\nensure this email reaches the intended recipient, please do not delete the above code</p><br/><br/><hr/><span style=\"font-style: italic; font-size: 90%;\">In compliance with data protection regulations, you may request that we remove your personal registration details at any time.  <a href=\"https://track.editorialmanager.com/CL0/https:%2F%2Fwww.editorialmanager.com%2Fsoftx%2Flogin.asp%3Fa=r/1/010f01a0f6ad145b-4e07a0d3-cac9-4410-839b-766e69f045c1-000000/PYrgH_fon5gs7kOpfWcRSAe_0yWM-SIUKMp_KcRopFM=258\">(Remove my information/details)</a>. Please contact the publication office if you have any questions.</span><img alt=\"\" src=\"http://track.editorialmanager.com/CI0/010f01a0f6ad145b-4e07a0d3-cac9-4410-839b-766e69f045c1-000000/ujHoBYu47zIyThkZ4HFP-me3XXp4iP8VWVbGPXOXfQo=258\" style=\"display: none; width: 1px; height: 1px;\">\r\n</body></html>\r\n"
+  },
+  "github_release": {
+    "url": "https://github.com/Selancee/Sera/releases/tag/v1.0.0",
+    "id": 377791339,
+    "tag": "v1.0.0",
+    "published_at": "2026-08-27T12:08:13Z",
+    "updated_at": "2026-09-03T07:13:10Z",
+    "assets": [
+      {
+        "name": "release_manifest.json",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/release_manifest.json",
+        "bytes": 567415,
+        "digest": "sha256:64a9def337c0ff5e25858989e035cfc366a1502c4e9b92133b0a4ce20d4304bd"
+      },
+      {
+        "name": "Sera-1.0.0-x64.exe",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/Sera-1.0.0-x64.exe",
+        "bytes": 234325156,
+        "digest": "sha256:66052a05c9f526b0dc44d125d0bc1449998cc8db7b3b53876c7cb0a5b9b7b756"
+      },
+      {
+        "name": "seraedit-1.0.0-softwarex-manuscript.zip",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-softwarex-manuscript.zip",
+        "bytes": 411927,
+        "digest": "sha256:f3cdf06e2210aa7d9e37511067f5e7bed4e7cdea5b5b236457ba412b578d3444"
+      },
+      {
+        "name": "seraedit-1.0.0-source.zip",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/seraedit-1.0.0-source.zip",
+        "bytes": 5609579,
+        "digest": "sha256:7ae6a9ab20c29279fb04872fee8fa549d4f6a361dba571821c38c608c4b4e0e6"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "url": "https://github.com/Selancee/Sera/releases/download/v1.0.0/SHA256SUMS.txt",
+        "bytes": 283,
+        "digest": "sha256:3c0ce2afa991486f2d3c706568854d0b677323d3802d133c033b46d7de806e10"
+      }
+    ]
+  },
+  "browser": {
+    "url": "https://www.editorialmanager.com/softx/default.aspx",
+    "session_id": "da8001dd-ac7a-49bd-878d-6d1207cf33e9",
+    "status": "login_required",
+    "reviewer_comments_read": false
+  }
+}

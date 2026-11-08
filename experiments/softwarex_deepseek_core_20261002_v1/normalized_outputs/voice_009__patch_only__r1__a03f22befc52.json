@@ -1,0 +1,159 @@
+{
+  "condition": "patch_only",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_016_m3_s1_v1_to_v2",
+    "source_score_id": "score_016",
+    "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+    "instruction": "Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.",
+    "target_scope": {
+      "measures": [
+        3
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "op_016_m3_s1_v1_to_v2",
+        "type": "move_to_voice",
+        "selector": {
+          "measures": [
+            3
+          ],
+          "staffs": [
+            1
+          ],
+          "voices": [
+            1
+          ],
+          "event_ids": [
+            "s016_m3_lh_1",
+            "s016_m3_lh_2",
+            "s016_m3_lh_3",
+            "s016_m3_lh_4"
+          ]
+        },
+        "arguments": {
+          "voice": 2
+        },
+        "preconditions": [],
+        "expected_change_count": 4
+      }
+    ],
+    "expected_effects": [
+      {
+        "type": "preserve_pitch"
+      },
+      {
+        "type": "preserve_duration"
+      },
+      {
+        "type": "changed_element_count",
+        "value": 4
+      }
+    ],
+    "provenance": {}
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "invalid"
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_016_m3_s1_v1_to_v2\",\"source_score_id\":\"score_016\",\"source_fingerprint\":\"sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f\",\"instruction\":\"Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.\",\"target_scope\":{\"measures\":[3],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_016_m3_s1_v1_to_v2\",\"type\":\"move_to_voice\",\"selector\":{\"measures\":[3],\"staffs\":[1],\"voices\":[1],\"event_ids\":[\"s016_m3_lh_1\",\"s016_m3_lh_2\",\"s016_m3_lh_3\",\"s016_m3_lh_4\"]},\"arguments\":{\"voice\":2},\"preconditions\":[],\"expected_change_count\":4}],\"expected_effects\":[{\"type\":\"preserve_pitch\"},{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":4}],\"provenance\":{}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_016_m3_s1_v1_to_v2",
+      "source_score_id": "score_016",
+      "source_fingerprint": "sha256:d36f1a6764d4c11d72ba06448cd150c53bca1d4517f2fadb2f458797dfbbdb3f",
+      "instruction": "Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.",
+      "target_scope": {
+        "measures": [
+          3
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_016_m3_s1_v1_to_v2",
+          "type": "move_to_voice",
+          "selector": {
+            "measures": [
+              3
+            ],
+            "staffs": [
+              1
+            ],
+            "voices": [
+              1
+            ],
+            "event_ids": [
+              "s016_m3_lh_1",
+              "s016_m3_lh_2",
+              "s016_m3_lh_3",
+              "s016_m3_lh_4"
+            ]
+          },
+          "arguments": {
+            "voice": 2
+          },
+          "preconditions": [],
+          "expected_change_count": 4
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_pitch"
+        },
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 4
+        }
+      ],
+      "provenance": {}
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1788.4830000111833,
+    "input_tokens": 3017,
+    "output_tokens": 277,
+    "estimated_cost": 0.0012375,
+    "request_id": "3e563823-3133-4532-8ea9-75456c3f0373",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "c38ded3d251c12701ea042df38f20f7f9aca8fd9c39368abff78b4590a6be6bf"
+  },
+  "processing_latency_ms": 1.2243999517522752,
+  "error_codes": [
+    "E06"
+  ],
+  "error": "operation op_016_m3_s1_v1_to_v2 selected no events",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

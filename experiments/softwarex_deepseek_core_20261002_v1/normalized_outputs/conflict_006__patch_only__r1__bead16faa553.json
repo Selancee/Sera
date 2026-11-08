@@ -1,0 +1,38 @@
+{
+  "condition": "patch_only",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction 'make the selected phrase sound mysteriously more beautiful without changing any notation' is not expressible under the supported operation set. No operation can alter perceived beauty or mystery while leaving all notation (pitch, duration, dynamic, articulation, tie, slur, key, meter) unchanged, and the condition_contract provides no assertion format for such a subjective expressive quality.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction 'make the selected phrase sound mysteriously more beautiful without changing any notation' is not expressible under the supported operation set. No operation can alter perceived beauty or mystery while leaving all notation (pitch, duration, dynamic, articulation, tie, slur, key, meter) unchanged, and the condition_contract provides no assertion format for such a subjective expressive quality."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1495.2467000111938,
+    "input_tokens": 2927,
+    "output_tokens": 85,
+    "estimated_cost": 0.0009801,
+    "request_id": "7df37e72-6d6d-4148-9bef-e56acfb563a8",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "e4437c78eb83034b6378bf55bdc476e5e08c9b06944336899f2b5c59af9ae581"
+  },
+  "processing_latency_ms": 0.003100023604929447,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

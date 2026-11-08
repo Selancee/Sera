@@ -1,0 +1,314 @@
+{
+  "condition": "sera_full",
+  "refusal": false,
+  "score_document": null,
+  "musicxml": null,
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_001",
+    "source_score_id": "score_001",
+    "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+    "instruction": "Transpose measure 1 of staff 1 up by a major second while preserving rhythm.",
+    "target_scope": {
+      "measures": [
+        1
+      ],
+      "staffs": [
+        1
+      ]
+    },
+    "protected_scope": {
+      "staffs": [
+        2
+      ]
+    },
+    "preconditions": [],
+    "operations": [
+      {
+        "operation_id": "op_1",
+        "type": "transpose",
+        "selector": {
+          "measures": [
+            1
+          ],
+          "staffs": [
+            1
+          ]
+        },
+        "arguments": {
+          "semitones": 2
+        },
+        "preconditions": [],
+        "expected_change_count": 4
+      }
+    ],
+    "expected_effects": [
+      {
+        "preserve_duration": {}
+      },
+      {
+        "changed_element_count": {
+          "value": 4
+        }
+      }
+    ],
+    "provenance": {}
+  },
+  "patch_parsed": true,
+  "validation_report": {
+    "status": "unsupported",
+    "errors": [
+      {
+        "code": "E19",
+        "message": "unsupported expected effect: ",
+        "stage": "semantic",
+        "repairable": false,
+        "details": {}
+      },
+      {
+        "code": "E19",
+        "message": "unsupported expected effect: ",
+        "stage": "semantic",
+        "repairable": false,
+        "details": {}
+      }
+    ],
+    "warnings": [],
+    "checks": {
+      "schema_version": "1.0.0",
+      "operation_count": 1,
+      "structural": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "event_count": 16,
+          "measure_count": 2,
+          "operation_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "preconditions": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "precondition_count": 0
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "duration": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "expected_quarters": "4",
+          "voice_end_positions": {
+            "m1:left_hand:v1": "4",
+            "m1:right_hand:v1": "4",
+            "m2:left_hand:v1": "4",
+            "m2:right_hand:v1": "4"
+          },
+          "voice_coverage": {
+            "m1:left_hand:v1": {
+              "covered": "4",
+              "gaps": [],
+              "collisions": []
+            },
+            "m1:right_hand:v1": {
+              "covered": "4",
+              "gaps": [],
+              "collisions": []
+            },
+            "m2:left_hand:v1": {
+              "covered": "4",
+              "gaps": [],
+              "collisions": []
+            },
+            "m2:right_hand:v1": {
+              "covered": "4",
+              "gaps": [],
+              "collisions": []
+            }
+          },
+          "pickup_first_measure_allowed": false
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "notation_relations": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "open_ties": 0,
+          "open_slurs": 0,
+          "chord_onsets_checked": 0,
+          "malformed_chords": [],
+          "event_ids_unique": true
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "protected_scope": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "unexpected_changed_elements": 0,
+          "protected_element_count": 12,
+          "preservation_rate": 1.0,
+          "violation_details": []
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "postconditions": {
+        "status": "unsupported",
+        "errors": [
+          {
+            "code": "E19",
+            "message": "unsupported expected effect: ",
+            "stage": "semantic",
+            "repairable": false,
+            "details": {}
+          },
+          {
+            "code": "E19",
+            "message": "unsupported expected effect: ",
+            "stage": "semantic",
+            "repairable": false,
+            "details": {}
+          }
+        ],
+        "warnings": [],
+        "checks": {
+          "expected_effect_count": 2
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      },
+      "musicxml_roundtrip": {
+        "exported": true,
+        "reimported": true,
+        "validator_valid": true,
+        "issues": [],
+        "warnings": [],
+        "metrics": {
+          "valid_musicxml": true,
+          "musicxml_parseable": true,
+          "music21_parseable": true,
+          "musicxml_exportable": true,
+          "measure_count": 2,
+          "expected_measure_count": null,
+          "measure_count_match": true,
+          "bar_completeness": 1.0,
+          "bar_completeness_score": 1.0,
+          "pitch_range_valid": true,
+          "pitch_count": 16,
+          "empty_measure_count": 0,
+          "rest_only_measure_count": 0,
+          "midi_export_success": true,
+          "pdf_export_success": true
+        }
+      },
+      "roundtrip_fidelity": {
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "source_event_count": 16,
+          "imported_event_count": 16,
+          "missing_event_ids": [],
+          "added_event_ids": [],
+          "field_mismatches": [],
+          "global_mismatches": [],
+          "fidelity_rate": 1.0
+        },
+        "repairable": false,
+        "suggested_repairs": []
+      }
+    },
+    "repairable": false,
+    "suggested_repairs": []
+  },
+  "provider_response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_001\",\"source_score_id\":\"score_001\",\"source_fingerprint\":\"sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b\",\"instruction\":\"Transpose measure 1 of staff 1 up by a major second while preserving rhythm.\",\"target_scope\":{\"measures\":[1],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_1\",\"type\":\"transpose\",\"selector\":{\"measures\":[1],\"staffs\":[1]},\"arguments\":{\"semitones\":2},\"preconditions\":[],\"expected_change_count\":4}],\"expected_effects\":[{\"preserve_duration\":{}},{\"changed_element_count\":{\"value\":4}}],\"provenance\":{}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_001",
+      "source_score_id": "score_001",
+      "source_fingerprint": "sha256:ae79685e482f1519a773da94df5c0a8e60542d79f608f933136360f862559c2b",
+      "instruction": "Transpose measure 1 of staff 1 up by a major second while preserving rhythm.",
+      "target_scope": {
+        "measures": [
+          1
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_1",
+          "type": "transpose",
+          "selector": {
+            "measures": [
+              1
+            ],
+            "staffs": [
+              1
+            ]
+          },
+          "arguments": {
+            "semitones": 2
+          },
+          "preconditions": [],
+          "expected_change_count": 4
+        }
+      ],
+      "expected_effects": [
+        {
+          "preserve_duration": {}
+        },
+        {
+          "changed_element_count": {
+            "value": 4
+          }
+        }
+      ],
+      "provenance": {}
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1828.1966000213288,
+    "input_tokens": 2569,
+    "output_tokens": 195,
+    "estimated_cost": 0.0010046999999999999,
+    "request_id": "680f2ff3-9849-4a2e-84b4-cb628a03565a",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "3384ea33e24ab8f3b3db8f43fd84128c5198b91efb7d85d933ac8c9a0ee1e863"
+  },
+  "processing_latency_ms": 17.664299986790866,
+  "error_codes": [
+    "E19",
+    "E19"
+  ],
+  "error": "post-apply validation failed",
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

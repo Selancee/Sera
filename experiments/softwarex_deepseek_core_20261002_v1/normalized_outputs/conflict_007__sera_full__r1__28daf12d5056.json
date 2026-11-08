@@ -1,0 +1,38 @@
+{
+  "condition": "sera_full",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"Changing measure 1 to 5/8 would alter the meter of a single measure while preserving all durations and adding no rests, which is impossible because the existing measure contains six eighth-note positions (6/8) and cannot fit into 5/8 without changing durations, deleting events, or adding rests; the instruction is internally conflicting.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "Changing measure 1 to 5/8 would alter the meter of a single measure while preserving all durations and adding no rests, which is impossible because the existing measure contains six eighth-note positions (6/8) and cannot fit into 5/8 without changing durations, deleting events, or adding rests; the instruction is internally conflicting."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1836.993300006725,
+    "input_tokens": 3617,
+    "output_tokens": 78,
+    "estimated_cost": 0.0011786999999999998,
+    "request_id": "67174701-3271-4842-b9de-1846eabfef8e",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "d6643df1420c98f47a4f08908282dd612dd6e14719ae38f11b74c937d19ad2eb"
+  },
+  "processing_latency_ms": 0.002500019036233425,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}

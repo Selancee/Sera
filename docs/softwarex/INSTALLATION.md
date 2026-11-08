@@ -2,7 +2,8 @@
 
 ## Supported environment
 
-The research source is tested on 64-bit Windows 11 with Python 3.12 and Node.js.
+The revision was tested on Windows 11 build 10.0.26200, Python 3.12.5,
+Node.js 24.16.0 and npm 11.13.0 (3 October 2026).
 The Python package declares Python 3.10 or newer. The Electron desktop package is
 currently Windows-only. MuseScore Studio 4.x is optional and is required only for
 the notation-host bridge; the benchmark and core transaction tests run without it.
@@ -27,6 +28,35 @@ for the evidence map.
 2026-08-27 verification. It is intentionally a constraints file: pip still resolves
 transitive packages, while experiment manifests preserve a dependency inventory and
 hash for drift checking.
+
+## POSIX source-level reviewer path
+
+The Python core is distinct from the Windows desktop/automatic host integration.
+The reviewer reported that the core runs on macOS; we have not independently
+retested macOS or Linux in this revision. The following are source-level commands,
+not a claim that a macOS/Linux application package or automated bridge exists.
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt -r requirements-publication.txt
+python scripts/run_reviewer_demo.py
+python scripts/validate_benchmark.py --split core
+python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000
+```
+
+Do not apply the Windows constraints as a verified POSIX lock. Save `python -m pip
+freeze` and the OS/Python version when reproducing on another platform. The demo
+requires no provider, host detection, Windows credential store or Node.js. Open its
+exported MusicXML manually in a notation application. The HTTP schema is at
+`http://127.0.0.1:8000/docs`; this route is not the automated MuseScore bridge.
+
+For optional source UI development, use `npm --prefix frontend ci` and
+`npm --prefix frontend run dev` in a second terminal. Configure optional provider
+credentials through environment variables, not the Windows-only stored-credential
+UI. Local-first does not mean that remote LLM mode is offline: that mode sends
+instructions and score context to the chosen service.
 
 ## Optional frontend and desktop development
 
@@ -85,8 +115,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File packaging\windows\smoke_test
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_reviewer_demo.py
 .\.venv\Scripts\python.exe scripts\validate_benchmark.py --split core --write-report
-.\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\core_mock.yaml --experiment-id softwarex_verification_120_v1
-.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_verification_120_v1 --skip-tests
+.\.venv\Scripts\python.exe scripts\run_core_experiment.py --config evaluation\configs\core_mock.yaml --experiment-id reviewer_new_fixture
+.\.venv\Scripts\python.exe scripts\verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests
 .\.venv\Scripts\python.exe scripts\verify_softwarex_package.py --profile draft
 ```
 
@@ -103,3 +133,14 @@ npm.cmd --prefix frontend run build
 
 The intentional error messages printed by `RuntimeErrorBoundary.test.jsx` exercise
 the UI error boundary; the Vitest exit code and final summary determine success.
+
+## Saved real-model evidence without new API calls
+
+```powershell
+.\.venv\Scripts\python.exe scripts/verify_reproducibility.py --experiment softwarex_deepseek_core_20261002_v1 --skip-tests --output-dir artifacts/reviewer_live_audit
+```
+
+On POSIX, replace the interpreter prefix with `python`. This verifies saved outputs;
+it does not invoke DeepSeek. The exact producing implementation is fingerprinted.
+Retain the immutable tested source candidate when auditing an older experiment.
+See the R1 `DEEPSEEK_RESULTS.md` for results, denominators and limitations.

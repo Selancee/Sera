@@ -1,0 +1,30 @@
+Zenodo new-version draft 23117392
+Status: DOI reserved, unpublished
+DOI: 10.5281/zenodo.23117392
+
+Title
+SeraEdit: Scoped and Validated Language-Guided MusicXML Editing (SoftwareX R1 source and evidence)
+
+Version
+softwarex-r1-20261003
+
+Description
+SeraEdit is local-first research software for scoped, source-bound MusicXML editing through ScorePatch transactions, deterministic validation and reversible execution. This SoftwareX R1 source and evidence revision preserves the original v1.0.0 deposit while correcting fixture reproducibility and source-archive completeness. It includes saved DeepSeek three-condition outputs, a 200-case constructed-error study, and native MuseScore bridge screenshots with XML verification.
+
+On the development benchmark, strict editing success is 72/110 for Full Rewrite, 65/110 for Patch Only and 63/110 for Sera Full. Sera Full records no measured non-target changes among 73 output scores, but erroneously refuses 34 executable requests. These results demonstrate a protection/completion tradeoff; they do not establish overall superiority or held-out generalization. The 720-run local rule-based replay is regression evidence on the same benchmark.
+
+The revision head is 0d319bc381cfc21687adaeff06dcb1f7797b8f18. Hosted CI run 37096317165 passed 447 Python tests from an isolated source archive, 133 frontend tests and the production build, and 14 saved-live-evidence checks. All 4,359 source-file hashes and 95 companion manuscript-file hashes were verified. The attached ZIP bytes are those tested by CI. Their manifest records synthetic PR merge a8535862f537ac91ea1331b94a29202908a3ca84, whose tree equals the revision head. Internal version 1.0.0 identifies the historical software version; softwarex-r1-20261003 identifies this separately archived revision.
+
+The manuscript snapshot captures the tested preparation stage; its pending publication fields do not describe the final journal submission. This deposit contains source and research evidence, with no new desktop installer. The original 1.0.0 software deposit remains at https://doi.org/10.5281/zenodo.22128976. Code is MIT licensed, the synthetic benchmark is CC0-1.0, and dependencies retain their own licenses.
+
+Resource type: Software
+Creator: Gao, Yuan
+Affiliation: Zhejiang Conservatory of Music
+ORCID: 0009-0005-0394-3623
+License: MIT
+Language: English
+Repository: https://github.com/Selancee/Sera
+CI evidence: https://github.com/Selancee/Sera/actions/runs/37096317165
+
+Submission availability wording while publication is pending
+The original software version 1.0.0 remains archived at https://doi.org/10.5281/zenodo.22128976. The SoftwareX R1 source and research-evidence snapshot has reserved DOI 10.5281/zenodo.23117392 in Zenodo draft 23117392; publication and public-download verification remain pending. The original DOI does not contain the new real-model or constructed-error study. This reserved DOI must not yet be described as a publicly available revision deposit.

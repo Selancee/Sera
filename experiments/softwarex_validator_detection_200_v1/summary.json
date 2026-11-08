@@ -1,0 +1,125 @@
+{
+  "created_at": "2026-10-02T12:57:44.056885+00:00",
+  "git": {
+    "commit": "230dbf7aeb0638121c9defa274a8a656f4192ac9",
+    "dirty": false
+  },
+  "source_hashes": {
+    "benchmark/source_scores/score_001.score.json": "f80940fbdb37798cd1e5e86dddb5cbf07ef93cc6e21137c2047cf16bb1b83b7a",
+    "benchmark/source_scores/score_002.score.json": "d640fa6f9314396023c625891e8b07681da531522cf1a6030ccb45d01ceac312",
+    "benchmark/source_scores/score_003.score.json": "95e19f1a6b0a64d474341a11af2be05a3f1fe33ebb92437355946564fcaf8fbf",
+    "benchmark/source_scores/score_004.score.json": "c293a6ca42263b063f16f554cc6815209f6016a5cf7c56a9d4bdf2f8d780b811",
+    "benchmark/source_scores/score_005.score.json": "5e8693cb7827fa290de9880979699e3772c20da1e9243b9e14fba034b6a7b56d",
+    "benchmark/source_scores/score_006.score.json": "e762da64c51530540fdafef1e7b8fa79715dbf60d14c3bed32fcff9b2850b5cf",
+    "benchmark/source_scores/score_007.score.json": "fbcbff3ca129b8337fa9051f147b2386f527e0532081e63a76208d99aad4e539",
+    "benchmark/source_scores/score_008.score.json": "6a7669fd14ba9ab05e17ded6058376e5832c0ea23e3b69f9055a8ed0e0df075e",
+    "benchmark/source_scores/score_009.score.json": "a2e3abfe2b9b4b2369c647f1198bcac6b9033999cb8d1d94436481990cfd5845",
+    "benchmark/source_scores/score_010.score.json": "7b34e0f6bde361e1af6133712457450b7db87899b05b59ea86b0049ca8030705",
+    "benchmark/source_scores/score_011.score.json": "b8884158150d78904bc8932625186eff7f50d44a77e81f64984b34c3ae7e62b4",
+    "benchmark/source_scores/score_012.score.json": "753b19c6ff0052849abdd3170ae85fd418602dc5c1bcbbe7a7b588a7cf8f182a",
+    "benchmark/source_scores/score_013.score.json": "4d3ca9f892fb29f0edea63989c903c723a5aed1be901f5fa6ed38eb99963c9ea",
+    "benchmark/source_scores/score_014.score.json": "3b4d587612700dbe2d436cb0369cd3e6e99402b6e6e63d5316718227d658aa9f",
+    "benchmark/source_scores/score_015.score.json": "3a69052611417bb8fec56bae04a01e1a2ff236e0b1080259e5583a96ccde4649",
+    "benchmark/source_scores/score_016.score.json": "be206976cabee695694106700cd93139d26f2eedfb0116340f55042719c1c4e8",
+    "benchmark/source_scores/score_017.score.json": "bd19b4f46805cf5e871085f227cebd0141a9d0108d1ab3ce9c86f409d376e90a",
+    "benchmark/source_scores/score_018.score.json": "2839b198ef1b79402e38512591ade5d9afc0cb20714d6dc72cedf3ca3fe04d42",
+    "benchmark/source_scores/score_019.score.json": "062445a8217634aa6a4d9f9f1c75faed60535803402810ed3b4755c583928454",
+    "benchmark/source_scores/score_020.score.json": "a05a626089429d03a4cf221316baa512c694d8f13ca199f0e9dd944fd7b503f0"
+  },
+  "source_count": 20,
+  "case_count": 200,
+  "families": {
+    "duration_overflow": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "missing_event": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "missing_schema": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "orphan_slur": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "orphan_tie": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "preserve_pitch_violation": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "protected_edit": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "stale_source": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    },
+    "valid_dynamic": {
+      "n": 20,
+      "invalid": false,
+      "rejected": 3,
+      "false_positive_rate": 0.15,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 3
+    },
+    "wrong_dynamic_semantics": {
+      "n": 20,
+      "invalid": true,
+      "rejected": 20,
+      "detection_rate": 1.0,
+      "exceptions": 0,
+      "caller_unchanged": 20,
+      "rollback_verified": 20
+    }
+  },
+  "scope": "Constructed mutation detection on existing synthetic sources; not model error prevalence or generalization.",
+  "cases_sha256": "c6434bfdf4cec7a5b6a0d2274e860278bc8fb7d84e861a3ab09f692c9136b99b"
+}

@@ -1,0 +1,76 @@
+您必须在发送评论回复前回复每一条评论
+作者评论
+
+排序与筛选
+Reviewer 1 -
+初稿，
+9月23日
+SeraEdit is local-first software that turns a natural-language request into a versioned ScorePatch bound to stable event identifiers, target and protected scopes, and a source fingerprint, then validates schema, duration, notation relations and protected content through atomic MusicXML round trips. It ships 20 public-domain synthetic scores, 120 tasks, three isolated conditions, an offline reviewer demo, a desktop interface and a MuseScore bridge. The tagged release is reachable and the documented offline reviewer path runs, but the manuscript's central three-condition comparison reports no per-condition outcomes, and the release does not reproduce its own reproducibility check. Usable engineering prototype; the reliability claims are asserted, not demonstrated.
+
+Strengths
+
+1. The manuscript frames a specific systems problem: a language-guided edit represented as a source-bound, scoped patch transaction that can be rejected, rather than a wholesale MusicXML rewrite.
+
+2. The mechanism is implemented and reviewer-reproducible offline: the documented reviewer command completes the promised six tasks, yielding five host-openable MusicXML revisions and one expected refusal, with no network access or API key.
+
+3. The three evaluation conditions exist as three separate code paths, and only the fully validated transaction receives bounded repair, so the intended contrast is structurally real rather than a narrative label.
+
+4. The benchmark is a concrete, licensed artifact: twenty CC0 synthetic source scores and 120 tasks with declared target and protected scopes, deterministic constraints, and gold and expected records, all retrievable from the tagged release.
+
+Weaknesses
+
+1. The comparison the paper is built around is never scored. Section 1, p.3 states that three separately implemented conditions "compare full-document rewriting, unprotected structured patches, and a fully validated transaction", and the end of Section 2.2, p.4 lists "Full Rewrite, Patch Only, and Sera Full". Section 3 and Table 3, p.6 report no outcome per condition: "360/360 task-condition cases" counts cases executed, not a contrast between conditions, and no accuracy, error rate or preservation measure is attributed to any condition. That layered validation and protected scopes improve edits is therefore asserted, not demonstrated. No external editing tool is used as a reference point either.
+
+2. Section 3, p.5 states "Reproducibility checks confirmed configuration, benchmark, prompt, dependency, evidence, metric-row and run-count integrity." On the release that Table 1 C2 designates permanent, the repository's own verify_reproducibility.py reports three failed checks, namely benchmark hash, dependency-lock hash and metric-row equality, with 6 of 360 metric rows disagreeing with the shipped benchmark. A clean checkout gives 1 failed, 409 passed, 1 skipped, and 411 collected rather than the 408 reported; the failing test reads a directory excluded by .gitignore. The same workflow also failed on the v1.0.0 commit itself before a later fix.
+
+3. Table 2 S5 and Table 1 C7 identify Windows 10/11, but no section states the consequence for the notation users the paper targets. Host detection is limited to Program Files and drive letters, credential storage raises an error off Windows, the runtime resolves %LOCALAPPDATA%, the Electron package builds only for Windows, and the installation guide gives PowerShell only. On macOS, however, the Python core runs the reviewer demo, benchmark validation and FastAPI service, so this is a documentation and packaging gap rather than a design limit. As written, a large share of MuseScore users cannot follow the documented path.
+
+4. Section 1, p.3 frames the novelty by analogy to "structured code-editing evaluation" but cites only CodeEditorBench [6]; the code-domain line that established this pattern, patch acceptance decided by executed tests by Jimenez et al. 2023, arXiv:2310.06770, or edit instructions judged by post-edit unit tests by Cassano et al. 2023, arXiv:2312.12450, both independent work by other groups and unrelated to this manuscript, is absent, as is the closest instruction-driven symbolic-editing work, Zhang 2025, arXiv:2505.08203. MuseScore is used by the bridge but never cited. With seven references, the novelty claim and the impact framing in Section 4, p.7 cannot be assessed against the state of the art.
+
+5. Internal reporting is inconsistent. The two abstract versions differ in quantity words, closing phrase and keyword count, four keywords on the submission sheet against six on p.1. The validator set is listed three times with different membership: six items in the abstract, seven at the end of Section 2.2, p.3, and a third list in the cover letter. Section 1, p.3 and the end of Section 2.2, p.4 name the conditions in two incompatible ways. In Section 3, p.6 the host-scope result shifts from runs to tasks within one sentence, "240/240 bilingual runs ... The remaining 66 tasks", while Table 3, p.6 records only "240 runs".
+
+6. The manuscript claims a desktop interface and a MuseScore bridge that expose proposals, diffs, rejection reasons and undo (Abstract, p.1) and describes the bridge in Section 3, p.5, but the submission contains one figure only: Figure 1, p.4, a box-and-arrow architecture diagram. There is no screenshot, no screencast and no supplementary material. The journal's own review criteria treat screenshots and video as evidence that the software runs as described, so the interface, the diff view, the rejection reasons and the bridge cannot be confirmed visually.
+
+Questions to the Authors
+
+1. Do any of the reported runs use an actual model provider? The shipped experiment manifests reference mock fixtures and local rules only. If model-backed results exist, where are they, and if not, what does Section 3 establish beyond pipeline determinism?
+
+2. What metric, and what outcome, belongs to each of Full Rewrite, Patch Only and Sera Full? Section 1, p.3 says the three are compared, yet no per-condition number appears anywhere in the manuscript.
+
+3. Which artifact should be treated as the authoritative permanent release, the v1.0.0 tag or the Zenodo deposit, and on which of the two were the checks reported in Section 3, p.5 performed?
+
+4. Is the desktop and host layer intended to remain Windows-only? If so, how are non-Windows notation users expected to reach the advertised MuseScore bridge?
+
+5. Section 3, p.5 reports 408 Python tests; a clean checkout collects 411 and reports one failure. Which state of the suite should be regarded as verified?
+
+Suggestions
+
+1. Make the release self-consistent and re-verify it end to end: include the evaluation package in the source archive so the documented reviewer command works there too, add .gitattributes and recompute the human-review hashes, either set the archive DOI in the publication configuration or remove the DOI from Table 1 C3 and Table 2 S3, regenerate the metric file so the reproducibility verifier passes on the tag, get the test suite green on a clean checkout and correct the 408 figure, re-run the continuous-integration workflow to green, and add an SPDX identifier to each Python, TypeScript and JavaScript source file.
+
+2. Either report the three-condition comparison or withdraw the comparison claim: add a per-condition table with metric definitions and outcomes for Full Rewrite, Patch Only and Sera Full, together with at least one run that states a real provider, model version and date; if the three conditions are only integration paths, restate Section 1, p.3 and the end of Section 2.2, p.4 accordingly and drop the word "compare".
+
+3. Anchor the contribution in the literature: cite the code-domain patch-and-test and edit-instruction lines, the instruction-driven symbolic-editing and symbolic benchmark work, and MuseScore itself, and state explicitly what remains novel relative to each.
+
+4. Make the documented path usable off Windows: add POSIX installation commands to the guide, state the Windows-only boundary in the abstract or in Section 2 rather than only in the metadata table, and move the exact environment versions reported in Section 3, p.5 into Table 1 C7 together with versions for Node and npm.
+
+5. Improve consistency and presentation: unify the two abstracts and keyword lists, publish one validator list under one naming, map the two condition namings, fix the runs-to-tasks unit change and the corresponding Table 3 entry, provide interface screenshots or a short screencast, update the stale requirements matrix and reproducibility boundary text, and correct the singular and plural headings of the competing-interest declaration on p.10.
+
+显示更少
+回复评论
+开始打字......
+
+帖子
+
+取消
+Reviewer 2 -
+初稿，
+9月28日
+The manuscript presents SeraEdit, a local-first tool that represents a language-guided MusicXML edit as a versioned ScorePatch. Each patch is bound to a source fingerprint and declares target and protected scopes. Patches are applied inside an atomic transaction with layered validation and a MusicXML round trip. The central design principle is that models may propose edits, but deterministic validators and the user decide whether a revision is committed. This is sound and useful, and it fits the scope of SoftwareX. I also appreciate the explicit claim boundaries: Table 3 states what each piece of evidence supports.
+
+My main concern is a mismatch between the paper's central claim and its evidence. The title and motivation claim reliable language-guided editing, i.e., that structured patches reduce unintended changes compared with full-document LLM rewriting. All reported evidence, however, comes from fixture or local rule-based paths. No real model run supports this claim. In addition, the ability of the validators to detect errors is asserted but never measured.
+
+The software implements three conditions (Full Rewrite, Patch Only, Sera Full), but the manuscript reports only that the fixture pipeline executes (360/360). SoftwareX does not require state-of-the-art results. It is reasonable, though, to expect a demonstration that the software supports the research it is designed for.
+
+The 720/720 replay uses a local rule-based generator without Gold patches. Please state whether this generator was developed or tuned on the same 120 instructions. Lines 111–114 say full agreement was reached only after "correcting a Chinese preserve-pitch/tenuto ambiguity," which suggests the generator was modified after seeing benchmark results. In that case, 720/720 is regression evidence, not evidence of generalization.
+
+显示更少

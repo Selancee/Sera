@@ -17,6 +17,7 @@ from backend.services.score_document_service import normalize_score_document
 from evaluation.benchmark_io import load_task
 from evaluation.conditions.sera_edit_conditions import ConditionOutcome
 from evaluation.metrics.sera_edit_metrics import compute_task_metrics
+from evaluation.runners.experiment_runner import _failure_metrics
 from sera_edit.providers.base import ProviderResponse
 
 
@@ -45,7 +46,10 @@ def recompute(experiment_dir: Path, output: Path) -> dict[str, Any]:
     """Recreate metric rows without consulting a model or modifying raw evidence."""
 
     manifest = _load_json(experiment_dir / "manifest.json")
-    benchmark_root = ROOT / "benchmark"
+    import yaml
+
+    config = yaml.safe_load((experiment_dir / "config_snapshot.yaml").read_text(encoding="utf-8"))
+    benchmark_root = ROOT / config.get("benchmark_root", "benchmark")
     rows: list[dict[str, Any]] = []
     for line in (experiment_dir / "runs.jsonl").read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -59,8 +63,11 @@ def recompute(experiment_dir: Path, output: Path) -> dict[str, Any]:
             else None
         )
         normalized = _load_json(ROOT / run["normalized_output_path"])
-        outcome = _restore_outcome(normalized)
-        metrics = compute_task_metrics(task, source, outcome, expected)
+        if normalized.get("error_codes") == ["E20"] and "provider_response" not in normalized:
+            metrics = _failure_metrics(task, run["condition"], normalized["error"])
+        else:
+            outcome = _restore_outcome(normalized)
+            metrics = compute_task_metrics(task, source, outcome, expected)
         metrics.update(
             {
                 "run_id": run["run_id"],
@@ -77,12 +84,12 @@ def recompute(experiment_dir: Path, output: Path) -> dict[str, Any]:
     report = {
         "experiment_id": manifest["experiment_id"],
         "source": str((experiment_dir / "runs.jsonl").relative_to(ROOT)).replace("\\", "/"),
-        "output": str(output.relative_to(ROOT)).replace("\\", "/"),
+        "output": output.name,
         "rows": len(rows),
         "provider_calls": 0,
         "note": "Metrics were deterministically recomputed from saved normalized outputs.",
     }
-    (experiment_dir / "recompute_manifest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (output.parent / "recompute_manifest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return report
 
 

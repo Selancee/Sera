@@ -1,0 +1,50 @@
+{
+  "render_clean": {
+    "pages": 10,
+    "pixel_identical_to_prior_inspected_pages": [
+      "page-4.png",
+      "page-5.png",
+      "page-6.png",
+      "page-7.png",
+      "page-8.png",
+      "page-9.png",
+      "page-10.png"
+    ],
+    "requires_visual_inspection": [
+      "page-1.png",
+      "page-2.png",
+      "page-3.png"
+    ]
+  },
+  "render_marked": {
+    "pages": 10,
+    "pixel_identical_to_prior_inspected_pages": [
+      "page-4.png",
+      "page-5.png",
+      "page-6.png",
+      "page-7.png",
+      "page-8.png",
+      "page-9.png",
+      "page-10.png"
+    ],
+    "requires_visual_inspection": [
+      "page-1.png",
+      "page-2.png",
+      "page-3.png"
+    ]
+  },
+  "render_response": {
+    "pages": 7,
+    "pixel_identical_to_prior_inspected_pages": [
+      "page-6.png",
+      "page-7.png"
+    ],
+    "requires_visual_inspection": [
+      "page-1.png",
+      "page-2.png",
+      "page-3.png",
+      "page-4.png",
+      "page-5.png"
+    ]
+  }
+}

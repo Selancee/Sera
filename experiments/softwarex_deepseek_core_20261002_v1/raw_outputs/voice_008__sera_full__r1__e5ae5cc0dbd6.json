@@ -1,0 +1,113 @@
+{
+  "run_id": "voice_008:sera_full:r1",
+  "request": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return only a ScorePatch 1.0.0 JSON object using the supplied schema and event IDs. Copy the source identity, fingerprint, target_scope and protected_scope exactly. Implement the instruction while preserving unspecified content. For conflicting or unsupported instructions return {\"refusal\":true,\"reason\":\"...\"}. Do not return prose or Markdown. Follow the public condition_contract for preconditions and expected_effects; do not invent assertion formats."
+      },
+      {
+        "role": "user",
+        "content": "{\"instruction\":\"Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.\",\"target_scope\":{\"measures\":[3],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"score_context\":{\"score_id\":\"score_014\",\"source_fingerprint\":\"sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a\",\"global\":{\"key\":\"B-flat major\",\"meter\":\"4/4\",\"tempo\":96,\"pickup\":false},\"included_measures\":[2,3,4],\"events\":[{\"event_id\":\"s014_m2_lh_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"E3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_lh_v2_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":2,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"A2\",\"duration\":\"whole\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_rh_1\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"E4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_lh_2\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"D3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_rh_2\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"G4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_lh_3\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"G3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_rh_3\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"A4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_lh_4\",\"measure\":2,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"C3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m2_rh_4\",\"measure\":2,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"B4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_lh_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"G3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_lh_v2_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":2,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"F2\",\"duration\":\"whole\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_rh_1\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"0\",\"type\":\"note\",\"pitch\":\"G4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_lh_2\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"C3\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_rh_2\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"1\",\"type\":\"note\",\"pitch\":\"A4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_lh_3\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"G2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_rh_3\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"2\",\"type\":\"note\",\"pitch\":\"B4\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_lh_4\",\"measure\":3,\"part\":\"piano\",\"staff\":\"left_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"A2\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false},{\"event_id\":\"s014_m3_rh_4\",\"measure\":3,\"part\":\"piano\",\"staff\":\"right_hand\",\"voice\":1,\"offset\":\"3\",\"type\":\"note\",\"pitch\":\"C5\",\"duration\":\"quarter\",\"dynamic\":\"mf\",\"articulations\":[],\"tie\":null,\"slur\":null,\"grace\":false,\"is_chord_tone\":false}]},\"response_schema\":{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"title\":\"SeraEdit patch or refusal response\",\"oneOf\":[{\"title\":\"SeraEdit ScorePatch\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_version\",\"patch_id\",\"source_score_id\",\"source_fingerprint\",\"instruction\",\"target_scope\",\"protected_scope\",\"preconditions\",\"operations\",\"expected_effects\",\"provenance\"],\"properties\":{\"schema_version\":{\"const\":\"1.0.0\"},\"patch_id\":{\"type\":\"string\",\"minLength\":1},\"source_score_id\":{\"type\":\"string\",\"minLength\":1},\"source_fingerprint\":{\"type\":\"string\",\"pattern\":\"^sha256:[0-9a-f]{64}$\"},\"instruction\":{\"type\":\"string\",\"minLength\":1},\"target_scope\":{\"$ref\":\"#/$defs/scope\"},\"protected_scope\":{\"$ref\":\"#/$defs/scope\"},\"preconditions\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"operations\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/operation\"}},\"expected_effects\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"provenance\":{\"type\":\"object\"}}},{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"refusal\",\"reason\"],\"properties\":{\"refusal\":{\"const\":true},\"reason\":{\"type\":\"string\",\"minLength\":1}}}],\"$defs\":{\"scope\":{\"type\":\"object\",\"additionalProperties\":false,\"properties\":{\"measures\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"parts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"staffs\":{\"type\":\"array\",\"items\":{\"oneOf\":[{\"type\":\"integer\",\"minimum\":1},{\"type\":\"string\"}]},\"uniqueItems\":true},\"voices\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"event_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"exclude_measures\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"minimum\":1},\"uniqueItems\":true},\"exclude_event_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true},\"time_range\":{\"oneOf\":[{\"type\":\"null\"},{\"type\":\"array\",\"prefixItems\":[{\"type\":[\"string\",\"number\"]},{\"type\":[\"string\",\"number\"]}],\"minItems\":2,\"maxItems\":2},{\"type\":\"object\",\"required\":[\"start\",\"end\"],\"properties\":{\"start\":{\"type\":[\"string\",\"number\"]},\"end\":{\"type\":[\"string\",\"number\"]}},\"additionalProperties\":false}]},\"whole_score\":{\"type\":\"boolean\"}}},\"operation\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"operation_id\",\"type\",\"selector\",\"arguments\",\"preconditions\"],\"properties\":{\"operation_id\":{\"type\":\"string\",\"minLength\":1},\"type\":{\"enum\":[\"transpose\",\"set_pitch\",\"set_duration\",\"insert_note\",\"insert_rest\",\"delete_event\",\"set_dynamic\",\"set_articulation\",\"set_tie\",\"set_slur\",\"change_key_signature\",\"change_time_signature\",\"move_to_voice\",\"duplicate_motif\",\"replace_chord\",\"batch\"]},\"selector\":{\"type\":\"object\"},\"arguments\":{\"type\":\"object\"},\"preconditions\":{\"type\":\"array\",\"items\":{\"type\":\"object\"}},\"expected_change_count\":{\"type\":[\"integer\",\"null\"],\"minimum\":0}}}}},\"operation_arguments\":{\"transpose\":{\"semitones\":\"integer\"},\"set_pitch\":{\"pitch\":\"C4-style pitch\"},\"set_duration\":{\"duration\":\"whole/half/quarter/eighth/16th, optionally dotted\"},\"set_dynamic\":{\"dynamic\":\"ppp/pp/p/mp/mf/f/ff/fff\"},\"set_articulation\":{\"articulations\":\"list of notation names\"},\"set_tie\":{\"tie\":\"start/stop/continue or null\"},\"set_slur\":{\"slur\":\"start/stop/continue or null\"},\"move_to_voice\":{\"voice\":\"positive integer\"},\"delete_event\":{},\"insert_note\":{\"pitch\":\"pitch\",\"duration\":\"duration name\",\"offset\":\"quarter-note units\",\"staff\":\"1 or 2\",\"voice\":\"integer\",\"event_id\":\"new unique ID\"},\"insert_rest\":{\"duration\":\"duration name\",\"offset\":\"quarter-note units\",\"staff\":\"1 or 2\",\"voice\":\"integer\",\"event_id\":\"new unique ID\"},\"change_key_signature\":{\"key\":\"key name; requires whole_score target\"},\"change_time_signature\":{\"meter\":\"numerator/denominator; requires whole_score target\"},\"duplicate_motif\":{\"target_measure\":\"integer\",\"offset_delta\":\"quarter-note units\"},\"replace_chord\":{\"pitches\":\"list of pitches\"},\"batch\":{\"operations\":\"list of operation objects\"}},\"condition_contract\":{\"preconditions\":{\"format\":\"An array of objects with a type field; use [] when no additional precondition is needed.\",\"supported_forms\":[{\"type\":\"event_exists\",\"event_id\":\"<existing event ID>\"},{\"type\":\"minimum_event_count\",\"value\":\"<integer>\"}],\"operation_preconditions\":\"Use [] (operation-level semantic assertions are not implemented).\"},\"expected_effects\":{\"format\":\"An array of objects with a type field. Do not use the type name as an object key. Use [] if none is needed.\",\"supported_forms\":[{\"type\":\"preserve_pitch\"},{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":\"<integer>\"},{\"type\":\"dynamic_equals\",\"event_id\":\"<existing event ID>\",\"value\":\"<dynamic name>\"}]},\"operation_expected_change_count\":\"Optional: omit or set null unless the exact number of affected event IDs is known. This counts event IDs, not global attributes; change_key_signature and change_time_signature count zero event IDs.\",\"selectors\":\"set_pitch/set_duration/set_dynamic/set_articulation/set_tie/set_slur/move_to_voice/delete_event require event_ids. insert_note/insert_rest require measures.\"}}"
+      }
+    ],
+    "response_schema_hash": "d37c2236824176f3781464df45180adc564931532a44889f8e4188e6a80f9dd0",
+    "temperature": 0,
+    "seed": null,
+    "max_tokens": 8192,
+    "thinking": "disabled",
+    "prompt_protocol": "answer_blind_v3"
+  },
+  "response": {
+    "raw_text": "{\"schema_version\":\"1.0.0\",\"patch_id\":\"patch_s014_m3_staff1_v1_to_v2\",\"source_score_id\":\"score_014\",\"source_fingerprint\":\"sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a\",\"instruction\":\"Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.\",\"target_scope\":{\"measures\":[3],\"staffs\":[1]},\"protected_scope\":{\"staffs\":[2]},\"preconditions\":[],\"operations\":[{\"operation_id\":\"op_s014_m3_lh_move_v1_to_v2\",\"type\":\"move_to_voice\",\"selector\":{\"event_ids\":[\"s014_m3_lh_1\",\"s014_m3_lh_2\",\"s014_m3_lh_3\",\"s014_m3_lh_4\"]},\"arguments\":{\"voice\":2},\"preconditions\":[],\"expected_change_count\":4}],\"expected_effects\":[{\"type\":\"preserve_pitch\"},{\"type\":\"preserve_duration\"},{\"type\":\"changed_element_count\",\"value\":4}],\"provenance\":{\"source\":\"score_014\",\"derivation\":\"move_to_voice on measure 3 staff 1 voice 1 events\"}}",
+    "parsed_output": {
+      "schema_version": "1.0.0",
+      "patch_id": "patch_s014_m3_staff1_v1_to_v2",
+      "source_score_id": "score_014",
+      "source_fingerprint": "sha256:b95e4c1a24e82c17aec6815f27372cbaefe668cb6432fbc76e314fe1d901393a",
+      "instruction": "Move all notes in measure 3 staff 1 from voice 1 to voice 2, preserving pitch and rhythm.",
+      "target_scope": {
+        "measures": [
+          3
+        ],
+        "staffs": [
+          1
+        ]
+      },
+      "protected_scope": {
+        "staffs": [
+          2
+        ]
+      },
+      "preconditions": [],
+      "operations": [
+        {
+          "operation_id": "op_s014_m3_lh_move_v1_to_v2",
+          "type": "move_to_voice",
+          "selector": {
+            "event_ids": [
+              "s014_m3_lh_1",
+              "s014_m3_lh_2",
+              "s014_m3_lh_3",
+              "s014_m3_lh_4"
+            ]
+          },
+          "arguments": {
+            "voice": 2
+          },
+          "preconditions": [],
+          "expected_change_count": 4
+        }
+      ],
+      "expected_effects": [
+        {
+          "type": "preserve_pitch"
+        },
+        {
+          "type": "preserve_duration"
+        },
+        {
+          "type": "changed_element_count",
+          "value": 4
+        }
+      ],
+      "provenance": {
+        "source": "score_014",
+        "derivation": "move_to_voice on measure 3 staff 1 voice 1 events"
+      }
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1971.4592000236735,
+    "input_tokens": 3017,
+    "output_tokens": 288,
+    "estimated_cost": 0.0012507,
+    "request_id": "15ea9572-263a-4e1a-93f8-731e8ff715be",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "8feb10077a90fb5b87a91907dedfc964d7d295f1681e33dfbb0000cf688754a4",
+    "repair_responses": [
+      {
+        "raw_text": "{\"refusal\":true,\"reason\":\"The instruction targets measure 3 staff 1 voice 1 events, but the supplied score_context uses staff identifiers 'left_hand' and 'right_hand' rather than numeric staffs, and the validation errors indicate the selected events are outside target_scope and protected. The requested move cannot be performed without conflicting with the supplied target_scope/protected_scope and event metadata.\"}",
+        "parsed_output": {
+          "refusal": true,
+          "reason": "The instruction targets measure 3 staff 1 voice 1 events, but the supplied score_context uses staff identifiers 'left_hand' and 'right_hand' rather than numeric staffs, and the validation errors indicate the selected events are outside target_scope and protected. The requested move cannot be performed without conflicting with the supplied target_scope/protected_scope and event metadata."
+        },
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "latency_ms": 1804.0825000498444,
+        "input_tokens": 4057,
+        "output_tokens": 87,
+        "estimated_cost": 0.0013215,
+        "request_id": "026c2452-6f44-4079-8e55-864058578f09",
+        "finish_reason": "stop",
+        "error": null,
+        "cached": false,
+        "retry_count": 0,
+        "request_hash": "3ea01e2fbc6291ae9c240169081509432f762002ef74f52325616b93ee32d06d"
+      }
+    ]
+  }
+}

@@ -28,11 +28,25 @@ jobs:
       - name: Python regression
         run: python -m pytest -q
       - name: Validate the 120-task benchmark
-        run: python scripts/validate_benchmark.py --split core --write-report
+        run: python scripts/validate_benchmark.py --split core
       - name: Run the offline reviewer demo
         run: python scripts/run_reviewer_demo.py --output-dir artifacts/softwarex_reviewer_demo
       - name: Verify the SoftwareX draft package
-        run: python scripts/verify_softwarex_package.py --profile draft
+        run: python scripts/verify_softwarex_package.py --profile draft --output artifacts/softwarex_package_verification.json
+      - name: Recompute frozen revision evidence and verify hashes
+        run: python scripts/verify_reproducibility.py --experiment softwarex_revision_verification_120_v2 --skip-tests --output-dir artifacts/revision_reproducibility
+      - name: Verify R1 manuscript consistency and evidence
+        run: python scripts/verify_softwarex_p1.py
+      - name: Build a local source archive candidate
+        run: python scripts/export_softwarex_package.py --artifact-label ci-candidate --manuscript-revision 2026-10_minor_r1 --output-dir artifacts/source_candidate
+      - name: Verify the isolated source archive
+        run: python scripts/verify_softwarex_source_archive.py artifacts/source_candidate/seraedit-ci-candidate-source.zip --output-dir artifacts/source_archive_verification
+      - name: Preserve the checked R1 archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwarex-r1-candidate
+          path: artifacts/source_candidate
+          if-no-files-found: error
       - name: Preserve reviewer-demo evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,6 +54,15 @@ jobs:
           name: softwarex-reviewer-demo
           path: artifacts/softwarex_reviewer_demo
           if-no-files-found: error
+      - name: Preserve revision reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwarex-revision-reproducibility
+          path: |
+            artifacts/revision_reproducibility
+            artifacts/source_archive_verification
+          if-no-files-found: warn
 
   frontend:
     runs-on: windows-latest

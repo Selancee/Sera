@@ -1,0 +1,38 @@
+{
+  "condition": "full_rewrite",
+  "refusal": true,
+  "score_document": null,
+  "musicxml": null,
+  "patch": null,
+  "patch_parsed": null,
+  "validation_report": {
+    "status": "refused"
+  },
+  "provider_response": {
+    "raw_text": "{\"refusal\":true,\"reason\":\"The instruction to 'merge the first two rhythmic units' is ambiguous: it is unclear whether the two eighth notes should be combined into a single note (e.g., a quarter note) or whether their durations should be summed while retaining both pitches, and how beam/notation attributes should be handled. Additionally, merging two distinct pitched events into one would require discarding one pitch, which is not specified.\"}",
+    "parsed_output": {
+      "refusal": true,
+      "reason": "The instruction to 'merge the first two rhythmic units' is ambiguous: it is unclear whether the two eighth notes should be combined into a single note (e.g., a quarter note) or whether their durations should be summed while retaining both pitches, and how beam/notation attributes should be handled. Additionally, merging two distinct pitched events into one would require discarding one pitch, which is not specified."
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "latency_ms": 1829.9435999942943,
+    "input_tokens": 6840,
+    "output_tokens": 89,
+    "estimated_cost": 0.0021588,
+    "request_id": "1ea535bb-f81f-450d-ae63-4833df1e8db0",
+    "finish_reason": "stop",
+    "error": null,
+    "cached": false,
+    "retry_count": 0,
+    "request_hash": "d73ffc6b09a7bb51d5d782f187341c896e4c4d150683b8d611d72b6cbfb0cb3a"
+  },
+  "processing_latency_ms": 0.001800013706088066,
+  "error_codes": [],
+  "error": null,
+  "repair_attempted": false,
+  "repair_success": false,
+  "repair_attempt_count": 0,
+  "repair_trace": [],
+  "repair_responses": []
+}
